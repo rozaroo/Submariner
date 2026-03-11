@@ -5,12 +5,10 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public Transform target;
-    private float movSmoothing;
-    private float rotSmoothing;
+    public float movSmoothing;
+    public float rotSmoothing;
     void Start()
-    {
-        movSmoothing = 0.04;
-        rotSmoothing = 0.02;
+    { 
         transform.position = target.position;
         transform.rotation = target.rotation;
     }
