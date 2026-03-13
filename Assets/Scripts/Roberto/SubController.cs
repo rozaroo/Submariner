@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SubController : MonoBehaviour
 {
@@ -13,37 +14,35 @@ public class SubController : MonoBehaviour
     public float curSpeed;
     public float riseSpeed;
     public float stabilizationSmoothing;
-    private Rigidbody rb;
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
+    public Rigidbody rb;
+    public InputActionReference moveAction;
+    public InputActionReference riseAction;
 
     // Update is called once per frame
     void FixedUpdate()
     { 
-        Move();
-        Turn();
-        Rise();
+        Vector2 moveInput = moveAction.action.ReadValue<Vector2>();
+        float riseInput = riseAction.action.ReadValue<float>();
+        Move(moveInput.y);
+        Turn(moveInput.x);
+        Rise(riseInput);
         Stabilize();
     }
-    void Move() 
+    void Move(float forwardInput) 
     {
-        if (Input.GetKey(KeyCode.W)) curSpeed += speedChangeAmount;
-        else if (Input.GetKey(KeyCode.S)) curSpeed -= speedChangeAmount;
+        if (forwardInput > 0) curSpeed += speedChangeAmount;
+        else if (forwardInput < 0) curSpeed -= speedChangeAmount;
         else if (Mathf.Abs(curSpeed) <= minSpeed) curSpeed = 0;
         curSpeed = Mathf.Clamp(curSpeed, -maxBackwardSpeed, maxForwardSpeed);
         rb.AddForce(transform.forward * curSpeed);
     }
-    void Turn() 
+    void Turn(float turnInput) 
     {
-        if (Input.GetKey(KeyCode.D)) rb.AddTorque(transform.up * turnSpeed);
-        else if (Input.GetKey(KeyCode.A)) rb.AddTorque(transform.up * -turnSpeed);
+        rb.AddTorque(transform.up * turnInput * turnSpeed);
     }
-    void Rise() 
+    void Rise(float riseInput) 
     {
-        if (Input.GetKey(KeyCode.LeftShift)) rb.AddForce(transform.up * riseSpeed);
-        else if (Input.GetKey(KeyCode.LeftControl)) rb.AddForce(transform.up * -riseSpeed);
+        rb.AddForce(transform.up * riseInput * riseSpeed);
     }
     void Stabilize() 
     {
