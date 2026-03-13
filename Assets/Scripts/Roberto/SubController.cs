@@ -18,6 +18,16 @@ public class SubController : MonoBehaviour
     public InputActionReference moveAction;
     public InputActionReference riseAction;
 
+    void OnEnable() 
+    {
+        moveAction.action.Enable();
+        riseAction.action.Enable();
+    }
+    void OnDisable() 
+    {
+        moveAction.action.Disable();
+        riseAction.action.Disable();
+    }
     // Update is called once per frame
     void FixedUpdate()
     { 
@@ -34,7 +44,7 @@ public class SubController : MonoBehaviour
         else if (forwardInput < 0) curSpeed -= speedChangeAmount;
         else if (Mathf.Abs(curSpeed) <= minSpeed) curSpeed = 0;
         curSpeed = Mathf.Clamp(curSpeed, -maxBackwardSpeed, maxForwardSpeed);
-        rb.AddForce(transform.forward * curSpeed);
+        rb.AddForce(transform.forward * curSpeed * Time.fixedDeltaTime);
     }
     void Turn(float turnInput) 
     {
@@ -42,10 +52,11 @@ public class SubController : MonoBehaviour
     }
     void Rise(float riseInput) 
     {
-        rb.AddForce(transform.up * riseInput * riseSpeed);
+        rb.AddForce(transform.up * riseInput * riseSpeed * Time.fixedDeltaTime);
     }
     void Stabilize() 
     {
-        rb.MoveRotation(Quaternion.Slerp(rb.rotation, Quaternion.Euler(new Vector3(0, rb.rotation.eulerAngles.y, 0)), stabilizationSmoothing));
+        Quaternion targetRotation = Quaternion.Euler(0, rb.rotation.eulerAngles.y, 0);
+        rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, stabilizationSmoothing));
     }
 }
