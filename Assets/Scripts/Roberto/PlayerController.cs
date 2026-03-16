@@ -4,12 +4,19 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float mouseSensitivity = 2f;
+    public float gravity = -9.81f;
     public Transform playerBody;
     public Transform cameraTransform;
+    public CharacterController controller;
     public InputActionReference moveAction;
     public InputActionReference lookAction;
     float xRotation = 0f;
+    float yVelocity = 0f;
 
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
     void OnEnable()
     {
         moveAction.action.Enable();
@@ -20,10 +27,6 @@ public class PlayerController : MonoBehaviour
         moveAction.action.Disable();
         lookAction.action.Disable();
     }
-    void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-    }
     void Update()
     {
         Move();
@@ -33,7 +36,10 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 input = moveAction.action.ReadValue<Vector2>();
         Vector3 move = playerBody.forward * input.y + playerBody.right * input.x;
-        transform.position += move * moveSpeed * Time.deltaTime;
+        if (controller.isGrounded && yVelocity < 0) yVelocity = -2f;
+        yVelocity += gravity * Time.deltaTime;
+        move.y = yVelocity;
+        controller.Move(move * speed * Time.deltaTime);
     }
     void Look()
     {
