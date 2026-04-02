@@ -8,6 +8,7 @@ public class Submarine : MonoBehaviour
     int currentTarget = -1;
     public enum SubmarineState { Idle, Moving, Braking }
     public SubmarineState currentState = SubmarineState.Idle;
+    int currentIndex = 0;
 
     void Start()
     {
@@ -27,6 +28,7 @@ public class Submarine : MonoBehaviour
     { 
         if (index < 0 || index >= destinations.Length) return;
         currentTarget = index;
+        agent.isStopped = false;
         agent.SetDestination(destinations[index].position);
         currentState = SubmarineState.Moving;
     }
@@ -39,5 +41,9 @@ public class Submarine : MonoBehaviour
     {
         currentState = SubmarineState.Braking;
         agent.isStopped = true;
+    }
+    public void GoToCurrentDestination()
+    {
+        StartTravel(currentIndex);
     }
 }
