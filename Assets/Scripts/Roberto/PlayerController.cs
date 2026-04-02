@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
         if (controller.isGrounded && yVelocity < 0) yVelocity = -2f;
         yVelocity += gravity * Time.deltaTime;
         move.y = yVelocity;
-        controller.Move(move * speed * Time.deltaTime);
+        controller.Move(move * moveSpeed * Time.deltaTime);
     }
     void Look()
     {
