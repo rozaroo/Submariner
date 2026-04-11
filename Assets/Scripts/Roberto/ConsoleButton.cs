@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class ConsoleButton : MonoBehaviour
 {
-    public CoordinateSelector selector;
+    public NavegationSystem nav;
     public int destinationIndex;
     public void Press()
     {
-        selector.SelectDestination(destinationIndex);
+        nav.SelectDestination(destinationIndex);
         Debug.Log("Botón presionado: " + destinationIndex);
     }
 }

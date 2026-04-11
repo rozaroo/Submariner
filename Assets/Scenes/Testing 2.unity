@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63377c587133162409e19ce27b77002f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selector: {fileID: 266784759}
+  nav: {fileID: 266784761}
   destinationIndex: 1
 --- !u!1 &223994884
 GameObject:
@@ -366,9 +366,7 @@ GameObject:
   - component: {fileID: 266784756}
   - component: {fileID: 266784755}
   - component: {fileID: 266784754}
-  - component: {fileID: 266784759}
-  - component: {fileID: 266784758}
-  - component: {fileID: 266784760}
+  - component: {fileID: 266784761}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -465,7 +463,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &266784758
+--- !u!114 &266784761
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -474,37 +472,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 266784753}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3ca23828febcf948bb6cb744c5951ea, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e67aa42f222a664aae2c1b11dfdd4ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selector: {fileID: 266784759}
   switchAction: {fileID: -8314537802705071795, guid: fc93172d602c26b479acce70c073e3a8, type: 3}
---- !u!114 &266784759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 266784753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f500f07e1f29064e8848495d8a1f482, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   submarine: {fileID: 1191382420}
---- !u!114 &266784760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 266784753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f503ee83d3529d4583e37a572e4c8fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selector: {fileID: 266784759}
   interactAction: {fileID: 8392879264971239048, guid: fc93172d602c26b479acce70c073e3a8, type: 3}
 --- !u!1 &278904212
 GameObject:
@@ -629,7 +601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63377c587133162409e19ce27b77002f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selector: {fileID: 266784759}
+  nav: {fileID: 266784761}
   destinationIndex: 0
 --- !u!1 &311185142
 GameObject:
@@ -1486,7 +1458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63377c587133162409e19ce27b77002f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selector: {fileID: 266784759}
+  nav: {fileID: 266784761}
   destinationIndex: 2
 --- !u!1 &1191382417
 GameObject:
@@ -1694,6 +1666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   submarine: {fileID: 1378680552}
+  selectedIndex: 0
 --- !u!114 &1378680552
 MonoBehaviour:
   m_ObjectHideFlags: 0
