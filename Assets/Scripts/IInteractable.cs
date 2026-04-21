@@ -1,6 +1,6 @@
+using UnityEngine.InputSystem;
+
 public interface IInteractable
 {
-    void Interact();
-    void OnInteractionStart();
-    void OnInteractionEnd();
+    void Interact(PlayerCharacter player);
 }

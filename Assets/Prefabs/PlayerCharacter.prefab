@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 247556578119447125}
   - component: {fileID: 2840888752674136054}
+  - component: {fileID: 2988871602860453287}
   - component: {fileID: 3307760291457062342}
   - component: {fileID: 8590537888755363150}
   m_Layer: 0
@@ -48,7 +49,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  mouseSensitivity: {x: 0.25, y: 0.25}
+  _moveActionName: Move
+  _interactionActionName: Interact
+  _cameraController: {fileID: 2988871602860453287}
+  _playerCamera: {fileID: 3246600704839594514}
+  _interactionDistance: 2.5
+  _interactableLayer:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!114 &2988871602860453287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7324493023298970460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb41d959a1f4bac43ab1b01fd5ec98c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lookSensitivity: 100
+  _upDownLookLimit: 70
+  _lookLerpSpeed: 10
+  _forceLookSpeed: 2
+  _forceMoveSpeed: 5
+  _showGizmos: 1
+  _camera: {fileID: 3246600704839594514}
 --- !u!143 &3307760291457062342
 CharacterController:
   m_ObjectHideFlags: 0
@@ -119,6 +146,18 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 592096b8-c2ea-46ea-888d-56e94d164971
     m_ActionName: 'Player/Look[/Mouse/delta]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e68ed786-bae6-4ea2-916c-c680287f23fb
+    m_ActionName: 'Player/Interact[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 633d7275-7d44-465b-97d1-ed19d5e1d272
+    m_ActionName: 'Player/NextTarget[/Keyboard/tab]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 53d8c130-101e-4e32-9df0-3031add875a4
+    m_ActionName: 'Player/Click[/Mouse/leftButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

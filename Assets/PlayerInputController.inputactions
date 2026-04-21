@@ -153,6 +153,65 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Periscope",
+            "id": "17fa0b56-aeaa-48f1-9ebc-dfeb795e5339",
+            "actions": [
+                {
+                    "name": "TakePhoto",
+                    "type": "Button",
+                    "id": "c295c289-0b7f-4bb7-b54e-2137cd8e5a3e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ExitStation",
+                    "type": "Button",
+                    "id": "5800ecc8-d7af-4771-a89a-75a0c9b48498",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ebc7ee82-1ad8-49b0-ab88-d6da293d42db",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TakePhoto",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "09d94912-56b1-4216-9776-1ab23236b4a6",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExitStation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bfd64247-3d6a-47db-b711-15951df2c06c",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExitStation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

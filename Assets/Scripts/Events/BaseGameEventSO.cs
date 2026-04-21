@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
 
-public abstract class BaseEventChannelSO : ScriptableObject
+[CreateAssetMenu(fileName = "New Base Event", menuName = "Events/Base Event (Void)")]
+public class BaseEventChannelSO : ScriptableObject
 {
     public event Action OnEventRaised;
 
