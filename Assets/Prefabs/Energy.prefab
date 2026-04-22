@@ -126,3 +126,4 @@ MonoBehaviour:
   timeToRegenerateEnergy: 5
   energyConsumptionRate: 10
   _currentEnergy: 0
+  _energyStatusEventSO: {fileID: 11400000, guid: 1d3ff72475cd32e4eb5906f12ae805b7, type: 2}

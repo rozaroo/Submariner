@@ -9,15 +9,34 @@ public class EnergySystem : MonoBehaviour
     [SerializeField] private float energyToRegen = 5f;
     [SerializeField] private float timeToRegenerateEnergy = 5f;
     [SerializeField] private float energyConsumptionRate = 10f;
-    [SerializeField] private float _currentEnergy; 
+    [SerializeField] private float _currentEnergy;
+    
+    [Header("Energy Events Channels")]
+    [SerializeField] private EnergyStatusEventSO _energyStatusEventSO;
+    
+    [Header("Energy Status")]
+    private EnergyStatus _energyStatus = EnergyStatus.Full;
     private bool _isEnergyBeingConsumed;
-    private bool _isEnergyRegenerating; 
+    private bool _isEnergyRegenerating;
+    
+    [Header("Coroutines")]
     private Coroutine _energyRegenerationCoroutine;
     private Coroutine _energyConsumptionCoroutine;
+    
+    private float CurrentEnergy
+    {
+        get => _currentEnergy;
+        set
+        {
+            _currentEnergy = Mathf.Clamp(value, 0f, maxEnergy);
+            
+            SetEnergyStatus();
+        }
+    }
 
     private void Start()
     {
-        _currentEnergy = maxEnergy;
+        CurrentEnergy = maxEnergy;
     }
     
     [ContextMenu("Consumption/Start Energy Consumption")]
@@ -27,12 +46,6 @@ public class EnergySystem : MonoBehaviour
         _energyConsumptionCoroutine ??= StartCoroutine(EnergyDrain());
     }
 
-    [ContextMenu("Consumption/Pause Consumption")]
-    private void PauseEnergyConsumption()
-    {
-        _isEnergyBeingConsumed = false;
-    }
-    
     [ContextMenu("Consumption/Stop Energy Consumption")]
     private void StopEnergyConsumption()
     {
@@ -43,20 +56,24 @@ public class EnergySystem : MonoBehaviour
         }
         _isEnergyBeingConsumed = false;
     }
-    
+
     private IEnumerator EnergyDrain()
     {
         while (_currentEnergy > 0)
         {
             if (_isEnergyBeingConsumed)
             {
-                _currentEnergy -= energyConsumptionRate * Time.deltaTime;
-                _currentEnergy = Mathf.Clamp(_currentEnergy, 0f, maxEnergy);
+                CurrentEnergy -= energyConsumptionRate * Time.deltaTime;
             }
             yield return null;
         }
         _energyConsumptionCoroutine = null;
-        Debug.Log("Energy totally Drained");
+    }
+    
+    [ContextMenu("Consumption/Pause Consumption")]
+    private void PauseEnergyConsumption()
+    {
+        _isEnergyBeingConsumed = false;
     }
     
     [ContextMenu("Regeneration/Start Energy Regeneration")]
@@ -79,36 +96,52 @@ public class EnergySystem : MonoBehaviour
     
     private IEnumerator EnergyRegenerateVPercentage()
     {
-        while (_currentEnergy < maxEnergy)
+        while (CurrentEnergy < maxEnergy)
         {
             if (_isEnergyRegenerating)
             {
-                _currentEnergy += GetPercentageToEnergy(energyToRegen) * Time.deltaTime;
-                _currentEnergy = Mathf.Clamp(_currentEnergy, 0f, maxEnergy);
+                CurrentEnergy += GetPercentageToEnergy(energyToRegen);
             }
             yield return new WaitForSeconds(timeToRegenerateEnergy);
         }
     }
+    
+    private void SetEnergyStatus()
+    {
+        float energyPercentage = GetCurrentEnergyPercentage();
+        EnergyStatus previousStatus = _energyStatus;
         
+        if (energyPercentage <= 0f) _energyStatus = EnergyStatus.Empty;
+        else if (energyPercentage <= 20f) _energyStatus = EnergyStatus.Low;
+        else _energyStatus = EnergyStatus.Full;
+        
+        if (_energyStatus != previousStatus)
+        {
+            TriggerEnergyEvents();
+        }
+    }
+    
+    private void TriggerEnergyEvents()
+    {
+        if (_energyStatusEventSO != null)
+        {
+            _energyStatusEventSO.RaiseEvent(_energyStatus);
+        }
+    }
     
     /// <summary>
     /// Fixed amount of energy regeneration and consumption methods
     /// </summary>
     public void RestoreEnergy(float amount)
     {
-        if (_currentEnergy < maxEnergy)
-        {
-            _currentEnergy += amount;
-            _currentEnergy = Mathf.Clamp(_currentEnergy, 0f, maxEnergy);
-        }
+        CurrentEnergy += amount;
     }
+    
     public void ConsumeEnergyAmount(float amount)
     {
-        if (_currentEnergy >= amount)
+        if (CurrentEnergy >= amount)
         {
-            _currentEnergy -= amount;
-            _currentEnergy = Mathf.Clamp(_currentEnergy, 0f, maxEnergy);
-            Debug.Log("Amount To Consume: " + amount);
+            CurrentEnergy -= amount;
         }
     }
     
@@ -117,14 +150,12 @@ public class EnergySystem : MonoBehaviour
     /// </summary>
     public float GetCurrentEnergy()
     {
-        Debug.Log("Current Energy Value = " + _currentEnergy);
         return _currentEnergy;
     }
     
     public float GetCurrentEnergyPercentage()
     {
         float currentPercentage = (_currentEnergy / maxEnergy) * 100f;
-        Debug.Log("Current Energy Percentage= " + currentPercentage);
         return currentPercentage;
     }
 
@@ -132,7 +163,6 @@ public class EnergySystem : MonoBehaviour
     {
         float energy = (percentage / 100f) * maxEnergy;
         energy = Mathf.Clamp(energy, 0f, maxEnergy);
-        Debug.Log("Energy to Regenerate = " + energy);
         return energy;
     }
     
@@ -140,7 +170,6 @@ public class EnergySystem : MonoBehaviour
     {
         float percentage = (energy / maxEnergy) * 100f;
         percentage = Mathf.Clamp(percentage, 0f, maxEnergy);
-        Debug.Log("Percentage to Regenerate = " + percentage);
         return percentage;
     }
     
@@ -150,7 +179,6 @@ public class EnergySystem : MonoBehaviour
         if (energyConsumptionRate > 0)
         {
             float time = maxEnergy / energyConsumptionRate;
-            Debug.Log("Time Remaining = " + TimeSpan.FromSeconds(time).ToString("mm\\:ss") + " Seconds");
             return time;
         }
         return Mathf.Infinity;
@@ -162,7 +190,6 @@ public class EnergySystem : MonoBehaviour
         if (energyConsumptionRate > 0)
         {
             float time = _currentEnergy / energyConsumptionRate;
-            Debug.Log("Time Remaining = " + TimeSpan.FromSeconds(time).ToString("mm\\:ss") + " Seconds");
             return time;
         }
         return Mathf.Infinity;
