@@ -124,7 +124,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _activeCamera: {fileID: 0}
-  _clickActionName: Click
-  _exitActionName: Cancel
+  _TakePhotoActionName: ClickInteraction
+  _exitActionName: ExitStation
+  _playerMapName: Player
+  _periscopeMapName: Station
   _onPeriscopePossess: {fileID: 11400000, guid: 71bc8619a80d4ab44a8b5cc0dd049afa, type: 2}
   _onPeriscopeUnpossess: {fileID: 11400000, guid: 7a04d80ab82883e46ac47a635c10e1bd, type: 2}

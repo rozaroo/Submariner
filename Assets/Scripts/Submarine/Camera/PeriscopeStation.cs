@@ -18,23 +18,22 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     [Header("Event Channels")]
     [SerializeField] private BaseEventChannelSO _onPeriscopePossess;
     [SerializeField] private BaseEventChannelSO _onPeriscopeUnpossess;
-
-    private PlayerInput _playerInput; 
+    
     private PlayerCharacter _currentPlayer; 
     private bool _isPossessed = false;
 
     private void Update()
     {
-        if (!_isPossessed || _playerInput == null) return;
+        if (!_isPossessed || _currentPlayer == null) return;
         
-        bool takePhoto = _playerInput.actions[_TakePhotoActionName].WasPressedThisFrame();
+        bool takePhoto = _currentPlayer.Input.actions[_TakePhotoActionName].WasPressedThisFrame();
 
         if (takePhoto && _activeCamera != null)
         {
             _activeCamera.TryTakePhoto();
         }
         
-        bool exitStation = _playerInput.actions[_exitActionName].WasPressedThisFrame();
+        bool exitStation = _currentPlayer.Input.actions[_exitActionName].WasPressedThisFrame();
 
         if (exitStation)
         {
@@ -45,8 +44,6 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     public void Interact(PlayerCharacter player)
     {
         _currentPlayer = player;
-        _playerInput = _currentPlayer.GetComponent<PlayerInput>();
-        
         Possess();
     }
     
@@ -54,9 +51,9 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     {
         _isPossessed = true;
         
-        if (_playerInput != null)
+        if (_currentPlayer != null)
         {
-            _playerInput.SwitchCurrentActionMap(_periscopeMapName);
+            _currentPlayer.Input.SwitchCurrentActionMap(_periscopeMapName);
             if (_onPeriscopePossess != null)
             {
                 _onPeriscopePossess.RaiseEvent();
@@ -79,7 +76,7 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
         
         if (_currentPlayer != null)
         {
-            _playerInput.SwitchCurrentActionMap(_playerMapName);
+            _currentPlayer.Input.SwitchCurrentActionMap(_playerMapName);
             _currentPlayer = null;
         }
     }

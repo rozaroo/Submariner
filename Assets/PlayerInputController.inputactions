@@ -155,11 +155,11 @@
             ]
         },
         {
-            "name": "Periscope",
+            "name": "Station",
             "id": "17fa0b56-aeaa-48f1-9ebc-dfeb795e5339",
             "actions": [
                 {
-                    "name": "TakePhoto",
+                    "name": "ClickInteraction",
                     "type": "Button",
                     "id": "c295c289-0b7f-4bb7-b54e-2137cd8e5a3e",
                     "expectedControlType": "",
@@ -185,7 +185,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "TakePhoto",
+                    "action": "ClickInteraction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

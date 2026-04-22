@@ -24,6 +24,10 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private float _interactionDistance = 2.5f;
     [SerializeField] private LayerMask _interactableLayer;
     
+    public PlayerInput Input => _playerInput;
+    public CameraController CamController => _cameraController;
+    public CharacterController Controller => _controller;
+    
     private void Start()
     {
         _playerInput = GetComponent<PlayerInput>();

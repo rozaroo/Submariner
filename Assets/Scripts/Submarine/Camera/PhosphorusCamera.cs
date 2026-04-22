@@ -12,12 +12,29 @@ public class PhosphorusCamera : MonoBehaviour
     
     [Header("Events")]
     [SerializeField] private CameraPropertiesEventChannelSO _onPeriscopePhotoTaken;
-
-    private bool _hasEnergy = true;
+    [SerializeField] private EnergyStatusEventSO _energyStatusEventSO;
+    
+    private EnergyStatus _energyStatus;
     private bool _isProcessingPhoto = false;
+    
+    private void OnEnable()
+    {
+        if (_energyStatusEventSO != null) _energyStatusEventSO.OnEventRaised += UpdateEnergyStatus;
+    }
+
+    private void OnDisable()
+    {
+        if (_energyStatusEventSO != null) _energyStatusEventSO.OnEventRaised -= UpdateEnergyStatus;
+    }
+    
+    private void UpdateEnergyStatus(EnergyStatus newStatus)
+    {
+        _energyStatus = newStatus;
+    }
+    
     public void TryTakePhoto()
     {
-        if (!_hasEnergy || _isProcessingPhoto) return;
+        if (_energyStatus != EnergyStatus.Empty || _isProcessingPhoto) return;
         StartCoroutine(TakePhotoCooldownRoutine());
     }
     

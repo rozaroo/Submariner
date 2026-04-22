@@ -15,7 +15,7 @@ public class EnergySystem : MonoBehaviour
     [SerializeField] private EnergyStatusEventSO _energyStatusEventSO;
     
     [Header("Energy Status")]
-    private EnergyStatus _energyStatus = EnergyStatus.Full;
+    private EnergyStatus _energyStatus;
     private bool _isEnergyBeingConsumed;
     private bool _isEnergyRegenerating;
     
@@ -123,7 +123,7 @@ public class EnergySystem : MonoBehaviour
     
     private void TriggerEnergyEvents()
     {
-        if (_energyStatusEventSO != null)
+        if (_energyStatusEventSO != null )
         {
             _energyStatusEventSO.RaiseEvent(_energyStatus);
         }
