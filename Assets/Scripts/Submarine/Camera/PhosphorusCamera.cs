@@ -4,37 +4,43 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class PhosphorusCamera : MonoBehaviour 
 {
-    [Header("Componentes")]
-    [SerializeField] private Camera _exteriorCamera;
+    [Header("Components")]
+    [SerializeField] private Camera exteriorCamera;
 
     [Header("Settings")] 
-    [SerializeField] private CameraPropertyData _cameraPropertyData;
+    [SerializeField] private CameraPropertyData cameraPropertyData;
     
     [Header("Events")]
-    [SerializeField] private CameraPropertiesEventChannelSO _onPeriscopePhotoTaken;
-    [SerializeField] private EnergyStatusEventSO _energyStatusEventSO;
+    [SerializeField] private CameraPropertiesEventChannelSO onPeriscopePhotoTaken;
+    [SerializeField] private EnergyStatusEventSO energyStatusEventSo;
     
-    private EnergyStatus _energyStatus;
+    private EnergyStatus _energyStatus = EnergyStatus.Full;
     private bool _isProcessingPhoto = false;
-    
-    private void OnEnable()
+
+    #region StartUpLogic
+
+    private void OnEnable() 
     {
-        if (_energyStatusEventSO != null) _energyStatusEventSO.OnEventRaised += UpdateEnergyStatus;
+        if (energyStatusEventSo != null) energyStatusEventSo.OnEventRaised += UpdateEnergyStatus;
     }
 
     private void OnDisable()
     {
-        if (_energyStatusEventSO != null) _energyStatusEventSO.OnEventRaised -= UpdateEnergyStatus;
+        if (energyStatusEventSo != null) energyStatusEventSo.OnEventRaised -= UpdateEnergyStatus;
     }
-    
+
     private void UpdateEnergyStatus(EnergyStatus newStatus)
     {
         _energyStatus = newStatus;
     }
-    
+    #endregion
+
+    #region PhotoLogic
+
     public void TryTakePhoto()
     {
-        if (_energyStatus != EnergyStatus.Empty || _isProcessingPhoto) return;
+        Debug.Log("Trying to take photo - " + _energyStatus + " - " + _isProcessingPhoto);
+        if (_energyStatus == EnergyStatus.Empty || _isProcessingPhoto) return;
         StartCoroutine(TakePhotoCooldownRoutine());
     }
     
@@ -42,18 +48,20 @@ public class PhosphorusCamera : MonoBehaviour
     {
         _isProcessingPhoto = true;
         
-        _exteriorCamera.enabled = true;
-        _exteriorCamera.Render(); 
-        _exteriorCamera.enabled = false;
+        exteriorCamera.enabled = true;
+        exteriorCamera.Render(); 
+        exteriorCamera.enabled = false;
         
-        if (_onPeriscopePhotoTaken != null)
+        if (onPeriscopePhotoTaken != null)
         {
-            _onPeriscopePhotoTaken.RaiseEvent(_cameraPropertyData);
+            onPeriscopePhotoTaken.RaiseEvent(cameraPropertyData);
         }
-        float totalCooldownTime = _cameraPropertyData._VisibleDuration + _cameraPropertyData._fadeDuration;
+        float totalCooldownTime = cameraPropertyData._VisibleDuration + cameraPropertyData._fadeDuration;
         
         yield return new WaitForSeconds(totalCooldownTime);
         
         _isProcessingPhoto = false;
     }
+
+    #endregion
 }

@@ -20,9 +20,9 @@ public class PlayerCharacter : MonoBehaviour
     private float _gravity = -9.81f;
     
     [Header("Interaction Settings (Raycast)")]
-    [SerializeField] private Camera _playerCamera; //INTERACTION ONLY
-    [SerializeField] private float _interactionDistance = 2.5f;
-    [SerializeField] private LayerMask _interactableLayer;
+    [SerializeField] private Camera playerCamera; //INTERACTION ONLY
+    [SerializeField] private float interactionDistance = 2.5f;
+    [SerializeField] private LayerMask interactableLayer;
     
     public PlayerInput Input => _playerInput;
     public CameraController CamController => _cameraController;
@@ -47,9 +47,9 @@ public class PlayerCharacter : MonoBehaviour
     
     private void TryInteractRaycast()
     {
-        Ray ray = new Ray(_playerCamera.transform.position, _playerCamera.transform.forward);
+        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         
-        if (Physics.Raycast(ray, out RaycastHit hit, _interactionDistance, _interactableLayer))
+        if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactableLayer))
         {
             Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 2f);
             
@@ -60,7 +60,7 @@ public class PlayerCharacter : MonoBehaviour
         }
         else
         {
-            Debug.DrawRay(ray.origin, ray.direction * _interactionDistance, Color.red, 2f);
+            Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red, 2f);
         }
     }
     
