@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//TODO: Cambiar nombre a NavegationStation o algo similar.
 public class NavegationSystem : MonoBehaviour
 {
     //CoordinateSwitcher

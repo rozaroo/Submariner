@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class EngineSystem : MonoBehaviour
 {
-    
+    //TODO: Eliminar Submarine.
     public Submarine submarine;
     public InputActionReference toggleEngineAction;
     public bool engineOn = false;
@@ -21,8 +21,10 @@ public class EngineSystem : MonoBehaviour
     void OnEnable() => toggleEngineAction.action.Enable();
     void OnDisable() => toggleEngineAction.action.Disable();
 
+    
+    //TODO: Cambiar a eventos de energía para evitar chequeos constantes.
     void Update()
-    {
+    { 
         if (toggleEngineAction.action.triggered) ToggleEngine();
         CheckEnergyState();
         CheckLowEnergy();
@@ -36,6 +38,8 @@ public class EngineSystem : MonoBehaviour
         ApplyEngineState();
         Debug.Log(engineOn ? "Motor ENCENDIDO " : "Motor APAGADO ");
     }
+    
+    //TODO: Cambiar EngineState a un Enum, en caso de añadir mas estados en algun futuro y a su vez, hacer un statemachine de ser necesario.
     void ApplyEngineState()
     {
         if (engineOn)

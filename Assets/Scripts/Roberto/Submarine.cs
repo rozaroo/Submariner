@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+//TODO: Cambiar nombre a SubmarineController o SubmarineNavegation
 public class Submarine : MonoBehaviour
 {
     public NavMeshAgent agent;
@@ -20,6 +21,8 @@ public class Submarine : MonoBehaviour
         if (destinations.Length > 0) StartTravel(0);
         agent.speed = baseSpeed;
     }
+    
+    //TODO: Cambiar a sistema de Eventos, NO usar Update (a menos que no haya alternativa)
     void Update()
     {
         if (!engineEnabled && currentState == SubmarineState.Moving)
@@ -32,6 +35,7 @@ public class Submarine : MonoBehaviour
             if (!agent.pathPending && agent.remainingDistance < 1f) StopSub();
         }
     }
+    
     public void StartTravel(int index) 
     { 
         if (!engineEnabled) return;

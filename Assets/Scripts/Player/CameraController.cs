@@ -14,7 +14,8 @@ public class CameraController : MonoBehaviour
     
     [Header("References Settings")] 
     private PlayerInput _playerInput;
-    [SerializeField] private Camera _camera;
+    [SerializeField] private string lookActionName = "Look";
+    [SerializeField] private Camera playerCamera;
     
     [Header("Rotation Settings")] 
     private float _pitch;
@@ -32,19 +33,19 @@ public class CameraController : MonoBehaviour
     
     private Vector3 _startingPosition;
     private Vector2 _lookDir;
-    private InputAction _lookAction; // Referencia segura a la acción
+    private InputAction _lookAction;
     
-    public Camera MainCamera { get {return _camera;} private set => _camera = value; }
+    public Camera MainCamera { get => playerCamera; private set => playerCamera = value; }
 
     private void Awake()
     {
-        _startingPosition = _camera.transform.localPosition;
+        _startingPosition = playerCamera.transform.localPosition;
     }
 
     private void Start()
     {
         _playerInput = GetComponent<PlayerInput>();
-        _lookAction = _playerInput.actions.FindAction("Look");
+        var _lookAction = _playerInput.actions.FindAction(lookActionName);
     }
     private void Update()
     {
@@ -77,7 +78,7 @@ public class CameraController : MonoBehaviour
         _currentPitch = Mathf.Lerp(_currentPitch, _pitch, t);
 
         transform.rotation = Quaternion.Euler(0f, _currentYaw, 0f);
-        _camera.transform.localRotation = Quaternion.Euler(_currentPitch, 0f, 0f);
+        playerCamera.transform.localRotation = Quaternion.Euler(_currentPitch, 0f, 0f);
     }
 
     #region ForceMoveCamera
@@ -92,7 +93,7 @@ public class CameraController : MonoBehaviour
     {
         _isForcedMoving = true;
 
-        Vector3 startPos = _camera.transform.position;
+        Vector3 startPos = playerCamera.transform.position;
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
@@ -100,15 +101,15 @@ public class CameraController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float t = Mathf.SmoothStep(0f, 1f, elapsedTime / duration);
 
-            _camera.transform.position = Vector3.Lerp(startPos, targetPosition, t);
+            playerCamera.transform.position = Vector3.Lerp(startPos, targetPosition, t);
 
             if (_showGizmos)
-                Debug.DrawLine(_camera.transform.position, targetPosition, Color.cyan);
+                Debug.DrawLine(playerCamera.transform.position, targetPosition, Color.cyan);
 
             yield return null;
         }
         
-        _camera.transform.position = targetPosition;
+        playerCamera.transform.position = targetPosition;
         StopForceMoveCamera(false);
     }
     
@@ -121,7 +122,7 @@ public class CameraController : MonoBehaviour
         }
 
         if (returnToPosition)
-            _camera.transform.localPosition = _startingPosition;
+            playerCamera.transform.localPosition = _startingPosition;
         
         _isForcedMoving = false;
     }
@@ -154,7 +155,7 @@ public class CameraController : MonoBehaviour
         _isForcedLooking = false;
     }
     
-    public void ForceRotationInstant(float newYaw, float newPitch)
+    private void ForceRotationInstant(float newYaw, float newPitch)
     {
         _yaw = newYaw;
         _currentYaw = newYaw;
@@ -167,12 +168,12 @@ public class CameraController : MonoBehaviour
         _isForcedLooking = true;
  
         if (_showGizmos)
-            Debug.DrawRay(_camera.transform.position, targetPosition - _camera.transform.position, Color.aquamarine, 5f);
+            Debug.DrawRay(playerCamera.transform.position, targetPosition - playerCamera.transform.position, Color.aquamarine, 5f);
  
         float startYaw = _currentYaw;
         float startPitch = _currentPitch;
 
-        Vector3 direction = targetPosition - _camera.transform.position;
+        Vector3 direction = targetPosition - playerCamera.transform.position;
         float targetYaw   = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
         float targetPitch = -Mathf.Asin(direction.normalized.y) * Mathf.Rad2Deg;
  
@@ -188,7 +189,7 @@ public class CameraController : MonoBehaviour
             _currentPitch = Mathf.LerpAngle(startPitch, targetPitch, t);
  
             transform.rotation              = Quaternion.Euler(0f, _currentYaw, 0f);
-            _camera.transform.localRotation = Quaternion.Euler(_currentPitch, 0f, 0f);
+            playerCamera.transform.localRotation = Quaternion.Euler(_currentPitch, 0f, 0f);
  
             yield return null;
         }
@@ -197,7 +198,7 @@ public class CameraController : MonoBehaviour
         ForceRotationInstant(targetYaw, targetPitch);
         
         transform.rotation = Quaternion.Euler(0f, _currentYaw, 0f);
-        _camera.transform.localRotation = Quaternion.Euler(_currentPitch, 0f, 0f);
+        playerCamera.transform.localRotation = Quaternion.Euler(_currentPitch, 0f, 0f);
         
         StopForceLook();
     }
