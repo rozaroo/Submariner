@@ -7,7 +7,7 @@ public class NavegationStation : MonoBehaviour
     public InputActionReference switchAction;
 
     //CoordinateSelector
-    public Submarine submarine;
+    //public Submarine submarine;
     int selectedIndex = 0;
 
     //LeverController
@@ -32,19 +32,19 @@ public class NavegationStation : MonoBehaviour
     }
     public void SelectNext()
     {
-        selectedIndex++;
+        /*selectedIndex++;
         if (selectedIndex >= submarine.destinations.Length) selectedIndex = 0;
-        Debug.Log("Selected destination: " + selectedIndex);
+        Debug.Log("Selected destination: " + selectedIndex);*/
     }
     public void SelectDestination(int index)
     {
-        if (index < 0 || index >= submarine.destinations.Length) return;
+        /*if (index < 0 || index >= submarine.destinations.Length) return;
         selectedIndex = index;
-        Debug.Log("Destino seleccionado: " + selectedIndex);
+        Debug.Log("Destino seleccionado: " + selectedIndex);*/
     }
     public void ConfirmSelection()
     {
-        submarine.StartTravel(selectedIndex);
+        /*submarine.StartTravel(selectedIndex);*/
     }
     void OnTriggerEnter(Collider other)
     {
