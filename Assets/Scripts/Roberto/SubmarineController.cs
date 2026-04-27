@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-//TODO: Cambiar nombre a SubmarineController o SubmarineNavegation
-public class Submarine : MonoBehaviour
+public class SubmarineController : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Transform[] destinations;
@@ -21,21 +20,21 @@ public class Submarine : MonoBehaviour
         if (destinations.Length > 0) StartTravel(0);
         agent.speed = baseSpeed;
     }
-    
-    //TODO: Cambiar a sistema de Eventos, NO usar Update (a menos que no haya alternativa)
+
     void Update()
     {
-        if (!engineEnabled && currentState == SubmarineState.Moving)
+        switch (currentState)
         {
-            HandleInertia();
-            return;
-        }
-        if (currentState == SubmarineState.Moving) 
-        {
-            if (!agent.pathPending && agent.remainingDistance < 1f) StopSub();
+            case SubmarineState.Moving:
+                CheckArrival();
+                break;
+
+            case SubmarineState.Braking:
+                HandleInertia();
+                break;
         }
     }
-    
+
     public void StartTravel(int index) 
     { 
         if (!engineEnabled) return;
@@ -50,11 +49,12 @@ public class Submarine : MonoBehaviour
     {
         agent.isStopped = true;
         currentState = SubmarineState.Idle;
+        agent.speed = baseSpeed * speedMultiplier;
     }
     public void Brake() 
     {
         currentState = SubmarineState.Braking;
-        agent.isStopped = true;
+        currentSpeed = agent.speed;
     }
     public void GoToCurrentDestination()
     {
@@ -63,10 +63,12 @@ public class Submarine : MonoBehaviour
     public void SetEngineState(bool state)
     {
         engineEnabled = state;
+
         if (!engineEnabled)
         {
-            agent.isStopped = true;
-            currentState = SubmarineState.Idle;
+            //pasar a estado de frenado, no idle
+            currentState = SubmarineState.Braking;
+            currentSpeed = agent.speed;
         }
         else
         {
@@ -84,5 +86,9 @@ public class Submarine : MonoBehaviour
     {
         speedMultiplier = multiplier;
         if (engineEnabled) agent.speed = baseSpeed * speedMultiplier;
+    }
+    void CheckArrival()
+    {
+        if (!agent.pathPending && agent.remainingDistance < 1f) StopSub();
     }
 }

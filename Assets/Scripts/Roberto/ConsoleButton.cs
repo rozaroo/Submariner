@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ConsoleButton : MonoBehaviour
 {
-    public NavegationSystem nav;
+    public NavegationStation nav;
     public int destinationIndex;
     public void Press()
     {

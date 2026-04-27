@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class BrakeSystem: MonoBehaviour
 {
-    public Submarine submarine;
+    public SubmarineController submarine;
     public InputActionReference interactAction;
     bool playerInside = false;
     void OnEnable() => interactAction.action.Enable();

@@ -194,4 +194,7 @@ public class EnergySystem : MonoBehaviour
         }
         return Mathf.Infinity;
     }
+
+    public void StartConsumption() => StartEnergyConsumption();
+    public void StopConsumption() => StopEnergyConsumption();
 }
