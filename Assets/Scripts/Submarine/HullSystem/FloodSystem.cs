@@ -33,13 +33,11 @@ public class FloodSystem : MonoBehaviour
         onDrainageStationStatusChanged.OnEventRaised += OnDrainageStatusReceived;
         onHullStatusChanged.OnEventRaised += ChangeFloodingSpeed;
     }
-    
     private void OnDisable()
     {
         onDrainageStationStatusChanged.OnEventRaised -= OnDrainageStatusReceived;
         onHullStatusChanged.OnEventRaised -= ChangeFloodingSpeed;
     }
-    
     private void ChangeFloodingSpeed(HullProperty hullProperty)
     {
         if (hullProperty.activeHullDamage <= 0)
@@ -52,7 +50,6 @@ public class FloodSystem : MonoBehaviour
         _hullFloodingSpeed = maxRiseSpeed * (hullProperty.activeHullDamage / hullProperty.maxHullDamagePosible);
         StartFloodingCoroutine(EffectiveFloodingSpeed);
     }
-
     private void StartFloodingCoroutine(float baseFloodingSpeed)
     {
         if (_floodingCoroutine != null)
@@ -61,7 +58,6 @@ public class FloodSystem : MonoBehaviour
         }
         _floodingCoroutine = StartCoroutine(FloodingRoutine(baseFloodingSpeed));
     }
-
     private IEnumerator FloodingRoutine(float floodingSpeed)
     {
         while (_currentHeight < maxHeight)
@@ -72,7 +68,6 @@ public class FloodSystem : MonoBehaviour
             yield return null;
         }
     }
-
     private void CheckProgress()
     {
         var progress = (_currentHeight - startHeight) / (maxHeight - startHeight);

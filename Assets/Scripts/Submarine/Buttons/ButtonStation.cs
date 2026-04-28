@@ -54,6 +54,7 @@ public class ButtonStation : MonoBehaviour, IStationControl
 
     public void OnActionUp()
     {
+        if (_isPressed || !IsUnlocked) return;
         ChangeColor(activeColor);
     }
     public void RestartButton()

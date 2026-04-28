@@ -37,7 +37,6 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     public void Possess()
     {
         enabled = true;
-        _currentPlayer.Controller.enabled = false;
         if (_currentPlayer.Input != null)
         {
             _currentPlayer.Input.SwitchCurrentActionMap(stationMapName);
@@ -74,7 +73,6 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
                 
                 _currentPlayer.Input.SwitchCurrentActionMap(playerMapName);
             }
-            _currentPlayer.Controller.enabled = true;
             _currentPlayer = null;
         }
     }

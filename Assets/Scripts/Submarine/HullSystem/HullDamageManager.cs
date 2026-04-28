@@ -32,7 +32,7 @@ public class HullDamageManager : MonoBehaviour
             crack.OnCrackRepaired += OnHullRepaired;
             _pool.Add(crack);
         }
-        //StartSpawningBehaviour();
+        StartSpawningBehaviour();
     }
 
     private void OnDestroy()
