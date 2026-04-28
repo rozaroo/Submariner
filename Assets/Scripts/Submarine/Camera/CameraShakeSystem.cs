@@ -1,33 +1,36 @@
 using System.Collections;
 using UnityEngine;
 
-// Sacude la cámara cada vez que aparece una grieta nueva.
-// Se puede activar y desactivar desde el Inspector sin tocar código.
 public class CameraShakeSystem : MonoBehaviour
 {
-    [Header("Referencias")]
-    [SerializeField] private CrackManager crackManager;
+    [Header("References")]
+    [SerializeField] private HullPropertyEventSO onHullStatusChanged;
     [SerializeField] private Camera targetCamera;
 
-    [Header("Configuración")]
+    [Header("Settings")]
     [SerializeField] private bool shakeEnabled = true;
     [SerializeField] private float shakeDuration  = 0.3f;
     [SerializeField] private float shakeMagnitude = 0.15f;
+    
+    private Coroutine _shakeCoroutine;
 
     private void OnEnable()
     {
-        crackManager.OnCrackSpawned += TriggerShake;
+        onHullStatusChanged.OnEventRaised += TriggerShake;
     }
 
     private void OnDisable()
     {
-        crackManager.OnCrackSpawned -= TriggerShake;
+        onHullStatusChanged.OnEventRaised -= TriggerShake;
     }
 
-    private void TriggerShake()
+    private void TriggerShake(HullProperty hullProperty)
     {
         if (!shakeEnabled) return;
-        StopAllCoroutines();
+        if (_shakeCoroutine != null)
+        {
+            StopCoroutine(_shakeCoroutine);
+        }
         StartCoroutine(ShakeRoutine());
     }
 
@@ -38,13 +41,11 @@ public class CameraShakeSystem : MonoBehaviour
 
         while (elapsed < shakeDuration)
         {
-            // La intensidad disminuye a medida que pasa el tiempo
             float strength = shakeMagnitude * (1f - elapsed / shakeDuration);
             targetCamera.transform.localPosition = originalLocalPos + Random.insideUnitSphere * strength;
             elapsed += Time.deltaTime;
             yield return null;
         }
-
         targetCamera.transform.localPosition = originalLocalPos;
     }
 }

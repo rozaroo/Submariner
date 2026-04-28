@@ -5,12 +5,12 @@ using UnityEngine.InputSystem;
 public class CameraController : MonoBehaviour
 {
     [Header("Vision Settings")]
-    [SerializeField] private float _lookSensitivity = 100f;
-    [SerializeField] private float _upDownLookLimit = 70f;
-    [SerializeField] private float _lookLerpSpeed = 10f;
+    [SerializeField] private float lookSensitivity = 100f;
+    [SerializeField] private float upDownLookLimit = 70f;
+    [SerializeField] private float lookLerpSpeed = 10f;
     
     [Header("Debug Settings")] 
-    [SerializeField] private bool _showGizmos = true;
+    [SerializeField] private bool showGizmos = true;
     
     [Header("References Settings")] 
     private PlayerInput _playerInput;
@@ -69,13 +69,23 @@ public class CameraController : MonoBehaviour
     
     private void RotateCamera()
     {
-        _yaw += _lookDir.x * _lookSensitivity * Time.deltaTime;
-        _pitch -= _lookDir.y * _lookSensitivity * Time.deltaTime;
-        _pitch = Mathf.Clamp(_pitch, -_upDownLookLimit, _upDownLookLimit);
+        float deltaYaw = _lookDir.x * lookSensitivity * Time.deltaTime;
+        float deltaPitch = -_lookDir.y * lookSensitivity * Time.deltaTime;
+        _yaw += deltaYaw;
+        _pitch += deltaPitch;
+        _pitch = Mathf.Clamp(_pitch, -upDownLookLimit, upDownLookLimit);
 
-        float t = 1f - Mathf.Exp(-_lookLerpSpeed * Time.deltaTime);
-        _currentYaw = Mathf.Lerp(_currentYaw, _yaw, t);
-        _currentPitch = Mathf.Lerp(_currentPitch, _pitch, t);
+        if (lookLerpSpeed >= 50)
+        {
+            _currentYaw = _yaw;
+            _currentPitch = _pitch;
+        }
+        else
+        {
+            float t = 1f - Mathf.Exp(-lookLerpSpeed * Time.deltaTime);
+            _currentYaw = Mathf.LerpAngle(_currentYaw, _yaw, t);
+            _currentPitch = Mathf.LerpAngle(_currentPitch, _pitch, t);
+        }
 
         transform.rotation = Quaternion.Euler(0f, _currentYaw, 0f);
         playerCamera.transform.localRotation = Quaternion.Euler(_currentPitch, 0f, 0f);
@@ -103,7 +113,7 @@ public class CameraController : MonoBehaviour
 
             playerCamera.transform.position = Vector3.Lerp(startPos, targetPosition, t);
 
-            if (_showGizmos)
+            if (showGizmos)
                 Debug.DrawLine(playerCamera.transform.position, targetPosition, Color.cyan);
 
             yield return null;
@@ -167,7 +177,7 @@ public class CameraController : MonoBehaviour
     {
         _isForcedLooking = true;
  
-        if (_showGizmos)
+        if (showGizmos)
             Debug.DrawRay(playerCamera.transform.position, targetPosition - playerCamera.transform.position, Color.aquamarine, 5f);
  
         float startYaw = _currentYaw;

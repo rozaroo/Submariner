@@ -52,9 +52,9 @@ MonoBehaviour:
   _moveActionName: Move
   _interactionActionName: Interact
   _cameraController: {fileID: 2988871602860453287}
-  _playerCamera: {fileID: 3246600704839594514}
-  _interactionDistance: 2.5
-  _interactableLayer:
+  playerCamera: {fileID: 3246600704839594514}
+  interactionDistance: 2.5
+  interactableLayer:
     serializedVersion: 2
     m_Bits: 8
 --- !u!114 &2988871602860453287
@@ -69,13 +69,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb41d959a1f4bac43ab1b01fd5ec98c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lookSensitivity: 100
-  _upDownLookLimit: 70
-  _lookLerpSpeed: 10
-  _forceLookSpeed: 2
-  _forceMoveSpeed: 5
-  _showGizmos: 1
-  _camera: {fileID: 3246600704839594514}
+  lookSensitivity: 100
+  upDownLookLimit: 80
+  lookLerpSpeed: 20
+  showGizmos: 1
+  lookActionName: Look
+  playerCamera: {fileID: 3246600704839594514}
 --- !u!143 &3307760291457062342
 CharacterController:
   m_ObjectHideFlags: 0
@@ -166,6 +165,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 5800ecc8-d7af-4771-a89a-75a0c9b48498
     m_ActionName: 'Periscope/ExitStation[/Keyboard/escape,/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4f4ce782-be39-4e2e-9d66-916b180d91c5
+    m_ActionName: 'Player/DropItem[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 77bb0985-d961-4664-a369-5186d1465c9c
+    m_ActionName: 'Station/Pointer[/Mouse/delta]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
