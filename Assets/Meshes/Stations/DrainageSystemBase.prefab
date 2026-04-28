@@ -160,6 +160,10 @@ MonoBehaviour:
   - {fileID: 8113210126330991984}
   mainLever: {fileID: 5370067608106260447}
   buttonsToUnlock: 3
+  drainagePercentage: 1
+  energyStatus: 0
+  onEnergyStatusChange: {fileID: 11400000, guid: 1d3ff72475cd32e4eb5906f12ae805b7, type: 2}
+  onDrainageStatusChanged: {fileID: 11400000, guid: 5a7bb3adb7a704049a7284d9251b63ac, type: 2}
 --- !u!64 &1403754948180677721
 MeshCollider:
   m_ObjectHideFlags: 0
