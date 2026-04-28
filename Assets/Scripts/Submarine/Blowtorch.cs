@@ -71,7 +71,7 @@ public class Blowtorch : MonoBehaviour, IInteractable
             Ray ray = new Ray(_camera.transform.position, _camera.transform.forward);
             if (Physics.Raycast(ray, out RaycastHit hit, repairRange, crackLayer))
             {
-                if (hit.collider.TryGetComponent(out Crack crack))
+                if (hit.collider.TryGetComponent(out HullDamage crack))
                     crack.Repair(Time.deltaTime);
             }
         }

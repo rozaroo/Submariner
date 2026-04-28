@@ -16,7 +16,6 @@ public class ButtonStation : MonoBehaviour, IStationControl
     public bool IsUnlocked { get; set; }
     public bool IsPressed { get; set; }
     public Action OnActivation { get; set; }
-    
     private Renderer _renderer;
     private Coroutine _colorCoroutine;
     private bool _isPressed = false;
@@ -46,7 +45,7 @@ public class ButtonStation : MonoBehaviour, IStationControl
     
     public void OnActionDown()
     {
-        if (_isPressed) return;
+        if (_isPressed || !IsUnlocked) return;
         _isPressed = true;
         ChangeColor(pressedColor);
         OnActivation?.Invoke();
@@ -59,8 +58,7 @@ public class ButtonStation : MonoBehaviour, IStationControl
     }
     public void RestartButton()
     {
-        ChangeColor(lockedColor);
-        IsUnlocked = false;
+        Lock();
         _isPressed = false;
     }
     #endregion

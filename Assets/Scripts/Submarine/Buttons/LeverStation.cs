@@ -36,6 +36,10 @@ public class LeverStation : MonoBehaviour, IStationControl
     }
 
     public void OnActionUp() { }
-    
-    public void RestartButton() { }
+
+    public void RestartButton()
+    {
+        Lock();
+        
+    }
 }
