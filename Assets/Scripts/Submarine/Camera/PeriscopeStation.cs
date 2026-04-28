@@ -51,9 +51,8 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
             }
         }
         if (onPeriscopePossess != null)
-        {
             onPeriscopePossess.RaiseEvent(); 
-        }
+        
     }
 
     public void UnPossess()
@@ -75,6 +74,9 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
             }
             _currentPlayer = null;
         }
+        if (onPeriscopeUnpossess != null)
+            onPeriscopeUnpossess.RaiseEvent();
+        enabled = false;
     }
 
     #endregion

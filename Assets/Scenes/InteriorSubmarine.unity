@@ -2322,6 +2322,10 @@ PrefabInstance:
       value: ExitStation
       objectReference: {fileID: 0}
     - target: {fileID: 987107979803856982, guid: 1655722ed256ddf4f8dcee2f21ccd543, type: 3}
+      propertyPath: buttonsToUnlock
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 987107979803856982, guid: 1655722ed256ddf4f8dcee2f21ccd543, type: 3}
       propertyPath: clickActionName
       value: ClickInteraction
       objectReference: {fileID: 0}
@@ -2329,6 +2333,10 @@ PrefabInstance:
       propertyPath: directionAnchor
       value: 
       objectReference: {fileID: 1803575263638877777}
+    - target: {fileID: 987107979803856982, guid: 1655722ed256ddf4f8dcee2f21ccd543, type: 3}
+      propertyPath: drainagePercentage
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 987107979803856982, guid: 1655722ed256ddf4f8dcee2f21ccd543, type: 3}
       propertyPath: pointerDeltaActionName
       value: Pointer
@@ -2435,6 +2443,10 @@ PrefabInstance:
       propertyPath: exteriorCamera
       value: 
       objectReference: {fileID: 1255244334}
+    - target: {fileID: 2756616740773598133, guid: 96a53706b124e934194e89062618f32b, type: 3}
+      propertyPath: energyStatusEventSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 1d3ff72475cd32e4eb5906f12ae805b7, type: 2}
     - target: {fileID: 2756616740773598133, guid: 96a53706b124e934194e89062618f32b, type: 3}
       propertyPath: _energyStatusEventSO
       value: 
@@ -2604,8 +2616,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1275837614409640310}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -2.208, y: -41.247, z: -5.198}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: -46.04873, y: 1.283001, z: 1.18426}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2616,7 +2628,7 @@ Transform:
   - {fileID: 7526298726434761721}
   - {fileID: 5884221535400142541}
   - {fileID: 6649323817989221966}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1579381003}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1945413341329994701
 MonoBehaviour:
@@ -2634,7 +2646,7 @@ MonoBehaviour:
   energyToRegen: 5
   timeToRegenerateEnergy: 5
   energyConsumptionRate: 10
-  energyStatusChangeEvent: {fileID: 0}
+  energyStatusChangeEvent: {fileID: 11400000, guid: 1d3ff72475cd32e4eb5906f12ae805b7, type: 2}
 --- !u!33 &2915489971878293005
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3032,6 +3044,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5567555428309088530, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1306915274217690393}
+    - targetCorrespondingSourceObject: {fileID: 5567555428309088530, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1945413341329994700}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
 --- !u!4 &8383768851282828734 stripped
@@ -3050,4 +3065,3 @@ SceneRoots:
   - {fileID: 723275621}
   - {fileID: 1090482526}
   - {fileID: 2107385979}
-  - {fileID: 1945413341329994700}
