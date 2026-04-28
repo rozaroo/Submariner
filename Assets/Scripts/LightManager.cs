@@ -59,8 +59,7 @@ public class LightManager : MonoBehaviour
         {
             _originalIntensities[i] = lights[i].intensity;
         }
-
-
+        
         float elapsedTime = 0f;
 
         while (elapsedTime < flickerDuration)

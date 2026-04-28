@@ -9,10 +9,9 @@ public class EnergySystem : MonoBehaviour
     [SerializeField] private float energyToRegen = 5f;
     [SerializeField] private float timeToRegenerateEnergy = 5f;
     [SerializeField] private float energyConsumptionRate = 10f;
-    [SerializeField] private float _currentEnergy;
     
     [Header("Energy Events Channels")]
-    [SerializeField] private EnergyStatusEventSO _energyStatusEventSO;
+    [SerializeField] private EnergyStatusEventSO energyStatusChangeEvent;
     
     [Header("Energy Status")]
     private EnergyStatus _energyStatus;
@@ -23,13 +22,13 @@ public class EnergySystem : MonoBehaviour
     private Coroutine _energyRegenerationCoroutine;
     private Coroutine _energyConsumptionCoroutine;
     
+    private float _currentEnergy;
     private float CurrentEnergy
     {
         get => _currentEnergy;
         set
         {
             _currentEnergy = Mathf.Clamp(value, 0f, maxEnergy);
-            
             SetEnergyStatus();
         }
     }
@@ -123,21 +122,18 @@ public class EnergySystem : MonoBehaviour
     
     private void TriggerEnergyEvents()
     {
-        if (_energyStatusEventSO != null )
+        if (energyStatusChangeEvent != null )
         {
-            _energyStatusEventSO.RaiseEvent(_energyStatus);
+            energyStatusChangeEvent.RaiseEvent(_energyStatus);
         }
     }
     
-    /// <summary>
-    /// Fixed amount of energy regeneration and consumption methods
-    /// </summary>
-    public void RestoreEnergy(float amount)
+    private void RestoreEnergy(float amount)
     {
         CurrentEnergy += amount;
     }
     
-    public void ConsumeEnergyAmount(float amount)
+    private void ConsumeEnergyAmount(float amount)
     {
         if (CurrentEnergy >= amount)
         {
@@ -145,9 +141,14 @@ public class EnergySystem : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Getters for Current Energy and Percentage of Energy
-    /// </summary>
+    private void ExplodeEnergyFuse()
+    {
+        StopEnergyConsumption();
+        //controlPanel?.NotifyFuseBurned();
+    }
+
+    #region Getters and Utility Methods
+
     public float GetCurrentEnergy()
     {
         return _currentEnergy;
@@ -194,6 +195,8 @@ public class EnergySystem : MonoBehaviour
         }
         return Mathf.Infinity;
     }
+
+    #endregion
 
     public void StartConsumption() => StartEnergyConsumption();
     public void StopConsumption() => StopEnergyConsumption();

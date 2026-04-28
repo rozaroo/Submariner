@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class PressureDoor : MonoBehaviour, IInteractable
 {
-    [Header("Configuración de la Puerta")]
-    [SerializeField] private float _openAngle = 90f;
+    [Header("Door Settings")]
+    [SerializeField] private Vector3 _openAngle = new Vector3(0, 90f, 0);
     [SerializeField] private float _openSpeed = 5f;
     
     private bool _isOpen = false;
@@ -15,7 +15,7 @@ public class PressureDoor : MonoBehaviour, IInteractable
     private void Start()
     {
         _closedRotation = transform.rotation;
-        _openRotation = _closedRotation * Quaternion.Euler(0, _openAngle, 0);
+        _openRotation = _closedRotation * Quaternion.Euler(_openAngle);
     }
     public void Interact(PlayerCharacter player)
     {
