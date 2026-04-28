@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Vector2 = UnityEngine.Vector2;
 
 public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 {
@@ -19,26 +21,29 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     [SerializeField] private string exitActionName;
     
     [Header("Minigame References")]
-    [SerializeField] private List<ButtonStation> requiredButtons;
+    [SerializeField] private List<ButtonStation> buttons;
     [SerializeField] private LeverStation mainLever;
+    
+    [Header("Minigame Settings")]
+    [SerializeField] private int buttonsToUnlock = 3;
     
     private PlayerCharacter _currentPlayer;
     private Camera _playerCamera;
     private IStationControl _currentDraggedControl;
+    private int _playableButtonsCount;
     private int _buttonsPressedCount = 0;
+    private Vector2 _mouseDelta;
 
     private void Awake()
     {
         enabled = false;
-        
-        foreach (var button in requiredButtons)
+        foreach (var button in buttons)
         {
             if (button != null)
             {
                 button.OnActivation += OnAnyButtonHit;
             }
         }
-
         if (mainLever != null)
         {
             mainLever.OnActivation += StartDrainageSequence;
@@ -49,8 +54,10 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     {
         if (_currentDraggedControl != null && Mouse.current != null)
         {
-            float mouseDeltaY = _currentPlayer.Input.actions[pointerDeltaActionName].ReadValue<Vector2>().y;
-            _currentDraggedControl.OnPointerDrag(mouseDeltaY);
+            _mouseDelta = _currentPlayer.Input.actions[pointerDeltaActionName].ReadValue<Vector2>();
+            float mouseDeltaY = _mouseDelta.y;
+            Debug.Log($"Mouse Delta Y: {mouseDeltaY}");
+            _currentDraggedControl.OnActionDrag(mouseDeltaY);
         }
     }
 
@@ -83,6 +90,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         enabled = true;
+        SetupMiniGame();
     }
     
     public void UnPossess()
@@ -133,7 +141,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
             if (hit.collider.TryGetComponent(out IStationControl control))
             {
                 _currentDraggedControl = control;
-                _currentDraggedControl.OnPointerDown();
+                _currentDraggedControl.OnActionDown();
             }
         }
     }
@@ -142,7 +150,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     {
         if (_currentDraggedControl != null)
         {
-            _currentDraggedControl.OnPointerUp();
+            _currentDraggedControl.OnActionUp();
             _currentDraggedControl = null;
         }
     }
@@ -153,27 +161,60 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     }
     #endregion
 
-    #region DrainageLogic
+    #region MinigameLogic
+
+    private void SetupMiniGame()
+    {
+        SelectRandomButtons();
+        CheckButtonAvailability();
+    }
+
+    private void SelectRandomButtons()
+    {
+        List<ButtonStation> availableButtons = new List<ButtonStation>(buttons);
+        _playableButtonsCount = 0;
+        for (int i = 0; i < buttonsToUnlock && availableButtons.Count > 0; i++)
+        {
+            int randomIndex = Random.Range(0, availableButtons.Count);
+            buttons[randomIndex].Unlock();
+            availableButtons.RemoveAt(randomIndex);
+            _playableButtonsCount++;
+        }
+    }
+    
+    private void CheckButtonAvailability()
+    {
+        if (_playableButtonsCount == 0)
+        {
+            Debug.LogError("NOT ENOUGH BUTTONS IN THE SCENE FOR THE MINIGAME!");
+            StartDrainageSequence();
+        }
+    }
 
     private void OnAnyButtonHit()
     {
         _buttonsPressedCount++;
-        
-        if (_buttonsPressedCount >= requiredButtons.Count)
+        if (_buttonsPressedCount >= _playableButtonsCount)
         {
-            mainLever.UnlockLever();
+            mainLever.Unlock();
         }
     }
 
+    #endregion
+    
+    #region DrainageLogic
+    
     private void StartDrainageSequence()
     {
         //TODO: Drainage Sequence Logic
+        Debug.Log("MINIGAME FINISHED!");
+        UnPossess();
     }
 
     private void RestartStation()
     {
         _buttonsPressedCount = 0;
-        foreach (var button in requiredButtons)
+        foreach (var button in buttons)
         {
             button.RestartButton();
         }
@@ -183,7 +224,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     
     private void OnDestroy()
     {
-        foreach (var button in requiredButtons)
+        foreach (var button in buttons)
         {
             if (button != null)
             {

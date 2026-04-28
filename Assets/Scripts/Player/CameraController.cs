@@ -173,10 +173,6 @@ public class CameraController : MonoBehaviour
         float startYaw = _currentYaw;
         float startPitch = _currentPitch;
 
-        Vector3 direction = targetPosition - playerCamera.transform.position;
-        float targetYaw   = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-        float targetPitch = -Mathf.Asin(direction.normalized.y) * Mathf.Rad2Deg;
- 
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
@@ -184,6 +180,10 @@ public class CameraController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             
             float t = Mathf.SmoothStep(0f, 1f, elapsedTime / duration);
+            
+            Vector3 direction = targetPosition - playerCamera.transform.position;
+            float targetYaw   = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+            float targetPitch = -Mathf.Asin(direction.normalized.y) * Mathf.Rad2Deg;
 
             _currentYaw   = Mathf.LerpAngle(startYaw, targetYaw, t);
             _currentPitch = Mathf.LerpAngle(startPitch, targetPitch, t);
@@ -194,8 +194,12 @@ public class CameraController : MonoBehaviour
             yield return null;
         }
         
+        Vector3 finalDirection = targetPosition - playerCamera.transform.position;
+        float finalYaw   = Mathf.Atan2(finalDirection.x, finalDirection.z) * Mathf.Rad2Deg;
+        float finalPitch = -Mathf.Asin(finalDirection.normalized.y) * Mathf.Rad2Deg;
+        
         // Final Snap (Security)
-        ForceRotationInstant(targetYaw, targetPitch);
+        ForceRotationInstant(finalYaw, finalPitch);
         
         transform.rotation = Quaternion.Euler(0f, _currentYaw, 0f);
         playerCamera.transform.localRotation = Quaternion.Euler(_currentPitch, 0f, 0f);

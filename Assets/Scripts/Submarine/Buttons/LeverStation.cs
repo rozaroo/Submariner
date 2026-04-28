@@ -1,41 +1,41 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(BoxCollider))]
 public class LeverStation : MonoBehaviour, IStationControl
 {
     [Header("Lever Settings")]
     [SerializeField] private float _pullSpeed = 0.5f;
     [SerializeField] private float _maxAngle = 90f;
-    
+    public bool IsUnlocked { get; set; }
+    public bool IsPressed { get; set; }
     public Action OnActivation { get; set; }
-    
     private float _currentAngle = 0f;
-    private bool _isUnlocked = false;
 
-    public void UnlockLever() => _isUnlocked = true;
-    public void OnPointerDown() { }
+    public void Lock() => IsUnlocked = false;
+    public void Unlock() => IsUnlocked = true;
 
-    public void OnPointerDrag(float deltaY)
+    public void OnActionDown() { }
+
+    public void OnActionDrag(float deltaY)
     {
-        if (!_isUnlocked) return;
-        
+        if (!IsUnlocked) return;
         if (deltaY < 0)
         {
             _currentAngle += Mathf.Abs(deltaY) * _pullSpeed;
             _currentAngle = Mathf.Clamp(_currentAngle, 0f, _maxAngle);
             
-            transform.localRotation = Quaternion.Euler(_currentAngle, 0f, 0f);
+            transform.localRotation = Quaternion.Euler(0f, 0f, _currentAngle);
             
             if (_currentAngle >= _maxAngle)
             {
+                IsUnlocked = false;
                 OnActivation?.Invoke();
-                _isUnlocked = false;
             }
         }
     }
 
-    public void OnPointerUp() { }
+    public void OnActionUp() { }
     
     public void RestartButton() { }
 }
