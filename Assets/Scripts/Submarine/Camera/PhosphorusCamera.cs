@@ -32,6 +32,17 @@ public class PhosphorusCamera : MonoBehaviour
     private void UpdateEnergyStatus(EnergyStatus newStatus)
     {
         _energyStatus = newStatus;
+        if (_energyStatus == EnergyStatus.Empty)
+        {
+            // 🔴 Cancelar foto en proceso
+            if (_isProcessingPhoto)
+            {
+                StopAllCoroutines();
+                _isProcessingPhoto = false;
+                exteriorCamera.enabled = false;
+                Debug.Log("⚡ APAGÓN - Foto cancelada");
+            }
+        }
     }
     #endregion
 
@@ -40,14 +51,24 @@ public class PhosphorusCamera : MonoBehaviour
     public void TryTakePhoto()
     {
         Debug.Log("Trying to take photo - " + _energyStatus + " - " + _isProcessingPhoto);
-        if (_energyStatus == EnergyStatus.Empty || _isProcessingPhoto) return;
+        if (_energyStatus == EnergyStatus.Empty)
+        {
+            Debug.Log("❌ SIN ENERGÍA - Cámara inutilizable");
+            return;
+        }
+        if (_isProcessingPhoto) return;
         StartCoroutine(TakePhotoCooldownRoutine());
     }
-    
+
     private IEnumerator TakePhotoCooldownRoutine()
     {
         _isProcessingPhoto = true;
-        
+        // chequeo extra por seguridad
+        if (_energyStatus == EnergyStatus.Empty)
+        {
+            _isProcessingPhoto = false;
+            yield break;
+        }
         exteriorCamera.enabled = true;
         exteriorCamera.Render(); 
         exteriorCamera.enabled = false;
@@ -57,9 +78,7 @@ public class PhosphorusCamera : MonoBehaviour
             onPeriscopePhotoTaken.RaiseEvent(cameraPropertyData);
         }
         float totalCooldownTime = cameraPropertyData._VisibleDuration + cameraPropertyData._fadeDuration;
-        
         yield return new WaitForSeconds(totalCooldownTime);
-        
         _isProcessingPhoto = false;
     }
 

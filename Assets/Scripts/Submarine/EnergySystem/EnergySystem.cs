@@ -133,7 +133,7 @@ public class EnergySystem : MonoBehaviour
         CurrentEnergy += amount;
     }
     
-    private void ConsumeEnergyAmount(float amount)
+    public void ConsumeEnergyAmount(float amount)
     {
         if (CurrentEnergy >= amount)
         {

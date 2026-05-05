@@ -27,7 +27,12 @@ public class PlayerCharacter : MonoBehaviour
     public PlayerInput Input => _playerInput;
     public CameraController CamController => _cameraController;
     public CharacterController Controller => _controller;
-    
+
+    public InputActionReference stopDrainAction; 
+    public DrainageSystem drainageSystem; 
+    void OnEnable() => stopDrainAction.action.Enable(); 
+    void OnDisable() => stopDrainAction.action.Disable();
+
     private void Start()
     {
         _playerInput = GetComponent<PlayerInput>();
@@ -43,6 +48,7 @@ public class PlayerCharacter : MonoBehaviour
         }
         _moveDirectionInput = _playerInput.actions[_moveActionName].ReadValue<Vector2>();
         Move();
+        if (stopDrainAction.action.triggered) drainageSystem.StopDrainage();
     }
     
     private void TryInteractRaycast()
