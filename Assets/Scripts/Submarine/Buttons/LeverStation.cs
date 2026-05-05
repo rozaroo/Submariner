@@ -19,19 +19,25 @@ public class LeverStation : MonoBehaviour, IStationControl
 
     public void OnActionDrag(float deltaY)
     {
-        if (!IsUnlocked) return;
-        if (deltaY < 0)
+        // Subir la palanca no requiere desbloqueo, siempre está disponible
+        if (deltaY > 0 && _currentAngle > 0)
         {
-            _currentAngle += Mathf.Abs(deltaY) * _pullSpeed;
+            _currentAngle -= deltaY * _pullSpeed;
             _currentAngle = Mathf.Clamp(_currentAngle, 0f, _maxAngle);
-            
             transform.localRotation = Quaternion.Euler(0f, 0f, _currentAngle);
-            
-            if (_currentAngle >= _maxAngle)
-            {
-                IsUnlocked = false;
-                OnActivation?.Invoke();
-            }
+            return;
+        }
+
+        if (!IsUnlocked || deltaY >= 0) return;
+
+        _currentAngle += Mathf.Abs(deltaY) * _pullSpeed;
+        _currentAngle = Mathf.Clamp(_currentAngle, 0f, _maxAngle);
+        transform.localRotation = Quaternion.Euler(0f, 0f, _currentAngle);
+
+        if (_currentAngle >= _maxAngle)
+        {
+            IsUnlocked = false;
+            OnActivation?.Invoke();
         }
     }
 

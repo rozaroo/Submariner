@@ -13,14 +13,13 @@ public class HullDamageManager : MonoBehaviour
     [Header("Spawn Parameters")]
     [SerializeField] private float minSpawnInterval = 5f;
     [SerializeField] private float maxSpawnInterval = 15f;
-    
+
     [Header("Event Channels")]
     [SerializeField] private HullPropertyEventSO onHullStatusChanged;
 
     private int ActiveCrackCount { get; set; }
     private Coroutine _spawnCoroutine;
     private readonly List<HullDamage> _pool = new List<HullDamage>();
-    private float _nextSpawnTime;
 
     private void Start()
     {
@@ -38,21 +37,15 @@ public class HullDamageManager : MonoBehaviour
     private void OnDestroy()
     {
         foreach (var crack in _pool)
-        {
-            if (crack != null)
-                crack.OnCrackRepaired -= OnHullRepaired;
-        }
+            if (crack != null) crack.OnCrackRepaired -= OnHullRepaired;
     }
-    
+
     private void StartSpawningBehaviour()
     {
-        if (_spawnCoroutine != null)
-        {
-            StopCoroutine(_spawnCoroutine);
-        }
+        if (_spawnCoroutine != null) StopCoroutine(_spawnCoroutine);
         _spawnCoroutine = StartCoroutine(SpawnHullDamage(Time.time + UnityEngine.Random.Range(minSpawnInterval, maxSpawnInterval)));
     }
-    
+
     private void StopSpawningBehaviour()
     {
         if (_spawnCoroutine != null)
@@ -61,15 +54,12 @@ public class HullDamageManager : MonoBehaviour
             _spawnCoroutine = null;
         }
     }
-    
+
     private void TrySpawnCrack()
     {
         var available = _pool.FindAll(c => !c.gameObject.activeSelf);
-        if (available.Count == 0)
-        {
-            if (_spawnCoroutine != null) StopCoroutine(_spawnCoroutine);
-            return;
-        }
+        if (available.Count == 0) return;
+
         var crack = available[UnityEngine.Random.Range(0, available.Count)];
         crack.gameObject.SetActive(true);
         ActiveCrackCount++;
@@ -83,19 +73,19 @@ public class HullDamageManager : MonoBehaviour
         return new HullProperty
         {
             maxHullDamagePosible = spawnZones.Length,
-            activeHullDamage = ActiveCrackCount
+            activeHullDamage     = ActiveCrackCount
         };
     }
-    
+
     private void OnHullRepaired(HullDamage hullDamage)
     {
         ActiveCrackCount = Mathf.Max(0, ActiveCrackCount - 1);
         onHullStatusChanged?.RaiseEvent(CreateHullProperty());
     }
-    
+
     private IEnumerator SpawnHullDamage(float interval)
     {
         yield return new WaitForSeconds(interval);
         TrySpawnCrack();
-    }   
+    }
 }

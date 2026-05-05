@@ -13,6 +13,7 @@ public class CameraShakeSystem : MonoBehaviour
     [SerializeField] private float shakeMagnitude = 0.15f;
     
     private Coroutine _shakeCoroutine;
+    private float _lastActiveCrackCount;
 
     private void OnEnable()
     {
@@ -27,11 +28,14 @@ public class CameraShakeSystem : MonoBehaviour
     private void TriggerShake(HullProperty hullProperty)
     {
         if (!shakeEnabled) return;
-        if (_shakeCoroutine != null)
+        if (hullProperty.activeHullDamage <= _lastActiveCrackCount)
         {
-            StopCoroutine(_shakeCoroutine);
+            _lastActiveCrackCount = hullProperty.activeHullDamage;
+            return;
         }
-        StartCoroutine(ShakeRoutine());
+        _lastActiveCrackCount = hullProperty.activeHullDamage;
+        if (_shakeCoroutine != null) StopCoroutine(_shakeCoroutine);
+        _shakeCoroutine = StartCoroutine(ShakeRoutine());
     }
 
     private IEnumerator ShakeRoutine()

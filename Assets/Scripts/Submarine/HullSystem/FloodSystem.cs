@@ -10,78 +10,91 @@ public class FloodSystem : MonoBehaviour
     [SerializeField] private float maxRiseSpeed = 1f;
     [SerializeField] private float startHeight = 0f;
     [SerializeField] private float maxHeight = 10f;
-    
+    // Tiempo hasta que el efecto del drenado se apaga solo si DrainageSystem no avisa que paró
+    [SerializeField] private float drainageEffectDuration = 8f;
+
     [Header("Event Channels")]
     [SerializeField] private HullPropertyEventSO onHullStatusChanged;
     [SerializeField] private DrainagePropertyEventChannelSO onDrainageStationStatusChanged;
     [SerializeField] private BaseEventChannelSO onSubmarineSunk;
-    
+
     private float _hullFloodingSpeed;
     private float _drainageSpeed;
     private float EffectiveFloodingSpeed => _hullFloodingSpeed - _drainageSpeed;
     private float _currentHeight;
-    private bool _halfwayLogged;
-    private Coroutine _floodingCoroutine;
+    private bool _sunkLogged;
+    private Coroutine _drainageResetCoroutine;
 
     private void Start()
     {
         _currentHeight = startHeight;
         SetWaterHeight(_currentHeight);
     }
+
     private void OnEnable()
     {
+        onHullStatusChanged.OnEventRaised += OnHullStatusChanged;
         onDrainageStationStatusChanged.OnEventRaised += OnDrainageStatusReceived;
-        onHullStatusChanged.OnEventRaised += ChangeFloodingSpeed;
     }
+
     private void OnDisable()
     {
+        onHullStatusChanged.OnEventRaised -= OnHullStatusChanged;
         onDrainageStationStatusChanged.OnEventRaised -= OnDrainageStatusReceived;
-        onHullStatusChanged.OnEventRaised -= ChangeFloodingSpeed;
     }
-    private void ChangeFloodingSpeed(HullProperty hullProperty)
+
+    private void Update()
+    {
+        if (EffectiveFloodingSpeed == 0) return;
+
+        _currentHeight = Mathf.Clamp(_currentHeight + EffectiveFloodingSpeed * Time.deltaTime, startHeight, maxHeight);
+        SetWaterHeight(_currentHeight);
+        CheckProgress();
+    }
+
+    private void OnHullStatusChanged(HullProperty hullProperty)
     {
         if (hullProperty.activeHullDamage <= 0)
         {
-            if (_floodingCoroutine != null) StopCoroutine(_floodingCoroutine);
-            _floodingCoroutine = null;
             _hullFloodingSpeed = 0f;
-            return; 
+            _drainageSpeed = 0f;
+            return;
         }
         _hullFloodingSpeed = maxRiseSpeed * (hullProperty.activeHullDamage / hullProperty.maxHullDamagePosible);
-        StartFloodingCoroutine(EffectiveFloodingSpeed);
-    }
-    private void StartFloodingCoroutine(float baseFloodingSpeed)
-    {
-        if (_floodingCoroutine != null)
-        {
-            StopCoroutine(_floodingCoroutine);
-        }
-        _floodingCoroutine = StartCoroutine(FloodingRoutine(baseFloodingSpeed));
-    }
-    private IEnumerator FloodingRoutine(float floodingSpeed)
-    {
-        while (_currentHeight < maxHeight)
-        {
-            _currentHeight = Mathf.Clamp(_currentHeight + floodingSpeed * Time.deltaTime, startHeight, maxHeight);
-            CheckProgress();
-            SetWaterHeight(_currentHeight);
-            yield return null;
-        }
-    }
-    private void CheckProgress()
-    {
-        var progress = (_currentHeight - startHeight) / (maxHeight - startHeight);
-        if (_halfwayLogged || !(progress >= 0.7f)) return;
-        onSubmarineSunk?.RaiseEvent();
-        _halfwayLogged = true;
     }
 
     private void OnDrainageStatusReceived(DrainagePropertyData drainagePropertyData)
     {
         _drainageSpeed = maxRiseSpeed * drainagePropertyData.drainagePercentage;
-        StartFloodingCoroutine(EffectiveFloodingSpeed);
+
+        if (_drainageResetCoroutine != null) StopCoroutine(_drainageResetCoroutine);
+        _drainageResetCoroutine = StartCoroutine(ResetDrainageAfterDelay());
     }
-    
+
+    // Llamar desde DrainageSystem cuando el drenaje se detiene para reseteo inmediato
+    public void ResetDrainageSpeed()
+    {
+        if (_drainageResetCoroutine != null) StopCoroutine(_drainageResetCoroutine);
+        _drainageSpeed = 0f;
+    }
+
+    private IEnumerator ResetDrainageAfterDelay()
+    {
+        yield return new WaitForSeconds(drainageEffectDuration);
+        _drainageSpeed = 0f;
+    }
+
+    private void CheckProgress()
+    {
+        if (_sunkLogged) return;
+        float progress = (_currentHeight - startHeight) / (maxHeight - startHeight);
+        if (progress >= 0.7f)
+        {
+            onSubmarineSunk?.RaiseEvent();
+            _sunkLogged = true;
+        }
+    }
+
     private void SetWaterHeight(float y)
     {
         Vector3 pos = waterMesh.position;
