@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class OxygenSystem : MonoBehaviour
@@ -8,6 +9,11 @@ public class OxygenSystem : MonoBehaviour
 
     [Header("Estado")]
     public bool isDraining = false;
+
+    // true = oxígeno crítico (≤10%), false = recuperado
+    public Action<bool> OnLowOxygen;
+
+    private bool _isLow;
 
     void Start()
     {
@@ -25,6 +31,16 @@ public class OxygenSystem : MonoBehaviour
                 GameOver();
             }
         }
+
+        CheckLowOxygenThreshold();
+    }
+
+    private void CheckLowOxygenThreshold()
+    {
+        bool low = (currentOxygen / maxOxygen) <= 0.15f;
+        if (low == _isLow) return;
+        _isLow = low;
+        OnLowOxygen?.Invoke(_isLow);
     }
 
     public void StartDrain()

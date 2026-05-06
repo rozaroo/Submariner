@@ -58,12 +58,28 @@ public class OxygenTank : MonoBehaviour, IInteractable
         if (CurrentHeld == this) CurrentHeld = null;
 
         transform.SetParent(null);
-        _rb.isKinematic  = false;
+        _rb.isKinematic   = false;
         _collider.enabled = true;
 
         _player = null;
         _camera = null;
     }
+
+    // Llamado por OxygenTerminal: saca el tanque de la mano y lo fija en el dock
+    public void Dock()
+    {
+        _isHeld = false;
+        if (CurrentHeld == this) CurrentHeld = null;
+
+        transform.SetParent(null);
+        _rb.isKinematic   = true;
+        _collider.enabled = false;
+
+        _player = null;
+        _camera = null;
+    }
+
+    public bool IsFull => CurrentCharge >= maxCharge;
 
     // Llamado por OxygenTerminal para drenar la carga del tanque
     public float Drain(float amount)
@@ -71,6 +87,12 @@ public class OxygenTank : MonoBehaviour, IInteractable
         float drained = Mathf.Min(amount, CurrentCharge);
         CurrentCharge = Mathf.Max(0f, CurrentCharge - drained);
         return drained;
+    }
+
+    // Llamado por TankRechargeTerminal para recargar el tanque
+    public void Refill(float amount)
+    {
+        CurrentCharge = Mathf.Min(maxCharge, CurrentCharge + amount);
     }
 
     private void Update()

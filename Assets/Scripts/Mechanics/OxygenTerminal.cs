@@ -16,38 +16,35 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
 
     public void Interact(PlayerCharacter player)
     {
-        // Si hay un tanque en mano, colocarlo
+        // Con tanque en mano: colocarlo
         if (OxygenTank.CurrentHeld != null)
         {
             DockTank(OxygenTank.CurrentHeld);
             return;
         }
 
-        // Si hay un tanque vacío en la terminal, el jugador lo retira
-        if (_dockedTank != null && _dockedTank.IsEmpty)
+        // Sin tanque en mano: retirar el que está en la terminal (vacío o no)
+        if (_dockedTank != null)
             UndockTank(player);
     }
 
     private void DockTank(OxygenTank tank)
     {
-        // Si ya había uno, lo sacamos primero
         if (_dockedTank != null) return;
 
-        tank.Drop();
+        tank.Dock();
         _dockedTank = tank;
 
-        // Colocar el tanque en el dock point visualmente
-        tank.transform.SetParent(dockPoint);
-        tank.transform.localPosition = Vector3.zero;
-        tank.transform.localRotation = Quaternion.identity;
+        // Se posiciona en el dockPoint sin parentear para evitar deformación por escala
+        tank.transform.position = dockPoint.position;
+        tank.transform.rotation = dockPoint.rotation;
 
-        Debug.Log("[OxygenTerminal] Tanque colocado. Cargando oxígeno...");
+        Debug.Log("[OxygenTerminal] Tanque colocado.");
     }
 
     private void UndockTank(PlayerCharacter player)
     {
-        _dockedTank.transform.SetParent(null);
-        _dockedTank.Interact(player); // lo recoge el jugador directamente
+        _dockedTank.Interact(player);
         _dockedTank = null;
     }
 

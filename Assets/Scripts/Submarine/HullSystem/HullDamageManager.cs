@@ -11,6 +11,7 @@ public class HullDamageManager : MonoBehaviour
     [SerializeField] private Transform[] spawnZones;
 
     [Header("Spawn Parameters")]
+    [SerializeField] private float gracePeriod = 10f;
     [SerializeField] private float minSpawnInterval = 5f;
     [SerializeField] private float maxSpawnInterval = 15f;
 
@@ -31,13 +32,19 @@ public class HullDamageManager : MonoBehaviour
             crack.OnCrackRepaired += OnHullRepaired;
             _pool.Add(crack);
         }
-        StartSpawningBehaviour();
+        StartCoroutine(StartAfterGracePeriod());
     }
 
     private void OnDestroy()
     {
         foreach (var crack in _pool)
             if (crack != null) crack.OnCrackRepaired -= OnHullRepaired;
+    }
+
+    private IEnumerator StartAfterGracePeriod()
+    {
+        yield return new WaitForSeconds(gracePeriod);
+        StartSpawningBehaviour();
     }
 
     private void StartSpawningBehaviour()
