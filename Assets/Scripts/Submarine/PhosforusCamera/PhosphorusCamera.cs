@@ -4,13 +4,13 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class PhosphorusCamera : MonoBehaviour 
 {
-    [Header("Components")]
+    [Header("References")]
     [SerializeField] private Camera exteriorCamera;
 
-    [Header("Settings")] 
+    [Header("Camera Settings")] 
     [SerializeField] private CameraPropertyData cameraPropertyData;
     
-    [Header("Events")]
+    [Header("Event Channels")]
     [SerializeField] private CameraPropertiesEventChannelSO onPeriscopePhotoTaken;
     [SerializeField] private EnergyStatusEventSO energyStatusEventSo;
     
@@ -34,13 +34,12 @@ public class PhosphorusCamera : MonoBehaviour
         _energyStatus = newStatus;
         if (_energyStatus == EnergyStatus.Empty)
         {
-            // 🔴 Cancelar foto en proceso
             if (_isProcessingPhoto)
             {
                 StopAllCoroutines();
                 _isProcessingPhoto = false;
                 exteriorCamera.enabled = false;
-                Debug.Log("⚡ APAGÓN - Foto cancelada");
+                Log.Info("Canceled Photo - No Energy");
             }
         }
     }
@@ -50,10 +49,10 @@ public class PhosphorusCamera : MonoBehaviour
 
     public void TryTakePhoto()
     {
-        Debug.Log("Trying to take photo - " + _energyStatus + " - " + _isProcessingPhoto);
+        Log.Info("Trying to take photo - " + _energyStatus + " - " + _isProcessingPhoto);
         if (_energyStatus == EnergyStatus.Empty)
         {
-            Debug.Log("❌ SIN ENERGÍA - Cámara inutilizable");
+            Log.Info("No Energy = No Photo"); //TODO: Agregar sonidos en caso de que no haya Energia para sacar la foto.
             return;
         }
         if (_isProcessingPhoto) return;
@@ -66,6 +65,7 @@ public class PhosphorusCamera : MonoBehaviour
         // chequeo extra por seguridad
         if (_energyStatus == EnergyStatus.Empty)
         {
+            Log.Info("No Energy = No Photo");
             _isProcessingPhoto = false;
             yield break;
         }
