@@ -10,8 +10,6 @@ public class FloodSystem : MonoBehaviour
     [SerializeField] private float maxRiseSpeed = 1f;
     [SerializeField] private float startHeight = 0f;
     [SerializeField] private float maxHeight = 10f;
-    // Tiempo hasta que el efecto del drenado se apaga solo si DrainageSystem no avisa que paró
-    [SerializeField] private float drainageEffectDuration = 8f;
 
     [Header("Event Channels")]
     [SerializeField] private HullPropertyEventSO onHullStatusChanged;
@@ -23,7 +21,6 @@ public class FloodSystem : MonoBehaviour
     private float EffectiveFloodingSpeed => _hullFloodingSpeed - _drainageSpeed;
     private float _currentHeight;
     private bool _sunkLogged;
-    private Coroutine _drainageResetCoroutine;
 
     private void Start()
     {
@@ -66,23 +63,9 @@ public class FloodSystem : MonoBehaviour
     private void OnDrainageStatusReceived(DrainagePropertyData drainagePropertyData)
     {
         _drainageSpeed = maxRiseSpeed * drainagePropertyData.drainagePercentage;
-
-        if (_drainageResetCoroutine != null) StopCoroutine(_drainageResetCoroutine);
-        _drainageResetCoroutine = StartCoroutine(ResetDrainageAfterDelay());
     }
 
-    // Llamar desde DrainageSystem cuando el drenaje se detiene para reseteo inmediato
-    public void ResetDrainageSpeed()
-    {
-        if (_drainageResetCoroutine != null) StopCoroutine(_drainageResetCoroutine);
-        _drainageSpeed = 0f;
-    }
 
-    private IEnumerator ResetDrainageAfterDelay()
-    {
-        yield return new WaitForSeconds(drainageEffectDuration);
-        _drainageSpeed = 0f;
-    }
 
     private void CheckProgress()
     {
@@ -100,5 +83,10 @@ public class FloodSystem : MonoBehaviour
         Vector3 pos = waterMesh.position;
         pos.y = y;
         waterMesh.position = pos;
+    }
+    public void StopDrainage()
+    {
+        _drainageSpeed = 0f;
+        Debug.Log("Drenaje apagado manualmente");
     }
 }

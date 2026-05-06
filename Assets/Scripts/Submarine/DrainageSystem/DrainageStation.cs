@@ -44,6 +44,10 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     private int _buttonsPressedCount = 0;
     private Vector2 _mouseDelta;
 
+    bool isDrainageActive = false;
+    [SerializeField] private FloodSystem floodSystem; // referencia
+    [SerializeField] private EnergySystem energySystem;
+
     private void Awake()
     {
         enabled = false;
@@ -77,13 +81,21 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
             _mouseDelta = _currentPlayer.Input.actions[pointerDeltaActionName].ReadValue<Vector2>();
             float mouseDeltaY = _mouseDelta.y;
             _currentDraggedControl.OnActionDrag(mouseDeltaY);
+            HandleDrainageEnergy();
         }
     }   
 
     public void Interact(PlayerCharacter player)
     {
+        // 🔄 Si ya está activo → apagar
+        if (isDrainageActive)
+        {
+            StopDrainage();
+            return;
+        }
+
+        // ▶ Si no → iniciar minijuego
         _currentPlayer = player;
-        _playerCamera = player.CamController.MainCamera;
         Possess();
     }
 
@@ -225,8 +237,20 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     
     private void StartDrainageSequence()
     {
-        onDrainageStatusChanged.RaiseEvent(CreateDrainageProperty());
-        Debug.Log("MINIGAME FINISHED!");
+        if (!isDrainageActive)
+        {
+            // ACTIVAR
+            onDrainageStatusChanged.RaiseEvent(CreateDrainageProperty());
+            isDrainageActive = true;
+            Debug.Log("Drenaje ACTIVADO");
+        }
+        else
+        {
+            // DESACTIVAR
+            floodSystem.StopDrainage();
+            isDrainageActive = false;
+            Debug.Log("Drenaje DESACTIVADO");
+        }
         UnPossess();
     }
     
@@ -285,5 +309,36 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         {
             mainLever.OnActivation -= StartDrainageSequence;
         }
+    }
+    private void StopDrainage()
+    {
+        isDrainageActive = false;
+
+        // 🔴 mandar evento de apagado
+        onDrainageStatusChanged.RaiseEvent(new DrainagePropertyData
+        {
+            drainagePercentage = 0f
+        });
+
+        Debug.Log("🔵 DRENAJE APAGADO MANUALMENTE");
+    }
+    void ConsumeEnergy()
+    {
+        if (energySystem != null) energySystem.ConsumeEnergyAmount(5f * Time.deltaTime);
+    }
+    void HandleDrainageEnergy()
+    {
+        if (!isDrainageActive) return;
+
+        // 🔴 Si no hay energía → apagar drenaje automáticamente
+        if (energyStatus == EnergyStatus.Empty)
+        {
+            StopDrainage();
+            Debug.Log("⛔ Drenaje detenido por falta de energía");
+            return;
+        }
+
+        // ⚡ Consumo constante
+        if (energySystem != null) energySystem.ConsumeEnergyAmount(5f * Time.deltaTime);
     }
 }
