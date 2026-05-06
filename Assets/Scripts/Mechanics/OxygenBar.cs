@@ -20,16 +20,15 @@ public class OxygenBar : MonoBehaviour
 
     private void Update()
     {
-        float ratio = Mathf.Clamp01(oxygenSystem.currentOxygen / oxygenSystem.maxOxygen);
-
-        // Achica en X
+        float ratio = Mathf.Clamp01(oxygenSystem.CurrentOxygen / oxygenSystem.MaxOxygen); 
+        //TODO: Que la barra se subscriba al evento de actualizacion de oxigeno en OxygenSystem, asi no es necesario actualizar mediante update, haciendolo OxygenSystem.
+        
         barTransform.localScale = new Vector3(
             _originalScale.x * ratio,
             _originalScale.y,
             _originalScale.z
         );
-
-        // Desplaza para que se achique desde la derecha en lugar del centro
+        
         barTransform.localPosition = new Vector3(
             _originalPosition.x - (_originalScale.x * (1f - ratio)) / 2f,
             _originalPosition.y,

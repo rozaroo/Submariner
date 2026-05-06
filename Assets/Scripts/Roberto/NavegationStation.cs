@@ -8,7 +8,7 @@ public class NavegationStation : MonoBehaviour
 
     //CoordinateSelector
     //public Submarine submarine;
-    int selectedIndex = 0;
+    //int selectedIndex = 0;
 
     //LeverController
     public InputActionReference interactAction;

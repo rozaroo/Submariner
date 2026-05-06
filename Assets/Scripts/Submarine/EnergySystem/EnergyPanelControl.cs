@@ -9,6 +9,6 @@ public class EnergyPanelControl : MonoBehaviour
     [Header("Fuse Slots")] [SerializeField]
     private List<Fuse> fuseSlots = new();
 
-    private int _burnedSlotIndex = -1;
+    //private int _burnedSlotIndex = -1;
     //TODO: Burned Fuse Effect
 }

@@ -14,7 +14,7 @@ public class LightManager : MonoBehaviour
 
     [Header("Event Channels")]
     [SerializeField] private HullPropertyEventSO onHullStatusChanged;
-    [SerializeField] private OxygenSystem oxygenSystem;
+    [SerializeField] private BoolEventChannelSO onLowOxygen;
 
     private Color _originalColor;
     private float[] _originalIntensities;
@@ -29,13 +29,13 @@ public class LightManager : MonoBehaviour
     private void OnEnable()
     {
         onHullStatusChanged.OnEventRaised += OnHullStatusChanged;
-        if (oxygenSystem != null) oxygenSystem.OnLowOxygen += OnLowOxygen;
+        onLowOxygen.OnEventRaised += OnLowOxygen;
     }
 
     private void OnDisable()
     {
         onHullStatusChanged.OnEventRaised -= OnHullStatusChanged;
-        if (oxygenSystem != null) oxygenSystem.OnLowOxygen -= OnLowOxygen;
+        onLowOxygen.OnEventRaised -= OnLowOxygen;
     }
 
     private void OnHullStatusChanged(HullProperty hullProperty)

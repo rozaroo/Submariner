@@ -45,7 +45,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         _playerInput = GetComponent<PlayerInput>();
-        _lookAction = _playerInput.actions.FindAction("Look");
+        _lookAction = _playerInput.actions.FindAction(lookActionName);
     }
     private void Update()
     {

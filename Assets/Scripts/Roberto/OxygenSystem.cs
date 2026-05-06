@@ -3,16 +3,23 @@ using UnityEngine;
 
 public class OxygenSystem : MonoBehaviour
 {
-    [Header("Oxígeno")]
-    public float maxOxygen = 60f; // 1 minuto
-    public float currentOxygen;
+    [Header("Oxygen")]
+    [SerializeField] private float maxOxygen = 60f; // 1 minute
+    [SerializeField] private float currentOxygen;
 
-    [Header("Estado")]
-    public bool isDraining = false;
-
-    // true = oxígeno crítico (≤10%), false = recuperado
-    public Action<bool> OnLowOxygen;
-
+    [Header("State")]
+    [SerializeField] private bool isDraining = false;
+    
+    [Header("Events Channels")]
+    [SerializeField] private BaseEventChannelSO onDeath;
+    [SerializeField] private BoolEventChannelSO onLowOxygen;     // true = oxígeno crítico (≤10%), false = recuperado
+    
+    public float MaxOxygen { get => maxOxygen;
+        private  set => maxOxygen = value;
+    }
+    public float CurrentOxygen { get => currentOxygen;
+        private  set => currentOxygen = value;
+    }
     private bool _isLow;
 
     void Start()
@@ -21,17 +28,16 @@ public class OxygenSystem : MonoBehaviour
     }
     void Update()
     {
-        if (isDraining)
+        if (isDraining) //TODO: Cambiar a Corrutina. Asi no se ejecuta continuamente en caso de que se requiera checkear     su ejecucion de manera mas estable.
         {
             currentOxygen -= Time.deltaTime;
 
             if (currentOxygen <= 0)
             {
                 currentOxygen = 0;
-                GameOver();
+                GameOver(); //TODO: Evitar que se ejecute continuamente.
             }
         }
-
         CheckLowOxygenThreshold();
     }
 
@@ -40,19 +46,19 @@ public class OxygenSystem : MonoBehaviour
         bool low = (currentOxygen / maxOxygen) <= 0.15f;
         if (low == _isLow) return;
         _isLow = low;
-        OnLowOxygen?.Invoke(_isLow);
+        onLowOxygen.RaiseEvent(_isLow);
     }
 
     public void StartDrain()
     {
         isDraining = true;
-        Debug.Log("Oxígeno bajando...");
+        Log.Info("Oxygen Descending...");
     }
 
     public void StopDrain()
     {
         isDraining = false;
-        Debug.Log("Oxígeno estabilizado");
+        Log.Info("Oxygen Stabilized");
     }
 
     public void RestoreOxygen(float amount)
@@ -63,7 +69,7 @@ public class OxygenSystem : MonoBehaviour
 
     void GameOver()
     {
-        Debug.Log("GAME OVER - Sin oxígeno");
-        // acá después conectanos UI / escena
+        Log.Info("GAME OVER - Oxygen");
+        onDeath.RaiseEvent();
     }
 }
