@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
@@ -35,8 +33,8 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 
     [Header("Event Channels")]
     [SerializeField] private EnergyStatusEventSO onEnergyStatusChange;
-    [SerializeField] private DrainagePropertyEventChannelSO onDrainageStatusChanged;
-    
+    [SerializeField] private DrainagePropertyEventChannelSO onDrainageStatusChanged; //Usar esto para evitar referencias.
+
     private PlayerCharacter _currentPlayer;
     private Camera _playerCamera;
     private IStationControl _currentDraggedControl;
@@ -45,7 +43,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     private Vector2 _mouseDelta;
 
     bool isDrainageActive = false;
-    [SerializeField] private FloodSystem floodSystem; // referencia
+    [SerializeField] private FloodSystem floodSystem; // TODO : Eliminar y reemplazar por eventos
     [SerializeField] private EnergySystem energySystem;
 
     private void Awake()
