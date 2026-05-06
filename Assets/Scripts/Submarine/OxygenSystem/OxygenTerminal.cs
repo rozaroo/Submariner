@@ -51,6 +51,7 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
     private void Update()
     {
         if (_dockedTank == null || _dockedTank.IsEmpty) return;
+        if (oxygenSystem.CurrentOxygen >= oxygenSystem.MaxOxygen) return;
 
         float transferred = _dockedTank.Drain(transferRatePerSecond * Time.deltaTime);
         oxygenSystem.RestoreOxygen(transferred);

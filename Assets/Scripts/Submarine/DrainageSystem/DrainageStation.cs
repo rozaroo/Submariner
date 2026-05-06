@@ -113,6 +113,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         
         if (_currentPlayer.CamController != null)
         {
+            _playerCamera = _currentPlayer.CamController.MainCamera;
             _currentPlayer.CamController.ForceMoveCamera(cameraAnchor.position, transitionDuration);
             _currentPlayer.CamController.ForceLookInDirection(directionAnchor.position, transitionDuration);
         }

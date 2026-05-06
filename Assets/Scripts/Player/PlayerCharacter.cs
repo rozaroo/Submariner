@@ -66,6 +66,8 @@ public class PlayerCharacter : MonoBehaviour
     
     private void Move()
     {
+        if (_cameraController.IsTransitioning) return;
+
         Vector3 move = transform.right * _moveDirectionInput.x + transform.forward * _moveDirectionInput.y;
         if (_controller.isGrounded && _moveVelocityY < 0) _moveVelocityY = -2f;
         _moveVelocityY += _gravity * Time.deltaTime;

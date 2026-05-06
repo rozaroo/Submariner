@@ -36,6 +36,7 @@ public class CameraController : MonoBehaviour
     private InputAction _lookAction;
     
     public Camera MainCamera { get => playerCamera; private set => playerCamera = value; }
+    public bool IsTransitioning => _isForcedMoving || _isForcedLooking;
 
     private void Awake()
     {
@@ -139,8 +140,29 @@ public class CameraController : MonoBehaviour
     
     public void ReturnToStartingPosition(float duration = 1.0f)
     {
-        Vector3 globalReturnPos = transform.TransformPoint(_startingPosition);
-        ForceMoveCamera(globalReturnPos, duration);
+        StopForceLook();
+        if (_forceMoveCoroutine != null) StopCoroutine(_forceMoveCoroutine);
+        _forceMoveCoroutine = StartCoroutine(ReturnToLocalPositionRoutine(duration));
+    }
+
+    // Interpola en espacio local para que el jugador pueda moverse sin desfasar la cámara
+    private IEnumerator ReturnToLocalPositionRoutine(float duration)
+    {
+        _isForcedMoving = true;
+
+        Vector3 startLocalPos = playerCamera.transform.localPosition;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.SmoothStep(0f, 1f, elapsedTime / duration);
+            playerCamera.transform.localPosition = Vector3.Lerp(startLocalPos, _startingPosition, t);
+            yield return null;
+        }
+
+        playerCamera.transform.localPosition = _startingPosition;
+        StopForceMoveCamera(false);
     }
 
     private void OnStopForceMoveCamera() => StopForceMoveCamera(true);
@@ -155,7 +177,7 @@ public class CameraController : MonoBehaviour
         _forceLookCoroutine = StartCoroutine(RotateCameraInDirectionRoutine(targetPosition, duration));
     }
 
-    private void StopForceLook()
+    public void StopForceLook()
     {
         if (_forceLookCoroutine != null)
         {

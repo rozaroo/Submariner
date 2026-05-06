@@ -9,12 +9,14 @@ public class OxygenTank : MonoBehaviour, IInteractable
 {
     [Header("Carga")]
     [SerializeField] private float maxCharge = 100f;
+    [SerializeField] private float currentCharge;
+    [SerializeField] private Transform chargeBar;
 
     [Header("Hold Position")]
     [SerializeField] private Vector3 holdOffset = new Vector3(-0.3f, -0.3f, 0.6f);
 
-    public float CurrentCharge { get; private set; }
-    public bool IsEmpty => CurrentCharge <= 0f;
+    public float CurrentCharge => currentCharge;
+    public bool IsEmpty => currentCharge <= 0f;
 
     // Referencia al tanque que el jugador está sosteniendo actualmente
     public static OxygenTank CurrentHeld { get; private set; }
@@ -25,11 +27,22 @@ public class OxygenTank : MonoBehaviour, IInteractable
     private Rigidbody _rb;
     private bool _isHeld;
 
+    private Vector3 _barOriginalScale;
+    private Vector3 _barOriginalPosition;
+
     private void Awake()
     {
         _collider = GetComponent<Collider>();
         _rb       = GetComponent<Rigidbody>();
-        CurrentCharge = maxCharge;
+        currentCharge = maxCharge;
+
+        if (chargeBar != null)
+        {
+            _barOriginalScale    = chargeBar.localScale;
+            _barOriginalPosition = chargeBar.localPosition;
+        }
+
+        RefreshBar();
     }
 
     public void Interact(PlayerCharacter player)
@@ -84,15 +97,37 @@ public class OxygenTank : MonoBehaviour, IInteractable
     // Llamado por OxygenTerminal para drenar la carga del tanque
     public float Drain(float amount)
     {
-        float drained = Mathf.Min(amount, CurrentCharge);
-        CurrentCharge = Mathf.Max(0f, CurrentCharge - drained);
+        float drained = Mathf.Min(amount, currentCharge);
+        currentCharge = Mathf.Max(0f, currentCharge - drained);
+        RefreshBar();
         return drained;
     }
 
     // Llamado por TankRechargeTerminal para recargar el tanque
     public void Refill(float amount)
     {
-        CurrentCharge = Mathf.Min(maxCharge, CurrentCharge + amount);
+        currentCharge = Mathf.Min(maxCharge, currentCharge + amount);
+        RefreshBar();
+    }
+
+    private void RefreshBar()
+    {
+        if (chargeBar == null) return;
+
+        float ratio = Mathf.Clamp01(currentCharge / maxCharge);
+
+        chargeBar.localScale = new Vector3(
+            _barOriginalScale.x,
+            _barOriginalScale.y * ratio,
+            _barOriginalScale.z
+        );
+
+        // Se mueve hacia abajo para que el tope quede fijo
+        chargeBar.localPosition = new Vector3(
+            _barOriginalPosition.x,
+            _barOriginalPosition.y - (_barOriginalScale.y * (1f - ratio)) / 2f,
+            _barOriginalPosition.z
+        );
     }
 
     private void Update()
