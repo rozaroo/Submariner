@@ -36,7 +36,7 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
         tank.transform.position = dockPoint.position;
         tank.transform.rotation = dockPoint.rotation;
         _transferCoroutine = StartCoroutine(TransferCoroutine());
-        Log.Info("[OxygenTerminal] Tank Placed.");
+        Log.Info("[OxygenTerminal] Tank Docked.");
     }
 
     private void UndockTank(PlayerCharacter player)
@@ -48,10 +48,12 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
         }
         _dockedTank.Interact(player);
         _dockedTank = null;
+        Log.Info("[OxygenTerminal] Tank Undocked.");
     }
     
     private IEnumerator TransferCoroutine()
     {
+        yield return null;
         while (_dockedTank != null && !_dockedTank.isEmpty)
         {
             float toDrain = transferRatePerSecond * Time.deltaTime;

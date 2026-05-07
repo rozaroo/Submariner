@@ -26,7 +26,6 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
         
         tank.Dock();
         _dockedTank = tank;
-
         tank.transform.position = dockPoint.position;
         tank.transform.rotation = dockPoint.rotation;
         

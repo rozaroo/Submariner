@@ -86,27 +86,21 @@ public class OxygenTank : MonoBehaviour, IInteractable, IPickable
     
     public void StopRefill()
     {
-        if (_tankRecharge != null)
-        {
-            StopCoroutine(_tankRecharge);
-            _tankRecharge = null;
-        }
+        if (_tankRecharge == null) return;
+        StopCoroutine(_tankRecharge);
+        _tankRecharge = null;
     }
 
-    private IEnumerator RefillOxygen(float duration)
+    private IEnumerator RefillOxygen(float ratePerSecond)
     {
-        float startCharge = currentCharge;
-        float elapsedTime = 0f;
-
-        while (elapsedTime < duration && !isFull)
+        while (!isFull)
         {
-            elapsedTime += Time.deltaTime;
-            float t = elapsedTime / duration;
-            currentCharge = Mathf.Lerp(startCharge, maxCharge, t);
-            Log.Info(currentCharge + " / " + maxCharge);
+            currentCharge = Mathf.MoveTowards(currentCharge, maxCharge, ratePerSecond * Time.deltaTime);
             RefreshBar();
             yield return null;
         }
+        currentCharge = maxCharge;
+        RefreshBar();
     }
 
     private void RefreshBar()
