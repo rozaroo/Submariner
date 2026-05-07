@@ -10,18 +10,16 @@ public class OxygenSystem : MonoBehaviour
 
     [Header("Suffocation")]
     [SerializeField] private float suffocationDuration = 60f;
-    [SerializeField] private float suffocationTimeRemaining;
+    [SerializeField] private float suffocationTimeRemaining; //TODO: What? Para que se usa?
 
     [Header("Event Channels")]
     [SerializeField] private BaseEventChannelSO onDeath;
     [SerializeField] private BoolEventChannelSO onLowOxygen;
+    [SerializeField] private FloatEventChannelSO onSuffocationProgress;
+    [SerializeField] private OxygenPropertyEventSO onOxygenChanged;
 
-    public float MaxOxygen => maxOxygen;
     public float CurrentOxygen => currentOxygen;
-
-    // Progreso de asfixia: 0 = recién sin oxígeno, 1 = muerte
-    public Action<float> OnSuffocationProgress;
-    public Action<float> OnOxygenChanged;
+    public float MaxOxygen => maxOxygen;
 
     private bool _isLow;
     private Coroutine _drainCoroutine;
@@ -30,29 +28,21 @@ public class OxygenSystem : MonoBehaviour
     private void Start()
     {
         currentOxygen = maxOxygen;
+        if(onSuffocationProgress  == null) Log.Error("on Suffocation Progress Event Not placed");
+        if(onOxygenChanged  == null) Log.Error("On Oxygen Changed Event Not placed");
         StartDrain();
     }
 
-    private IEnumerator DrainCoroutine()
+    private OxygenProperty MakeOxygenProperty()
     {
-        while (true)
+        return new OxygenProperty
         {
-            currentOxygen -= Time.deltaTime;
-            OnOxygenChanged?.Invoke(currentOxygen);
-            CheckLowOxygenThreshold();
-
-            if (currentOxygen <= 0)
-            {
-                currentOxygen = 0;
-                OnOxygenChanged?.Invoke(currentOxygen);
-                _drainCoroutine = null;
-                StartSuffocation();
-                yield break;
-            }
-
-            yield return null;
-        }
+            currentOxygen = this.currentOxygen,
+            maxOxygen = this.maxOxygen,
+        };
     }
+    
+    #region SuffocationLogic
 
     private void StartSuffocation()
     {
@@ -67,7 +57,7 @@ public class OxygenSystem : MonoBehaviour
         StopCoroutine(_suffocationCoroutine);
         _suffocationCoroutine = null;
         suffocationTimeRemaining = suffocationDuration;
-        OnSuffocationProgress?.Invoke(0f);
+        onSuffocationProgress?.RaiseEvent(0f);
     }
 
     private IEnumerator SuffocationCoroutine()
@@ -79,24 +69,20 @@ public class OxygenSystem : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             suffocationTimeRemaining = suffocationDuration - elapsed;
-            OnSuffocationProgress?.Invoke(elapsed / suffocationDuration);
+            onSuffocationProgress.RaiseEvent(elapsed / suffocationDuration);
             yield return null;
         }
 
         suffocationTimeRemaining = 0f;
 
-        OnSuffocationProgress?.Invoke(1f);
-        GameOver();
+        onSuffocationProgress.RaiseEvent(1f);
+        OxygenDepleted();
     }
 
-    private void CheckLowOxygenThreshold()
-    {
-        bool low = (currentOxygen / maxOxygen) <= 0.15f;
-        if (low == _isLow) return;
-        _isLow = low;
-        onLowOxygen.RaiseEvent(_isLow);
-    }
+    #endregion
 
+    #region OxygenLogic
+    
     public void StartDrain()
     {
         if (_drainCoroutine != null) return;
@@ -111,23 +97,51 @@ public class OxygenSystem : MonoBehaviour
         _drainCoroutine = null;
         Log.Info("Oxygen Stabilized");
     }
+    
+    private IEnumerator DrainCoroutine()
+    {
+        while (true)
+        {
+            currentOxygen -= Time.deltaTime;
+            onOxygenChanged.RaiseEvent(MakeOxygenProperty());
+            CheckLowOxygenThreshold();
+
+            if (currentOxygen <= 0)
+            {
+                currentOxygen = 0;
+                onOxygenChanged.RaiseEvent(MakeOxygenProperty());
+                _drainCoroutine = null;
+                StartSuffocation();
+                yield break;
+            }
+            yield return null;
+        }
+    }
 
     public void RestoreOxygen(float amount)
     {
         currentOxygen = Mathf.Clamp(currentOxygen + amount, 0, maxOxygen);
-        OnOxygenChanged?.Invoke(currentOxygen);
+        onOxygenChanged.RaiseEvent(MakeOxygenProperty());
         CheckLowOxygenThreshold();
-
-        // Si se estaba asfixiando, cancelar
-        if (_suffocationCoroutine != null)
+        
+        if (_suffocationCoroutine != null)         // Si se estaba asfixiando, cancelar
             StopSuffocation();
-
-        // Reiniciar drenaje si la corrutina había terminado
-        if (_drainCoroutine == null && currentOxygen > 0)
+        
+        if (_drainCoroutine == null && currentOxygen > 0)         // Reiniciar drenaje si la corrutina había terminado
             _drainCoroutine = StartCoroutine(DrainCoroutine());
     }
+    
+    private void CheckLowOxygenThreshold()
+    {
+        bool low = (currentOxygen / maxOxygen) <= 0.15f;
+        if (low == _isLow) return;
+        _isLow = low;
+        onLowOxygen.RaiseEvent(_isLow);
+    }
 
-    private void GameOver()
+    #endregion
+
+    private void OxygenDepleted()
     {
         Log.Info("GAME OVER - Oxygen");
         onDeath.RaiseEvent();

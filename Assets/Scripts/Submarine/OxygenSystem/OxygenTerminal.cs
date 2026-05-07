@@ -1,29 +1,27 @@
+using System.Collections;
 using UnityEngine;
 
-// Presionar E con un tanque en mano para colocarlo.
-// El tanque recarga el oxígeno del submarino hasta agotarse.
-// Presionar E sobre el tanque vacío para retirarlo y reemplazarlo.
 public class OxygenTerminal : MonoBehaviour, IInteractable
 {
-    [Header("Referencias")]
+    [Header("References")]
     [SerializeField] private OxygenSystem oxygenSystem;
-    [SerializeField] private Transform dockPoint; // posición donde se coloca el tanque visualmente
+    [SerializeField] private Transform dockPoint;
 
-    [Header("Configuración")]
+    [Header("Settings")]
     [SerializeField] private float transferRatePerSecond = 10f;
 
     private OxygenTank _dockedTank;
+    private Coroutine _transferCoroutine;
 
     public void Interact(PlayerCharacter player)
     {
-        // Con tanque en mano: colocarlo
-        if (OxygenTank.CurrentHeld != null)
+        player.InventorySystem.TryGetHeldItem(out OxygenTank oxygenTankItem);
+        if (oxygenTankItem != null)
         {
-            DockTank(OxygenTank.CurrentHeld);
+            DockTank(oxygenTankItem);
             return;
         }
 
-        // Sin tanque en mano: retirar el que está en la terminal (vacío o no)
         if (_dockedTank != null)
             UndockTank(player);
     }
@@ -31,32 +29,39 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
     private void DockTank(OxygenTank tank)
     {
         if (_dockedTank != null) return;
-
+        
         tank.Dock();
         _dockedTank = tank;
-
-        // Se posiciona en el dockPoint sin parentear para evitar deformación por escala
+        
         tank.transform.position = dockPoint.position;
         tank.transform.rotation = dockPoint.rotation;
-
-        Debug.Log("[OxygenTerminal] Tanque colocado.");
+        _transferCoroutine = StartCoroutine(TransferCoroutine());
+        Log.Info("[OxygenTerminal] Tank Placed.");
     }
 
     private void UndockTank(PlayerCharacter player)
     {
+        if (_transferCoroutine != null)
+        {
+            StopCoroutine(_transferCoroutine);
+            _transferCoroutine = null;
+        }
         _dockedTank.Interact(player);
         _dockedTank = null;
     }
-
-    private void Update()
+    
+    private IEnumerator TransferCoroutine()
     {
-        if (_dockedTank == null || _dockedTank.IsEmpty) return;
-        if (oxygenSystem.CurrentOxygen >= oxygenSystem.MaxOxygen) return;
+        while (_dockedTank != null && !_dockedTank.isEmpty)
+        {
+            float toDrain = transferRatePerSecond * Time.deltaTime;
+            float drained = _dockedTank.Drain(toDrain);
+            oxygenSystem.RestoreOxygen(drained);
+            
+            if (oxygenSystem.CurrentOxygen >= oxygenSystem.MaxOxygen)
+                yield break;
 
-        float transferred = _dockedTank.Drain(transferRatePerSecond * Time.deltaTime);
-        oxygenSystem.RestoreOxygen(transferred);
-
-        if (_dockedTank.IsEmpty)
-            Debug.Log("[OxygenTerminal] Tanque agotado. Reemplazarlo para continuar.");
+            yield return null;
+        }
     }
 }
