@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 247556578119447125}
   - component: {fileID: 2840888752674136054}
   - component: {fileID: 2988871602860453287}
+  - component: {fileID: 471372131358332951}
   - component: {fileID: 3307760291457062342}
   - component: {fileID: 8590537888755363150}
   m_Layer: 0
@@ -51,12 +52,14 @@ MonoBehaviour:
   moveSpeed: 5
   _moveActionName: Move
   _interactionActionName: Interact
+  _dropActionName: DropItem
   _cameraController: {fileID: 2988871602860453287}
   playerCamera: {fileID: 3246600704839594514}
   interactionDistance: 2.5
   interactableLayer:
     serializedVersion: 2
     m_Bits: 8
+  _inventorySystem: {fileID: 471372131358332951}
 --- !u!114 &2988871602860453287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,6 +78,19 @@ MonoBehaviour:
   showGizmos: 1
   lookActionName: Look
   playerCamera: {fileID: 3246600704839594514}
+--- !u!114 &471372131358332951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7324493023298970460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf07b5c3c8c4dfb4db62a28b6c2362b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isHoldingObject: 0
 --- !u!143 &3307760291457062342
 CharacterController:
   m_ObjectHideFlags: 0
@@ -251,7 +267,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 127
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -260,7 +276,7 @@ Camera:
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!81 &2447678229703385746
@@ -291,7 +307,7 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1

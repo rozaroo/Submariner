@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +9,7 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private string _moveActionName = "Move";
     [SerializeField] private string _interactionActionName = "Interact";
+    [SerializeField] private string _dropActionName = "Drop";
     
     [Header("References Settings")] 
     [SerializeField] CameraController _cameraController;
@@ -24,28 +26,35 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private float interactionDistance = 2.5f;
     [SerializeField] private LayerMask interactableLayer;
     
+    [Header("Inventory")]
+    [SerializeField] private InventorySystem _inventorySystem;
+    
     public PlayerInput Input => _playerInput;
     public CameraController CamController => _cameraController;
     public CharacterController Controller => _controller;
+    public InventorySystem InventorySystem => _inventorySystem;
     
     private void Start()
     {
         _playerInput = GetComponent<PlayerInput>();
         _controller = GetComponent<CharacterController>();
+        _inventorySystem = GetComponent<InventorySystem>();
         Cursor.lockState = CursorLockMode.Locked;
+        
+        var interactionAction = _playerInput.actions[_interactionActionName];
+        interactionAction.started += TryInteractRaycast;
+        
+        var dropAction = _playerInput.actions[_dropActionName];
+        dropAction.started += TryDropItem;
     }
 
     private void Update()
     {
-        if (_playerInput.actions[_interactionActionName].WasPressedThisFrame())
-        {
-            TryInteractRaycast();
-        }
         _moveDirectionInput = _playerInput.actions[_moveActionName].ReadValue<Vector2>();
         Move();
     }
     
-    private void TryInteractRaycast()
+    private void TryInteractRaycast(InputAction.CallbackContext context)
     {
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         
@@ -73,5 +82,10 @@ public class PlayerCharacter : MonoBehaviour
         _moveVelocityY += _gravity * Time.deltaTime;
         move.y = _moveVelocityY;
         _controller.Move(move * moveSpeed * Time.deltaTime);
+    }
+
+    private void TryDropItem(InputAction.CallbackContext context)
+    {
+        InventorySystem.DropItem();
     }
 }
