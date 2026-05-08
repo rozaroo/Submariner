@@ -84,9 +84,5 @@ public class FloodSystem : MonoBehaviour
         pos.y = y;
         waterMesh.position = pos;
     }
-    public void StopDrainage()
-    {
-        _drainageSpeed = 0f;
-        Debug.Log("Drenaje apagado manualmente");
-    }
+   
 }

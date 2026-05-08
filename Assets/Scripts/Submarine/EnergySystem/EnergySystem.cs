@@ -12,7 +12,8 @@ public class EnergySystem : MonoBehaviour
     
     [Header("Energy Events Channels")]
     [SerializeField] private EnergyStatusEventSO energyStatusChangeEvent;
-    
+    [SerializeField] private DrainageEnergyEventChannelSO onDrainageConsumeEnergy;
+
     [Header("Energy Status")]
     private EnergyStatus _energyStatus;
     private bool _isEnergyBeingConsumed;
@@ -33,6 +34,14 @@ public class EnergySystem : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        if (onDrainageConsumeEnergy != null) onDrainageConsumeEnergy.OnEventRaised += ConsumeDrainageEnergy;
+    }
+    private void OnDisable()
+    {
+        if (onDrainageConsumeEnergy != null) onDrainageConsumeEnergy.OnEventRaised -= ConsumeDrainageEnergy;
+    }
     private void Start()
     {
         CurrentEnergy = maxEnergy;
@@ -133,12 +142,9 @@ public class EnergySystem : MonoBehaviour
         CurrentEnergy += amount;
     }
     
-    public void ConsumeEnergyAmount(float amount)
+    private void ConsumeEnergyAmount(float amount)
     {
-        if (CurrentEnergy >= amount)
-        {
-            CurrentEnergy -= amount;
-        }
+        CurrentEnergy -= amount;
     }
     
     private void ExplodeEnergyFuse()
@@ -200,4 +206,8 @@ public class EnergySystem : MonoBehaviour
 
     public void StartConsumption() => StartEnergyConsumption();
     public void StopConsumption() => StopEnergyConsumption();
+    private void ConsumeDrainageEnergy(DrainageEnergyData data)
+    {
+        ConsumeEnergyAmount(data.energyAmount);
+    }
 }

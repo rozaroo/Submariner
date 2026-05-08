@@ -34,6 +34,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     [Header("Event Channels")]
     [SerializeField] private EnergyStatusEventSO onEnergyStatusChange;
     [SerializeField] private DrainagePropertyEventChannelSO onDrainageStatusChanged; //Usar esto para evitar referencias.
+    [SerializeField] private DrainageEnergyEventChannelSO onDrainageConsumeEnergy;
 
     private PlayerCharacter _currentPlayer;
     private Camera _playerCamera;
@@ -43,12 +44,9 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     private Vector2 _mouseDelta;
 
     bool isDrainageActive = false;
-    [SerializeField] private FloodSystem floodSystem; // TODO : Eliminar y reemplazar por eventos
-    [SerializeField] private EnergySystem energySystem;
 
     private void Awake()
     {
-        enabled = false;
         foreach (var button in buttons)
         {
             if (button != null)
@@ -74,13 +72,8 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 
     private void Update()
     {
-        if (_currentDraggedControl != null && Mouse.current != null)
-        {
-            _mouseDelta = _currentPlayer.Input.actions[pointerDeltaActionName].ReadValue<Vector2>();
-            float mouseDeltaY = _mouseDelta.y;
-            _currentDraggedControl.OnActionDrag(mouseDeltaY);
-            HandleDrainageEnergy();
-        }
+        HandleControlDragging();
+        HandleDrainageEnergy();
     }   
 
     public void Interact(PlayerCharacter player)
@@ -151,7 +144,6 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         _currentPlayer = null;
         _playerCamera = null;
         RestartStation();
-        enabled = false;
     }
 
     #endregion
@@ -236,6 +228,12 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     
     private void StartDrainageSequence()
     {
+        if (energyStatus == EnergyStatus.Empty)
+        {
+            Debug.Log("⛔ No hay energía para activar el drenaje");
+            UnPossess();
+            return;
+        }
         if (!isDrainageActive)
         {
             // ACTIVAR
@@ -243,13 +241,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
             isDrainageActive = true;
             Debug.Log("Drenaje ACTIVADO");
         }
-        else
-        {
-            // DESACTIVAR
-            floodSystem.StopDrainage();
-            isDrainageActive = false;
-            Debug.Log("Drenaje DESACTIVADO");
-        }
+        else StopDrainage();
         UnPossess();
     }
     
@@ -321,10 +313,8 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 
         Debug.Log("🔵 DRENAJE APAGADO MANUALMENTE");
     }
-    void ConsumeEnergy()
-    {
-        if (energySystem != null) energySystem.ConsumeEnergyAmount(5f * Time.deltaTime);
-    }
+
+
     void HandleDrainageEnergy()
     {
         if (!isDrainageActive) return;
@@ -336,8 +326,17 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
             Debug.Log("⛔ Drenaje detenido por falta de energía");
             return;
         }
-
         // ⚡ Consumo constante
-        if (energySystem != null) energySystem.ConsumeEnergyAmount(5f * Time.deltaTime);
+        onDrainageConsumeEnergy?.RaiseEvent(new DrainageEnergyData
+        {
+            energyAmount = 5f * Time.deltaTime
+        });
+    }
+    private void HandleControlDragging()
+    {
+        if (_currentDraggedControl == null || Mouse.current == null || _currentPlayer == null) return;
+        _mouseDelta = _currentPlayer.Input.actions[pointerDeltaActionName].ReadValue<Vector2>();
+        float mouseDeltaY = _mouseDelta.y;
+        _currentDraggedControl.OnActionDrag(mouseDeltaY);
     }
 }
