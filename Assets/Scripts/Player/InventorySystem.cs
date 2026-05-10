@@ -28,6 +28,31 @@ public class InventorySystem : MonoBehaviour
         _heldItem.OnDrop();
         _heldItem = null;
     }
+    
+    public bool UseItem()
+    {
+        if (!isHoldingItem) return false;
+        if (_heldItem is IUsable usableItem)
+        {
+            usableItem.UseItem();
+            return true;
+        }
+        return false;
+    }
+    
+    public void UseItemHold()
+    {
+        if (!isHoldingItem) return;
+        if (_heldItem is IUsable usableItem)
+            usableItem.UseItemHold();
+    }
+
+    public void UseItemReleased()
+    {
+        if (!isHoldingItem) return;
+        if (_heldItem is IUsable usableItem)
+            usableItem.UseItemReleased();
+    }
 
     public bool TryGetHeldItem<T>(out T item) where T : class
     {

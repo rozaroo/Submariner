@@ -34,21 +34,12 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "NextTarget",
-                    "type": "Button",
-                    "id": "633d7275-7d44-465b-97d1-ed19d5e1d272",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Click",
                     "type": "Button",
                     "id": "53d8c130-101e-4e32-9df0-3031add875a4",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold,Tap",
                     "initialStateCheck": false
                 },
                 {
@@ -136,17 +127,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "084c34e6-4992-4ee5-8637-c0b0240c0f6d",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "NextTarget",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

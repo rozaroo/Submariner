@@ -6,23 +6,29 @@ public class EnergySystem : MonoBehaviour
 {
     [Header("Energy Settings")]
     [SerializeField] private float maxEnergy = 5000f;
-    [SerializeField] private float energyToRegen = 5f;
+    [SerializeField] private float energyToRegenPercentage = 1f;
     [SerializeField] private float timeToRegenerateEnergy = 5f;
-    [SerializeField] private float energyConsumptionRate = 10f;
+    [SerializeField] private float energyConsumptionRate = 0f;
+    
+    [Header("Stress Settings")]
+    [SerializeField] private int maxStressIndex = 5;
+    [SerializeField] private float timeTillStressDamage = 10f;
     
     [Header("Energy Events Channels")]
-    [SerializeField] private EnergyStatusEventSO energyStatusChangeEvent;
-    [SerializeField] private DrainageEnergyEventChannelSO onDrainageConsumeEnergy;
+    [SerializeField] private EnergyStatusEventSO onEnergyStatusChange;
+    [SerializeField] private EnergyPropertyEventChannelSO onEnergyPropertyChange;
+    [SerializeField] private EnergyToConsumeEventChannelSO onConsumeEnergyToConsume;
 
     [Header("Energy Status")]
     private EnergyStatus _energyStatus;
     private bool _isEnergyBeingConsumed;
-    private bool _isEnergyRegenerating;
     
     [Header("Coroutines")]
     private Coroutine _energyRegenerationCoroutine;
     private Coroutine _energyConsumptionCoroutine;
-    
+    private Coroutine _energyStressCoroutine;
+
+    private int _stressIndex;
     private float _currentEnergy;
     private float CurrentEnergy
     {
@@ -30,21 +36,25 @@ public class EnergySystem : MonoBehaviour
         set
         {
             _currentEnergy = Mathf.Clamp(value, 0f, maxEnergy);
+            onEnergyPropertyChange?.RaiseEvent(new EnergyProperty { currentEnergyPercentage = GetCurrentEnergyPercentage(), maxEnergyPercentage = 100f });
             SetEnergyStatus();
         }
     }
 
     private void OnEnable()
     {
-        if (onDrainageConsumeEnergy != null) onDrainageConsumeEnergy.OnEventRaised += ConsumeDrainageEnergy;
+        if (onConsumeEnergyToConsume != null) onConsumeEnergyToConsume.OnEventRaised += ChangeEnergyToConsumeValues;
     }
+    
     private void OnDisable()
     {
-        if (onDrainageConsumeEnergy != null) onDrainageConsumeEnergy.OnEventRaised -= ConsumeDrainageEnergy;
+        if (onConsumeEnergyToConsume != null) onConsumeEnergyToConsume.OnEventRaised -= ChangeEnergyToConsumeValues;
     }
+    
     private void Start()
     {
         CurrentEnergy = maxEnergy;
+        SetEnergyStatus();
     }
     
     [ContextMenu("Consumption/Start Energy Consumption")]
@@ -64,10 +74,46 @@ public class EnergySystem : MonoBehaviour
         }
         _isEnergyBeingConsumed = false;
     }
+    
+    private void ChangeEnergyToConsumeValues(EnergyConsumeData consumeData)
+    {
+        if (consumeData.isAddingStress)
+        {
+            energyConsumptionRate += consumeData.energyToConsumeRate;
+            _stressIndex++;
+        }
+        else
+        {
+            energyConsumptionRate -= consumeData.energyToConsumeRate;
+            _stressIndex--;
+        }
+        Log.Info($"Energy Consumption Rate Changed: {energyConsumptionRate} - Stress Index: {_stressIndex}");
+        CheckStress();
+    }
+
+    private void CheckStress()
+    {
+        if(_stressIndex >= maxStressIndex && _energyStressCoroutine == null)
+        {
+            _energyStressCoroutine = StartCoroutine(EnergyStress());
+        }
+        else if (_stressIndex < maxStressIndex && _energyStressCoroutine != null)
+        {
+            StopCoroutine(_energyStressCoroutine);
+            _energyStressCoroutine = null;
+        }
+    }
+
+    private IEnumerator EnergyStress()
+    {
+        Log.Info("Stress Sequence Activated...");
+        yield return new WaitForSeconds(timeTillStressDamage);
+        OnStressAchieved();
+    }
 
     private IEnumerator EnergyDrain()
     {
-        while (_currentEnergy > 0)
+        while (CurrentEnergy > 0)
         {
             if (_isEnergyBeingConsumed)
             {
@@ -83,11 +129,12 @@ public class EnergySystem : MonoBehaviour
     {
         _isEnergyBeingConsumed = false;
     }
-    
+
+    #region Energy Regeneration
+
     [ContextMenu("Regeneration/Start Energy Regeneration")]
     private void StartEnergyRegeneration()
     {
-        _isEnergyRegenerating = true;
         _energyRegenerationCoroutine ??= StartCoroutine(EnergyRegenerateVPercentage());
     }
     
@@ -99,21 +146,22 @@ public class EnergySystem : MonoBehaviour
             StopCoroutine(_energyRegenerationCoroutine);
             _energyRegenerationCoroutine = null;
         }
-        _isEnergyRegenerating = false;
     }
     
     private IEnumerator EnergyRegenerateVPercentage()
     {
         while (CurrentEnergy < maxEnergy)
-        {
-            if (_isEnergyRegenerating)
-            {
-                CurrentEnergy += GetPercentageToEnergy(energyToRegen);
-            }
+        { 
+            CurrentEnergy += GetPercentageToEnergy(energyToRegenPercentage);
             yield return new WaitForSeconds(timeToRegenerateEnergy);
         }
+        _energyRegenerationCoroutine = null;
     }
-    
+
+    #endregion
+
+    #region Set Energy Status
+
     private void SetEnergyStatus()
     {
         float energyPercentage = GetCurrentEnergyPercentage();
@@ -131,12 +179,16 @@ public class EnergySystem : MonoBehaviour
     
     private void TriggerEnergyEvents()
     {
-        if (energyStatusChangeEvent != null )
+        if (onEnergyStatusChange != null )
         {
-            energyStatusChangeEvent.RaiseEvent(_energyStatus);
+            onEnergyStatusChange.RaiseEvent(_energyStatus);
         }
     }
-    
+
+    #endregion
+
+    #region InstantEnergyChanges
+
     private void RestoreEnergy(float amount)
     {
         CurrentEnergy += amount;
@@ -147,11 +199,7 @@ public class EnergySystem : MonoBehaviour
         CurrentEnergy -= amount;
     }
     
-    private void ExplodeEnergyFuse()
-    {
-        StopEnergyConsumption();
-        //controlPanel?.NotifyFuseBurned();
-    }
+    #endregion
 
     #region Getters and Utility Methods
 
@@ -176,7 +224,7 @@ public class EnergySystem : MonoBehaviour
     private float GetEnergyToPercentage(float energy)
     {
         float percentage = (energy / maxEnergy) * 100f;
-        percentage = Mathf.Clamp(percentage, 0f, maxEnergy);
+        percentage = Mathf.Clamp(percentage, 0f, 100f);
         return percentage;
     }
     
@@ -204,10 +252,14 @@ public class EnergySystem : MonoBehaviour
 
     #endregion
 
+    private void OnStressAchieved()
+    {
+        StopEnergyConsumption();
+        Log.Info("Stress Achieved, Energy Consumption Stopped");
+        //controlPanel?.NotifyFuseBurned();
+    }
+    
     public void StartConsumption() => StartEnergyConsumption();
     public void StopConsumption() => StopEnergyConsumption();
-    private void ConsumeDrainageEnergy(DrainageEnergyData data)
-    {
-        ConsumeEnergyAmount(data.energyAmount);
-    }
+
 }

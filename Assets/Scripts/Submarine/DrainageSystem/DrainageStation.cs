@@ -33,17 +33,17 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 
     [Header("Event Channels")]
     [SerializeField] private EnergyStatusEventSO onEnergyStatusChange;
-    [SerializeField] private DrainagePropertyEventChannelSO onDrainageStatusChanged; //Usar esto para evitar referencias.
-    [SerializeField] private DrainageEnergyEventChannelSO onDrainageConsumeEnergy;
+    [SerializeField] private DrainagePropertyEventChannelSO onDrainageStatusChanged;
+    [SerializeField] private EnergyToConsumeEventChannelSO onConsumeEnergyToConsume;
 
     private PlayerCharacter _currentPlayer;
     private Camera _playerCamera;
     private IStationControl _currentDraggedControl;
     private int _playableButtonsCount;
-    private int _buttonsPressedCount = 0;
+    private int _buttonsPressedCount;
     private Vector2 _mouseDelta;
 
-    bool isDrainageActive = false;
+    bool _isDrainageActive;
 
     private void Awake()
     {
@@ -78,14 +78,12 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 
     public void Interact(PlayerCharacter player)
     {
-        // 🔄 Si ya está activo → apagar
-        if (isDrainageActive)
+        if (_isDrainageActive)
         {
             StopDrainage();
             return;
         }
-
-        // ▶ Si no → iniciar minijuego
+        
         _currentPlayer = player;
         Possess();
     }
@@ -208,7 +206,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     {
         if (_playableButtonsCount == 0)
         {
-            Debug.LogError("NOT ENOUGH BUTTONS IN THE SCENE FOR THE MINIGAME!");
+            Log.Error("NOT ENOUGH BUTTONS IN THE SCENE FOR THE MINIGAME!");
             StartDrainageSequence();
         }
     }
@@ -230,16 +228,15 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     {
         if (energyStatus == EnergyStatus.Empty)
         {
-            Debug.Log("⛔ No hay energía para activar el drenaje");
+            Log.Info("Not Enough Energy to start the drainage");
             UnPossess();
             return;
         }
-        if (!isDrainageActive)
+        if (!_isDrainageActive)
         {
-            // ACTIVAR
             onDrainageStatusChanged.RaiseEvent(CreateDrainageProperty());
-            isDrainageActive = true;
-            Debug.Log("Drenaje ACTIVADO");
+            _isDrainageActive = true;
+            Log.Info("Drainage Active");
         }
         else StopDrainage();
         UnPossess();
@@ -303,33 +300,28 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     }
     private void StopDrainage()
     {
-        isDrainageActive = false;
-
-        // 🔴 mandar evento de apagado
+        _isDrainageActive = false;
+        
         onDrainageStatusChanged.RaiseEvent(new DrainagePropertyData
         {
             drainagePercentage = 0f
         });
-
-        Debug.Log("🔵 DRENAJE APAGADO MANUALMENTE");
+        Log.Info("Warning = No Energy");
     }
-
-
-    void HandleDrainageEnergy()
+    
+    private void HandleDrainageEnergy()
     {
-        if (!isDrainageActive) return;
-
-        // 🔴 Si no hay energía → apagar drenaje automáticamente
+        if (!_isDrainageActive) return;
+        
         if (energyStatus == EnergyStatus.Empty)
         {
             StopDrainage();
-            Debug.Log("⛔ Drenaje detenido por falta de energía");
+            Log.Info("Warning = No Energy");
             return;
         }
-        // ⚡ Consumo constante
-        onDrainageConsumeEnergy?.RaiseEvent(new DrainageEnergyData
+        onConsumeEnergyToConsume?.RaiseEvent(new EnergyConsumeData
         {
-            energyAmount = 5f * Time.deltaTime
+            energyToConsumeRate = 5f * Time.deltaTime
         });
     }
     private void HandleControlDragging()

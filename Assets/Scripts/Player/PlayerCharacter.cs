@@ -10,6 +10,7 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private string _moveActionName = "Move";
     [SerializeField] private string _interactionActionName = "Interact";
     [SerializeField] private string _dropActionName = "Drop";
+    [SerializeField] private string _useActionName = "Click";
     
     [Header("References Settings")] 
     [SerializeField] CameraController _cameraController;
@@ -29,6 +30,8 @@ public class PlayerCharacter : MonoBehaviour
     [Header("Inventory")]
     [SerializeField] private InventorySystem _inventorySystem;
     
+    private bool _isHolding = false;
+    
     public PlayerInput Input => _playerInput;
     public CameraController CamController => _cameraController;
     public CharacterController Controller => _controller;
@@ -46,12 +49,20 @@ public class PlayerCharacter : MonoBehaviour
         
         var dropAction = _playerInput.actions[_dropActionName];
         dropAction.started += TryDropItem;
+        
+        var useAction = _playerInput.actions[_useActionName];
+        useAction.performed += TryUseItem;
+        useAction.started   += OnUseStarted;
+        useAction.canceled  += OnUseReleased;
     }
 
     private void Update()
     {
         _moveDirectionInput = _playerInput.actions[_moveActionName].ReadValue<Vector2>();
         Move();
+
+        if (_isHolding)
+            InventorySystem.UseItemHold();
     }
     
     private void TryInteractRaycast(InputAction.CallbackContext context)
@@ -87,5 +98,32 @@ public class PlayerCharacter : MonoBehaviour
     private void TryDropItem(InputAction.CallbackContext context)
     {
         InventorySystem.DropItem();
+    }
+    
+    private void OnUseStarted(InputAction.CallbackContext ctx)
+    {
+        _isHolding = false; // reset
+    }
+
+    private void TryUseItem(InputAction.CallbackContext ctx)
+    {
+        if (ctx.interaction is UnityEngine.InputSystem.Interactions.HoldInteraction)
+        {
+            _isHolding = true;
+        }
+        else
+        {
+            _isHolding = false;
+            InventorySystem.UseItem();
+        }
+    }
+
+    private void OnUseReleased(InputAction.CallbackContext ctx)
+    {
+        if (_isHolding)
+        {
+            _isHolding = false;
+            InventorySystem.UseItemReleased();
+        }
     }
 }
