@@ -765,10 +765,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxEnergy: 5000
-  energyToRegen: 1
+  energyToRegenPercentage: 1
   timeToRegenerateEnergy: 5
   energyConsumptionRate: 10
-  energyStatusChangeEvent: {fileID: 0}
+  maxStressIndex: 5
+  timeTillStressDamage: 10
+  onEnergyStatusChange: {fileID: 0}
+  onEnergyPropertyChange: {fileID: 0}
+  onConsumeEnergyToConsume: {fileID: 0}
 --- !u!65 &334835835
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1224,15 +1228,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f7951c8af14a5e341bda731b36ce7492, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f7951c8af14a5e341bda731b36ce7492, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1378680552}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f7951c8af14a5e341bda731b36ce7492, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1378680551}
@@ -1291,8 +1292,7 @@ MonoBehaviour:
   energyStatus: 0
   onEnergyStatusChange: {fileID: 11400000, guid: 1d3ff72475cd32e4eb5906f12ae805b7, type: 2}
   onDrainageStatusChanged: {fileID: 11400000, guid: 5a7bb3adb7a704049a7284d9251b63ac, type: 2}
-  floodSystem: {fileID: 935890731}
-  energySystem: {fileID: 334835834}
+  onConsumeEnergyToConsume: {fileID: 0}
 --- !u!65 &935890727
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1819,7 +1819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f86c59864d039204f80e3a47c7589a93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  submarine: {fileID: 1378680552}
+  submarine: {fileID: 0}
   interactAction: {fileID: 8392879264971239048, guid: fc93172d602c26b479acce70c073e3a8, type: 3}
 --- !u!114 &1378680551
 MonoBehaviour:
@@ -1830,21 +1830,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1378680548}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f500f07e1f29064e8848495d8a1f482, type: 3}
+  m_Script: {fileID: 11500000, guid: 158c3e8ede1918e4cb069d7351a9d0d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1378680552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1378680548}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd976afcf7b1ab348aa65a1267fa793b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  destinations: []
+  currentState: 0
+  deceleration: 2
+  baseSpeed: 5
 --- !u!1 &1529346665 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7324493023298970460, guid: 45c12e2cd143bca45b4aa14fbbdd1952, type: 3}

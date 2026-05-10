@@ -2573,7 +2573,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1856492883}
-  - component: {fileID: 1856492884}
   m_Layer: 5
   m_Name: PeriscopeContainer
   m_TagString: Untagged
@@ -2601,25 +2600,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1856492884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1856492882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab75757be83483843b7b8af307f9e550, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _phosphorusDisplay: {fileID: 283799194}
-  _periscopeContainer: {fileID: 1089267100}
-  _flashOverlay: {fileID: 1694592037}
-  _flashDuration: 0.15
-  _onPeriscopePossess: {fileID: 11400000, guid: 71bc8619a80d4ab44a8b5cc0dd049afa, type: 2}
-  _onPeriscopeUnpossess: {fileID: 11400000, guid: 7a04d80ab82883e46ac47a635c10e1bd, type: 2}
-  _onPeriscopePhotoTaken: {fileID: 11400000, guid: 9747f370da9dfa74885755a3e0f9d2c2, type: 2}
 --- !u!1 &1953818403
 GameObject:
   m_ObjectHideFlags: 0
