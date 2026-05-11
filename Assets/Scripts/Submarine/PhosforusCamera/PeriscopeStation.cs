@@ -36,8 +36,6 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
 
     public void Possess()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         enabled = true;
         if (_currentPlayer.Input != null)
         {
@@ -59,8 +57,6 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
 
     public void UnPossess()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
         if (_currentPlayer != null)
         {
             if (_currentPlayer.Input != null)
@@ -81,10 +77,6 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
         if (onPeriscopeUnpossess != null)
             onPeriscopeUnpossess.RaiseEvent();
         enabled = false;
-        if (activeCamera != null)
-        {
-            activeCamera.DisableCameraControl();
-        }
     }
 
     #endregion

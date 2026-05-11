@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Camera))]
 public class PhosphorusCamera : MonoBehaviour 
@@ -12,18 +11,11 @@ public class PhosphorusCamera : MonoBehaviour
     [SerializeField] private CameraPropertyData cameraPropertyData;
     
     [Header("Event Channels")]
+    [SerializeField] private CameraPropertiesEventChannelSO onPeriscopePhotoTaken;
     [SerializeField] private EnergyStatusEventSO energyStatusEventSo;
     
     private EnergyStatus _energyStatus = EnergyStatus.Full;
     private bool _isProcessingPhoto = false;
-
-    [Header("Rotation Settings")]
-    [SerializeField] private float mouseSensitivity = 2f;
-    [SerializeField] private float verticalClamp = 70f;
-
-    private float _pitch;
-    private float _yaw;
-    private bool _isActiveView;
 
     #region StartUpLogic
 
@@ -36,16 +28,6 @@ public class PhosphorusCamera : MonoBehaviour
     {
         if (energyStatusEventSo != null) energyStatusEventSo.OnEventRaised -= UpdateEnergyStatus;
     }
-    private void Update()
-    {
-        if (!_isActiveView) return;
-        if (Mouse.current == null) return;
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue();
-        _yaw += mouseDelta.x * mouseSensitivity * Time.deltaTime;
-        _pitch -= mouseDelta.y * mouseSensitivity * Time.deltaTime;
-        _pitch = Mathf.Clamp(_pitch, -verticalClamp, verticalClamp);
-        exteriorCamera.transform.rotation = Quaternion.Euler(_pitch, _yaw, 0f);
-    }
 
     private void UpdateEnergyStatus(EnergyStatus newStatus)
     {
@@ -56,7 +38,7 @@ public class PhosphorusCamera : MonoBehaviour
             {
                 StopAllCoroutines();
                 _isProcessingPhoto = false;
-                DisableCameraControl();
+                exteriorCamera.enabled = false;
                 Log.Info("Canceled Photo - No Energy");
             }
         }
@@ -80,32 +62,25 @@ public class PhosphorusCamera : MonoBehaviour
     private IEnumerator TakePhotoCooldownRoutine()
     {
         _isProcessingPhoto = true;
+        // chequeo extra por seguridad
         if (_energyStatus == EnergyStatus.Empty)
         {
+            Log.Info("No Energy = No Photo");
             _isProcessingPhoto = false;
             yield break;
         }
-        EnableCameraControl();
+        exteriorCamera.enabled = true;
+        exteriorCamera.Render(); 
+        exteriorCamera.enabled = false;
+        
+        if (onPeriscopePhotoTaken != null)
+        {
+            onPeriscopePhotoTaken.RaiseEvent(cameraPropertyData);
+        }
         float totalCooldownTime = cameraPropertyData._VisibleDuration + cameraPropertyData._fadeDuration;
         yield return new WaitForSeconds(totalCooldownTime);
-        DisableCameraControl();
         _isProcessingPhoto = false;
     }
 
     #endregion
-    public void EnableCameraControl()
-    {
-        _isActiveView = true;
-        exteriorCamera.enabled = true;
-
-        Vector3 rot = exteriorCamera.transform.eulerAngles;
-        _yaw = rot.y;
-        _pitch = rot.x;
-    }
-
-    public void DisableCameraControl()
-    {
-        _isActiveView = false;
-        exteriorCamera.enabled = false;
-    }
 }
