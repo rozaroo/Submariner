@@ -17,7 +17,7 @@ public class EnergySystem : MonoBehaviour
     [Header("Energy Events Channels")]
     [SerializeField] private EnergyStatusEventSO onEnergyStatusChange;
     [SerializeField] private EnergyPropertyEventChannelSO onEnergyPropertyChange;
-    [SerializeField] private EnergyToConsumeEventChannelSO onConsumeEnergyToConsume;
+    [SerializeField] private EnergyToConsumeEventChannelSO onConsumeEnergy;
 
     [Header("Energy Status")]
     private EnergyStatus _energyStatus;
@@ -43,12 +43,12 @@ public class EnergySystem : MonoBehaviour
 
     private void OnEnable()
     {
-        if (onConsumeEnergyToConsume != null) onConsumeEnergyToConsume.OnEventRaised += ChangeEnergyToConsumeValues;
+        if (onConsumeEnergy != null) onConsumeEnergy.OnEventRaised += ChangeEnergyValues;
     }
     
     private void OnDisable()
     {
-        if (onConsumeEnergyToConsume != null) onConsumeEnergyToConsume.OnEventRaised -= ChangeEnergyToConsumeValues;
+        if (onConsumeEnergy != null) onConsumeEnergy.OnEventRaised -= ChangeEnergyValues;
     }
     
     private void Start()
@@ -75,7 +75,7 @@ public class EnergySystem : MonoBehaviour
         _isEnergyBeingConsumed = false;
     }
     
-    private void ChangeEnergyToConsumeValues(EnergyConsumeData consumeData)
+    private void ChangeEnergyValues(EnergyConsumeData consumeData)
     {
         if (consumeData.isAddingStress)
         {

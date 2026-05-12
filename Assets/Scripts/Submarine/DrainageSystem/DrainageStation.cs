@@ -73,7 +73,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     private void Update()
     {
         HandleControlDragging();
-        HandleDrainageEnergy();
+        HandleDrainageEnergy(); //TODO: Cambiar a un Unico LLAMADO.
     }   
 
     public void Interact(PlayerCharacter player)
