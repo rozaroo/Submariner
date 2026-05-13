@@ -2258,7 +2258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce38e1dc4c718eb49afe6fe9a1620395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oxygenSystem: {fileID: 0}
+  oxygenSystem: {fileID: 244702388}
   dockPoint: {fileID: 731964612}
   transferRatePerSecond: 10
 --- !u!20 &1475043858 stripped
