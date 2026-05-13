@@ -565,6 +565,74 @@ Transform:
   - {fileID: 636368153}
   m_Father: {fileID: 310783821}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &244702386
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 244702389}
+  - component: {fileID: 244702388}
+  - component: {fileID: 244702387}
+  m_Layer: 0
+  m_Name: Oxygen System
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &244702387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244702386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be176b938d25b3249a06476bfa32f188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barTransform: {fileID: 1050081954}
+  onSuffocationProgress: {fileID: 11400000, guid: 5d1169d521586294bba46c03ccc3c2f4, type: 2}
+  onOxygenChanged: {fileID: 11400000, guid: 6067dc80e58be5e4593ee05004842ef3, type: 2}
+--- !u!114 &244702388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244702386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad6860af3661d5b418419a5ac60a7509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxOxygen: 100
+  currentOxygen: 60
+  suffocationDuration: 60
+  suffocationTimeRemaining: 0
+  onDeath: {fileID: 11400000, guid: 2cfc5ac3502b1e441aff5d6459137d45, type: 2}
+  onLowOxygen: {fileID: 11400000, guid: f91072f76c84d5a4e9b992d7e4642aee, type: 2}
+  onSuffocationProgress: {fileID: 11400000, guid: 5d1169d521586294bba46c03ccc3c2f4, type: 2}
+  onOxygenChanged: {fileID: 11400000, guid: 6067dc80e58be5e4593ee05004842ef3, type: 2}
+--- !u!4 &244702389
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244702386}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -15.39706, y: -46.03901, z: -0.45491}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &283799192
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,6 +885,57 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 240122003}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &659772129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 659772131}
+  - component: {fileID: 659772130}
+  m_Layer: 0
+  m_Name: SuffocationEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &659772130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659772129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f52255192c89a964fa34b9d04e65ab18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volume: {fileID: 1953818405}
+  maxIntensity: 8
+  curve: 9
+  pulseAmplitude: 0.04
+  pulseSpeed: 2.5
+  recoverySpeed: 0.3
+  onSuffocationProgress: {fileID: 11400000, guid: 5d1169d521586294bba46c03ccc3c2f4, type: 2}
+--- !u!4 &659772131
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659772129}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -15.39706, y: -46.03901, z: -0.45491}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &670046346
 PrefabInstance:
@@ -1493,11 +1612,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1090482526}
   - component: {fileID: 1090482524}
-  - component: {fileID: 1090482527}
-  - component: {fileID: 1090482528}
-  - component: {fileID: 1090482529}
   m_Layer: 0
-  m_Name: Systems
+  m_Name: CameraSHake System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1535,60 +1651,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1090482527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1090482523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad6860af3661d5b418419a5ac60a7509, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxOxygen: 100
-  currentOxygen: 60
-  suffocationDuration: 60
-  suffocationTimeRemaining: 0
-  onDeath: {fileID: 11400000, guid: 2cfc5ac3502b1e441aff5d6459137d45, type: 2}
-  onLowOxygen: {fileID: 11400000, guid: f91072f76c84d5a4e9b992d7e4642aee, type: 2}
-  onSuffocationProgress: {fileID: 11400000, guid: 5d1169d521586294bba46c03ccc3c2f4, type: 2}
-  onOxygenChanged: {fileID: 11400000, guid: 6067dc80e58be5e4593ee05004842ef3, type: 2}
---- !u!114 &1090482528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1090482523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be176b938d25b3249a06476bfa32f188, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  barTransform: {fileID: 1050081954}
-  onSuffocationProgress: {fileID: 11400000, guid: 5d1169d521586294bba46c03ccc3c2f4, type: 2}
-  onOxygenChanged: {fileID: 11400000, guid: 6067dc80e58be5e4593ee05004842ef3, type: 2}
---- !u!114 &1090482529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1090482523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f52255192c89a964fa34b9d04e65ab18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volume: {fileID: 1953818405}
-  maxIntensity: 8
-  curve: 9
-  pulseAmplitude: 0.04
-  pulseSpeed: 2.5
-  recoverySpeed: 0.3
-  onSuffocationProgress: {fileID: 11400000, guid: 5d1169d521586294bba46c03ccc3c2f4, type: 2}
 --- !u!1 &1132841899
 GameObject:
   m_ObjectHideFlags: 0
@@ -2196,7 +2258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce38e1dc4c718eb49afe6fe9a1620395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oxygenSystem: {fileID: 1090482527}
+  oxygenSystem: {fileID: 0}
   dockPoint: {fileID: 731964612}
   transferRatePerSecond: 10
 --- !u!20 &1475043858 stripped
@@ -3458,7 +3520,7 @@ MonoBehaviour:
   timeTillStressDamage: 10
   onEnergyStatusChange: {fileID: 11400000, guid: 1d3ff72475cd32e4eb5906f12ae805b7, type: 2}
   onEnergyPropertyChange: {fileID: 11400000, guid: b783866ef0ba4dd499a4ef1c6e2f1cbd, type: 2}
-  onConsumeEnergyToConsume: {fileID: 11400000, guid: 21a98addd0d82f24e8a917a13daf134c, type: 2}
+  onConsumeEnergy: {fileID: 0}
 --- !u!33 &2915489971878293005
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3889,3 +3951,5 @@ SceneRoots:
   - {fileID: 1241982446}
   - {fileID: 723275621}
   - {fileID: 1090482526}
+  - {fileID: 244702389}
+  - {fileID: 659772131}
