@@ -60,6 +60,8 @@ public class GameLogger : MonoBehaviour
         if (!visible) return;
         if (!showInBuild && !Application.isEditor) return;
         
+        GUI.skin.label.fontSize = 24;
+        
         GUI.Box(new Rect(location.x, location.y, boxSize.x, boxSize.y), "Logger (F1)");
         scrollPos = GUILayout.BeginScrollView(scrollPos,
             GUILayout.Width(boxSize.x), GUILayout.Height(boxSize.y));
