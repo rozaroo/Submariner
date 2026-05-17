@@ -5,20 +5,20 @@ using UnityEngine;
 
 public class Submarine2DMovementBehaviour : MonoBehaviour
 {
+    [Header("Properties")]
     [SerializeField] private float smoothTime = 0.3f;
     [SerializeField] private float rotationSmoothTime = 0.15f;
     [SerializeField] private float maxMovementSpeed = 10f;
     [SerializeField] private float maxRotationSpeed = 10f;
     [SerializeField] private float offsetRotation= 90f;
     [SerializeField] private float distanceOffset = 0.1f;
-    
     public event Action OnWaypointReached;
-
-    private List<RectTransform> waypointPoints;
-    private int _currentIndex;
+    
+    [SerializeField] private List<RectTransform> _currentWaypointPoints;
+    [SerializeField] private List<RectTransform> _newWaypointPoints;
+    [SerializeField] private int _currentIndex;
     private RectTransform _selfTransform;
-    private RectTransform _currentTarget;
-
+    [SerializeField] private RectTransform _currentTarget;
     private Coroutine _movementCoroutine;
     private float _rotationVelocity = 0f;
     private Vector2 _velocity = Vector2.zero;
@@ -27,7 +27,9 @@ public class Submarine2DMovementBehaviour : MonoBehaviour
     {
         _selfTransform = GetComponent<RectTransform>();
     }
-    
+
+    #region CoroutinesHandlers
+
     [ContextMenu("Movement/StartMovementTowards")]
     private void OnStartMovingTowards()
     {
@@ -40,14 +42,6 @@ public class Submarine2DMovementBehaviour : MonoBehaviour
             _movementCoroutine = StartCoroutine(MoveSmoothTowards());
     }
     
-    private void GetCurrentTarget()
-    {
-        if (waypointPoints.Count > 0)
-        {
-            _currentTarget = waypointPoints[_currentIndex];
-        }
-    }
-    
     [ContextMenu("Movement/StopMovementTowards")]
     public void StopMovingTowards()
     {
@@ -56,14 +50,19 @@ public class Submarine2DMovementBehaviour : MonoBehaviour
             StopCoroutine(_movementCoroutine);
         }
     }
+    
+    #endregion
+
+    #region Coroutines
+
     private IEnumerator MoveSmoothTowards()
     {
         _velocity = Vector2.zero;
         _rotationVelocity = 0f;
         
         yield return RotateTowardsTarget();
-        
-        while (Vector2.Distance(_selfTransform.anchoredPosition, _currentTarget.anchoredPosition) > distanceOffset && _currentTarget != null)
+
+        while (_currentTarget != null && Vector2.Distance(_selfTransform.anchoredPosition, _currentTarget.anchoredPosition) > distanceOffset)
         {
             _selfTransform.anchoredPosition = Vector2.SmoothDamp(
                 _selfTransform.anchoredPosition,
@@ -74,13 +73,7 @@ public class Submarine2DMovementBehaviour : MonoBehaviour
             );
             yield return null;
         }
-
-        if (_currentTarget != null)
-        {
-            _velocity = Vector2.zero;
-            _selfTransform.anchoredPosition = _currentTarget.anchoredPosition;
-        }
-        OnWaypoint();
+        CheckTargetAvailability();
     }
     
     IEnumerator RotateTowardsTarget()
@@ -113,28 +106,61 @@ public class Submarine2DMovementBehaviour : MonoBehaviour
             yield return null;
         }
     }
-    
-    private void OnWaypoint()
+    #endregion
+
+    #region TargetTools
+
+    private void GetCurrentTarget()
     {
+        if (_currentIndex > _currentWaypointPoints.Count - 1) return;
+        _currentTarget = _currentWaypointPoints[_currentIndex];
         _currentIndex++;
-        if (_currentIndex < waypointPoints.Count)
-        {
-            OnStartMovingTowards();
-        }
-        OnWaypointReached?.Invoke();
     }
     
-    public void OnUpdateWaypointsList(List<RectTransform> waypoints)
+    private void CheckTargetAvailability()
     {
-        waypointPoints = waypoints;
-        if (waypointPoints.Count > 0)
+        if (_currentTarget == null)
         {
-            _currentIndex = 0;
-            OnStartMovingTowards();
+            UpdateToNewWaypointList();
         }
         else
         {
-            StopMovingTowards();
+            _velocity = Vector2.zero;
+            _selfTransform.anchoredPosition = _currentTarget.anchoredPosition;
+            OnWaypoint();
         }
     }
+
+    #endregion
+    
+    #region WaypointUpdates
+    
+    private void OnWaypoint()
+    {
+        OnWaypointReached?.Invoke();
+        UpdateToNewWaypointList();
+    }
+    
+    public void GetNewWaypointList(List<RectTransform> waypoints)
+    {
+        _newWaypointPoints = waypoints;
+    }
+
+    public void UpdateToNewWaypointList()
+    {
+        if (_newWaypointPoints.Count > 0)
+        {
+            if (_currentWaypointPoints != _newWaypointPoints)
+            {
+                _currentWaypointPoints = _newWaypointPoints;
+                if (_currentWaypointPoints[0] != _currentTarget)
+                {
+                    _currentIndex = 0;
+                }
+            }
+        }
+        OnStartMovingTowards();
+    }
+
+    #endregion
 }

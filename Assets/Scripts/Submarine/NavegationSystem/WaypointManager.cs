@@ -7,23 +7,24 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
     [Header("Properties")] 
     [SerializeField] private MapAssetSO waypointPointConfig;
     [SerializeField] private GameObject lineContainer;
-    private RectTransform canvasRect;
     
-    private readonly List<MapIcon> _waypoints = new();
+    private readonly  List<MapIcon> _waypoints = new();
+    private RectTransform canvasRect;
     private RectTransform _submarineRect;
-    public RectTransform SubmarineRect
+    public RectTransform SubmarineRect //Only for
     {
         set => _submarineRect = value;
     }
     public event Action OnRouteStarted;
-    public event Action OnRouteCancelled;
     public event Action OnRouteModified;
 
     private void Awake()
     {
         canvasRect = GetComponent<RectTransform>();
     }
-    
+
+    #region Pointer Events Handlers
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
@@ -45,6 +46,10 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
         SetWaypoint(mapIcon, iconLineBehaviour);
         RefreshIndices();
     }
+
+    #endregion
+
+    #region WaypointUtilities
 
     private MapIcon CreateMapIcon(Vector2 point)
     {
@@ -72,66 +77,70 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
                 waypoint.LineComp = lineBehaviour;
                 lineBehaviour.SetContainer(lineContainer);
             }
-            Action onRightClick = () => RemoveWaypoint(mapIcon);
+            Action onRightClick = () => RemovedWaypointByPlayer(mapIcon);
             waypoint.OnRightClicked += onRightClick;
             waypoint.SetAction(onRightClick);
             _waypoints.Add(mapIcon);
         }
+        if (_waypoints.Count == 1)
+        {
+            OnRouteStarted?.Invoke();
+        }
+        else
+        {
+            OnRouteModified?.Invoke();
+        }
     }
-
+    
+    private void RemovedWaypointByPlayer(MapIcon icon)
+    {
+        RemoveWaypoint(icon);
+        OnRouteModified?.Invoke();
+    }
+    
+    public void RemoveWaypointOnArrival()
+    {
+        RemoveWaypoint(_waypoints[0]);
+    }
+    
     private void RemoveWaypoint(MapIcon icon)
     {
         var point = icon.gameObject.GetComponent<WaypointBehaviour>();
-        DestroyWaypoint(point);
         _waypoints.Remove(icon);
-        Destroy(icon.gameObject);
-        RefreshIndices();
-    }
-
-    public void RemoveWaypointOnArrival()
-    {
-        var point = _waypoints[0].gameObject.GetComponent<WaypointBehaviour>();
         DestroyWaypoint(point);
-        _waypoints.Remove(_waypoints[0]);
         RefreshIndices();
     }
 
+    
     private void DestroyWaypoint(WaypointBehaviour waypointBehaviour)
     {
         waypointBehaviour.OnDestroyWaypoint();
     }
+
+    #endregion
+    
+    #region RouteChecks
 
     private void RefreshIndices()
     {
         for (int i = 0; i < _waypoints.Count; i++)
         {
             var waypointComp = _waypoints[i].GetComponent<WaypointBehaviour>();
-            if (waypointComp != null)
+            if (waypointComp == null) continue;
+            waypointComp.SetIndex(i + 1);
+            switch (i)
             {
-                waypointComp.SetIndex(i + 1);
-                if (i == 0)
-                {
+                case 0:
                     waypointComp.LineComp.SetTarget(_submarineRect, _waypoints[0].GetComponent<RectTransform>());
-                }
-                if (i > 0)
-                {
+                    break;
+                case > 0:
                     waypointComp.LineComp.SetTarget(_waypoints[i-1].GetComponent<RectTransform>(), _waypoints[i].GetComponent<RectTransform>());
-                }
+                    break;
             }
         }
-        if (_waypoints.Count <= 0)
-        {
-            OnRouteCancelled?.Invoke();
-        }
-        if (_waypoints.Count == 1)
-        {
-            OnRouteStarted?.Invoke();
-        }
-        if (_waypoints.Count > 1)
-        {
-            OnRouteModified?.Invoke();
-        }
     }
-
+    
     public IReadOnlyList<MapIcon> GetWaypoints() => _waypoints;
+    
+    #endregion
 }

@@ -71,7 +71,6 @@ public class LineBehaviour : MonoBehaviour, ISetup
     public void SetScale(RectTransform origin)
     {
         float distance = Vector2.Distance(origin.anchoredPosition, _targetRectTransform.anchoredPosition);
-        Log.Info(distance.ToString());
         _selfRectTransform.sizeDelta = new Vector2(distance, lineWidth);
     }
 

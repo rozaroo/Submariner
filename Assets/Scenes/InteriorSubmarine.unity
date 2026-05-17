@@ -1760,12 +1760,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581d5a0201abdf84388e6d14238c7fcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTime: 1
-  rotationSmoothTime: 1
-  maxMovementSpeed: 15
-  maxRotationSpeed: 20
+  smoothTime: 0.2
+  rotationSmoothTime: 0.2
+  maxMovementSpeed: 30
+  maxRotationSpeed: 100
   offsetRotation: -90
   distanceOffset: 0.1
+  _currentWaypointPoints: []
+  _newWaypointPoints: []
+  _currentIndex: 0
+  _currentTarget: {fileID: 0}
 --- !u!1 &1241982443
 GameObject:
   m_ObjectHideFlags: 0

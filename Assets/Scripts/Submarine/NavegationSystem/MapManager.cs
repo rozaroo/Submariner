@@ -21,29 +21,33 @@ public class MapManager : MonoBehaviour
     
     private void OnEnable()
     {
-        _mapSubmarine.OnWaypointReached += OnRemoveWaypoint;
-        _waypointManager.OnRouteStarted += UpdateSubmarineRoute;
-        _waypointManager.OnRouteModified += UpdateSubmarineRoute;
-        _waypointManager.OnRouteCancelled += _mapSubmarine.StopMovingTowards;
+        _mapSubmarine.OnWaypointReached += OnReachRemoveWaypoint;
+        _waypointManager.OnRouteStarted += OnStartTravelingSubmarine;
+        _waypointManager.OnRouteModified += OnUpdateSubmarineRoute;
     }
     
     private void OnDisable()
     {
-        _mapSubmarine.OnWaypointReached -= OnRemoveWaypoint;
-        _waypointManager.OnRouteStarted -= UpdateSubmarineRoute;
-        _waypointManager.OnRouteModified -= UpdateSubmarineRoute;
-        _waypointManager.OnRouteCancelled -= _mapSubmarine.StopMovingTowards;
+        _mapSubmarine.OnWaypointReached -= OnReachRemoveWaypoint;
+        _waypointManager.OnRouteStarted -= OnStartTravelingSubmarine;
+        _waypointManager.OnRouteModified -= OnUpdateSubmarineRoute;
     }
 
-    private void OnRemoveWaypoint()
+    private void OnStartTravelingSubmarine()
     {
-        _waypointManager.RemoveWaypointOnArrival();
-        UpdateSubmarineRoute();
+        OnUpdateSubmarineRoute();
+        _mapSubmarine.UpdateToNewWaypointList();
     }
     
-    private void UpdateSubmarineRoute()
+    private void OnReachRemoveWaypoint()
+    {
+        _waypointManager.RemoveWaypointOnArrival();
+        OnUpdateSubmarineRoute();
+    }
+    
+    private void OnUpdateSubmarineRoute()
     {
         var waypoints = _waypointManager.GetWaypoints();
-        _mapSubmarine.OnUpdateWaypointsList(waypoints.Select(icon => icon.GetComponent<RectTransform>()).ToList());
+        _mapSubmarine.GetNewWaypointList(waypoints.Select(icon => icon.GetComponent<RectTransform>()).ToList());
     }
 }
