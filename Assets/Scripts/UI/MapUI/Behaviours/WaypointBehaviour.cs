@@ -12,6 +12,12 @@ public class WaypointBehaviour : MonoBehaviour, IPointerClickHandler, ISetup
     public bool IsInitialized { get; private set; }
     public LineBehaviour LineComp { get; set; }
 
+    private void OnDisable()
+    {
+        if (_onRightClickedAction != null)
+            OnRightClicked -= _onRightClickedAction;
+    }
+
     public void Setup()
     {
         if (IsInitialized) return;
@@ -33,6 +39,7 @@ public class WaypointBehaviour : MonoBehaviour, IPointerClickHandler, ISetup
 
     public void SetAction(Action action)
     {
+        OnRightClicked += action;
         _onRightClickedAction = action;
     }
 

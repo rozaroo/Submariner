@@ -8,8 +8,8 @@ public class GameLogger : MonoBehaviour
     public static GameLogger Instance;
 
     [SerializeField] private bool showInBuild = true;
-    [SerializeField] Vector2 location = new Vector2(0, 0);
-    [SerializeField] Vector2 boxSize = new Vector2(420, 300);
+    [SerializeField] private Vector2 location = new Vector2(0, 0);
+    [SerializeField] private Vector2 boxSize = new Vector2(420, 300);
     private readonly List<(string message, LogType type)> logs = new();
     private Vector2 scrollPos;
     private bool visible = true;
@@ -52,7 +52,7 @@ public class GameLogger : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1)) visible = !visible;
+        if (Input.GetKeyDown(KeyCode.F1)) visible = !visible; //TODO: Change this to InputSystem.
     }
 
     void OnGUI()

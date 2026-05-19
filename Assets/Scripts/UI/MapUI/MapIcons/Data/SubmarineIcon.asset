@@ -16,5 +16,6 @@ MonoBehaviour:
   material: {fileID: 0}
   tintColor: {r: 0, g: 0, b: 0, a: 1}
   baseSize: {x: 16, y: 16}
+  rotationOffset: 0
   iconBehaviours:
   - {fileID: 11400000, guid: d13d24b2635b16346b2bd8939735b39d, type: 2}

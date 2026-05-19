@@ -12,3 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8da8fc0e81be9234aaefc52b94ca8da4, type: 3}
   m_Name: SubmarineMovementBehaviour
   m_EditorClassIdentifier: 
+  smoothTime: 0.3
+  rotationSmoothTime: 0.15
+  maxMovementSpeed: 10
+  maxRotationSpeed: 100
+  offsetRotation: -90
+  distanceOffset: 0.1

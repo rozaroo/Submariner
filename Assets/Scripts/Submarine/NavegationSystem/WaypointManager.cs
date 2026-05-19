@@ -9,19 +9,20 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
     [SerializeField] private GameObject lineContainer;
     
     private readonly  List<MapIcon> _waypoints = new();
-    private RectTransform canvasRect;
+    private RectTransform _mapRect;
     private RectTransform _submarineRect;
-    public RectTransform SubmarineRect //Only for
+    public RectTransform SubmarineRect
     {
         set => _submarineRect = value;
     }
+
+    public RectTransform MapRect
+    {
+        set => _mapRect = value;
+    }
+    
     public event Action OnRouteStarted;
     public event Action OnRouteModified;
-
-    private void Awake()
-    {
-        canvasRect = GetComponent<RectTransform>();
-    }
 
     #region Pointer Events Handlers
 
@@ -33,8 +34,13 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
 
     private void HandleLeftClick(PointerEventData eventData)
     {
+        if (_submarineRect == null || _mapRect == null)
+        {
+            Log.Info($"[{name}]- No Map Rect or Submarine");
+            return;
+        }
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvasRect,
+            _mapRect,
             eventData.position,
             eventData.pressEventCamera,
             out Vector2 localPoint
@@ -53,7 +59,7 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
 
     private MapIcon CreateMapIcon(Vector2 point)
     {
-        MapIcon mapIcon = MapIconFactory.Create(waypointPointConfig, canvasRect);
+        MapIcon mapIcon = MapIconFactory.Create(waypointPointConfig, _mapRect);
         mapIcon.GetComponent<RectTransform>().anchoredPosition = point;
         return mapIcon;
     }
@@ -77,9 +83,9 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
                 waypoint.LineComp = lineBehaviour;
                 lineBehaviour.SetContainer(lineContainer);
             }
-            Action onRightClick = () => RemovedWaypointByPlayer(mapIcon);
-            waypoint.OnRightClicked += onRightClick;
-            waypoint.SetAction(onRightClick);
+
+            void OnRightClick() => RemovedWaypointByPlayer(mapIcon);
+            waypoint.SetAction(OnRightClick);
             _waypoints.Add(mapIcon);
         }
         if (_waypoints.Count == 1)

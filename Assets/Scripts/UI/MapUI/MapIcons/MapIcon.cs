@@ -9,6 +9,7 @@ public class MapIcon : MonoBehaviour, ISetup
     [SerializeField] private Image image;
     public bool IsInitialized { get; private set; }
 
+    public RectTransform IconRectTransform => iconRectTransform;
     public MapAssetSO MapAssetConfig {get => mapAssetConfig; set => mapAssetConfig = value; }
 
     private void Awake()
@@ -32,6 +33,10 @@ public class MapIcon : MonoBehaviour, ISetup
     {
         image.sprite       = mapAssetConfig.sprite;
         image.color        = mapAssetConfig.tintColor;
+        iconRectTransform.localRotation = Quaternion.Euler(
+            iconRectTransform.localEulerAngles.x,
+            iconRectTransform.localEulerAngles.y,
+            iconRectTransform.localEulerAngles.z + mapAssetConfig.rotationOffset);
         iconRectTransform.sizeDelta = mapAssetConfig.baseSize;
         if (mapAssetConfig.material != null)
             image.material = mapAssetConfig.material;
