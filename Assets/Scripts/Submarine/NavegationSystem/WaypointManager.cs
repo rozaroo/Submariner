@@ -20,7 +20,6 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
     {
         set => _mapRect = value;
     }
-    
     public event Action OnRouteStarted;
     public event Action OnRouteModified;
 
