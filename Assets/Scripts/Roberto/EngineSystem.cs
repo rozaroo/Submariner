@@ -44,8 +44,8 @@ public class EngineSystem : MonoBehaviour
     void ToggleEngine()
     {
         engineOn = !engineOn;
-        if (engineOn) energySystem.StartConsumption();
-        else energySystem.StopConsumption();
+        /*if (engineOn) energySystem.StartConsumption();
+        else energySystem.StopConsumption();*/
         ApplyEngineState();
         Debug.Log(engineOn ? "Motor ENCENDIDO" : "Motor APAGADO");
     }
@@ -74,7 +74,7 @@ public class EngineSystem : MonoBehaviour
         if (energySystem.GetCurrentEnergy() <= 0 && engineOn)
         {
             engineOn = false;
-            energySystem.StopConsumption(); // directo
+            /*energySystem.StopConsumption(); // directo*/
             ApplyEngineState();
             Debug.Log("ENERGÍA AGOTADA - APAGÓN");
         }
