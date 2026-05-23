@@ -9,8 +9,9 @@ public class GameLogger : MonoBehaviour
 
     [SerializeField] private bool showInBuild = true;
     [SerializeField] Vector2 location = new Vector2(0, 0);
-    [SerializeField] Vector2 boxSize = new Vector2(420, 300);
+    [SerializeField] Vector2 boxSize = new Vector2(500, 500);
     private readonly List<(string message, LogType type)> logs = new();
+    private GUIStyle logStyle;
     private Vector2 scrollPos;
     private bool visible = true;
 
@@ -59,6 +60,12 @@ public class GameLogger : MonoBehaviour
     {
         if (!visible) return;
         if (!showInBuild && !Application.isEditor) return;
+        
+        logStyle ??= new GUIStyle(GUI.skin.label)
+        {
+            fontSize = 20,
+            wordWrap = true
+        };
         
         GUI.Box(new Rect(location.x, location.y, boxSize.x, boxSize.y), "Logger (F1)");
         scrollPos = GUILayout.BeginScrollView(scrollPos,

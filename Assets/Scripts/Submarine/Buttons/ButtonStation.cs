@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
-public class ButtonStation : MonoBehaviour, IStationControl
+public class ButtonStation : MonoBehaviour, IButtonControls
 {
     [Header("Button Settings")]
     [SerializeField] private string colorParameter = "_Color";
@@ -13,12 +13,11 @@ public class ButtonStation : MonoBehaviour, IStationControl
     [SerializeField] private Color activeColor = Color.green;
     [SerializeField] private float transitionTime = 0.1f;
     
-    public bool IsUnlocked { get; set; }
-    public bool IsPressed { get; set; }
-    public Action OnActivation { get; set; }
+    public bool isLocked { get; set; }
+    public bool isPressed { get; set; }
+    public Action onActivation { get; set; }
     private Renderer _renderer;
     private Coroutine _colorCoroutine;
-    private bool _isPressed = false;
 
     private void Awake()
     {
@@ -34,33 +33,42 @@ public class ButtonStation : MonoBehaviour, IStationControl
 
     public void Lock()
     {
-        IsUnlocked = false;
+        isLocked = true;
         ChangeColor(lockedColor);
     }
     public void Unlock()
     {
-        IsUnlocked = true;
+        isLocked = false;
         ChangeColor(unlockedColor);
     }
-    
+
+    public void SetActive(bool active)
+    {
+        ChangeColor(active ? activeColor : unlockedColor);
+    }
+
     public void OnActionDown()
     {
-        if (_isPressed || !IsUnlocked) return;
-        _isPressed = true;
-        ChangeColor(pressedColor);
-        OnActivation?.Invoke();
+        if (!isPressed && !isLocked)
+        {
+            isPressed = true;
+            ChangeColor(pressedColor);
+            onActivation?.Invoke();
+        }
     }
-    public void OnActionDrag(float deltaY) { }
 
-    public void OnActionUp()
+    public void OnActionUp() //TODO: Not Being used, change the usage on Drainage Station (or others) or remove if useless (Prefer the first option)
     {
-        if (_isPressed || !IsUnlocked) return;
-        ChangeColor(activeColor);
+        if (isPressed && !isLocked)
+        {
+            ChangeColor(activeColor);
+        }
     }
-    public void RestartButton()
+    
+    public void Restart()
     {
         Lock();
-        _isPressed = false;
+        isPressed = false;
     }
     #endregion
 
@@ -87,8 +95,7 @@ public class ButtonStation : MonoBehaviour, IStationControl
             yield return null;
         }
         _renderer.material.SetColor(colorParameter, toColor);
-        _colorCoroutine = null;
     }
-
+    
     #endregion
 }

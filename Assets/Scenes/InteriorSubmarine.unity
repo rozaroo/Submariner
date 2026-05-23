@@ -3208,6 +3208,10 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 987107979803856982, guid: 1655722ed256ddf4f8dcee2f21ccd543, type: 3}
+      propertyPath: transitionDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 987107979803856982, guid: 1655722ed256ddf4f8dcee2f21ccd543, type: 3}
       propertyPath: pointerDeltaActionName
       value: Pointer
       objectReference: {fileID: 0}

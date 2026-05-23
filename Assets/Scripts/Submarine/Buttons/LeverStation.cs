@@ -2,50 +2,71 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
-public class LeverStation : MonoBehaviour, IStationControl
+public class LeverStation : MonoBehaviour, ILeverControls
 {
     [Header("Lever Settings")]
-    [SerializeField] private float _pullSpeed = 0.5f;
-    [SerializeField] private float _maxAngle = 90f;
-    public bool IsUnlocked { get; set; }
-    public bool IsPressed { get; set; }
-    public Action OnActivation { get; set; }
+    [SerializeField] private float pullSpeed = 0.5f;
+    [SerializeField] private float maxAngleActivation = 90f;
+    
+    private float _initialAngle;
     private float _currentAngle = 0f;
+    
+    public bool isActive { get; set; }
+    public bool isLocked { get; set; }
+    public Action onActivation { get; set; }
+    public Action onDeactivation { get; set; }
 
-    public void Lock() => IsUnlocked = false;
-    public void Unlock() => IsUnlocked = true;
-
-    public void OnActionDown() { }
-
-    public void OnActionDrag(float deltaY)
+    private void Awake()
     {
-        // Subir la palanca no requiere desbloqueo, siempre está disponible
-        if (deltaY > 0 && _currentAngle > 0)
+        _initialAngle = transform.localRotation.eulerAngles.y;
+    }
+    
+    public void Lock() => isLocked = true;
+    public void Unlock() => isLocked = false;
+    
+    public void SetActive(bool active)
+    {
+        if (active)
         {
-            _currentAngle -= deltaY * _pullSpeed;
-            _currentAngle = Mathf.Clamp(_currentAngle, 0f, _maxAngle);
-            transform.localRotation = Quaternion.Euler(0f, 0f, _currentAngle);
-            return;
+            isActive = true;
+            onActivation?.Invoke();
+            SetLeverRotation(maxAngleActivation);
         }
-
-        if (!IsUnlocked || deltaY >= 0) return;
-
-        _currentAngle += Mathf.Abs(deltaY) * _pullSpeed;
-        _currentAngle = Mathf.Clamp(_currentAngle, 0f, _maxAngle);
-        transform.localRotation = Quaternion.Euler(0f, 0f, _currentAngle);
-
-        if (_currentAngle >= _maxAngle)
+        else
         {
-            IsUnlocked = false;
-            OnActivation?.Invoke();
+            isActive = false;
+            onDeactivation?.Invoke();
+            SetLeverRotation(_initialAngle);
         }
     }
 
-    public void OnActionUp() { }
+    public void OnActionDrag(float delta)
+    {
+        if (isLocked) return;
+        _currentAngle -= delta * pullSpeed;
+        _currentAngle = Mathf.Clamp(_currentAngle, _initialAngle, maxAngleActivation);
+        transform.localRotation = Quaternion.Euler(0f, 0f, _currentAngle);
 
-    public void RestartButton()
+        if (_currentAngle >= maxAngleActivation && !isActive)
+        {
+            SetActive(true);
+        }
+        else if (_currentAngle <= _initialAngle && isActive)
+        {
+            SetActive(false);
+        }
+    }
+
+    public void Restart()
     {
         Lock();
-        
+        isActive = false;
+        SetLeverRotation(_initialAngle);
+    }
+
+    private void SetLeverRotation(float angle)
+    {
+        transform.localRotation = Quaternion.Euler(0f, 0f, angle);
+        _currentAngle = angle;
     }
 }
