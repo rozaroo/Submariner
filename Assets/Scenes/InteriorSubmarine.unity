@@ -3204,6 +3204,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1803575263638877777}
     - target: {fileID: 987107979803856982, guid: 1655722ed256ddf4f8dcee2f21ccd543, type: 3}
+      propertyPath: onEnergyToConsume
+      value: 
+      objectReference: {fileID: 11400000, guid: 21a98addd0d82f24e8a917a13daf134c, type: 2}
+    - target: {fileID: 987107979803856982, guid: 1655722ed256ddf4f8dcee2f21ccd543, type: 3}
       propertyPath: drainagePercentage
       value: 0.5
       objectReference: {fileID: 0}
@@ -3517,6 +3521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxEnergy: 5000
+  _currentEnergy: 0
   energyToRegenPercentage: 1
   timeToRegenerateEnergy: 5
   energyConsumptionRate: 10
@@ -3524,7 +3529,7 @@ MonoBehaviour:
   timeTillStressDamage: 10
   onEnergyStatusChange: {fileID: 11400000, guid: 1d3ff72475cd32e4eb5906f12ae805b7, type: 2}
   onEnergyPropertyChange: {fileID: 11400000, guid: b783866ef0ba4dd499a4ef1c6e2f1cbd, type: 2}
-  onConsumeEnergy: {fileID: 0}
+  onConsumeEnergy: {fileID: 11400000, guid: 21a98addd0d82f24e8a917a13daf134c, type: 2}
 --- !u!33 &2915489971878293005
 MeshFilter:
   m_ObjectHideFlags: 0
