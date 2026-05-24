@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8028251301562178004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8374195753356596361}
+  - component: {fileID: 7571228807201647731}
+  - component: {fileID: 2520860549417467482}
+  - component: {fileID: 3636989460143065708}
+  m_Layer: 0
+  m_Name: OxygenManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8374195753356596361
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028251301562178004}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.87568, y: -45.64325, z: -8.27059}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7571228807201647731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028251301562178004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c53a7b20c268f74684f5906e670e955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onHullStatusChanged: {fileID: 11400000, guid: 57df504b4607b5347a6e29e893996736, type: 2}
+  targetCamera: {fileID: 0}
+  shakeEnabled: 1
+  shakeDuration: 0.3
+  shakeMagnitude: 0.15
+--- !u!114 &2520860549417467482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028251301562178004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad6860af3661d5b418419a5ac60a7509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxOxygen: 100
+  currentOxygen: 60
+  suffocationDuration: 60
+  suffocationTimeRemaining: 0
+  onDeath: {fileID: 11400000, guid: 2cfc5ac3502b1e441aff5d6459137d45, type: 2}
+  onLowOxygen: {fileID: 11400000, guid: f91072f76c84d5a4e9b992d7e4642aee, type: 2}
+  onSuffocationProgress: {fileID: 11400000, guid: 5d1169d521586294bba46c03ccc3c2f4, type: 2}
+  onOxygenChanged: {fileID: 11400000, guid: 6067dc80e58be5e4593ee05004842ef3, type: 2}
+--- !u!114 &3636989460143065708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028251301562178004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f52255192c89a964fa34b9d04e65ab18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volume: {fileID: 0}
+  maxIntensity: 8
+  curve: 9
+  pulseAmplitude: 0.04
+  pulseSpeed: 2.5
+  recoverySpeed: 0.3
+  onSuffocationProgress: {fileID: 11400000, guid: 5d1169d521586294bba46c03ccc3c2f4, type: 2}

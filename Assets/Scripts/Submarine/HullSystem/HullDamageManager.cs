@@ -32,7 +32,6 @@ public class HullDamageManager : MonoBehaviour
             crack.OnCrackRepaired += OnHullRepaired;
             _pool.Add(crack);
         }
-        StartCoroutine(StartAfterGracePeriod());
     }
 
     private void OnDestroy()
@@ -41,7 +40,13 @@ public class HullDamageManager : MonoBehaviour
             if (crack != null) crack.OnCrackRepaired -= OnHullRepaired;
     }
 
-    private IEnumerator StartAfterGracePeriod()
+    [ContextMenu("Start Hull Grace Period")]
+    private void OnStartGracePeriod()
+    {
+        StartCoroutine(StartHullGracePeriod());
+    }
+
+    private IEnumerator StartHullGracePeriod()
     {
         yield return new WaitForSeconds(gracePeriod);
         StartSpawningBehaviour();
