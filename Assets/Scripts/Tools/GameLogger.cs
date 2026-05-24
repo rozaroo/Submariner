@@ -11,8 +11,8 @@ public class GameLogger : MonoBehaviour
     [SerializeField] private Vector2 location = new Vector2(0, 0);
     [SerializeField] private Vector2 boxSize = new Vector2(420, 300);
     private readonly List<(string message, LogType type)> logs = new();
-    private Vector2 scrollPos;
-    private bool visible = true;
+    private Vector2 _scrollPos;
+    private bool _visible = true;
 
     void Awake()
     {
@@ -52,18 +52,18 @@ public class GameLogger : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1)) visible = !visible; //TODO: Change this to InputSystem.
+        if (Input.GetKeyDown(KeyCode.F1)) _visible = !_visible; //TODO: Change this to InputSystem.
     }
 
     void OnGUI()
     {
-        if (!visible) return;
+        if (!_visible) return;
         if (!showInBuild && !Application.isEditor) return;
         
         GUI.skin.label.fontSize = 24;
         
         GUI.Box(new Rect(location.x, location.y, boxSize.x, boxSize.y), "Logger (F1)");
-        scrollPos = GUILayout.BeginScrollView(scrollPos,
+        _scrollPos = GUILayout.BeginScrollView(_scrollPos,
             GUILayout.Width(boxSize.x), GUILayout.Height(boxSize.y));
 
         foreach (var (msg, type) in logs)

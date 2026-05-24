@@ -119,6 +119,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &21847025
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 21847026}
+  m_Layer: 0
+  m_Name: ---SUBMARINE EXTERIOR---
+  m_TagString: EditorOnly
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &21847026
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21847025}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.84537, y: -41.43085, z: 12.7438}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &334924990 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 471372131358332951, guid: 45c12e2cd143bca45b4aa14fbbdd1952, type: 3}
@@ -146,7 +177,7 @@ GameObject:
   - component: {fileID: 473372934}
   m_Layer: 0
   m_Name: ---SYSTEMS---
-  m_TagString: Untagged
+  m_TagString: EditorOnly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,11 +212,37 @@ Light:
   m_CorrespondingSourceObject: {fileID: 7474493152823056754, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
   m_PrefabInstance: {fileID: 8311463887093034908}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1050081954 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8976773772385490397, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
-  m_PrefabInstance: {fileID: 8311463887093034908}
+--- !u!1 &903838323
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 903838324}
+  m_Layer: 0
+  m_Name: ---SUBMARINE INTERIOR---
+  m_TagString: EditorOnly
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &903838324
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 903838323}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.84537, y: -41.43085, z: 12.7438}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1090482523
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,10 +254,9 @@ GameObject:
   - component: {fileID: 1090482526}
   - component: {fileID: 1090482524}
   - component: {fileID: 1090482527}
-  - component: {fileID: 1090482528}
   - component: {fileID: 1090482529}
   m_Layer: 0
-  m_Name: Systems
+  m_Name: OxygenSystems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,21 +312,6 @@ MonoBehaviour:
   suffocationTimeRemaining: 0
   onDeath: {fileID: 11400000, guid: 2cfc5ac3502b1e441aff5d6459137d45, type: 2}
   onLowOxygen: {fileID: 11400000, guid: f91072f76c84d5a4e9b992d7e4642aee, type: 2}
-  onSuffocationProgress: {fileID: 11400000, guid: 5d1169d521586294bba46c03ccc3c2f4, type: 2}
-  onOxygenChanged: {fileID: 11400000, guid: 6067dc80e58be5e4593ee05004842ef3, type: 2}
---- !u!114 &1090482528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1090482523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be176b938d25b3249a06476bfa32f188, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  barTransform: {fileID: 1050081954}
   onSuffocationProgress: {fileID: 11400000, guid: 5d1169d521586294bba46c03ccc3c2f4, type: 2}
   onOxygenChanged: {fileID: 11400000, guid: 6067dc80e58be5e4593ee05004842ef3, type: 2}
 --- !u!114 &1090482529
@@ -1004,10 +1045,12 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 903838324}
   - {fileID: 8311463887093034908}
   - {fileID: 7229034046181323196}
   - {fileID: 7837014035009809849}
   - {fileID: 1495644453}
+  - {fileID: 21847026}
   - {fileID: 1944112610357537602}
   - {fileID: 473372934}
   - {fileID: 1585097670396917852}
