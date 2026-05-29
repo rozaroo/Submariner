@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Submarine2DMovementBehaviour : MonoBehaviour, ISetup
+public class SubmarineMovementBehaviour : MonoBehaviour, ISetup
 {
     [Header("Properties")]
     [SerializeField] private float smoothTime = 0.3f;
@@ -24,7 +24,7 @@ public class Submarine2DMovementBehaviour : MonoBehaviour, ISetup
     private Vector2 _velocity = Vector2.zero;
     
     public event Action OnWaypointReached;
-    public bool IsInitialized { get; }
+    public bool IsInitialized { get; private set; }
 
     private void Start()
     {
@@ -36,6 +36,7 @@ public class Submarine2DMovementBehaviour : MonoBehaviour, ISetup
     public void Setup(float subSmoothTime, float subRotationSmoothTime, float subMaxMovementSpeed, float subMaxRotationSpeed, float subOffsetRotation, float subDistanceOffset)
     {
         if (IsInitialized) return;
+        IsInitialized = true;
         smoothTime = subSmoothTime;
         rotationSmoothTime = subRotationSmoothTime;
         maxMovementSpeed = subMaxMovementSpeed;

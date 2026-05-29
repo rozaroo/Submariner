@@ -341,6 +341,25 @@ Light:
   m_CorrespondingSourceObject: {fileID: 7474493152823056754, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
   m_PrefabInstance: {fileID: 8311463887093034908}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &761384889 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3313133988446791856, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
+  m_PrefabInstance: {fileID: 8311463887093034908}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &761384897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761384889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c4cdee08a850fd41a7fce60b42bd4f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onSubmarineCreated: {fileID: 11400000, guid: f6923a0a3d404c24facc0c99d914e6d2, type: 2}
+  onMapUpdated: {fileID: 11400000, guid: 19d75c22871cdd6418915b912156a924, type: 2}
 --- !u!4 &898523645 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 144820049034007595, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
@@ -1198,6 +1217,18 @@ PrefabInstance:
       propertyPath: mapSize
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 2380335473737552098, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
+      propertyPath: onMapUpdated
+      value: 
+      objectReference: {fileID: 11400000, guid: 19d75c22871cdd6418915b912156a924, type: 2}
+    - target: {fileID: 2380335473737552098, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
+      propertyPath: onSubmarineCreated
+      value: 
+      objectReference: {fileID: 11400000, guid: f6923a0a3d404c24facc0c99d914e6d2, type: 2}
+    - target: {fileID: 2380335473737552098, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
+      propertyPath: desiredEventsAmount
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6974418148309397462, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
       propertyPath: activeCamera
       value: 
@@ -1257,7 +1288,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3313133988446791856, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 761384897}
   m_SourcePrefab: {fileID: 100100000, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

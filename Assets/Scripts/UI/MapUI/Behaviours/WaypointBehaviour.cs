@@ -17,7 +17,7 @@ public class WaypointBehaviour : MonoBehaviour, IPointerClickHandler, ISetup
         if (_onRightClickedAction != null)
             OnRightClicked -= _onRightClickedAction;
     }
-
+    
     public void Setup()
     {
         if (IsInitialized) return;

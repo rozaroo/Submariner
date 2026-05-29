@@ -18,14 +18,18 @@ public class MapManager : MonoBehaviour
     
     [Header("Icons SO")]
     [SerializeField] private MapAssetSO eventIconSo;
-    [SerializeField] private MapAssetSO interestPointSo;
-    [SerializeField] private MapAssetSO objectivePointSo;
+    //[SerializeField] private MapAssetSO interestPointSo;
+    //[SerializeField] private MapAssetSO objectivePointSo;
     [SerializeField] private MapAssetSO submarineSo;
 
+    [Header("Event Channel")] 
+    [SerializeField] private MapIconPropertyEventChannelSO onSubmarineCreated;
+    [SerializeField] private MapIconListPropertyEventChannelSO onMapUpdated;
+    
     private Canvas _mapCanvas;
     private RectTransform _mapRect;
-    private Submarine2DMovementBehaviour _mapSubmarine;
-    private WaypointManager _waypointManager;
+    private SubmarineMovementBehaviour _mapSubmarine;
+    private WaypointManager _waypointManager; //TODO: Maybe use Event Channels for this instead of direct reference.
     private List<MapIcon> _mapIcons;
     public Canvas MapCanvas => _mapCanvas;
     
@@ -54,10 +58,15 @@ public class MapManager : MonoBehaviour
         _waypointManager.OnRouteModified -= OnUpdateSubmarineRoute;
     }
 
+    private void Start()
+    {
+        GenerateMap();
+        GenerateSubmarine();
+    }
+
     #region MapUtilities
     
-    [ContextMenu("Map Generation/Generate Map")]
-    public void GenerateMap() //TODO: Change to Private once is working and tested via ContextMenu.
+    private void GenerateMap()
     {
         int removedIcons = 0;
         int iconNumber = 0;
@@ -66,7 +75,7 @@ public class MapManager : MonoBehaviour
         for (int i = 0; i < desiredEventsAmount; i++)
         {
             var icon = GenerateDesiredIcon(eventIconSo);
-                icon.gameObject.SetActive(false);
+                icon.IsVisible = false;
             generatedIcons.Add(icon);
         }
         
@@ -74,7 +83,7 @@ public class MapManager : MonoBehaviour
         {
             if (TryAssignPosition(icon.IconRectTransform))
             {
-                icon.gameObject.SetActive(true);
+                icon.IsVisible = true;
                 _mapIcons.Add(icon);
                 iconNumber++;
                 Log.Info($"Icon Number: {iconNumber} - Spawning at {icon.IconRectTransform.anchoredPosition}");
@@ -86,15 +95,15 @@ public class MapManager : MonoBehaviour
             }
         }
         Log.Info($"Removed {removedIcons} icons from {_mapIcons.Count}.");
+        onMapUpdated.RaiseEvent(_mapIcons);
     }
     
-    [ContextMenu("Map Generation/Create Submarine")]
-    public void GenerateSubmarine()
+    private void GenerateSubmarine()
     {
         if (submarineSo == null || _mapSubmarine != null) return;
         var submarine = GenerateDesiredIcon(submarineSo);
         submarine.IconRectTransform.anchoredPosition = GenerateIconLocation(submarine.IconRectTransform, GetScaleRange(_mapRect));
-        _mapSubmarine = submarine.GetComponent<Submarine2DMovementBehaviour>();
+        _mapSubmarine = submarine.GetComponent<SubmarineMovementBehaviour>();
         
         if (_mapSubmarine == null) return;
         
@@ -102,6 +111,7 @@ public class MapManager : MonoBehaviour
         _mapSubmarine.SetWaypointReachedAction(reachWaypointAction);
         
         _waypointManager.SubmarineRect = submarine.IconRectTransform;
+        onSubmarineCreated.RaiseEvent(submarine);
     }
     
     private void ChangeMapSize()

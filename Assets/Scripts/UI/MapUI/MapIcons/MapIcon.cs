@@ -8,7 +8,8 @@ public class MapIcon : MonoBehaviour, ISetup
     [SerializeField] private RectTransform iconRectTransform;
     [SerializeField] private Image image;
     public bool IsInitialized { get; private set; }
-
+    public bool IsVisible { get => gameObject.activeSelf; set => gameObject.SetActive(value); }
+    
     public RectTransform IconRectTransform => iconRectTransform;
     public MapAssetSO MapAssetConfig {get => mapAssetConfig; set => mapAssetConfig = value; }
 
@@ -21,6 +22,7 @@ public class MapIcon : MonoBehaviour, ISetup
     public void Setup()
     {
         if (IsInitialized) return;
+        
         IsInitialized = true;
         iconRectTransform = GetComponent<RectTransform>();
         image             = GetComponent<Image>();

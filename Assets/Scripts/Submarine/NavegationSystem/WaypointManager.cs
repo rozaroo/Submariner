@@ -15,7 +15,6 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
     {
         set => _submarineRect = value;
     }
-
     public RectTransform MapRect
     {
         set => _mapRect = value;

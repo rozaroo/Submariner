@@ -12,7 +12,7 @@ public class Submarine2DMovementBehaviourSO : IconBehaviourSO
     [SerializeField] private float distanceOffset = 0.1f;
     public override void ApplyComponent(GameObject go)
     {
-        var behaviour = go.AddComponent<Submarine2DMovementBehaviour>();
+        var behaviour = go.AddComponent<SubmarineMovementBehaviour>();
         behaviour.Setup(smoothTime, rotationSmoothTime, maxMovementSpeed, maxRotationSpeed, offsetRotation, distanceOffset);
     }
 }

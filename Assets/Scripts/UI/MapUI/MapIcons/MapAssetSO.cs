@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MapAssetSO", menuName = "Scriptable Objects/MapAssetSO")]
+[CreateAssetMenu(menuName = "Map/Icon/MapAsset")]
 public class MapAssetSO : ScriptableObject
 {
     [Header("Visual Properties")] 
