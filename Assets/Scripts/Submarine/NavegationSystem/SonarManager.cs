@@ -34,6 +34,7 @@ public class SonarManager : MonoBehaviour
     
     private void OnListUpdated(List<MapIcon> mapIcons)
     {
+        mapIcons.Clear();
         FilterList(mapIcons);
     }
     

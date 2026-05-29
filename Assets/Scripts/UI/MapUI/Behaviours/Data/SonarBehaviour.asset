@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ef6b3c8d1fa1ef4aba253c3e0dd4caa, type: 3}
   m_Name: SonarBehaviour
   m_EditorClassIdentifier: 
-  sonarIcon: {fileID: 21300000, guid: 3dcaf00a4ae832d4b94c470b03c0804d, type: 3}
-  _radius: 50
+  _generalRadius: 50
   _timePerSonarCheck: 0.2
-  _color: {r: 1, g: 0.96746254, b: 0, a: 0.12156863}
+  _sonarIconSprite: {fileID: 21300000, guid: 3dcaf00a4ae832d4b94c470b03c0804d, type: 3}
+  _mainSonarColor: {r: 0.6603774, g: 0.6077577, b: 0, a: 0.19607843}
+  _secondarySonarColor: {r: 0, g: 0.5924529, b: 0, a: 0.19607843}
