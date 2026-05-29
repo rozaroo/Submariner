@@ -7,7 +7,6 @@ public static class MapIconFactory
     {
         var go = new GameObject(config.name);
         go.transform.SetParent(parent, false);
-        go.AddComponent<Image>();
 
         var icon = go.AddComponent<MapIcon>();
         icon.MapAssetConfig = config;

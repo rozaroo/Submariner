@@ -18,9 +18,9 @@ public class MapManager : MonoBehaviour
     
     [Header("Icons SO")]
     [SerializeField] private MapAssetSO eventIconSo;
-    //[SerializeField] private MapAssetSO interestPointSo;
-    //[SerializeField] private MapAssetSO objectivePointSo;
     [SerializeField] private MapAssetSO submarineSo;
+    //[SerializeField] private MapAssetSO interestPointSo; //TODO Temporary, Maybe Remove
+    //[SerializeField] private MapAssetSO objectivePointSo;//TODO Temporary, Maybe Remove
 
     [Header("Event Channel")] 
     [SerializeField] private MapIconPropertyEventChannelSO onSubmarineCreated;
@@ -28,6 +28,7 @@ public class MapManager : MonoBehaviour
     
     private Canvas _mapCanvas;
     private RectTransform _mapRect;
+    private GameObject _eventContainer;
     private SubmarineMovementBehaviour _mapSubmarine;
     private WaypointManager _waypointManager; //TODO: Maybe use Event Channels for this instead of direct reference.
     private List<MapIcon> _mapIcons;
@@ -71,11 +72,14 @@ public class MapManager : MonoBehaviour
         int removedIcons = 0;
         int iconNumber = 0;
         List<MapIcon> generatedIcons = new List<MapIcon>();
+        _eventContainer = new GameObject("EventContainer");
+        _eventContainer.transform.SetParent(mapIconContainer.transform,false);
         
         for (int i = 0; i < desiredEventsAmount; i++)
         {
             var icon = GenerateDesiredIcon(eventIconSo);
                 icon.IsVisible = false;
+            
             generatedIcons.Add(icon);
         }
         
@@ -84,6 +88,7 @@ public class MapManager : MonoBehaviour
             if (TryAssignPosition(icon.IconRectTransform))
             {
                 icon.IsVisible = true;
+                icon.gameObject.transform.SetParent(_eventContainer.transform, false);
                 _mapIcons.Add(icon);
                 iconNumber++;
                 Log.Info($"Icon Number: {iconNumber} - Spawning at {icon.IconRectTransform.anchoredPosition}");

@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(RectTransform), typeof(Image))]
+[RequireComponent(typeof(RectTransform))]
 public class MapIcon : MonoBehaviour, ISetup
 {
     [SerializeField] private MapAssetSO mapAssetConfig;
     [SerializeField] private RectTransform iconRectTransform;
+    [SerializeField] private RectTransform iconImageRectTransform;
     [SerializeField] private Image image;
     public bool IsInitialized { get; private set; }
     public bool IsVisible { get => gameObject.activeSelf; set => gameObject.SetActive(value); }
@@ -16,7 +17,6 @@ public class MapIcon : MonoBehaviour, ISetup
     private void Awake()
     {
         iconRectTransform = GetComponent<RectTransform>();
-        image             = GetComponent<Image>();
     }
     
     public void Setup()
@@ -25,7 +25,6 @@ public class MapIcon : MonoBehaviour, ISetup
         
         IsInitialized = true;
         iconRectTransform = GetComponent<RectTransform>();
-        image             = GetComponent<Image>();
         ApplyConfig();
         ApplyBehaviours();
     }
@@ -33,13 +32,22 @@ public class MapIcon : MonoBehaviour, ISetup
     [ContextMenu("MapIcon/ApplyConfig")]
     private void ApplyConfig()
     {
+        GameObject go = new GameObject("BaseIcon");
+        go.transform.SetParent(transform,false);
+        image = go.AddComponent<Image>();
+        iconImageRectTransform = go.GetComponent<RectTransform>();
+        
+        
         image.sprite       = mapAssetConfig.sprite;
         image.color        = mapAssetConfig.tintColor;
-        iconRectTransform.localRotation = Quaternion.Euler(
-            iconRectTransform.localEulerAngles.x,
-            iconRectTransform.localEulerAngles.y,
-            iconRectTransform.localEulerAngles.z + mapAssetConfig.rotationOffset);
-        iconRectTransform.sizeDelta = mapAssetConfig.baseSize;
+        iconImageRectTransform.localRotation = Quaternion.Euler(
+            iconImageRectTransform.localEulerAngles.x,
+            iconImageRectTransform.localEulerAngles.y,
+            iconImageRectTransform.localEulerAngles.z + mapAssetConfig.rotationOffset);
+        iconImageRectTransform.sizeDelta = mapAssetConfig.baseSize;
+        
+        iconRectTransform.sizeDelta = mapAssetConfig.baseSize; //Note: This is for Raycast, DONT remove.
+        
         if (mapAssetConfig.material != null)
             image.material = mapAssetConfig.material;
     }

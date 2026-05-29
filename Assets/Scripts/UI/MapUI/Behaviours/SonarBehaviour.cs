@@ -56,6 +56,7 @@ public class SonarBehaviour : MonoBehaviour, ISetup
         {
             GameObject go = new GameObject("SonarRadio");
             go.transform.SetParent(transform,false);
+            go.transform.SetSiblingIndex(0);
             
             _sonarImage = go.AddComponent<Image>();
             _sonarImage.raycastTarget = false;
