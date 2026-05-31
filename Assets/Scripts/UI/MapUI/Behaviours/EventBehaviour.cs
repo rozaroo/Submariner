@@ -1,16 +1,15 @@
 using UnityEngine;
-
 public class EventBehaviour : MonoBehaviour, ISetup
 {
-    private WorldEventSO _worldEvent;
+    public WorldEventBehaviourSO worldEvent { get; private set; }
     public bool IsInitialized { get; private set; }
 
-    public void Setup() => Setup(_worldEvent);
+    public void Setup() => Setup(worldEvent);
 
-    public void Setup(WorldEventSO desiredEvent)  //TODO: Maybe this is Useless. Only Useful to detect if Event has been Stored.
+    public void Setup(WorldEventBehaviourSO desiredEvent)
     {
         if (IsInitialized) return;
         IsInitialized = true;
-        _worldEvent = desiredEvent;
+        worldEvent = desiredEvent;
     }
 }

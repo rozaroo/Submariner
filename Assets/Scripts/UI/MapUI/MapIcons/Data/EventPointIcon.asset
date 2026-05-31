@@ -18,4 +18,4 @@ MonoBehaviour:
   baseSize: {x: 8, y: 8}
   rotationOffset: 0
   iconBehaviours:
-  - {fileID: 11400000, guid: c9f4b1cbb7760084f9bb063438284001, type: 2}
+  - {fileID: 11400000, guid: 19ed1a1560e789744af3409201d18316, type: 2}

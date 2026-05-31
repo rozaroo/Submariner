@@ -12,68 +12,90 @@ Radio de Mapa 3D (Verde): Una vez que algún “Punto de Estructura”, “Punto
 //-Recibir la posición del submarino, y mostrarlo en el mapa 2D (amarillo) y en el periscopio si está dentro del radio de mapa 3D (verde)
 public class SonarBehaviour : MonoBehaviour, ISetup
 {
-    [SerializeField] private float _generalRadius = 50f;
-    [SerializeField] private float _timePerSonarCheck = 0.2f;
-    [SerializeField] private Sprite _sonarIconSprite;
-    [SerializeField] private Color _mainSonarColor = Color.yellow;
-    [SerializeField] private Color _secondarySonarColor = Color.green;
+    [Header("Sonar Properties")]
+    [SerializeField] private float generalRadius = 50f;
+    [SerializeField] private float timePerSonarCheck = 0.2f;
+    [SerializeField] private Sprite sonarIconSprite;
+    [SerializeField] private Color mainSonarColor = Color.yellow;
+    [SerializeField] private Color secondarySonarColor = Color.green;
+
+    [Header("Event Channels")] 
+    [SerializeField] private MapIconPropertyEventChannelSO onEventIconEnteredRadius;
+    [SerializeField] private MapIconPropertyEventChannelSO onEventIconLeftRadius;
     
     private MapIcon _iconOwner;
     private Coroutine _sonarDistanceCoroutine;
-    private List<MapIcon> _mapEventList;
+    private List<MapIcon> _detectableIcons;
     
     public bool IsInitialized { get; private set; }
     public List<MapIcon> MapEventList
     {
         set
         {
-            _mapEventList = value; 
+            _detectableIcons = value; 
             InitializeSonarBehaviour();
         }
     }
     
-    public void Setup() => Setup(_generalRadius, _timePerSonarCheck, _mainSonarColor, _secondarySonarColor, _sonarIconSprite);
-    public void Setup(float radius, float timeSonarCheck, Color mainColor, Color secondaryColor, Sprite sonarIcon = null)
+    public void Setup() => Setup(generalRadius, timePerSonarCheck, mainSonarColor, secondarySonarColor, 
+        sonarIconSprite, onEventIconEnteredRadius, onEventIconLeftRadius);
+    
+    public void Setup(float radius, float timeSonarCheck, Color mainColor, Color secondaryColor, 
+        Sprite sonarIcon = null, MapIconPropertyEventChannelSO radiusEnteredEvent = null, MapIconPropertyEventChannelSO radiusLeftEvent = null)
     {
         if (IsInitialized) 
             return; 
         
         IsInitialized = true;
-        _generalRadius = radius;
-        _timePerSonarCheck = timeSonarCheck;
-        _mainSonarColor = mainColor;
-        _secondarySonarColor = secondaryColor;
-        _sonarIconSprite = sonarIcon;
-        
+        generalRadius = radius;
+        timePerSonarCheck = timeSonarCheck;
+        mainSonarColor = mainColor;
+        secondarySonarColor = secondaryColor;
+        sonarIconSprite = sonarIcon;
         _iconOwner = GetComponent<MapIcon>();
+        
         if (_iconOwner == null)
         {
             Log.Warning($"[{name}] - No MapIcon component found. SonarBehaviour requires a MapIcon component to function properly.");
         }
-
         if (sonarIcon != null)
         {
-            GenerateSonarRadius("OuterRadiusSonar", _mainSonarColor, _generalRadius*2, 1);
-            GenerateSonarRadius("InnerRadiusSonar", _secondarySonarColor, _generalRadius, 0);
+            GameObject outerSonar = GenerateSonarRadius("OuterRadiusSonar", mainSonarColor, generalRadius*2);
+            GameObject innerSonar = GenerateSonarRadius("InnerRadiusSonar", secondarySonarColor, generalRadius);
+            
+            outerSonar.transform.SetSiblingIndex(0);
+            innerSonar.transform.SetSiblingIndex(1);
+
         }
-        InitializeSonarBehaviour();
+        
+        if(radiusEnteredEvent != null && radiusLeftEvent != null)
+        {
+            onEventIconEnteredRadius = radiusEnteredEvent;
+            onEventIconLeftRadius = radiusLeftEvent;
+        }
+        else
+        {
+            Log.Warning("SonarBehaviour: One or both of the event channels for radius entry/exit are not assigned. " +
+                        "This may lead to missing notifications when icons enter or leave the sonar radius.");
+        }
     }
 
-    private void GenerateSonarRadius(string goName, Color color, float radius, int order)
+    private GameObject GenerateSonarRadius(string goName, Color color, float radius)
     {
         GameObject go = new GameObject(goName);
         go.transform.SetParent(transform,false);
-        go.transform.SetSiblingIndex(order);
         
         Image image = go.AddComponent<Image>();
         image.raycastTarget = false;
         
-        image.sprite = _sonarIconSprite;
+        image.sprite = sonarIconSprite;
         image.color = color;
         go.GetComponent<RectTransform>().sizeDelta = new Vector2(radius, radius);
+
+        return go;
     }
 
-    #region PrincipalSonar
+    #region SonarBehaviour
 
     private void InitializeSonarBehaviour()
     {
@@ -94,29 +116,37 @@ public class SonarBehaviour : MonoBehaviour, ISetup
     
     private IEnumerator CheckDistances()
     {
-        while (_mapEventList != null && _iconOwner != null)
+        List<MapIcon> insideRadius = new List<MapIcon>();
+        while (_detectableIcons != null && _iconOwner != null)
         {
-            foreach (MapIcon icon in _mapEventList)
+            foreach (MapIcon icon in _detectableIcons)
             {
                 float iconSonarDistance = Vector2.Distance(
                     _iconOwner.IconRectTransform.anchoredPosition, 
                     icon.IconRectTransform.anchoredPosition);
                 
-                bool isWithinOuterRadius = iconSonarDistance <= _generalRadius && 
-                                           iconSonarDistance >= _generalRadius/2;
+                bool isWithinOuterRadius = iconSonarDistance <= generalRadius && 
+                                           iconSonarDistance >= generalRadius/2;
                 if (icon.IsVisible != isWithinOuterRadius)
                 {
                     icon.IsVisible = isWithinOuterRadius;
                     Log.Info("Sonar Check: " + icon.name + " is now " + (isWithinOuterRadius ? "visible" : "invisible") + " on the map. Distance: " + iconSonarDistance);
                 }
                 
-                bool isWithinInnerRadius = iconSonarDistance < _generalRadius/2;
-                if (isWithinInnerRadius)
+                if (iconSonarDistance < generalRadius/2 && !insideRadius.Contains(icon))
                 {
-                    
+                    insideRadius.Add(icon);
+                    onEventIconEnteredRadius?.RaiseEvent(icon);
+                    Log.Info("Sonar Check: " + icon.name + " entered the inner radius. Distance: " + iconSonarDistance);
+                }
+                else if (iconSonarDistance > generalRadius/2 && insideRadius.Contains(icon))
+                {
+                    insideRadius.Remove(icon);
+                    onEventIconLeftRadius?.RaiseEvent(icon);
+                    Log.Info("Sonar Check: " + icon.name + " left the inner radius. Distance: " + iconSonarDistance);
                 }
             }
-            yield return new WaitForSeconds(_timePerSonarCheck);
+            yield return new WaitForSeconds(timePerSonarCheck);
         }
     }
 
