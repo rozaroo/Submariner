@@ -97,7 +97,7 @@ public class SubmarineMovement : MonoBehaviour
             }
             else
             {
-                _velocity = Vector3.zero; // Limpieza final de inercia
+                _velocity = Vector3.zero;
             }
             
             Vector3 dir = _currentTarget - _selfTransform.position;
@@ -154,10 +154,10 @@ public class SubmarineMovement : MonoBehaviour
             
             _selfTransform.position += _velocity * Time.deltaTime;
             
-            Vector3 currentLocalEuler = _selfTransform.localRotation.eulerAngles;
+            Vector3 currentLocalEuler = _selfTransform.eulerAngles;
             float newYAngle = currentLocalEuler.y + (_rotationVelocity * Time.deltaTime);
             
-            _selfTransform.localRotation = Quaternion.Euler(currentLocalEuler.x, newYAngle, currentLocalEuler.z);
+            _selfTransform.rotation = Quaternion.Euler(currentLocalEuler.x, newYAngle, currentLocalEuler.z);
             
             yield return null;
         }
@@ -209,21 +209,29 @@ public class SubmarineMovement : MonoBehaviour
     public void GetNewWaypointList(List<Vector3> waypoints)
     {
         _newWaypoints = waypoints;
+        UpdateToNewWaypointList();
     }
 
     public void UpdateToNewWaypointList()
     {
-        if (_newWaypoints is { Count: > 0 })
+        if (_newWaypoints != null && _newWaypoints.Count > 0)
         {
-            if (_currentWaypoints != _newWaypoints)
+            _currentWaypoints = _newWaypoints;
+            
+            if (!_hasTarget || Vector3.Distance(_currentWaypoints[0], _currentTarget) > 0.05f)
             {
-                _currentWaypoints = _newWaypoints;
-                if (_currentWaypoints[0] != _currentTarget)
-                    _currentIndex = 0;
+                _currentIndex = 0;
+                OnStartMovingTowards();
             }
         }
-        OnStartMovingTowards();
+        else
+        {
+            _currentWaypoints?.Clear();
+            _hasTarget = false;
+            StopMovingTowards();
+        }
     }
+    
     #endregion
     
 }

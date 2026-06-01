@@ -153,7 +153,6 @@ public class MapUIManager : MonoBehaviour
     
     private void SetIconRotation(IWorldMapUIElement element, MapIcon icon)
     {
-        Log.Info(element.Rotation.y.ToString());
         icon.IconRectTransform.localRotation = Quaternion.Euler(0,0,element.Rotation.y);
     }
     
@@ -175,7 +174,7 @@ public class MapUIManager : MonoBehaviour
         {
             if (pair.Value != null)
             {
-                Destroy(pair.Value.gameObject);
+                MapIconFactory.Release(pair.Value); 
             }
         }
         _worldElementIconDictionary.Clear();
@@ -184,11 +183,14 @@ public class MapUIManager : MonoBehaviour
     private void OnElementDestroyed(IWorldMapUIElement element)
     {
         element.OnElementDestroyed -= OnElementDestroyed;
-        
+    
         if (_worldElementIconDictionary.TryGetValue(element, out MapIcon icon))
+        {
             if(icon != null)
-                Destroy(icon.gameObject);
-        
+            {
+                MapIconFactory.Release(icon);
+            }
+        }
         _worldElementIconDictionary.Remove(element);
         _dynamicIconDictionary.Remove(element);
     }
@@ -293,19 +295,14 @@ public class MapUIManager : MonoBehaviour
     private void OnUpdateSubmarineRoute()
     {
         var waypoints = _waypointManager.GetWaypoints();
-    
-        if (waypoints.Count == 0)
-        {
-            _mapSubmarine.StopMovingTowards();
-            return;
-        }
-    
+        
         List<Vector3> worldWaypoints = waypoints
-            .Select(icon => WorldPositionConverter.MapToWorld(
-                icon.IconRectTransform.anchoredPosition,
+            .Select(data => WorldPositionConverter.MapToWorld(
+                data.Rect.anchoredPosition,
                 _worldMapSize,
                 mapSize))
             .ToList();
+        
         _mapSubmarine.GetNewWaypointList(worldWaypoints);
     }
 

@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class WaypointBehaviour : MonoBehaviour, IPointerClickHandler, ISetup
+public class WaypointBehaviour : MonoBehaviour, IPointerClickHandler, ISetup, IResettable
 {
     public event Action OnRightClicked;
     private Action _onRightClickedAction;
@@ -48,12 +48,13 @@ public class WaypointBehaviour : MonoBehaviour, IPointerClickHandler, ISetup
         if (eventData.button == PointerEventData.InputButton.Right)
             OnRightClicked?.Invoke();
     }
-    
-    public void OnDestroyWaypoint()
+
+    public void ResetState()
     {
-        OnRightClicked -= _onRightClickedAction;
-        LineComp.OnDestroyLine();
-        Destroy(gameObject);
+        OnRightClicked = null;
+        _onRightClickedAction = null;
+        
+        if (_label != null)
+            _label.text = string.Empty;
     }
-    
 }

@@ -8,7 +8,7 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
     [SerializeField] private MapAssetSO waypointPointConfig;
     [SerializeField] private GameObject lineContainer;
     
-    private readonly  List<MapIcon> _waypoints = new();
+    private readonly List<WaypointData> _waypoints = new();
     private RectTransform _mapRect;
     private RectTransform _submarineRect;
     public RectTransform MapRect
@@ -66,8 +66,14 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
     
     private void SetWaypoint(MapIcon mapIcon, LineBehaviour lineBehaviour)
     {
-        var waypoint = mapIcon.GetComponent<WaypointBehaviour>();
-        if (waypoint == null)
+        var data = new WaypointData 
+        {
+            Icon = mapIcon,
+            Behaviour = mapIcon.GetComponent<WaypointBehaviour>(),
+            Rect = mapIcon.GetComponent<RectTransform>()
+        };
+        
+        if (data.Behaviour == null)
         {
             Log.Warning($"WaypointBehaviour not found on {mapIcon.name}");
             Destroy(mapIcon);
@@ -80,13 +86,13 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
             }
             else
             {
-                waypoint.LineComp = lineBehaviour;
+                data.Behaviour.LineComp = lineBehaviour;
                 lineBehaviour.SetContainer(lineContainer);
             }
 
-            void OnRightClick() => RemovedWaypointByPlayer(mapIcon);
-            waypoint.SetAction(OnRightClick);
-            _waypoints.Add(mapIcon);
+            void OnRightClick() => RemovedWaypointByPlayer(data);
+            data.Behaviour.SetAction(OnRightClick);
+            _waypoints.Add(data);
         }
         if (_waypoints.Count == 1)
         {
@@ -98,9 +104,9 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
         }
     }
     
-    private void RemovedWaypointByPlayer(MapIcon icon)
+    private void RemovedWaypointByPlayer(WaypointData data)
     {
-        RemoveWaypoint(icon);
+        RemoveWaypoint(data);
         OnRouteModified?.Invoke();
     }
     
@@ -109,18 +115,11 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
         RemoveWaypoint(_waypoints[0]);
     }
     
-    private void RemoveWaypoint(MapIcon icon)
+    private void RemoveWaypoint(WaypointData data)
     {
-        var point = icon.gameObject.GetComponent<WaypointBehaviour>();
-        _waypoints.Remove(icon);
-        DestroyWaypoint(point);
+        _waypoints.Remove(data);
+        MapIconFactory.Release(data.Icon); 
         RefreshIndices();
-    }
-
-    
-    private void DestroyWaypoint(WaypointBehaviour waypointBehaviour)
-    {
-        waypointBehaviour.OnDestroyWaypoint();
     }
 
     #endregion
@@ -131,22 +130,22 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
     {
         for (int i = 0; i < _waypoints.Count; i++)
         {
-            var waypointComp = _waypoints[i].GetComponent<WaypointBehaviour>();
+            var waypointComp = _waypoints[i].Behaviour;
             if (waypointComp == null) continue;
             waypointComp.SetIndex(i + 1);
             switch (i)
             {
                 case 0:
-                    waypointComp.LineComp.SetTarget(_submarineRect, _waypoints[0].GetComponent<RectTransform>());
+                    waypointComp.LineComp.SetTarget(_submarineRect, _waypoints[0].Rect);
                     break;
                 case > 0:
-                    waypointComp.LineComp.SetTarget(_waypoints[i-1].GetComponent<RectTransform>(), _waypoints[i].GetComponent<RectTransform>());
+                    waypointComp.LineComp.SetTarget(_waypoints[i-1].Rect, _waypoints[i].Rect);
                     break;
             }
         }
     }
     
-    public IReadOnlyList<MapIcon> GetWaypoints() => _waypoints;
+    public IReadOnlyList<WaypointData> GetWaypoints() => _waypoints;
     
     #endregion
 }

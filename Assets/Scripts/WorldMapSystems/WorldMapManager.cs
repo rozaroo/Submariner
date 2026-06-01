@@ -160,7 +160,10 @@ public class WorldMapManager : MonoBehaviour
     
     private bool CheckForOverlap(Vector3 desired, Vector3 existing, float sizeA, float sizeB)
     {
-        return Vector3.Distance(desired, existing) < sizeA + sizeB + minDistanceBetweenEvents;
+        float minRequiredDistance = sizeA + sizeB + minDistanceBetweenEvents;
+        float minRequiredDistanceSqr = minRequiredDistance * minRequiredDistance; 
+    
+        return (desired - existing).sqrMagnitude < minRequiredDistanceSqr;
     }
 
     private Vector3 GenerateRandomPosition()

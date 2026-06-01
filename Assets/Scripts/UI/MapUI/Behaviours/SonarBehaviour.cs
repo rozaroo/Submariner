@@ -3,14 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/*Radio de Mapa 2D (Amarillo): Es más grande que el Radio 3D, es capaz de detectar los “Puntos de Eventos Dinamicos”.
-Radio de Mapa 3D (Verde): Una vez que algún “Punto de Estructura”, “Punto de Evento Dinámico” y/o “Punto de Interés” entre dentro de este Radio, estos serán visibles dentro del Radio de la Cámara de Periscopio.*/
-
-//-Recibir Lista de MapIcons del MapManager, filtrar por tipo de icono y mostrar solo los que estén dentro del radio de mapa 2D (amarillo)
-//-Si un icono entra dentro del radio de mapa 3D (verde), mostrarlo en el periscopio, si sale del radio de mapa 3D (verde), ocultarlo del periscopio pero seguir mostrándolo
-//en el mapa 2D (amarillo) si sigue dentro del radio de mapa 2D (amarillo)
-//-Recibir la posición del submarino, y mostrarlo en el mapa 2D (amarillo) y en el periscopio si está dentro del radio de mapa 3D (verde)
-public class SonarBehaviour : MonoBehaviour, ISetup
+public class SonarBehaviour : MonoBehaviour, ISetup, IResettable
 {
     [Header("Sonar Properties")]
     [SerializeField] private float generalRadius = 50f;
@@ -163,4 +156,14 @@ public class SonarBehaviour : MonoBehaviour, ISetup
         #endif
 
     #endregion
+
+    public void ResetState()
+    {
+        StopSonarBehaviour();
+        
+        if (_detectableIcons != null)
+        {
+            _detectableIcons.Clear();
+        }
+    }
 }
