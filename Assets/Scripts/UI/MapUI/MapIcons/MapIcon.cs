@@ -5,78 +5,82 @@ using UnityEngine.UI;
 public class MapIcon : MonoBehaviour, ISetup
 {
     [SerializeField] private MapAssetSO mapAssetConfig;
-    [SerializeField] private RectTransform iconRectTransform;
-    [SerializeField] private RectTransform iconImageRectTransform;
-    [SerializeField] private Image image;
-    private IResettable[] _cachedResettable;  //TODO: Maybe use interface in the future to apply to collections.
+    
+    private RectTransform _iconRectTransform;
+    private RectTransform _iconImageRectTransform;
+    private Image _image;
+    
+    private IResettable[] _cachedResettable;
+    private IWorldElementBinder[] _cachedBinders;
     
     public bool IsInitialized { get; private set; }
     public bool IsVisible { get => gameObject.activeSelf; set => gameObject.SetActive(value); }
-    
-    public RectTransform IconRectTransform => iconRectTransform;
-    public MapAssetSO MapAssetConfig {get => mapAssetConfig; set => mapAssetConfig = value; }
+    public RectTransform IconRectTransform => _iconRectTransform;
+    public MapAssetSO MapAssetConfig { get => mapAssetConfig; set => mapAssetConfig = value; }
 
     private void Awake()
     {
-        iconRectTransform = GetComponent<RectTransform>();
+        _iconRectTransform = GetComponent<RectTransform>();
     }
     
     public void Setup()
     {
         if (IsInitialized) return;
-        
         IsInitialized = true;
-        iconRectTransform = GetComponent<RectTransform>();
+        
         ApplyConfig();
         ApplyBehaviours();
         
-        _cachedResettable = GetComponentsInChildren<IResettable>(true); //Dont Remove. Use for resetting behaviours when released to pool.
+        _cachedResettable = GetComponentsInChildren<IResettable>(true);
+        _cachedBinders = GetComponentsInChildren<IWorldElementBinder>(true);
     }
     
-    [ContextMenu("MapIcon/ApplyConfig")]
     private void ApplyConfig()
     {
         GameObject go = new GameObject("BaseIcon");
-        go.transform.SetParent(transform,false);
-        image = go.AddComponent<Image>();
-        iconImageRectTransform = go.GetComponent<RectTransform>();
+        go.transform.SetParent(transform, false);
+        _image = go.AddComponent<Image>();
+        _iconImageRectTransform = go.GetComponent<RectTransform>();
         
+        _image.sprite = mapAssetConfig.sprite;
+        _image.color = mapAssetConfig.tintColor;
+        _iconImageRectTransform.localRotation = Quaternion.Euler(0, 0, mapAssetConfig.rotationOffset);
+        _iconImageRectTransform.sizeDelta = mapAssetConfig.baseSize;
         
-        image.sprite       = mapAssetConfig.sprite;
-        image.color        = mapAssetConfig.tintColor;
-        iconImageRectTransform.localRotation = Quaternion.Euler(
-            iconImageRectTransform.localEulerAngles.x,
-            iconImageRectTransform.localEulerAngles.y,
-            iconImageRectTransform.localEulerAngles.z + mapAssetConfig.rotationOffset);
-        iconImageRectTransform.sizeDelta = mapAssetConfig.baseSize;
-        
-        iconRectTransform.sizeDelta = mapAssetConfig.baseSize; //Note: This is for Raycast, DONT remove.
+        _iconRectTransform.sizeDelta = mapAssetConfig.baseSize; 
         
         if (mapAssetConfig.material != null)
-            image.material = mapAssetConfig.material;
+            _image.material = mapAssetConfig.material;
     }
     
-    [ContextMenu("MapIcon/ApplyBehaviours")]
     private void ApplyBehaviours()
     {
         if (mapAssetConfig.iconBehaviours.Count <= 0) return;
         foreach (var behaviour in mapAssetConfig.iconBehaviours)
-            behaviour.ApplyComponent(gameObject);
+        {
+            if(behaviour != null)
+                behaviour.ApplyComponent(gameObject);
+        }
+    }
+    
+    public void BindToWorldEntity(IWorldMapUIElement element)
+    {
+        if (_cachedBinders == null) return;
+        for (int i = 0; i < _cachedBinders.Length; i++)
+        {
+            if (_cachedBinders[i] != null) _cachedBinders[i].Bind(element);
+        }
     }
     
     public void ResetToDefaultState()
     {
         if (!IsInitialized || mapAssetConfig == null) return;
         
-        image.color = mapAssetConfig.tintColor;
-    
-        iconImageRectTransform.localRotation = Quaternion.Euler(
-            iconImageRectTransform.localEulerAngles.x,
-            iconImageRectTransform.localEulerAngles.y,
-            mapAssetConfig.rotationOffset);
+        _image.color = mapAssetConfig.tintColor;
+        _iconImageRectTransform.localRotation = Quaternion.Euler(0, 0, mapAssetConfig.rotationOffset);
+        _iconImageRectTransform.sizeDelta = mapAssetConfig.baseSize;
+        _iconRectTransform.sizeDelta = mapAssetConfig.baseSize;
         
-        iconImageRectTransform.sizeDelta = mapAssetConfig.baseSize;
-        iconRectTransform.sizeDelta = mapAssetConfig.baseSize;
         StopAllCoroutines();
         ResetBehaviours();
     }
@@ -84,13 +88,9 @@ public class MapIcon : MonoBehaviour, ISetup
     private void ResetBehaviours()
     {
         if (_cachedResettable == null) return;
-
         for (int i = 0; i < _cachedResettable.Length; i++)
         {
-            if (_cachedResettable[i] != null)
-            {
-                _cachedResettable[i].ResetState();
-            }
+            if (_cachedResettable[i] != null) _cachedResettable[i].ResetState();
         }
     }
 }

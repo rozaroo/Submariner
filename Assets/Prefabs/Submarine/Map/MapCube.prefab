@@ -250,9 +250,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5884555834835477001}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.0029499875, w: 0.99999565}
+  m_LocalRotation: {x: 0, y: 0, z: -0.002949613, w: 0.99999565}
   m_LocalPosition: {x: -43.84073, y: 0.006004334, z: -4.5277405}
-  m_LocalScale: {x: 1.7690004, y: 0.8409119, z: 1.7690003}
+  m_LocalScale: {x: 1.4246465, y: 1.0289679, z: 1.4246464}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2803044676956867643}
@@ -329,7 +329,7 @@ MonoBehaviour:
   transitionDuration: 0.4
   playerMapName: Player
   stationMapName: Station
-  _map: {fileID: 7381442588868842108}
+  mapUI: {fileID: 5470208694286536802}
   exitActionName: ExitStation
   onPossessNavigationStation: {fileID: 11400000, guid: 9d7721e5ed8c4694da036a8e187c895d, type: 2}
   onUnPossessNavigationStation: {fileID: 11400000, guid: 24f839960bfdc354eaa0885df5a543a3, type: 2}
@@ -379,7 +379,7 @@ Transform:
   m_GameObject: {fileID: 6790099172866622295}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.066, z: 0.156}
+  m_LocalPosition: {x: 0, y: 1.771, z: 0.156}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -397,7 +397,7 @@ GameObject:
   - component: {fileID: 3213251917815154126}
   - component: {fileID: 8283648065074132099}
   - component: {fileID: 7247764250565292982}
-  - component: {fileID: 7381442588868842108}
+  - component: {fileID: 5470208694286536802}
   - component: {fileID: 9215001087029248979}
   - component: {fileID: 541381395745317324}
   m_Layer: 0
@@ -482,7 +482,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
---- !u!114 &7381442588868842108
+--- !u!114 &5470208694286536802
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -491,18 +491,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 7674729298555578926}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf1b8d8ba259c174186ae50ecae92457, type: 3}
+  m_Script: {fileID: 11500000, guid: bb38dedc0fbb2a64c8b93fd78b904c7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mapIconContainer: {fileID: 4395888355579504186}
-  backgroundImage: {fileID: 9165619411436319740}
-  desiredEventsAmount: 10
-  mapIconSpawnAttempts: 3
-  mapSize: 500
-  eventIconSo: {fileID: 11400000, guid: 625f41b7342b984468f93681823168fc, type: 2}
-  interestPointSo: {fileID: 11400000, guid: 1fc61ed2caa945e418c8ff622b2430d4, type: 2}
-  objectivePointSo: {fileID: 11400000, guid: 3d0b7b3e525f28249b1a67a159564909, type: 2}
-  submarineSo: {fileID: 11400000, guid: 210ded319ccbfc24cb6e64616799f4dc, type: 2}
+  backgroundImage: {fileID: 1392104818439153845}
+  mapRuntimeData: {fileID: 11400000, guid: f993c08ecc9c4a340b86e7895003b85a, type: 2}
+  linearSyncSpeed: 100
+  onOuterRadarChanged: {fileID: 11400000, guid: 61b22e0d7be78c742a5ebc0254a26204, type: 2}
+  onInnerRadarChanged: {fileID: 11400000, guid: ec7695e88b7faa540bf9e9d3cc8ab22d, type: 2}
+  onWorldMapGenerated: {fileID: 11400000, guid: e2a69c9673a356a448d648541516a618, type: 2}
+  onWorldSubmarineElementGenerated: {fileID: 11400000, guid: 07ac95b2616c88b4bae6167e5e7cbff9, type: 2}
+  onWorldElementGenerated: {fileID: 11400000, guid: 164a221a1f6083648a0be64ed4bba397, type: 2}
 --- !u!114 &9215001087029248979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -517,6 +517,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waypointPointConfig: {fileID: 11400000, guid: 971cc99dcd4e8aa47a29369ce9f6a2ee, type: 2}
   lineContainer: {fileID: 2346895324149052619}
+  mapRuntimeData: {fileID: 11400000, guid: f993c08ecc9c4a340b86e7895003b85a, type: 2}
+  submarineRectAnchor: {fileID: 11400000, guid: a049d780d44eabe43a81575462f84cb6, type: 2}
+  onSubmarineRouteChanged: {fileID: 11400000, guid: f33c6b3472f828649a0718e0af4a1f29, type: 2}
+  onSubmarineArrivedAtWaypoint: {fileID: 11400000, guid: 917246a49e199df469a04952c5bb8eb3, type: 2}
 --- !u!222 &541381395745317324
 CanvasRenderer:
   m_ObjectHideFlags: 0

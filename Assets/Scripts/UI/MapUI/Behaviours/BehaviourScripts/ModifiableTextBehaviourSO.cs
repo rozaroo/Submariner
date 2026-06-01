@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Map/Behaviours/ModifiableText")]
+[CreateAssetMenu(menuName = "MapUI/Behaviours/ModifiableText")]
 public class ModifiableTextBehaviourComponentSo : IconBehaviourSO
 {
     [Header("Text Config")]

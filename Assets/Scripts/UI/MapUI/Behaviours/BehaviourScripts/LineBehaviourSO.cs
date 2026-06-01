@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Map/Behaviours/LineBehaviour")]
+[CreateAssetMenu(menuName = "MapUI/Behaviours/LineBehaviour")]
 public class LineBehaviourComponentSo : IconBehaviourSO
 {
     [SerializeField] private float lineWidth;

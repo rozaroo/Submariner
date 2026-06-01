@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Map/Behaviours/Waypoint")]
+[CreateAssetMenu(menuName = "MapUI/Behaviours/Waypoint")]
 public class WaypointBehaviourComponentSo : IconBehaviourSO
 {
     public override void ApplyComponent(GameObject go)

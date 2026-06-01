@@ -1,4 +1,4 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "IWorldMap Channel", menuName = "EventsChannels/WorldMap/IWorldMapElement Event")]
+[CreateAssetMenu(fileName = "IWorldUIElement Channel", menuName = "EventsChannels/WorldMap/IWorldMapUIElement Event")]
 public class WorldMapUIElementEventChannelSO : GenericEventChannelSO<IWorldMapUIElement> { }

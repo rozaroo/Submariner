@@ -738,6 +738,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8180454467954080319}
+  - component: {fileID: 7471845475133664312}
+  - component: {fileID: 7807609392984242170}
   m_Layer: 0
   m_Name: SubmarineExterior
   m_TagString: Untagged
@@ -761,6 +763,43 @@ Transform:
   - {fileID: 8018074258431363805}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7471845475133664312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8848763287368147077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581d5a0201abdf84388e6d14238c7fcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothTime: 0.9
+  rotationSmoothTime: 0.15
+  maxMovementSpeed: 20
+  maxRotationSpeed: 40
+  distanceOffset: 0.1
+  smoothDeaccelerationTime: 1
+  onRouteChangedChannel: {fileID: 11400000, guid: f33c6b3472f828649a0718e0af4a1f29, type: 2}
+  onSubmarineArrivedAtWaypoint: {fileID: 11400000, guid: 917246a49e199df469a04952c5bb8eb3, type: 2}
+--- !u!114 &7807609392984242170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8848763287368147077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe82ba8ae84405049995cc851277712c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outerDetectionRadius: 100
+  innerDetectionRadius: 50
+  timePerSonarCheck: 0.2
+  onOuterRadarChanged: {fileID: 11400000, guid: 61b22e0d7be78c742a5ebc0254a26204, type: 2}
+  onInnerRadarChanged: {fileID: 11400000, guid: ec7695e88b7faa540bf9e9d3cc8ab22d, type: 2}
 --- !u!1001 &5700268274874215639
 PrefabInstance:
   m_ObjectHideFlags: 0

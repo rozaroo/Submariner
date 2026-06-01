@@ -3,59 +3,57 @@ using UnityEngine;
 
 public class SonarManager : MonoBehaviour
 {
-    [Header("Event Channel")] 
-    [SerializeField] private MapIconPropertyEventChannelSO onSubmarineCreated;
-    [SerializeField] private MapIconListPropertyEventChannelSO onMapUpdated;
+    [Header("Event Channels")] 
+    [SerializeField] private WorldMapGeneratedPropertyEventChannelSO onWorldMapGenerated;
+    [SerializeField] private WorldMapUIElementEventChannelSO onWorldSubmarineGenerated;
     
-    private SonarBehaviour _sonarBehaviour;
-    private readonly List<MapIcon> _mapEventList = new List<MapIcon>();
+    private SubmarineSonar _submarineSonar;
+    private readonly List<IWorldElement> _worldEntities = new List<IWorldElement>();
 
     private void OnEnable()
     {
-        onSubmarineCreated.OnEventRaised += OnTargetUpdated;
-        onMapUpdated.OnEventRaised += OnListUpdated;
+        onWorldMapGenerated.OnEventRaised += OnMapGenerated;
+        onWorldSubmarineGenerated.OnEventRaised += OnSubmarineGenerated;
     }
     
     private void OnDisable()
     {
-        onSubmarineCreated.OnEventRaised -= OnTargetUpdated;
-        onMapUpdated.OnEventRaised -= OnListUpdated;
+        onWorldMapGenerated.OnEventRaised -= OnMapGenerated;
+        onWorldSubmarineGenerated.OnEventRaised -= OnSubmarineGenerated;
     }
-    
-    private void OnTargetUpdated(MapIcon targetIcon)
+
+    private void OnMapGenerated(WorldMapGeneratedProperty data)
     {
-        if (targetIcon != null)
+        _worldEntities.Clear();
+        foreach (var element in data.mapElements)
         {
-            Log.Info("[OnTargetUpdated] Received Sonar Behaviour");
-            _sonarBehaviour = targetIcon.gameObject.GetComponent<SonarBehaviour>();
+            _worldEntities.Add(element);
         }
-        SendFilteredData();
+        TryInitializeSonar();
     }
     
-    private void OnListUpdated(List<MapIcon> mapIcons)
+    private void OnSubmarineGenerated(IWorldMapUIElement submarineElement)
     {
-        _mapEventList.Clear();
-        FilterList(mapIcons);
-    }
-    
-    private void FilterList(List<MapIcon> mapIcons)
-    {
-        foreach (MapIcon mapIcon in mapIcons)
+        var submarineMono = submarineElement as MonoBehaviour;
+        if (submarineMono != null)
         {
-            /*if (mapIcon.GetComponent<EventBehaviour>() != null)
-            {
-                _mapEventList.Add(mapIcon);
-            }*/
+            _submarineSonar = submarineMono.GetComponent<SubmarineSonar>();
+            Log.Info("[SonarManager] Submarine Sonar Linked.");
         }
-        SendFilteredData();
+        
+        TryInitializeSonar();
     }
     
-    private void SendFilteredData()
+    private void TryInitializeSonar()
     {
-        if (_sonarBehaviour != null && _mapEventList.Count > 0)
+        if (_submarineSonar != null && _worldEntities.Count > 0)
         {
-            Log.Info("[SendFilteredData] Sent Map Event List to Sonar Behaviour");
-            _sonarBehaviour.MapEventList = _mapEventList;
+            Log.Info($"[SonarManager] Initializing Sonar with {_worldEntities.Count} physical targets.");
+            _submarineSonar.InitializeSonarTargets(_worldEntities);
+        }
+        else
+        {
+            Log.Warning("[SonarManager] Cannot initialize Sonar. Submarine Sonar or World Entities not ready.");
         }
     }
 }

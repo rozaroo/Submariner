@@ -13,6 +13,10 @@ public class SubmarineMovement : MonoBehaviour
     [SerializeField] private float distanceOffset = 0.1f;
     [SerializeField] private float smoothDeaccelerationTime = 1f;
     
+    [Header("Event Channels")]
+    [SerializeField] private ListVector3EventChannelSO onRouteChangedChannel; 
+    [SerializeField] private BaseEventChannelSO onSubmarineArrivedAtWaypoint;
+    
     private List<Vector3> _currentWaypoints;
     private List<Vector3> _newWaypoints;
     private bool _hasTarget;
@@ -23,7 +27,17 @@ public class SubmarineMovement : MonoBehaviour
     private float _rotationVelocity = 0f;
     private Vector3 _velocity = Vector3.zero;
     
-    public event Action OnWaypointReached;
+    private void OnEnable()
+    {
+        if (onRouteChangedChannel != null)
+            onRouteChangedChannel.OnEventRaised += GetNewWaypointList; 
+    }
+
+    private void OnDisable()
+    {
+        if (onRouteChangedChannel != null)
+            onRouteChangedChannel.OnEventRaised -= GetNewWaypointList;
+    }
 
     private void Start()
     {
@@ -45,7 +59,6 @@ public class SubmarineMovement : MonoBehaviour
             _movementCoroutine = StartCoroutine(MoveSmoothTowards());
     }
 
-    [ContextMenu("Movement/StopMovementTowards")]
     public void StopMovingTowards()
     {
         if (_movementCoroutine != null)
@@ -53,8 +66,7 @@ public class SubmarineMovement : MonoBehaviour
         
         _movementCoroutine = StartCoroutine(DecelerateToStop());
     }
-
-
+    
     #endregion
 
     #region Coroutines
@@ -68,8 +80,7 @@ public class SubmarineMovement : MonoBehaviour
         
         float sqrDistanceOffset = distanceOffset * distanceOffset;
 
-        while (_hasTarget && 
-               (_currentTarget - _selfTransform.position).sqrMagnitude > sqrDistanceOffset)
+        while (_hasTarget && (_currentTarget - _selfTransform.position).sqrMagnitude > sqrDistanceOffset)
         {
             _selfTransform.position = Vector3.SmoothDamp(
                 _selfTransform.position,
@@ -106,7 +117,6 @@ public class SubmarineMovement : MonoBehaviour
             if (dir.sqrMagnitude < 0.001f) yield break;
             
             float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
-
             float currentAngle = _selfTransform.eulerAngles.y;
 
             float smoothAngle = Mathf.SmoothDampAngle(
@@ -136,7 +146,7 @@ public class SubmarineMovement : MonoBehaviour
         Vector3 velocityDampRef = Vector3.zero;
         float rotationDampRef = 0f;
         
-        while (_velocity.magnitude > 0.01f || Math.Abs(_rotationVelocity) > 0.01f)
+        while (_velocity.magnitude > 0.01f || Mathf.Abs(_rotationVelocity) > 0.01f)
         {
             _velocity = Vector3.SmoothDamp(
                 _velocity, 
@@ -181,7 +191,6 @@ public class SubmarineMovement : MonoBehaviour
         _currentIndex++;
     }
 
-
     private void CheckTargetAvailability()
     {
         if (!_hasTarget)
@@ -202,7 +211,8 @@ public class SubmarineMovement : MonoBehaviour
 
     private void OnWaypoint()
     {
-        OnWaypointReached?.Invoke();
+        if (onSubmarineArrivedAtWaypoint != null)
+            onSubmarineArrivedAtWaypoint.RaiseEvent();
         UpdateToNewWaypointList();
     }
 
