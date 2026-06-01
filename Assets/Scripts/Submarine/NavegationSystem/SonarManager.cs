@@ -42,10 +42,10 @@ public class SonarManager : MonoBehaviour
     {
         foreach (MapIcon mapIcon in mapIcons)
         {
-            if (mapIcon.GetComponent<EventBehaviour>() != null)
+            /*if (mapIcon.GetComponent<EventBehaviour>() != null)
             {
                 _mapEventList.Add(mapIcon);
-            }
+            }*/
         }
         SendFilteredData();
     }

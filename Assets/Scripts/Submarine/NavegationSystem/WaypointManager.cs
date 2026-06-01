@@ -11,14 +11,16 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
     private readonly  List<MapIcon> _waypoints = new();
     private RectTransform _mapRect;
     private RectTransform _submarineRect;
-    public RectTransform SubmarineRect
-    {
-        set => _submarineRect = value;
-    }
     public RectTransform MapRect
     {
         set => _mapRect = value;
     }
+
+    public RectTransform SubmarineRect
+    {
+        set => _submarineRect = value;
+    }
+    
     public event Action OnRouteStarted;
     public event Action OnRouteModified;
 

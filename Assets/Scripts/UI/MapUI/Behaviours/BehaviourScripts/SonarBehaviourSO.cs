@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Map/Behaviours/Sonar")]
-public class SonarBehaviourSO : IconBehaviourSO
+public class SonarBehaviourComponentSo : IconBehaviourSO
 {
     [SerializeField] private float generalRadius = 50f;
     [SerializeField] private float timePerSonarCheck = 0.2f;

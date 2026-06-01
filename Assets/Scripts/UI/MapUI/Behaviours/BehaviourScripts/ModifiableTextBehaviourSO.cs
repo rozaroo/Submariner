@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Map/Behaviours/ModifiableText")]
-public class ModifiableTextBehaviourSO : IconBehaviourSO
+public class ModifiableTextBehaviourComponentSo : IconBehaviourSO
 {
     [Header("Text Config")]
     public string defaultText = "";

@@ -1,4 +1,4 @@
 using UnityEngine;
 
-    [CreateAssetMenu(fileName = "Energy Data Event", menuName = "Events/Energy Data Event")]
+    [CreateAssetMenu(fileName = "Energy Data Event", menuName = "EventsChannels/Energy/Energy Data Event")]
 public class EnergyPropertyEventChannelSO : GenericEventChannelSO<EnergyProperty> { }

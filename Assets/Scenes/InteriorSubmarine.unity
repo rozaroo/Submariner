@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 21847026}
   m_Layer: 0
-  m_Name: ---SUBMARINE EXTERIOR---
+  m_Name: ---EXTERIOR---
   m_TagString: EditorOnly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -295,6 +295,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8063900114002368552, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
   m_PrefabInstance: {fileID: 8311463887093034908}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &450634135 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2380335473737552098, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
+  m_PrefabInstance: {fileID: 8311463887093034908}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf1b8d8ba259c174186ae50ecae92457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &473372933
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,6 +342,37 @@ Light:
   m_CorrespondingSourceObject: {fileID: 1266303092309684139, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
   m_PrefabInstance: {fileID: 8311463887093034908}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &599892452
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 599892453}
+  m_Layer: 0
+  m_Name: WorldRoot
+  m_TagString: EditorOnly
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &599892453
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599892452}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &622455037 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 2914589612019012986, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
@@ -341,25 +383,6 @@ Light:
   m_CorrespondingSourceObject: {fileID: 7474493152823056754, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
   m_PrefabInstance: {fileID: 8311463887093034908}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &761384889 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3313133988446791856, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
-  m_PrefabInstance: {fileID: 8311463887093034908}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &761384897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 761384889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c4cdee08a850fd41a7fce60b42bd4f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onSubmarineCreated: {fileID: 11400000, guid: f6923a0a3d404c24facc0c99d914e6d2, type: 2}
-  onMapUpdated: {fileID: 11400000, guid: 19d75c22871cdd6418915b912156a924, type: 2}
 --- !u!4 &898523645 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 144820049034007595, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
@@ -422,17 +445,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7894743588548952182, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
   m_PrefabInstance: {fileID: 8311463887093034908}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1255244331 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2756616740773598133, guid: 96a53706b124e934194e89062618f32b, type: 3}
-  m_PrefabInstance: {fileID: 1944112610357537602}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54d561ba6c4dd524d93b96e15464dfa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!108 &1335692311 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 5903589707874545089, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
@@ -567,6 +579,61 @@ Light:
   m_CorrespondingSourceObject: {fileID: 393172443689504017, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
   m_PrefabInstance: {fileID: 8311463887093034908}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1826700683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1826700685}
+  - component: {fileID: 1826700684}
+  m_Layer: 0
+  m_Name: WorldMapManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1826700684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826700683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: affaafd10a0f4dd4ebb56e0b1e2637e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldContainerGo: {fileID: 599892452}
+  worldSize: 500
+  desiredEventsAmount: 3
+  mapSpawnAttempts: 3
+  minDistanceBetweenEvents: 10
+  submarineSo: {fileID: 11400000, guid: a5da4ebb564750346851cccd161068d3, type: 2}
+  worldPossibleElements:
+  - {fileID: 11400000, guid: 5e93bf089f30adf45b090ba3964e60c6, type: 2}
+  onWorldMapGenerated: {fileID: 11400000, guid: e2a69c9673a356a448d648541516a618, type: 2}
+  onWorldSubmarineElementGenerated: {fileID: 11400000, guid: 07ac95b2616c88b4bae6167e5e7cbff9, type: 2}
+  onWorldElementGenerated: {fileID: 11400000, guid: 164a221a1f6083648a0be64ed4bba397, type: 2}
+--- !u!4 &1826700685
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826700683}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.00191, y: -41.28798, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1953818405 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7454012405267882776, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
@@ -763,63 +830,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37776c6dc735b144695493c1654ab6fd, type: 3}
---- !u!1001 &1944112610357537602
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 8180454467954080319, guid: 96a53706b124e934194e89062618f32b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8180454467954080319, guid: 96a53706b124e934194e89062618f32b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.91
-      objectReference: {fileID: 0}
-    - target: {fileID: 8180454467954080319, guid: 96a53706b124e934194e89062618f32b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8180454467954080319, guid: 96a53706b124e934194e89062618f32b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 8180454467954080319, guid: 96a53706b124e934194e89062618f32b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8180454467954080319, guid: 96a53706b124e934194e89062618f32b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 8180454467954080319, guid: 96a53706b124e934194e89062618f32b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8180454467954080319, guid: 96a53706b124e934194e89062618f32b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8180454467954080319, guid: 96a53706b124e934194e89062618f32b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8180454467954080319, guid: 96a53706b124e934194e89062618f32b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8848763287368147077, guid: 96a53706b124e934194e89062618f32b, type: 3}
-      propertyPath: m_Name
-      value: SubmarineExterior
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 96a53706b124e934194e89062618f32b, type: 3}
 --- !u!1001 &2512268466962752663
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1283,6 +1293,10 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2380335473737552098, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
+      propertyPath: isSyncing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2380335473737552098, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
       propertyPath: onMapUpdated
       value: 
       objectReference: {fileID: 11400000, guid: 19d75c22871cdd6418915b912156a924, type: 2}
@@ -1294,14 +1308,34 @@ PrefabInstance:
       propertyPath: desiredEventsAmount
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2380335473737552098, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
+      propertyPath: onWorldMapGenerated
+      value: 
+      objectReference: {fileID: 11400000, guid: e2a69c9673a356a448d648541516a618, type: 2}
+    - target: {fileID: 2380335473737552098, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
+      propertyPath: onWorldElementGenerated
+      value: 
+      objectReference: {fileID: 11400000, guid: 164a221a1f6083648a0be64ed4bba397, type: 2}
+    - target: {fileID: 2380335473737552098, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
+      propertyPath: onWorldSubmarineElementGenerated
+      value: 
+      objectReference: {fileID: 11400000, guid: 07ac95b2616c88b4bae6167e5e7cbff9, type: 2}
+    - target: {fileID: 4078786573097976141, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6974418148309397462, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
       propertyPath: activeCamera
       value: 
-      objectReference: {fileID: 1255244331}
+      objectReference: {fileID: 0}
     - target: {fileID: 7034317113347313317, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.771
       objectReference: {fileID: 0}
+    - target: {fileID: 7154906447247850881, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
+      propertyPath: mapUI
+      value: 
+      objectReference: {fileID: 450634135}
     - target: {fileID: 7270950656445705046, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
       propertyPath: m_Name
       value: SubmarineInterior
@@ -1353,17 +1387,14 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3313133988446791856, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
-      insertIndex: 5
-      addedObject: {fileID: 761384897}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 21847026}
-  - {fileID: 1944112610357537602}
+  - {fileID: 599892453}
   - {fileID: 903838324}
   - {fileID: 8311463887093034908}
   - {fileID: 7229034046181323196}
@@ -1377,3 +1408,4 @@ SceneRoots:
   - {fileID: 222584104}
   - {fileID: 2725972567633721026}
   - {fileID: 4316534512922342337}
+  - {fileID: 1826700685}

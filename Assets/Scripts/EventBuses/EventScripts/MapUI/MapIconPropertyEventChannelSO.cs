@@ -1,4 +1,4 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MapIconListEvent", menuName = "Events/MapIcon Event")]
+[CreateAssetMenu(fileName = "MapIconListEvent", menuName = "EventsChannels/MapUI/MapIcon Event")]
 public class MapIconPropertyEventChannelSO : GenericEventChannelSO<MapIcon> { }
