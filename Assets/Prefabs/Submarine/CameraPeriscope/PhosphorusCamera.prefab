@@ -141,9 +141,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d561ba6c4dd524d93b96e15464dfa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  periscopeCameraAnchorSo: {fileID: 11400000, guid: 522a189dbd2c157479bb7efa2786b504, type: 2}
   exteriorCamera: {fileID: 5069593907928987219}
   cameraPropertyData:
     _VisibleDuration: 1
     _fadeDuration: 3
-  onPeriscopePhotoTaken: {fileID: 11400000, guid: 9747f370da9dfa74885755a3e0f9d2c2, type: 2}
+  mouseSensitivity: 2
+  verticalClamp: 70
   energyStatusEventSo: {fileID: 11400000, guid: 1d3ff72475cd32e4eb5906f12ae805b7, type: 2}
+  mainCamera: {fileID: 0}

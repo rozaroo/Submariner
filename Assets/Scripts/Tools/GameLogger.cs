@@ -56,6 +56,11 @@ public class GameLogger : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F1)) _visible = !_visible; //TODO: Change this to InputSystem.
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = !Cursor.visible;
+        }
     }
 
     void OnGUI()

@@ -44,7 +44,10 @@ GameObject:
   - component: {fileID: 7659684585522601713}
   - component: {fileID: 8838859360620089245}
   - component: {fileID: 6158718838070468153}
-  m_Layer: 0
+  - component: {fileID: 4135632387311292675}
+  - component: {fileID: 1316425925668190623}
+  - component: {fileID: 348101485581778852}
+  m_Layer: 3
   m_Name: Fuse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,6 +122,78 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4135632387311292675
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2595418291907852621}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1715451, y: 0.17154507, z: 0.8874062}
+  m_Center: {x: -0.0000030994415, y: -0.0000010728836, z: 0.00000016391274}
+--- !u!54 &1316425925668190623
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2595418291907852621}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &348101485581778852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2595418291907852621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aef567a2ddcafc04894b2271b2709622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holdOffset: {x: 0.2, y: -0.2, z: 0.6}
+  isBurned: 0
+  amperage: 40
+  functionalVisual: {fileID: 0}
+  burnedVisual: {fileID: 0}
+  amperageLabel: {fileID: 0}
+  showAmperageLabel: 1
+  createAmperageLabelIfMissing: 1
+  amperageLabelLocalOffset: {x: 0, y: 0, z: 0}
+  amperageLabelLocalRotation: {x: 0, y: -90, z: 0}
+  amperageLabelCharacterSize: 0.08
+  amperageLabelColor: {r: 0.99215686, g: 0.7411765, b: 0, a: 1}
 --- !u!1 &3272086543814621957
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,7 +451,10 @@ GameObject:
   - component: {fileID: 3570796799897116805}
   - component: {fileID: 6940229374100740542}
   - component: {fileID: 4999665635276557968}
-  m_Layer: 0
+  - component: {fileID: 3858258625920067666}
+  - component: {fileID: 2262023395250738708}
+  - component: {fileID: 8944607164488784125}
+  m_Layer: 3
   m_Name: Fuse4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -451,6 +529,78 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3858258625920067666
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5130829694578032557}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1715451, y: 0.17154507, z: 0.8874062}
+  m_Center: {x: -0.0000030994415, y: -0.0000010728836, z: 0.00000016391274}
+--- !u!54 &2262023395250738708
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5130829694578032557}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &8944607164488784125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5130829694578032557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aef567a2ddcafc04894b2271b2709622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holdOffset: {x: 0.2, y: -0.2, z: 0.6}
+  isBurned: 0
+  amperage: 40
+  functionalVisual: {fileID: 0}
+  burnedVisual: {fileID: 0}
+  amperageLabel: {fileID: 0}
+  showAmperageLabel: 1
+  createAmperageLabelIfMissing: 1
+  amperageLabelLocalOffset: {x: 0, y: 0, z: 0}
+  amperageLabelLocalRotation: {x: 0, y: -90, z: 0}
+  amperageLabelCharacterSize: 0.08
+  amperageLabelColor: {r: 0.99215686, g: 0.7411765, b: 0, a: 1}
 --- !u!1 &5544631193834574638
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,7 +612,10 @@ GameObject:
   - component: {fileID: 4231697142238224318}
   - component: {fileID: 9000307719900409192}
   - component: {fileID: 2924358607174621501}
-  m_Layer: 0
+  - component: {fileID: 7714506063029989031}
+  - component: {fileID: 5848475259821919467}
+  - component: {fileID: 3689779238004678845}
+  m_Layer: 3
   m_Name: Fuse5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -537,6 +690,80 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &7714506063029989031
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544631193834574638}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.4437031
+  m_Height: 0.17154507
+  m_Direction: 1
+  m_Center: {x: -0.0000030994415, y: -0.0000010728836, z: 0.00000016391274}
+--- !u!54 &5848475259821919467
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544631193834574638}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &3689779238004678845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544631193834574638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aef567a2ddcafc04894b2271b2709622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holdOffset: {x: 0.2, y: -0.2, z: 0.6}
+  isBurned: 0
+  amperage: 40
+  functionalVisual: {fileID: 0}
+  burnedVisual: {fileID: 0}
+  amperageLabel: {fileID: 0}
+  showAmperageLabel: 1
+  createAmperageLabelIfMissing: 1
+  amperageLabelLocalOffset: {x: 0, y: 0, z: 0}
+  amperageLabelLocalRotation: {x: 0, y: -90, z: 0}
+  amperageLabelCharacterSize: 0.08
+  amperageLabelColor: {r: 0.99215686, g: 0.7411765, b: 0, a: 1}
 --- !u!1 &6608388574208453106
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,7 +774,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1713597473411464417}
   - component: {fileID: 524817361694114344}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: EnergyStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -562,7 +789,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6608388574208453106}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: -46.04873, y: 1.283001, z: 1.18426}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -575,7 +802,7 @@ Transform:
   - {fileID: 3570796799897116805}
   - {fileID: 4231697142238224318}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!114 &524817361694114344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,8 +820,10 @@ MonoBehaviour:
   energyToRegenPercentage: 1
   timeToRegenerateEnergy: 5
   energyConsumptionRate: 10
-  maxStressIndex: 5
-  timeTillStressDamage: 10
+  fuseBreakConsumptionThreshold: 1
+  timeTillFuseBreak: 1
+  startupEnergyPercentageAfterFuseRepair: 10
+  isFuseBroken: 0
   onEnergyStatusChange: {fileID: 11400000, guid: 1d3ff72475cd32e4eb5906f12ae805b7, type: 2}
   onEnergyPropertyChange: {fileID: 11400000, guid: b783866ef0ba4dd499a4ef1c6e2f1cbd, type: 2}
   onConsumeEnergy: {fileID: 11400000, guid: 21a98addd0d82f24e8a917a13daf134c, type: 2}
@@ -609,7 +838,10 @@ GameObject:
   - component: {fileID: 3961940146570281958}
   - component: {fileID: 3723571827651329655}
   - component: {fileID: 8847766080047925829}
-  m_Layer: 0
+  - component: {fileID: 5174239978836036645}
+  - component: {fileID: 5034055364599471473}
+  - component: {fileID: 710141218885147671}
+  m_Layer: 3
   m_Name: Fuse3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -684,6 +916,78 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5174239978836036645
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7119180156082176830}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1715451, y: 0.17154507, z: 0.8874062}
+  m_Center: {x: -0.0000030994415, y: -0.0000010728836, z: 0.00000016391274}
+--- !u!54 &5034055364599471473
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7119180156082176830}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &710141218885147671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7119180156082176830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aef567a2ddcafc04894b2271b2709622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holdOffset: {x: 0.2, y: -0.2, z: 0.6}
+  isBurned: 0
+  amperage: 40
+  functionalVisual: {fileID: 0}
+  burnedVisual: {fileID: 0}
+  amperageLabel: {fileID: 0}
+  showAmperageLabel: 1
+  createAmperageLabelIfMissing: 1
+  amperageLabelLocalOffset: {x: 0, y: 0, z: 0}
+  amperageLabelLocalRotation: {x: 0, y: -90, z: 0}
+  amperageLabelCharacterSize: 0.08
+  amperageLabelColor: {r: 0.99215686, g: 0.7411765, b: 0, a: 1}
 --- !u!1 &7530906058836746703
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,7 +999,10 @@ GameObject:
   - component: {fileID: 6686348981098678274}
   - component: {fileID: 4967258494576504469}
   - component: {fileID: 3961063531585889752}
-  m_Layer: 0
+  - component: {fileID: 4936415945075534059}
+  - component: {fileID: 8366370010593844746}
+  - component: {fileID: 6180109904489142549}
+  m_Layer: 3
   m_Name: Fuse2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -770,6 +1077,78 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4936415945075534059
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7530906058836746703}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1715451, y: 0.17154507, z: 0.8874062}
+  m_Center: {x: -0.0000030994415, y: -0.0000010728836, z: 0.00000016391274}
+--- !u!54 &8366370010593844746
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7530906058836746703}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &6180109904489142549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7530906058836746703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aef567a2ddcafc04894b2271b2709622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holdOffset: {x: 0.2, y: -0.2, z: 0.6}
+  isBurned: 0
+  amperage: 40
+  functionalVisual: {fileID: 0}
+  burnedVisual: {fileID: 0}
+  amperageLabel: {fileID: 0}
+  showAmperageLabel: 1
+  createAmperageLabelIfMissing: 1
+  amperageLabelLocalOffset: {x: 0, y: 0, z: 0}
+  amperageLabelLocalRotation: {x: 0, y: -90, z: 0}
+  amperageLabelCharacterSize: 0.08
+  amperageLabelColor: {r: 0.990566, g: 0.73969615, b: 0, a: 1}
 --- !u!1 &8360888345446415205
 GameObject:
   m_ObjectHideFlags: 0

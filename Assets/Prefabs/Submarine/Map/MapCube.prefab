@@ -518,6 +518,7 @@ MonoBehaviour:
   waypointPointConfig: {fileID: 11400000, guid: 971cc99dcd4e8aa47a29369ce9f6a2ee, type: 2}
   lineContainer: {fileID: 2346895324149052619}
   mapRuntimeData: {fileID: 11400000, guid: f993c08ecc9c4a340b86e7895003b85a, type: 2}
+  mapRect: {fileID: 7004154974895054004}
   submarineRectAnchor: {fileID: 11400000, guid: a049d780d44eabe43a81575462f84cb6, type: 2}
   onSubmarineRouteChanged: {fileID: 11400000, guid: f33c6b3472f828649a0718e0af4a1f29, type: 2}
   onSubmarineArrivedAtWaypoint: {fileID: 11400000, guid: 917246a49e199df469a04952c5bb8eb3, type: 2}
