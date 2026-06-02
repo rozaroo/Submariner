@@ -155,3 +155,9 @@ MonoBehaviour:
   functionalVisual: {fileID: 0}
   burnedVisual: {fileID: 0}
   amperageLabel: {fileID: 0}
+  showAmperageLabel: 1
+  createAmperageLabelIfMissing: 1
+  amperageLabelLocalOffset: {x: 0, y: 0, z: 0}
+  amperageLabelLocalRotation: {x: 0, y: 0, z: 0}
+  amperageLabelCharacterSize: 0.08
+  amperageLabelColor: {r: 1, g: 1, b: 1, a: 1}

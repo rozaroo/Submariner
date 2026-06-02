@@ -777,8 +777,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothTime: 0.9
   rotationSmoothTime: 0.15
-  maxMovementSpeed: 20
-  maxRotationSpeed: 40
+  maxMovementSpeed: 40
+  maxRotationSpeed: 50
   distanceOffset: 0.1
   smoothDeaccelerationTime: 1
   onRouteChangedChannel: {fileID: 11400000, guid: f33c6b3472f828649a0718e0af4a1f29, type: 2}
@@ -795,7 +795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe82ba8ae84405049995cc851277712c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outerDetectionRadius: 100
+  outerDetectionRadius: 200
   innerDetectionRadius: 50
   timePerSonarCheck: 0.2
   onOuterRadarChanged: {fileID: 11400000, guid: 61b22e0d7be78c742a5ebc0254a26204, type: 2}
