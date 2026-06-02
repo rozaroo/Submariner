@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bc6c050af4278343993a92b2545f751, type: 3}
   m_Name: TrackBehaviour
   m_EditorClassIdentifier: 
-  submarineRectAnchor: {fileID: 0}
+  submarineRectAnchor: {fileID: 11400000, guid: a049d780d44eabe43a81575462f84cb6, type: 2}

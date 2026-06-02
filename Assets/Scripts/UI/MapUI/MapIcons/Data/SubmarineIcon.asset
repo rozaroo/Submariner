@@ -21,3 +21,4 @@ MonoBehaviour:
   rotationOffset: 0
   iconBehaviours:
   - {fileID: 11400000, guid: 387c92b5ac6419a4ba7e86237b56b621, type: 2}
+  - {fileID: 11400000, guid: 4968814b3b7deba468ef56e3367f6532, type: 2}
