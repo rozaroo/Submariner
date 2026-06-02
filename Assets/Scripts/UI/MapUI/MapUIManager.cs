@@ -95,8 +95,8 @@ public class MapUIManager : MonoBehaviour
         if (iconCreated != null)
         {
             iconCreated.IsVisible = element.MapAsset.startsVisible; 
-            iconCreated.BindToWorldEntity(element); // <--- Aquí se ejecuta el auto-registro del radar y del anchor del submarino
-            element.OnEntityDestroyed += OnElementDestroyed;
+            iconCreated.BindToWorldEntity(element);
+            element.OnElementDestroyed += OnElementDestroyed;
             _worldElementIconDictionary.Add(element, iconCreated);
             StoreViaUpdateMode(element);
             return iconCreated;
@@ -172,7 +172,7 @@ public class MapUIManager : MonoBehaviour
     
     private void OnElementDestroyed(IWorldElement entity)
     {
-        entity.OnEntityDestroyed -= OnElementDestroyed;
+        entity.OnElementDestroyed -= OnElementDestroyed;
         
         if (entity is IWorldMapUIElement uiElement)
         {

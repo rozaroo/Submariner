@@ -98,17 +98,21 @@ public class FlockingCore : MonoBehaviour, ISetup
             _managerTransform = transform;
             SpawnGroup();
             _hasSpawned = true;
-            return;
         }
-
+    
         for (int i = 0; i < _agents.Count; i++)
         {
-            if (_agents[i] != null)
+            FlockAgent agent = _agents[i];
+            if (agent != null)
             {
-                _agents[i].gameObject.SetActive(visible);
+                agent.gameObject.SetActive(visible);
                 if (visible)
                 {
-                    _agents[i].Initialize(_agents[i].transform.forward * _settings.minSpeed);
+                    agent.Initialize(agent.transform.forward * _settings.minSpeed);
+                    if (agent is IAnimateableAgent animatedAgent)
+                    { 
+                        animatedAgent.WakeUpAnimation();
+                    }
                 }
             }
         }

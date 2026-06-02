@@ -3,6 +3,7 @@ using UnityEngine;
 public class WorldEventManager : MonoBehaviour
 {
     [Header("Event Channel")] 
+    [SerializeField] private SonarElementsDetectionEventChannelSO onOuterRadarChanged;
     [SerializeField] private SonarElementsDetectionEventChannelSO onInnerRadarChanged;
 
     private void OnEnable()
@@ -15,6 +16,11 @@ public class WorldEventManager : MonoBehaviour
     {
         if (onInnerRadarChanged != null)
             onInnerRadarChanged.OnEventRaised -= OnInnerRadarStateChanged;
+    }
+    
+    private void OnOutterRadarStateChanged(SonarElementsDetectionProperty property)
+    {
+        //TODO: Currently not used, but can be implemented similarly to inner radar if needed
     }
 
     private void OnInnerRadarStateChanged(SonarElementsDetectionProperty property)

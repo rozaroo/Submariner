@@ -3,8 +3,8 @@ using Random = UnityEngine.Random;
 
 public class JellyFishEvent : WorldMapElement, IEvent
 {
-    [Header("Patrol Properties")]
-    [SerializeField] private float patrolSpeed = 3f;
+    private float _patrolSpeed = 3f;
+    private bool _canMove;
 
     private FlockingCore _flockManager;
     private Transform _selfTransform;
@@ -25,9 +25,9 @@ public class JellyFishEvent : WorldMapElement, IEvent
 
     private void Update()
     {
-        if (UpdateMode == WorldUIUpdateMode.Dynamic && IsActive)
+        if (_canMove && IsActive)
         {
-            _selfTransform.position = Vector3.MoveTowards(_selfTransform.position, _patrolTarget, patrolSpeed * Time.deltaTime);
+            _selfTransform.position = Vector3.MoveTowards(_selfTransform.position, _patrolTarget, _patrolSpeed * Time.deltaTime);
             
             if ((_patrolTarget - _selfTransform.position).sqrMagnitude < 1f)
             {
@@ -37,9 +37,11 @@ public class JellyFishEvent : WorldMapElement, IEvent
         }
     }
     
-    public void InjectFlockingEngine(FlockingCore core)
+    public void InjectFlockingEngine(FlockingCore core, float patrolSpeed = 3f, bool canMove = true)
     {
         _flockManager = core;
+        _patrolSpeed = patrolSpeed;
+        _canMove = canMove;
     }
     
     public bool CheckConditions()

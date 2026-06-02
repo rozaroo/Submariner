@@ -24,7 +24,7 @@ public class SonarVisualBehaviour : MonoBehaviour, ISetup, IResettable, IWorldEl
         _sonarIconSprite = icon;
         _mainSonarColor = mainCol;
         _secondarySonarColor = secCol;
-        _mapRuntimeData = runtimeData; // Guardado en memoria RAM
+        _mapRuntimeData = runtimeData;
     }
     
     public void Bind(IWorldMapUIElement worldElement)

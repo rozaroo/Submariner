@@ -1040,14 +1040,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3490466929024884362, guid: 7fdcb693db5fd984dbba61079b1771e1, type: 3}
-      propertyPath: onInnerRadarChanged
-      value: 
-      objectReference: {fileID: 11400000, guid: ec7695e88b7faa540bf9e9d3cc8ab22d, type: 2}
-    - target: {fileID: 3490466929024884362, guid: 7fdcb693db5fd984dbba61079b1771e1, type: 3}
-      propertyPath: onEventIconEnteredRadius
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4429422688495718339, guid: 7fdcb693db5fd984dbba61079b1771e1, type: 3}
       propertyPath: m_Name
       value: WorldEventManager

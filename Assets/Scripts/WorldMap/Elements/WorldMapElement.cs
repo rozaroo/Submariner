@@ -3,40 +3,40 @@ using UnityEngine;
 
 public class WorldMapElement : MonoBehaviour, IWorldMapUIElement, ISetup
 {
-    [SerializeField] private WorldUIUpdateMode _updateMode = WorldUIUpdateMode.Static;
-    [SerializeField] private WorldUISyncMode _syncMode = WorldUISyncMode.Linear;
+    [SerializeField] private WorldUIUpdateMode updateMode = WorldUIUpdateMode.Static;
+    [SerializeField] private WorldUISyncMode syncMode = WorldUISyncMode.Linear;
     public MapAssetSO MapAsset { get; private set;}
     public bool IsInitialized { get; private set; }
     public Vector3 Position => transform.position;
     public Vector3 Rotation => transform.rotation.eulerAngles;
     public SonarDetectionMode SonarDetectionMode => 
         MapAsset != null ? MapAsset.sonarInteractionRule : SonarDetectionMode.Both;
-    public event Action<IWorldElement> OnEntityDestroyed;
+    public event Action<IWorldElement> OnElementDestroyed;
 
     public WorldUIUpdateMode UpdateMode
     {
-        get => _updateMode;
-        private set => _updateMode = value;
+        get => updateMode;
+        private set => updateMode = value;
     }
     
     public WorldUISyncMode SyncMode 
     {
-        get => _syncMode;
-        private set => _syncMode = value;
+        get => syncMode;
+        private set => syncMode = value;
     }
     
     public float SyncTime { get; private set; }
     
-    private void OnDestroy() => OnEntityDestroyed?.Invoke(this);
+    private void OnDestroy() => OnElementDestroyed?.Invoke(this);
     public void Setup() => Setup(UpdateMode, SyncMode, MapAsset);
 
-    public void Setup(WorldUIUpdateMode updateMode, WorldUISyncMode syncMode, 
+    public void Setup(WorldUIUpdateMode uMode, WorldUISyncMode sMode, 
         MapAssetSO mapAsset, float syncTime = 0.1f)
     {
         if (IsInitialized) return;
         IsInitialized = true;
-        UpdateMode = updateMode;
-        SyncMode = syncMode;
+        UpdateMode = uMode;
+        SyncMode = sMode;
         SyncTime = syncTime;
         MapAsset = mapAsset;
     }

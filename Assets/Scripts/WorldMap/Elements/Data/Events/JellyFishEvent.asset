@@ -20,3 +20,5 @@ MonoBehaviour:
   syncTime: 0.1
   flockAgentPrefab: {fileID: 2280099232107861253, guid: 4ffc861df13b89c4088240f6ef6ce847, type: 3}
   flockingSettings: {fileID: 11400000, guid: 76aedf12de21e974592f35a0c5e3e721, type: 2}
+  _patrolSpeed: 3
+  _canMove: 1

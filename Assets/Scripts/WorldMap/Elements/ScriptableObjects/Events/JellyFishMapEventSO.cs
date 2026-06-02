@@ -8,21 +8,20 @@ public class JellyFishMapEventSO : WorldMapElementSO
 
     [Header("Flocking Physics")]
     [SerializeField] private FlockingSettingsSO flockingSettings;
+    [SerializeField] private float _patrolSpeed = 3f;
+    [SerializeField] private bool _canMove = false;
 
     public override GameObject CreateElement()
     {
         GameObject go = new GameObject(elementName);
-        
-        WorldMapElement mapElementComp = go.AddComponent<WorldMapElement>();
-        mapElementComp.Setup(updateMode, syncMode, mapAsset, syncTime);
         
         FlockingCore flockCore = go.AddComponent<FlockingCore>();
         flockCore.Setup(flockingSettings, flockAgentPrefab);
         flockCore.enabled = false; 
         
         JellyFishEvent jellyFishEvent = go.AddComponent<JellyFishEvent>();
-        
-        jellyFishEvent.InjectFlockingEngine(flockCore);
+        jellyFishEvent.Setup(updateMode, syncMode, mapAsset, syncTime);
+        jellyFishEvent.InjectFlockingEngine(flockCore, _patrolSpeed, _canMove);
         
         return go;
     }
