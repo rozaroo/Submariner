@@ -7,6 +7,7 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private Camera _heldObjectPlacement;
     
     private IPickable _heldItem;
+    private Vector3 _heldItemWorldScale;
     private bool isHoldingItem => _heldItem != null;
 
     public bool TryPickUp(IPickable item)
@@ -14,17 +15,24 @@ public class InventorySystem : MonoBehaviour
         if (isHoldingItem) return false;
 
         _heldItem = item;
+        Transform itemTransform = _heldItem.GameObject.transform;
+        _heldItemWorldScale = itemTransform.lossyScale;
+
         _heldItem.OnPickUp();
-        _heldItem.GameObject.transform.SetParent(_heldObjectPlacement.transform);
-        _heldItem.GameObject.transform.localPosition = item.HoldPositionOffset;
-        _heldItem.GameObject.transform.localRotation = Quaternion.identity;
+        itemTransform.SetParent(_heldObjectPlacement.transform, false);
+        itemTransform.localPosition = item.HoldPositionOffset;
+        itemTransform.localRotation = Quaternion.identity;
+        SetWorldScale(itemTransform, _heldItemWorldScale);
         return true;
     }
     
     public void DropItem()
     {
         if (!isHoldingItem) return;
-        _heldItem.GameObject.transform.SetParent(null);
+
+        Transform itemTransform = _heldItem.GameObject.transform;
+        itemTransform.SetParent(null, true);
+        SetWorldScale(itemTransform, _heldItemWorldScale);
         _heldItem.OnDrop();
         _heldItem = null;
     }
@@ -63,5 +71,31 @@ public class InventorySystem : MonoBehaviour
             return item != null;
         }
         return false;
+    }
+
+    private void SetWorldScale(Transform targetTransform, Vector3 worldScale)
+    {
+        if (targetTransform.parent == null)
+        {
+            targetTransform.localScale = worldScale;
+            return;
+        }
+
+        Vector3 parentScale = targetTransform.parent.lossyScale;
+        targetTransform.localScale = new Vector3(
+            GetSafeScaleValue(worldScale.x, parentScale.x),
+            GetSafeScaleValue(worldScale.y, parentScale.y),
+            GetSafeScaleValue(worldScale.z, parentScale.z)
+        );
+    }
+
+    private float GetSafeScaleValue(float targetScale, float parentScale)
+    {
+        if (Mathf.Approximately(parentScale, 0f))
+        {
+            return targetScale;
+        }
+
+        return targetScale / parentScale;
     }
 }

@@ -8,12 +8,14 @@ public class EnergySystem : MonoBehaviour
     [SerializeField] private float maxEnergy = 5000f;
     [SerializeField] private float _currentEnergy;
     [SerializeField] private float energyToRegenPercentage = 1f;
-    [SerializeField] private float timeToRegenerateEnergy = 5f;
+    [SerializeField] private float timeToRegenerateEnergy = 60f;
     [SerializeField] private float energyConsumptionRate = 0f;
     
-    [Header("Stress Settings")]
-    [SerializeField] private int maxStressIndex = 5;
-    [SerializeField] private float timeTillStressDamage = 10f;
+    [Header("Fuse Settings")]
+    [SerializeField] private float fuseBreakConsumptionThreshold = 25f;
+    [SerializeField] private float timeTillFuseBreak = 10f;
+    [SerializeField] private float startupEnergyPercentageAfterFuseRepair = 10f;
+    [SerializeField] private bool isFuseBroken;
     
     [Header("Energy Events Channels")]
     [SerializeField] private EnergyStatusEventSO onEnergyStatusChange;
@@ -22,20 +24,27 @@ public class EnergySystem : MonoBehaviour
 
     [Header("Energy Status")]
     private EnergyStatus _energyStatus;
+    private int _stressIndex;
     
     [Header("Coroutines")]
     private Coroutine _energyRegenerationCoroutine;
     private Coroutine _energyConsumptionCoroutine;
-    private Coroutine _energyStressCoroutine;
+    private Coroutine _fuseBreakCoroutine;
 
-    private int _stressIndex;
+    public event Action FuseBurned;
+    public event Action FuseRestored;
+    public bool IsFuseBroken => isFuseBroken;
+
     private float CurrentEnergy
     {
         get => _currentEnergy;
         set
         {
             _currentEnergy = Mathf.Clamp(value, 0f, maxEnergy);
-            onEnergyPropertyChange?.RaiseEvent(new EnergyProperty { currentEnergyPercentage = GetCurrentEnergyPercentage(), maxEnergyPercentage = 100f });
+            if (onEnergyPropertyChange != null)
+            {
+                onEnergyPropertyChange.RaiseEvent(new EnergyProperty { currentEnergyPercentage = GetCurrentEnergyPercentage(), maxEnergyPercentage = 100f });
+            }
             SetEnergyStatus();
         }
     }
@@ -44,12 +53,18 @@ public class EnergySystem : MonoBehaviour
 
     private void OnEnable()
     {
-        if (onConsumeEnergy != null) onConsumeEnergy.OnEventRaised += OnChangeEnergyValues;
+        if (onConsumeEnergy != null)
+        {
+            onConsumeEnergy.OnEventRaised += OnChangeEnergyValues;
+        }
     }
     
     private void OnDisable()
     {
-        if (onConsumeEnergy != null) onConsumeEnergy.OnEventRaised -= OnChangeEnergyValues;
+        if (onConsumeEnergy != null)
+        {
+            onConsumeEnergy.OnEventRaised -= OnChangeEnergyValues;
+        }
     }
     
     private void Start()
@@ -92,11 +107,20 @@ public class EnergySystem : MonoBehaviour
         else
         {
             energyConsumptionRate -= consumeData.energyToConsumeRate;
-            _stressIndex--;
+            _stressIndex = Mathf.Max(0, _stressIndex - 1);
         }
+
+        energyConsumptionRate = Mathf.Max(0f, energyConsumptionRate);
+
+        if (isFuseBroken)
+        {
+            Log.Info($"Energy Consumption Rate: {Mathf.Abs(energyConsumptionRate)} - Fuse Broken");
+            return;
+        }
+
         CheckEnergyConsumption();
         CheckEnergyRegeneration();
-        CheckStress();
+        CheckFuseOverload();
     }
     
     private void CheckEnergyConsumption()
@@ -109,12 +133,12 @@ public class EnergySystem : MonoBehaviour
         {
             StartEnergyConsumption();
         }
-        Log.Info($"Energy Consumption Rate: {Math.Abs(energyConsumptionRate)} - Stress Index: {_stressIndex}");
+        Log.Info($"Energy Consumption Rate: {Mathf.Abs(energyConsumptionRate)} - Stress Index: {_stressIndex}");
     }
     
     private IEnumerator EnergyConsumption()
     {
-        while (CurrentEnergy > 0)
+        while (!isFuseBroken && CurrentEnergy > 0f)
         {
             CurrentEnergy -= energyConsumptionRate * Time.deltaTime;
             yield return null;
@@ -129,6 +153,11 @@ public class EnergySystem : MonoBehaviour
     [ContextMenu("Regeneration/Start Energy Regeneration")]
     private void StartEnergyRegeneration()
     {
+        if (isFuseBroken)
+        {
+            return;
+        }
+
         if (_energyRegenerationCoroutine != null)
         {
             StopCoroutine(_energyRegenerationCoroutine);
@@ -142,12 +171,19 @@ public class EnergySystem : MonoBehaviour
         if (_energyRegenerationCoroutine != null)
         {
             StopCoroutine(_energyRegenerationCoroutine);
+            _energyRegenerationCoroutine = null;
         }
     }
 
     private void CheckEnergyRegeneration()
     {
-        if (CurrentEnergy < maxEnergy || _energyConsumptionCoroutine != null)
+        if (isFuseBroken)
+        {
+            StopEnergyRegeneration();
+            return;
+        }
+
+        if (CurrentEnergy < maxEnergy)
         {
             StartEnergyRegeneration();
         }
@@ -155,13 +191,22 @@ public class EnergySystem : MonoBehaviour
     
     private IEnumerator EnergyRegenerateVPercentage()
     {
-        while (CurrentEnergy < maxEnergy)
-        { 
-            CurrentEnergy += GetPercentageToEnergy(energyToRegenPercentage);
-            CurrentEnergy = Math.Clamp(CurrentEnergy, 0f, maxEnergy);
-            Log.Info($"Regenerated: {Math.Abs(GetPercentageToEnergy(energyToRegenPercentage))}, Current Energy: {CurrentEnergy} ");
+        while (!isFuseBroken && CurrentEnergy < maxEnergy)
+        {
             yield return new WaitForSeconds(timeToRegenerateEnergy);
+
+            if (isFuseBroken)
+            {
+                _energyRegenerationCoroutine = null;
+                yield break;
+            }
+
+            CurrentEnergy += GetPercentageToEnergy(energyToRegenPercentage);
+            CurrentEnergy = Mathf.Clamp(CurrentEnergy, 0f, maxEnergy);
+            Log.Info($"Regenerated: {Mathf.Abs(GetPercentageToEnergy(energyToRegenPercentage))}, Current Energy: {CurrentEnergy} ");
         }
+
+        _energyRegenerationCoroutine = null;
     }
 
     #endregion
@@ -173,9 +218,18 @@ public class EnergySystem : MonoBehaviour
         float energyPercentage = GetCurrentEnergyPercentage();
         EnergyStatus previousStatus = _energyStatus;
         
-        if (energyPercentage <= 0f) _energyStatus = EnergyStatus.Empty;
-        else if (energyPercentage <= 20f) _energyStatus = EnergyStatus.Low;
-        else _energyStatus = EnergyStatus.Full;
+        if (energyPercentage <= 0f)
+        {
+            _energyStatus = EnergyStatus.Empty;
+        }
+        else if (energyPercentage <= 20f)
+        {
+            _energyStatus = EnergyStatus.Low;
+        }
+        else
+        {
+            _energyStatus = EnergyStatus.Full;
+        }
         
         if (_energyStatus != previousStatus)
         {
@@ -193,34 +247,90 @@ public class EnergySystem : MonoBehaviour
 
     #endregion
     
-    #region Stress Logic
+    #region Fuse Logic
 
-    private void CheckStress()
+    private void CheckFuseOverload()
     {
-        if(_stressIndex >= maxStressIndex && _energyStressCoroutine == null)
+        if (isFuseBroken)
         {
-            _energyStressCoroutine = StartCoroutine(EnergyStress());
+            return;
         }
-        else if (_stressIndex < maxStressIndex && _energyStressCoroutine != null)
+
+        if (energyConsumptionRate >= fuseBreakConsumptionThreshold && _fuseBreakCoroutine == null)
         {
-            StopCoroutine(_energyStressCoroutine);
-            _energyStressCoroutine = null;
+            _fuseBreakCoroutine = StartCoroutine(FuseOverloadSequence());
+        }
+        else if (energyConsumptionRate < fuseBreakConsumptionThreshold && _fuseBreakCoroutine != null)
+        {
+            StopCoroutine(_fuseBreakCoroutine);
+            _fuseBreakCoroutine = null;
         }
     }
 
-    private IEnumerator EnergyStress()
+    private IEnumerator FuseOverloadSequence()
     {
-        Log.Info("Stress Sequence Activated...");
-        yield return new WaitForSeconds(timeTillStressDamage);
-        OnStressAchieved();
+        Log.Info("Fuse overload sequence activated...");
+        yield return new WaitForSeconds(timeTillFuseBreak);
+
+        if (energyConsumptionRate >= fuseBreakConsumptionThreshold)
+        {
+            BurnFuse();
+        }
+
+        _fuseBreakCoroutine = null;
     }
     
-    private void OnStressAchieved()
+    private void BurnFuse()
     {
-        StopEnergyConsumption();
-        Log.Info("Stress Achieved, Energy Consumption Stopped");
-        //controlPanel?.NotifyFuseBurned();
+        if (isFuseBroken)
+        {
+            return;
+        }
+
+        ActivateBlackout(true);
     }
+
+    public void BreakFuseFromPanel()
+    {
+        if (isFuseBroken)
+        {
+            return;
+        }
+
+        ActivateBlackout(false);
+    }
+
+    private void ActivateBlackout(bool notifyFuseBurned)
+    {
+        isFuseBroken = true;
+        StopEnergyConsumption();
+        StopEnergyRegeneration();
+        CurrentEnergy = 0f;
+        Log.Info("Fuse burned. Total blackout activated.");
+
+        if (notifyFuseBurned)
+        {
+            FuseBurned?.Invoke();
+        }
+    }
+
+    public void RestoreFuse()
+    {
+        if (!isFuseBroken)
+        {
+            return;
+        }
+
+        isFuseBroken = false;
+        CurrentEnergy = Mathf.Max(CurrentEnergy, GetPercentageToEnergy(startupEnergyPercentageAfterFuseRepair));
+        Log.Info("Fuse restored. Energy flow resumed.");
+        FuseRestored?.Invoke();
+
+        CheckEnergyConsumption();
+        CheckEnergyRegeneration();
+        CheckFuseOverload();
+    }
+
     #endregion
     
     #region InstantEnergyChanges
