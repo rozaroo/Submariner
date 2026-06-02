@@ -1,53 +1,53 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PeriscopeFlash3D : MonoBehaviour
 {
-    [SerializeField] private MeshRenderer flashRenderer;
-    [SerializeField] private float flashDuration = 0.15f;
-
-    private Material _material;
-    private Coroutine _flashRoutine;
+    [SerializeField] private PeriscopeCameraAnchorSO periscopeCameraAnchorSo;
+    
+    private Image _flashImage;
+    private Color _currentColor;
 
     private void Awake()
     {
-        _material = flashRenderer.material;
-        Color color = _material.color;
-        color.a = 0f;
-        _material.color = color;
-        flashRenderer.enabled = false;
-    }
-
-    public void PlayFlash()
-    {
-        if (_flashRoutine != null) StopCoroutine(_flashRoutine);
-        _flashRoutine = StartCoroutine(FlashRoutine());
-    }
-
-    private IEnumerator FlashRoutine()
-    {
-        SetAlpha(1f);
-        float timer = 0f;
-        while (timer < flashDuration)
+        if (periscopeCameraAnchorSo == null)
         {
-            timer += Time.deltaTime;
-            float alpha = Mathf.Lerp(1f, 0f, timer / flashDuration);
-            SetAlpha(alpha);
-            yield return null;
-        }
-        SetAlpha(0f);
-    }
-
-    private void SetAlpha(float alpha)
-    {
-        if (alpha <= 0.01f)
-        {
-            flashRenderer.enabled = false;
+            Log.Warning("[PeriscopeFlash] PeriscopeCameraAnchorSO is null");
             return;
         }
-        flashRenderer.enabled = true;
-        Color color = _material.color;
-        color.a = alpha;
-        _material.color = color;
+        periscopeCameraAnchorSo.flashComponent = this;
+        
+        _flashImage = GetComponent<Image>();
+        
+        if (_flashImage != null)
+        {
+            _currentColor = _flashImage.color;
+            SetOverlayAlpha(0f);
+        }
+    }
+    
+    public void SetOverlayColor(Color targetColor, float alpha)
+    {
+        if (_flashImage == null) return;
+
+        alpha = Mathf.Clamp01(alpha);
+        _flashImage.enabled = alpha > 0.001f;
+        
+        _currentColor = targetColor;
+        _currentColor.a = alpha;
+        _flashImage.color = _currentColor;
+    }
+    
+    public void SetOverlayAlpha(float alpha)
+    {
+        if (_flashImage == null) return;
+
+        alpha = Mathf.Clamp01(alpha);
+        _flashImage.enabled = alpha > 0.001f;
+        
+        _currentColor = _flashImage.color;
+        _currentColor.a = alpha;
+        _flashImage.color = _currentColor;
     }
 }

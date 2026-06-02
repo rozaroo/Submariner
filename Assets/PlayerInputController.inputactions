@@ -159,6 +159,15 @@
             "id": "17fa0b56-aeaa-48f1-9ebc-dfeb795e5339",
             "actions": [
                 {
+                    "name": "Look",
+                    "type": "Value",
+                    "id": "38a20c18-470c-41ab-af0d-253b4eba83d8",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "ClickInteraction",
                     "type": "Button",
                     "id": "c295c289-0b7f-4bb7-b54e-2137cd8e5a3e",
@@ -195,6 +204,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ClickInteraction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "efdd9146-5eec-4d18-b66d-c6ecee814a49",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

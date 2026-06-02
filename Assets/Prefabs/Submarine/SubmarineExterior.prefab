@@ -848,10 +848,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7591401671884472162, guid: c1bc9d778ac80c244b28be1a7231e5b6, type: 3}
-      propertyPath: periscopeCameraAnchorSo
+    - target: {fileID: 5069593907928987219, guid: c1bc9d778ac80c244b28be1a7231e5b6, type: 3}
+      propertyPath: m_TargetTexture
       value: 
-      objectReference: {fileID: 11400000, guid: 522a189dbd2c157479bb7efa2786b504, type: 2}
+      objectReference: {fileID: 0}
+    - target: {fileID: 7591401671884472162, guid: c1bc9d778ac80c244b28be1a7231e5b6, type: 3}
+      propertyPath: mouseSensitivity
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8328221534027331840, guid: c1bc9d778ac80c244b28be1a7231e5b6, type: 3}
       propertyPath: m_Name
       value: PhosphorusCamera

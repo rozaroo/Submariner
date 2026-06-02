@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d72285466df6d504d8c0793d1b8fc78a, type: 3}
   m_Name: JellyFishFlocking
   m_EditorClassIdentifier: 
-  spawnAmount: 30
-  spawnRadius: 20
-  containmentRadius: 30
+  spawnAmount: 50
+  spawnRadius: 30
+  containmentRadius: 15
   minSpeed: 2
   maxSpeed: 5
-  neighborRadius: 4
+  neighborRadius: 6
   avoidanceRadius: 1.5
   cohesionWeight: 1
   alignmentWeight: 1

@@ -4,5 +4,6 @@ using UnityEngine;
 public class PeriscopeCameraAnchorSO : ScriptableObject
 {
     public PhosphorusCamera phosphorusCameraComponent { get; set; }
-    public Camera _playerCamera { get; set; }
+    public PeriscopeFlash3D flashComponent { get; set; }
+    public Camera playerCamera { get; set; }
 }

@@ -43,11 +43,12 @@ public class FlockAgent : MonoBehaviour, IAnimateableAgent
         }
 
         _selfTransform.position += _velocity * Time.deltaTime;
-
+        
         if (_velocity.sqrMagnitude > 0.001f)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(_velocity);
-            _selfTransform.rotation = Quaternion.Slerp(_selfTransform.rotation, targetRotation, settings.rotationSpeed * Time.deltaTime);
+            Quaternion lookRotation = Quaternion.LookRotation(_velocity);
+            Quaternion rotationOffset = Quaternion.Euler(90f, 0f, 0f); //TODO: Change via other parameters.
+            _selfTransform.rotation = lookRotation * rotationOffset;
         }
     }
     

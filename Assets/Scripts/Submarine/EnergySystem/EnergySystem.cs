@@ -356,7 +356,7 @@ public class EnergySystem : MonoBehaviour
     
     public float GetCurrentEnergyPercentage()
     {
-        float currentPercentage = (CurrentEnergy / maxEnergy) * 100f;
+        float currentPercentage = CurrentEnergy / maxEnergy * 100f;
         return currentPercentage;
     }
 

@@ -73,9 +73,9 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 129
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 0c8b3ae628157784db4a6795497a20c0, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -146,7 +146,10 @@ MonoBehaviour:
   cameraPropertyData:
     _VisibleDuration: 1
     _fadeDuration: 3
-  mouseSensitivity: 2
+  mouseSensitivity: 0.2
   verticalClamp: 70
   energyStatusEventSo: {fileID: 11400000, guid: 1d3ff72475cd32e4eb5906f12ae805b7, type: 2}
-  mainCamera: {fileID: 0}
+  flashFadeInDuration: 0.05
+  whiteScreenDuration: 0.15
+  exteriorCameraDuration: 2
+  finalFadeOutDuration: 0.5

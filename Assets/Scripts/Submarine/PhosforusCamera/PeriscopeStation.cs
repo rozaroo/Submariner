@@ -5,7 +5,6 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
 {
     [Header("Camera Connection")]
     [SerializeField] private PeriscopeCameraAnchorSO _periscopeCameraAnchorSo;
-    [SerializeField] private PeriscopeFlash3D flashEffect;
     
     [Header("Actions Maps Settings")]
     [SerializeField] private string playerMapName;
@@ -29,12 +28,19 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     private void Awake()
     {
         enabled = false;
-        if(flashEffect == null) Log.Warning("[Periscope Station]: No Flash Effect");
     }
     
     public void Interact(PlayerCharacter player)
     {
         _currentPlayer = player;
+        if (_periscopeCameraAnchorSo != null && player != null)
+        {
+            Camera playerCam = player.CamController.MainCamera;
+            if (playerCam != null)
+            {
+                _periscopeCameraAnchorSo.playerCamera = playerCam;
+            }
+        }
         Possess();
     }
 
@@ -53,8 +59,10 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
             _currentPlayer.Input.SwitchCurrentActionMap(stationMapName);
             var clickAction = _currentPlayer.Input.actions[takePhotoActionName];
             clickAction.started += OnPhotoClickStarted;
+            
             var cancelAction = _currentPlayer.Input.actions[exitActionName];
             if (cancelAction != null) cancelAction.started += OnCancelStarted;
+            
             var lookAction = _currentPlayer.Input.actions[lookActionName];
             lookAction.performed += OnLookPerformed;
         }
@@ -97,12 +105,12 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
         if (_periscopeCameraAnchorSo.phosphorusCameraComponent  == null) return;
         if (!_periscopeCameraAnchorSo.phosphorusCameraComponent.CanTakePhoto())
         {
-            Log.Info("Photo Input Blocked - No Energy");
             return;
         }
+
+        Log.Info("[PeriscopeStation] Taking Photo");
+        
         _periscopeCameraAnchorSo.phosphorusCameraComponent.TryTakePhoto();
-        if (flashEffect != null) flashEffect.PlayFlash();
-        if (_exitRoutine != null) StopCoroutine(_exitRoutine);
     }
 
     private void OnCancelStarted(InputAction.CallbackContext context)
