@@ -1,7 +1,7 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class JellyFishEvent : WorldMapElement, IEvent
+public class JellyFishEvent : WorldMapUIElement, IEvent
 {
     private float _patrolSpeed = 3f;
     private bool _canMove;

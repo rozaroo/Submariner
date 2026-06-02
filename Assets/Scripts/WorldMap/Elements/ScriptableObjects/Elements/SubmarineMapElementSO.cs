@@ -1,14 +1,17 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "WorldMap/Elements/SubmarineElement")]
-public class SubmarineMapElementSO : WorldMapElementSO
+public class SubmarineMapElementSO : WorldMapUIElementSO
 {
     [SerializeField] private GameObject submarinePrefab;
+    
     public override GameObject CreateElement()
     {
         GameObject go = Instantiate(submarinePrefab);
-        WorldMapElement component = go.AddComponent<WorldMapElement>();
-        component.Setup(updateMode, syncMode, mapAsset);
+        
+        WorldMapUIElement component = go.AddComponent<WorldMapUIElement>();
+        component.Setup(updateMode, syncMode, mapAsset, syncTime);
+        
         return go;
     }
 }

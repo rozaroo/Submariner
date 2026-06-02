@@ -53,6 +53,7 @@ MonoBehaviour:
   _moveActionName: Move
   _interactionActionName: Interact
   _dropActionName: DropItem
+  _useActionName: Click
   _cameraController: {fileID: 2988871602860453287}
   playerCamera: {fileID: 3246600704839594514}
   interactionDistance: 2.5
@@ -91,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHoldingObject: 0
+  _heldObjectPlacement: {fileID: 3246600704839594514}
 --- !u!143 &3307760291457062342
 CharacterController:
   m_ObjectHideFlags: 0
@@ -167,10 +169,6 @@ MonoBehaviour:
     m_ActionName: 'Player/Interact[/Keyboard/e]'
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 633d7275-7d44-465b-97d1-ed19d5e1d272
-    m_ActionName: 'Player/NextTarget[/Keyboard/tab]'
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 53d8c130-101e-4e32-9df0-3031add875a4
     m_ActionName: 'Player/Click[/Mouse/leftButton]'
   - m_PersistentCalls:
@@ -237,7 +235,7 @@ Camera:
   m_GameObject: {fileID: 7568800606293847566}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 4
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2

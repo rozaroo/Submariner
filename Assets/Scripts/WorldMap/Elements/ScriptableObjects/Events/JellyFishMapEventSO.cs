@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "WorldMap/Events/JellyFishEvent")]
-public class JellyFishMapEventSO : WorldMapElementSO
+public class JellyFishMapEventSO : WorldMapUIElementSO
 {
     [Header("Flocking Spawner Settings")]
     [SerializeField] private GameObject flockAgentPrefab;
@@ -10,7 +10,7 @@ public class JellyFishMapEventSO : WorldMapElementSO
     [SerializeField] private FlockingSettingsSO flockingSettings;
     [SerializeField] private float _patrolSpeed = 3f;
     [SerializeField] private bool _canMove = false;
-
+    
     public override GameObject CreateElement()
     {
         GameObject go = new GameObject(elementName);
@@ -20,9 +20,9 @@ public class JellyFishMapEventSO : WorldMapElementSO
         flockCore.enabled = false; 
         
         JellyFishEvent jellyFishEvent = go.AddComponent<JellyFishEvent>();
-        jellyFishEvent.Setup(updateMode, syncMode, mapAsset, syncTime);
+        jellyFishEvent.Setup(UpdateMode, SyncMode, mapAsset, SyncTime);
         jellyFishEvent.InjectFlockingEngine(flockCore, _patrolSpeed, _canMove);
-        
         return go;
     }
+    
 }
