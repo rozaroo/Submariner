@@ -1,12 +1,11 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable 
 {
     [Header("Camera Connection")]
-    [SerializeField] private PhosphorusCamera activeCamera; 
+    [SerializeField] private PeriscopeCameraAnchorSO _periscopeCameraAnchorSo;
+    [SerializeField] private PeriscopeFlash3D flashEffect;
     
     [Header("Actions Maps Settings")]
     [SerializeField] private string playerMapName;
@@ -19,17 +18,18 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     [Header("Event Channels")]
     [SerializeField] private BaseEventChannelSO onPeriscopePossess;
     [SerializeField] private BaseEventChannelSO onPeriscopeUnpossess;
-
-    [SerializeField] private PeriscopeFlash3D flashEffect;
-
-    private PlayerCharacter _currentPlayer;
-
+    
+    [Header("Inputs")]
     [SerializeField] private string lookActionName = "Look";
+
+    private PhosphorusCamera _componentCamera;
+    private PlayerCharacter _currentPlayer;
     private Coroutine _exitRoutine;
 
     private void Awake()
     {
         enabled = false;
+        if(flashEffect == null) Log.Warning("[Periscope Station]: No Flash Effect");
     }
     
     public void Interact(PlayerCharacter player)
@@ -42,6 +42,11 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
 
     public void Possess()
     {
+        if (_periscopeCameraAnchorSo.phosphorusCameraComponent == null)
+        {
+            Log.Warning("[Periscope Station]: No PhosphorusCamera]");
+            return;
+        }
         enabled = true;
         if (_currentPlayer.Input != null)
         {
@@ -54,8 +59,8 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
             lookAction.performed += OnLookPerformed;
         }
         if (onPeriscopePossess != null) onPeriscopePossess.RaiseEvent();
-        activeCamera.BeginPeriscopeControl();
-        activeCamera.EnableCamera();
+        _periscopeCameraAnchorSo.phosphorusCameraComponent.BeginPeriscopeControl();
+        _periscopeCameraAnchorSo.phosphorusCameraComponent.EnableCamera();
     }
 
     public void UnPossess()
@@ -74,10 +79,10 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
                 _currentPlayer.Input.SwitchCurrentActionMap(playerMapName);
             }
         }
-        if (activeCamera != null)
+        if (_periscopeCameraAnchorSo.phosphorusCameraComponent  != null)
         {
-            activeCamera.EndPeriscopeControl();
-            activeCamera.ForceDisable();
+            _periscopeCameraAnchorSo.phosphorusCameraComponent.EndPeriscopeControl();
+            _periscopeCameraAnchorSo.phosphorusCameraComponent.ForceDisable();
         }
         if (onPeriscopeUnpossess != null) onPeriscopeUnpossess.RaiseEvent();
         _currentPlayer = null;
@@ -89,33 +94,28 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
 
     private void OnPhotoClickStarted(InputAction.CallbackContext context)
     {
-        if (activeCamera == null) return;
-        if (!activeCamera.CanTakePhoto())
+        if (_periscopeCameraAnchorSo.phosphorusCameraComponent  == null) return;
+        if (!_periscopeCameraAnchorSo.phosphorusCameraComponent.CanTakePhoto())
         {
             Log.Info("Photo Input Blocked - No Energy");
             return;
         }
-        activeCamera.TryTakePhoto();
+        _periscopeCameraAnchorSo.phosphorusCameraComponent.TryTakePhoto();
         if (flashEffect != null) flashEffect.PlayFlash();
         if (_exitRoutine != null) StopCoroutine(_exitRoutine);
-        _exitRoutine = StartCoroutine(ExitAfterPhoto());
     }
 
     private void OnCancelStarted(InputAction.CallbackContext context)
     {
         UnPossess();
     }
-    private IEnumerator ExitAfterPhoto()
-    {
-        yield return new WaitForSeconds(activeCamera.GetVisibleDuration());
-        _exitRoutine = null;
-        UnPossess();
-    }
+    
     private void OnLookPerformed(InputAction.CallbackContext context)
     {
         Vector2 delta = context.ReadValue<Vector2>();
 
-        activeCamera.Rotate(delta);
+        _periscopeCameraAnchorSo.phosphorusCameraComponent.Rotate(delta);
     }
+    
     #endregion
 }

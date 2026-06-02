@@ -1,10 +1,10 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PhosphorusCamera : MonoBehaviour
 {
     [Header("References")]
+    [SerializeField] private PeriscopeCameraAnchorSO periscopeCameraAnchorSo;
     [SerializeField] private Camera exteriorCamera;
 
     [Header("Camera Settings")]
@@ -21,16 +21,32 @@ public class PhosphorusCamera : MonoBehaviour
     [SerializeField] private Camera mainCamera;
 
     private EnergyStatus _energyStatus = EnergyStatus.Full;
-    private bool _isProcessingPhoto = false;
-
+    private bool _isProcessingPhoto;
+    private bool _isPossessingCamera;
     private float _yaw;
     private float _pitch;
-    private bool _isPossessingCamera = false;
+    
     #region Startup
 
     private void Start()
     {
-        if (exteriorCamera != null) exteriorCamera.enabled = false;
+        if (exteriorCamera != null)
+        {
+            exteriorCamera.enabled = false;
+        }
+        else
+        {
+            Log.Warning("[PhosphorusCamera]: No Exterior Camera");
+        }
+        
+        if (periscopeCameraAnchorSo != null)
+        {
+            periscopeCameraAnchorSo.phosphorusCameraComponent = this;
+        }
+        else
+        {
+            Log.Warning("[PhosphorusCamera]: No PeriscopeCameraAnchor");
+        }
     }
 
     private void OnEnable()
@@ -100,7 +116,7 @@ public class PhosphorusCamera : MonoBehaviour
         if (_pitch > 180f) _pitch -= 360f;
     }
 
-    public void DisableCamera()
+    private void DisableCamera()
     {
         exteriorCamera.enabled = false;
         if (mainCamera != null) mainCamera.enabled = true;
@@ -111,10 +127,7 @@ public class PhosphorusCamera : MonoBehaviour
         _isProcessingPhoto = false;
         DisableCamera();
     }
-    public float GetVisibleDuration()
-    {
-        return cameraPropertyData._VisibleDuration;
-    }
+
     public bool CanTakePhoto()
     {
         return _energyStatus != EnergyStatus.Empty && !_isProcessingPhoto;
@@ -129,4 +142,12 @@ public class PhosphorusCamera : MonoBehaviour
         _isPossessingCamera = false;
     }
     #endregion
+    
+    /*
+    public float GetVisibleDuration() //TODO: Not Used Yet, but keep just in case.
+    {
+        return cameraPropertyData._VisibleDuration;
+    }
+    */
+
 }
