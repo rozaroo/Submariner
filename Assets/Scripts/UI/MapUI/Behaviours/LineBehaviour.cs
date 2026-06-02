@@ -1,35 +1,38 @@
-using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
-public class LineBehaviour : MonoBehaviour, ISetup
+public class LineBehaviour : MonoBehaviour, ISetup, IResettable
 {
-    private float lineWidth = 5f;
-    private Color lineColor = Color.crimson;
+    private float _lineWidth = 5f;
+    private Color _lineColor = Color.crimson;
     private GameObject _lineObject;
+    
     private RectTransform _selfRectTransform;
+    private RectTransform _originRectTransform;
     private RectTransform _targetRectTransform;
-    private Image lineImage;
-    public bool IsInitialized { get; }
+    
+    private Image _lineImage;
+    public bool IsInitialized { get; private set; }
 
     private void Awake()
     {
         _lineObject = new GameObject("LineObject");
-        lineImage = _lineObject.AddComponent<Image>();
-        lineImage.color = lineColor;
+        _lineImage = _lineObject.AddComponent<Image>();
+        _lineImage.color = _lineColor;
         _selfRectTransform = _lineObject.GetComponent<RectTransform>();
     }
 
-    public void Setup() => Setup(lineWidth, lineColor, null);
+    public void Setup() => Setup(_lineWidth, _lineColor, null);
 
     public void Setup(float width, Color color, Material material)
     {
-        lineWidth = width;
-        lineColor = color;
-        lineImage.color = lineColor;
+        if (IsInitialized) return;
+        IsInitialized = true;
+        _lineWidth = width;
+        _lineColor = color;
+        _lineImage.color = _lineColor;
         if (material != null)
-            lineImage.material = material;
+            _lineImage.material = material;
     }
 
     public void SetContainer(GameObject container)
@@ -38,13 +41,29 @@ public class LineBehaviour : MonoBehaviour, ISetup
             _lineObject.transform.SetParent(container.transform,false);
     }
 
-    public void SetTarget(RectTransform _origin, RectTransform target)
+    public void SetTarget(RectTransform origin, RectTransform target)
     {
-        var origin = _origin;
+        _originRectTransform = origin;
         _targetRectTransform = target;
-        SetPosition(origin);
-        SetRotation(origin);
-        SetScale(origin);
+        
+        _lineObject.SetActive(true); 
+        UpdateLineTransform(); 
+    }
+    
+    private void LateUpdate()
+    {
+        if (_lineObject != null && _lineObject.activeSelf && 
+            _originRectTransform != null && _targetRectTransform != null)
+        {
+            UpdateLineTransform();
+        }
+    }
+    
+    private void UpdateLineTransform()
+    {
+        SetPosition(_originRectTransform);
+        SetRotation(_originRectTransform);
+        SetScale(_originRectTransform);
     }
     
     [ContextMenu("RectTransform/Set Position")]
@@ -71,12 +90,17 @@ public class LineBehaviour : MonoBehaviour, ISetup
     public void SetScale(RectTransform origin)
     {
         float distance = Vector2.Distance(origin.anchoredPosition, _targetRectTransform.anchoredPosition);
-        _selfRectTransform.sizeDelta = new Vector2(distance, lineWidth);
+        _selfRectTransform.sizeDelta = new Vector2(distance, _lineWidth);
     }
+    
 
-    public void OnDestroyLine()
+    public void ResetState()
     {
-        Destroy(_lineObject);
-        Destroy(gameObject);
+        if (_lineObject != null)
+        {
+            _lineObject.SetActive(false);
+        }
+        _targetRectTransform = null; 
+        _originRectTransform = null;
     }
 }

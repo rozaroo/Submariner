@@ -13,7 +13,7 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
     [SerializeField] private string stationMapName;
 
     [Header("Property Settings")] 
-    [SerializeField] private MapManager _map;
+    [SerializeField] private MapUIManager mapUI;
     
     [Header("Input Settings")]
     [SerializeField] private string exitActionName;
@@ -42,7 +42,7 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
         {
             _currentPlayer.CamController.ForceMoveCamera(cameraAnchor.position, transitionDuration);
             _currentPlayer.CamController.ForceLookInDirection(directionAnchor.position, transitionDuration);
-            _map.MapCanvas.worldCamera = _currentPlayer.CamController.MainCamera;
+            mapUI.MapCanvas.worldCamera = _currentPlayer.CamController.MainCamera;
         }
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -64,7 +64,7 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
                 _currentPlayer.CamController.ReturnToStartingPosition(transitionDuration);
                 _currentPlayer.CamController.enabled = true;
             }
-            _map.MapCanvas.worldCamera = null;
+            mapUI.MapCanvas.worldCamera = null;
             _currentPlayer = null;
         }
         Cursor.lockState = CursorLockMode.Locked;

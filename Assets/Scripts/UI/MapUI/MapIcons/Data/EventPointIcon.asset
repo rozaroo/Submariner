@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fedae8dfc2207234bbd9aa71a004296f, type: 3}
   m_Name: EventPointIcon
   m_EditorClassIdentifier: 
+  startsVisible: 1
+  sonarInteractionRule: 3
   sprite: {fileID: 21300000, guid: 1eabed13bba90f34db550167fe191282, type: 3}
   material: {fileID: 0}
   tintColor: {r: 1, g: 0, b: 0.01760149, a: 1}
   baseSize: {x: 8, y: 8}
+  rotationOffset: 0
   iconBehaviours: []

@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fedae8dfc2207234bbd9aa71a004296f, type: 3}
   m_Name: SubmarineIcon
   m_EditorClassIdentifier: 
+  startsVisible: 1
+  sonarInteractionRule: 3
   sprite: {fileID: 21300000, guid: 3b4f49ce32b67af41bba09207b3c2ff5, type: 3}
   material: {fileID: 0}
   tintColor: {r: 0, g: 0, b: 0, a: 1}
   baseSize: {x: 16, y: 16}
   rotationOffset: 0
   iconBehaviours:
-  - {fileID: 11400000, guid: d13d24b2635b16346b2bd8939735b39d, type: 2}
+  - {fileID: 11400000, guid: 387c92b5ac6419a4ba7e86237b56b621, type: 2}
+  - {fileID: 11400000, guid: 4968814b3b7deba468ef56e3367f6532, type: 2}

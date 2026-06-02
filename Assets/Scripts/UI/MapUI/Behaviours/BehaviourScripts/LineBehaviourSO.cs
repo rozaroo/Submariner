@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Map/Behaviours/LineBehaviour")]
-public class LineBehaviourSO : IconBehaviourSO
+[CreateAssetMenu(menuName = "MapUI/Behaviours/LineBehaviour")]
+public class LineBehaviourComponentSo : IconBehaviourSO
 {
     [SerializeField] private float lineWidth;
     [SerializeField] private Color lineColor;

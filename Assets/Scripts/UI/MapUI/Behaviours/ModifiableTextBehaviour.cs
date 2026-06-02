@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class ModifiableTextBehaviour : MonoBehaviour, ISetup
+public class ModifiableTextBehaviour : MonoBehaviour, ISetup, IResettable
 {
     [SerializeField] private string _textDisplay;
     [SerializeField] private float _fontSize = 2f;
@@ -51,4 +51,11 @@ public class ModifiableTextBehaviour : MonoBehaviour, ISetup
         _textRectTransform.anchoredPosition = Vector2.zero;
     }
 
+    public void ResetState()
+    {
+        if (_textComponent != null)
+        {
+            _textComponent.text = string.Empty;
+        }
+    }
 }
