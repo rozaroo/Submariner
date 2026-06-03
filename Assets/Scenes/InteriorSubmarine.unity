@@ -901,6 +901,10 @@ PrefabInstance:
       propertyPath: _inventorySystem
       value: 
       objectReference: {fileID: 334924990}
+    - target: {fileID: 2840888752674136054, guid: 45c12e2cd143bca45b4aa14fbbdd1952, type: 3}
+      propertyPath: cameraController
+      value: 
+      objectReference: {fileID: 1983122236}
     - target: {fileID: 3246600704839594514, guid: 45c12e2cd143bca45b4aa14fbbdd1952, type: 3}
       propertyPath: m_OcclusionCulling
       value: 0
@@ -956,6 +960,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1983122236 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2988871602860453287, guid: 45c12e2cd143bca45b4aa14fbbdd1952, type: 3}
+  m_PrefabInstance: {fileID: 1495644453}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb41d959a1f4bac43ab1b01fd5ec98c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &2039288690 stripped

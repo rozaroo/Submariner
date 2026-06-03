@@ -40,8 +40,7 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
         
         if (_currentPlayer.camController != null)
         {
-            _currentPlayer.camController.ForceMoveCamera(cameraAnchor.position, transitionDuration);
-            _currentPlayer.camController.ForceLookInDirection(directionAnchor.position, transitionDuration);
+            _currentPlayer.camController.ForceMoveLookCamera(cameraAnchor.position,directionAnchor.position, transitionDuration);
             mapUI.MapCanvas.worldCamera = _currentPlayer.camController.MainCamera;
         }
         Cursor.lockState = CursorLockMode.None;

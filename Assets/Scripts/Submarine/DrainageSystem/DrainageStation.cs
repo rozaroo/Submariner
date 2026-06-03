@@ -116,8 +116,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         if (_currentPlayer.camController != null)
         {
             _playerCamera = _currentPlayer.camController.MainCamera;
-            _currentPlayer.camController.ForceMoveCamera(cameraAnchor.position, transitionDuration);
-            _currentPlayer.camController.ForceLookInDirection(directionAnchor.position, transitionDuration);
+            _currentPlayer.camController.ForceMoveLookCamera(cameraAnchor.position,directionAnchor.position, transitionDuration);
         }
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

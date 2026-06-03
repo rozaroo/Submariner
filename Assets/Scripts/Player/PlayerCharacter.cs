@@ -56,16 +56,16 @@ public class PlayerCharacter : MonoBehaviour
         
         Cursor.lockState = CursorLockMode.Locked;
         
-        /*var interactionAction = _playerInput.actions[_interactionActionName];
+        var interactionAction = _playerInput.actions[interactionActionName];
         interactionAction.started += TryInteractRaycast;
         
-        var dropAction = _playerInput.actions[_dropActionName];
+        var dropAction = _playerInput.actions[dropActionName];
         dropAction.started += TryDropItem;
         
-        var useAction = _playerInput.actions[_useActionName];
+        var useAction = _playerInput.actions[useActionName];
         useAction.performed += TryUseItem;
         useAction.started   += OnUseStarted;
-        useAction.canceled  += OnUseReleased;*/
+        useAction.canceled  += OnUseReleased;
     }
 
     private void Update()

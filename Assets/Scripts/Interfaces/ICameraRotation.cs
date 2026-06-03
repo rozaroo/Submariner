@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public interface ICameraRotation
 {
     float Yaw { get; set; }
