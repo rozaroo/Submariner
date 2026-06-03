@@ -3,25 +3,26 @@ using UnityEngine;
 
 public class WorldMapElement : MonoBehaviour, IWorldElement, ISetup
 {
-    public MapAssetSO MapAsset { get; private set; }
     public bool IsInitialized { get; private set; }
-    public Vector3 Position => transform.position;
-    public Vector3 Rotation => transform.rotation.eulerAngles;
-
-    public SonarDetectionMode SonarDetectionMode =>
-        MapAsset != null ? MapAsset.sonarInteractionRule : SonarDetectionMode.Both;
+    public Vector3 position => transform.position;
+    public Vector3 rotation => transform.rotation.eulerAngles;
+    public SonarDetectionMode sonarDetectionMode { get; private set; } = SonarDetectionMode.None;
 
     public event Action<IWorldElement> OnElementDestroyed;
 
     private void OnDestroy() => OnElementDestroyed?.Invoke(this);
 
-    public void Setup() => Setup(MapAsset);
-
-    public void Setup(MapAssetSO mapAsset)
+    public void Setup()
     {
         if (IsInitialized) return;
+        Setup(SonarDetectionMode.None);
+    }
+    
+    public void Setup(SonarDetectionMode sDetectionMode)
+    {
+        if (IsInitialized) return;
+        sonarDetectionMode = sDetectionMode;
         IsInitialized = true;
-        MapAsset = mapAsset;
     }
 
 #if UNITY_EDITOR
@@ -29,8 +30,7 @@ public class WorldMapElement : MonoBehaviour, IWorldElement, ISetup
     {
         float radius = 1f;
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(Position, radius);
+        Gizmos.DrawSphere(position, radius);
     }
 #endif
 }
-

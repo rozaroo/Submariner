@@ -47,11 +47,11 @@ public class SubmarineSonar : MonoBehaviour, ISonarProvider
             for (int i = 0; i < _worldTargets.Count; i++)
             {
                 IWorldElement target = _worldTargets[i];
-                SonarDetectionMode interactionMode = target.SonarDetectionMode;
+                SonarDetectionMode interactionMode = target.sonarDetectionMode;
 
                 if (interactionMode == SonarDetectionMode.None) continue;
 
-                float sqrDistance = (target.Position - _selfTransform.position).sqrMagnitude;
+                float sqrDistance = (target.position - _selfTransform.position).sqrMagnitude;
 
                 //Exterior
                 bool isWithinOuter = sqrDistance <= sqrOuterRadius &&

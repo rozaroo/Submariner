@@ -1,22 +1,26 @@
+using UnityEngine;
 
 public class WorldMapUIElement : WorldMapElement, IWorldMapUIElement
 {
+    private MapAssetSO _mapAsset;
     private WorldUIUpdateMode _updateMode = WorldUIUpdateMode.Static;
     private WorldUISyncMode _syncMode = WorldUISyncMode.Linear;
     private float _syncTime;
 
-    public WorldUIUpdateMode UpdateMode => _updateMode;
-    public WorldUISyncMode SyncMode => _syncMode;
-    public float SyncTime => _syncTime;
+    public MapAssetSO mapAsset => _mapAsset;
+    public WorldUIUpdateMode updateMode => _updateMode;
+    public WorldUISyncMode syncMode => _syncMode;
+    public float syncTime => _syncTime;
     
-    public void Setup(WorldUIUpdateMode uMode, WorldUISyncMode sMode, MapAssetSO mapAsset, float syncTime = 0.1f)
+    public void Setup(SonarDetectionMode sMode, MapAssetSO assSo, WorldUIUpdateMode uMode, WorldUISyncMode sModeUI, float sTime = 0.1f)
     {
         if (IsInitialized) return;
         
-        base.Setup(mapAsset);
+        base.Setup(sMode);
 
+        _mapAsset = assSo;
         _updateMode = uMode;
-        _syncMode = sMode;
-        _syncTime = syncTime;
+        _syncMode = sModeUI;
+        _syncTime = sTime;
     }
 }

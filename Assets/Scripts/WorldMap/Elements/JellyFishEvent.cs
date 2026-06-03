@@ -44,10 +44,7 @@ public class JellyFishEvent : WorldMapUIElement, IEvent
         _canMove = canMove;
     }
     
-    public bool CheckConditions()
-    {
-        return true; 
-    }
+    public bool CheckConditions() => true;
 
     public void Execute()
     {

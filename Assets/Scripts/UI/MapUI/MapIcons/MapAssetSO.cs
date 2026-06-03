@@ -6,8 +6,7 @@ public class MapAssetSO : ScriptableObject
 {
     [Header("Visibility Properties")]
     public bool startsVisible = true; 
-    public SonarDetectionMode sonarInteractionRule = SonarDetectionMode.Both;
-    
+
     [Header("Visual Properties")] 
     public Sprite sprite;
     public Material material;
@@ -17,5 +16,4 @@ public class MapAssetSO : ScriptableObject
     
     [Header("Behaviour Properties")]
     public List<IconBehaviourSO> iconBehaviours;
-    
 }

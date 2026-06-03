@@ -91,10 +91,10 @@ public class MapUIManager : MonoBehaviour
     
     private MapIcon GenerateDesiredIcon(IWorldMapUIElement element)
     {
-        MapIcon iconCreated = MapIconFactory.Create(element.MapAsset, _mapRect);
+        MapIcon iconCreated = MapIconFactory.Create(element.mapAsset, _mapRect);
         if (iconCreated != null)
         {
-            iconCreated.IsVisible = element.MapAsset.startsVisible; 
+            iconCreated.IsVisible = element.mapAsset.startsVisible; 
             iconCreated.BindToWorldEntity(element);
             element.OnElementDestroyed += OnElementDestroyed;
             _worldElementIconDictionary.Add(element, iconCreated);
@@ -106,7 +106,7 @@ public class MapUIManager : MonoBehaviour
     
     private void StoreViaUpdateMode(IWorldMapUIElement element)
     {
-        switch (element.UpdateMode)
+        switch (element.updateMode)
         {
             case WorldUIUpdateMode.Static:
                 break;
@@ -115,7 +115,7 @@ public class MapUIManager : MonoBehaviour
                 { 
                     Icon = _worldElementIconDictionary[element],
                     PositionVelocity = Vector2.zero,
-                    SyncTime = element.SyncTime
+                    SyncTime = element.syncTime
                 });
                 if (!_isSyncing)
                 {
@@ -123,7 +123,7 @@ public class MapUIManager : MonoBehaviour
                 }
                 break;
             default:
-                Log.Warning($"[MapUIManager] Unhandled Update Mode Type: {element.UpdateMode}");
+                Log.Warning($"[MapUIManager] Unhandled Update Mode Type: {element.updateMode}");
                 break;
         }
     }
@@ -131,12 +131,12 @@ public class MapUIManager : MonoBehaviour
     private void SetIconPosition(IWorldMapUIElement element, MapIcon icon)
     {
         icon.IconRectTransform.anchoredPosition = 
-            WorldPositionConverter.WorldToMap(element.Position, mapRuntimeData.worldMapSize, mapRuntimeData.uiMapSize);
+            WorldPositionConverter.WorldToMap(element.position, mapRuntimeData.worldMapSize, mapRuntimeData.uiMapSize);
     }
     
     private void SetIconRotation(IWorldMapUIElement element, MapIcon icon)
     {
-        icon.IconRectTransform.localRotation = Quaternion.Euler(0,0,element.Rotation.y);
+        icon.IconRectTransform.localRotation = Quaternion.Euler(0,0,element.rotation.y);
     }
     
     private void ChangeMapSize()
@@ -230,9 +230,9 @@ public class MapUIManager : MonoBehaviour
     private void SyncIconPosition(IWorldMapUIElement element, DynamicIconData data)
     {
         Vector2 targetPos = WorldPositionConverter.WorldToMap(
-            element.Position, mapRuntimeData.worldMapSize, mapRuntimeData.uiMapSize);
+            element.position, mapRuntimeData.worldMapSize, mapRuntimeData.uiMapSize);
     
-        switch (element.SyncMode)
+        switch (element.syncMode)
         {
             case WorldUISyncMode.Linear:
                 data.Icon.IconRectTransform.anchoredPosition = Vector2.MoveTowards(
@@ -252,9 +252,9 @@ public class MapUIManager : MonoBehaviour
     
     private void SyncIconRotation(IWorldMapUIElement element, DynamicIconData data)
     {
-        float targetAngle = -element.Rotation.y;
+        float targetAngle = -element.rotation.y;
     
-        switch (element.SyncMode)
+        switch (element.syncMode)
         {
             case WorldUISyncMode.Linear:
                 data.CurrentAngle = Mathf.MoveTowardsAngle(

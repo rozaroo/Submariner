@@ -9,8 +9,12 @@ public class SubmarineMapElementSO : WorldMapUIElementSO
     {
         GameObject go = Instantiate(submarinePrefab);
         
-        WorldMapUIElement component = go.AddComponent<WorldMapUIElement>();
-        component.Setup(updateMode, syncMode, mapAsset, syncTime);
+        if (!go.TryGetComponent<WorldMapUIElement>(out var component))
+        {
+            component = go.AddComponent<WorldMapUIElement>();
+        }
+        
+        component.Setup(this.SonarDetectionMode, MapAsset, UpdateMode, SyncMode, SyncTime);
         
         return go;
     }

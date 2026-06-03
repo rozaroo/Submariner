@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elementName: SubmarineExterior
   requiredSize: 20
+  sonarDetectionMode: 0
+  mapAsset: {fileID: 11400000, guid: 210ded319ccbfc24cb6e64616799f4dc, type: 2}
   updateMode: 1
   syncMode: 1
-  mapAsset: {fileID: 11400000, guid: 210ded319ccbfc24cb6e64616799f4dc, type: 2}
   syncTime: 0.05
   submarinePrefab: {fileID: 8848763287368147077, guid: 96a53706b124e934194e89062618f32b, type: 3}

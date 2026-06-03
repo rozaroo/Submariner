@@ -1,7 +1,7 @@
 public interface IWorldMapUIElement : IWorldElement 
 {
-    MapAssetSO MapAsset { get; }
-    WorldUIUpdateMode UpdateMode { get; }
-    WorldUISyncMode SyncMode { get; }
-    float SyncTime { get; }
+    MapAssetSO mapAsset { get; }
+    WorldUIUpdateMode updateMode { get; }
+    WorldUISyncMode syncMode { get; }
+    float syncTime { get; }
 }
