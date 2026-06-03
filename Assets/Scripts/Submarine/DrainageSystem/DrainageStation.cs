@@ -102,22 +102,22 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 
     public void Possess()
     {
-        if (_currentPlayer.Input != null)
+        if (_currentPlayer.input != null)
         {
-            _currentPlayer.Input.SwitchCurrentActionMap(stationMapName);
-            var clickAction = _currentPlayer.Input.actions[clickActionName];
-            var exitAction = _currentPlayer.Input.actions[exitActionName];
+            _currentPlayer.input.SwitchCurrentActionMap(stationMapName);
+            var clickAction = _currentPlayer.input.actions[clickActionName];
+            var exitAction = _currentPlayer.input.actions[exitActionName];
             
             clickAction.started += OnClickStarted;
             clickAction.canceled += OnClickCanceled;
             exitAction.started += OnExitPerformed;
         }
         
-        if (_currentPlayer.CamController != null)
+        if (_currentPlayer.camController != null)
         {
-            _playerCamera = _currentPlayer.CamController.MainCamera;
-            _currentPlayer.CamController.ForceMoveCamera(cameraAnchor.position, transitionDuration);
-            _currentPlayer.CamController.ForceLookInDirection(directionAnchor.position, transitionDuration);
+            _playerCamera = _currentPlayer.camController.MainCamera;
+            _currentPlayer.camController.ForceMoveCamera(cameraAnchor.position, transitionDuration);
+            _currentPlayer.camController.ForceLookInDirection(directionAnchor.position, transitionDuration);
         }
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -130,21 +130,21 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     {
         if (_currentPlayer != null)
         {
-            if (_currentPlayer.Input != null)
+            if (_currentPlayer.input != null)
             {
-                var clickAction = _currentPlayer.Input.actions[clickActionName];
-                var exitAction = _currentPlayer.Input.actions[exitActionName];
+                var clickAction = _currentPlayer.input.actions[clickActionName];
+                var exitAction = _currentPlayer.input.actions[exitActionName];
                 
                 clickAction.started -= OnClickStarted;
                 clickAction.canceled -= OnClickCanceled;
                 exitAction.started -= OnExitPerformed;
                 
-                _currentPlayer.Input.SwitchCurrentActionMap(playerMapName);
+                _currentPlayer.input.SwitchCurrentActionMap(playerMapName);
             }
-            if (_currentPlayer.CamController != null) 
+            if (_currentPlayer.camController != null) 
             {
-                _currentPlayer.CamController.ReturnToStartingPosition(transitionDuration);
-                _currentPlayer.CamController.enabled = true;
+                _currentPlayer.camController.ReturnToStartingPosition(transitionDuration);
+                _currentPlayer.camController.enabled = true;
             }
         }
         Cursor.lockState = CursorLockMode.Locked;
@@ -197,7 +197,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     private void HandleControlDragging()
     {
         if (_currentDraggedControls == null || Mouse.current == null) return;
-        _mouseDelta = _currentPlayer.Input.actions[pointerDeltaActionName].ReadValue<Vector2>();
+        _mouseDelta = _currentPlayer.input.actions[pointerDeltaActionName].ReadValue<Vector2>();
         float mouseDeltaY = _mouseDelta.y;
         _currentDraggedControls.OnActionDrag(mouseDeltaY);
     }

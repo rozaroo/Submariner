@@ -35,7 +35,7 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
         _currentPlayer = player;
         if (_periscopeCameraAnchorSo != null && player != null)
         {
-            Camera playerCam = player.CamController.MainCamera;
+            Camera playerCam = player.camController.MainCamera;
             if (playerCam != null)
             {
                 _periscopeCameraAnchorSo.playerCamera = playerCam;
@@ -54,16 +54,16 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
             return;
         }
         enabled = true;
-        if (_currentPlayer.Input != null)
+        if (_currentPlayer.input != null)
         {
-            _currentPlayer.Input.SwitchCurrentActionMap(stationMapName);
-            var clickAction = _currentPlayer.Input.actions[takePhotoActionName];
+            _currentPlayer.input.SwitchCurrentActionMap(stationMapName);
+            var clickAction = _currentPlayer.input.actions[takePhotoActionName];
             clickAction.started += OnPhotoClickStarted;
             
-            var cancelAction = _currentPlayer.Input.actions[exitActionName];
+            var cancelAction = _currentPlayer.input.actions[exitActionName];
             if (cancelAction != null) cancelAction.started += OnCancelStarted;
             
-            var lookAction = _currentPlayer.Input.actions[lookActionName];
+            var lookAction = _currentPlayer.input.actions[lookActionName];
             lookAction.performed += OnLookPerformed;
         }
         if (onPeriscopePossess != null) onPeriscopePossess.RaiseEvent();
@@ -76,15 +76,15 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
         enabled = false;
         if (_currentPlayer != null)
         {
-            if (_currentPlayer.Input != null)
+            if (_currentPlayer.input != null)
             {
-                var clickAction = _currentPlayer.Input.actions[takePhotoActionName];
+                var clickAction = _currentPlayer.input.actions[takePhotoActionName];
                 clickAction.started -= OnPhotoClickStarted;
-                var cancelAction = _currentPlayer.Input.actions[exitActionName];
+                var cancelAction = _currentPlayer.input.actions[exitActionName];
                 if (cancelAction != null) cancelAction.started -= OnCancelStarted;
-                var lookAction = _currentPlayer.Input.actions[lookActionName];
+                var lookAction = _currentPlayer.input.actions[lookActionName];
                 lookAction.performed -= OnLookPerformed;
-                _currentPlayer.Input.SwitchCurrentActionMap(playerMapName);
+                _currentPlayer.input.SwitchCurrentActionMap(playerMapName);
             }
         }
         if (_periscopeCameraAnchorSo.phosphorusCameraComponent  != null)

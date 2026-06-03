@@ -9,7 +9,7 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
 
     public void Interact(PlayerCharacter player)
     {
-        player.InventorySystem.TryGetHeldItem(out OxygenTank oxygenTankItem);
+        player.inventorySystem.TryGetHeldItem(out OxygenTank oxygenTankItem);
         if (oxygenTankItem != null)
         {
             DockTank(oxygenTankItem);

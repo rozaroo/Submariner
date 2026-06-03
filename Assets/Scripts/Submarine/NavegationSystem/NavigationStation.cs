@@ -31,18 +31,18 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
 
     public void Possess()
     {
-        if (_currentPlayer.Input != null)
+        if (_currentPlayer.input != null)
         {
-            _currentPlayer.Input.SwitchCurrentActionMap(stationMapName);
-            var exitAction = _currentPlayer.Input.actions[exitActionName];
+            _currentPlayer.input.SwitchCurrentActionMap(stationMapName);
+            var exitAction = _currentPlayer.input.actions[exitActionName];
             exitAction.started += OnExitPerformed;
         }
         
-        if (_currentPlayer.CamController != null)
+        if (_currentPlayer.camController != null)
         {
-            _currentPlayer.CamController.ForceMoveCamera(cameraAnchor.position, transitionDuration);
-            _currentPlayer.CamController.ForceLookInDirection(directionAnchor.position, transitionDuration);
-            mapUI.MapCanvas.worldCamera = _currentPlayer.CamController.MainCamera;
+            _currentPlayer.camController.ForceMoveCamera(cameraAnchor.position, transitionDuration);
+            _currentPlayer.camController.ForceLookInDirection(directionAnchor.position, transitionDuration);
+            mapUI.MapCanvas.worldCamera = _currentPlayer.camController.MainCamera;
         }
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -53,16 +53,16 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
     {
         if (_currentPlayer != null)
         {
-            if (_currentPlayer.Input != null)
+            if (_currentPlayer.input != null)
             {
-                var exitAction = _currentPlayer.Input.actions[exitActionName];
+                var exitAction = _currentPlayer.input.actions[exitActionName];
                 exitAction.started -= OnExitPerformed;
-                _currentPlayer.Input.SwitchCurrentActionMap(playerMapName);
+                _currentPlayer.input.SwitchCurrentActionMap(playerMapName);
             }
-            if (_currentPlayer.CamController != null) 
+            if (_currentPlayer.camController != null) 
             {
-                _currentPlayer.CamController.ReturnToStartingPosition(transitionDuration);
-                _currentPlayer.CamController.enabled = true;
+                _currentPlayer.camController.ReturnToStartingPosition(transitionDuration);
+                _currentPlayer.camController.enabled = true;
             }
             mapUI.MapCanvas.worldCamera = null;
             _currentPlayer = null;

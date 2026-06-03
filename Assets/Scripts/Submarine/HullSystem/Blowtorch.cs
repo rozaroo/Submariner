@@ -26,8 +26,8 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
 
     public void Interact(PlayerCharacter player)
     {
-        player.InventorySystem.TryPickUp(this);
-        _camera = player.CamController.MainCamera;
+        player.inventorySystem.TryPickUp(this);
+        _camera = player.camController.MainCamera;
     }
 
     public void OnPickUp()

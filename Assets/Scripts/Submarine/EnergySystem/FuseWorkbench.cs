@@ -90,23 +90,23 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
             return;
         }
 
-        if (_currentPlayer.Input != null)
+        if (_currentPlayer.input != null)
         {
-            _currentPlayer.Input.SwitchCurrentActionMap(stationMapName);
+            _currentPlayer.input.SwitchCurrentActionMap(stationMapName);
 
-            InputAction clickAction = _currentPlayer.Input.actions[clickActionName];
-            InputAction exitAction = _currentPlayer.Input.actions[exitActionName];
+            InputAction clickAction = _currentPlayer.input.actions[clickActionName];
+            InputAction exitAction = _currentPlayer.input.actions[exitActionName];
 
             clickAction.started += OnClickStarted;
             clickAction.canceled += OnClickCanceled;
             exitAction.started += OnExitPerformed;
         }
 
-        if (_currentPlayer.CamController != null)
+        if (_currentPlayer.camController != null)
         {
-            _playerCamera = _currentPlayer.CamController.MainCamera;
-            _currentPlayer.CamController.ForceMoveCamera(cameraAnchor.position, transitionDuration);
-            _currentPlayer.CamController.ForceLookInDirection(directionAnchor.position, transitionDuration);
+            _playerCamera = _currentPlayer.camController.MainCamera;
+            _currentPlayer.camController.ForceMoveCamera(cameraAnchor.position, transitionDuration);
+            _currentPlayer.camController.ForceLookInDirection(directionAnchor.position, transitionDuration);
         }
 
         Cursor.lockState = CursorLockMode.None;
@@ -125,22 +125,22 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     {
         if (_currentPlayer != null)
         {
-            if (_currentPlayer.Input != null)
+            if (_currentPlayer.input != null)
             {
-                InputAction clickAction = _currentPlayer.Input.actions[clickActionName];
-                InputAction exitAction = _currentPlayer.Input.actions[exitActionName];
+                InputAction clickAction = _currentPlayer.input.actions[clickActionName];
+                InputAction exitAction = _currentPlayer.input.actions[exitActionName];
 
                 clickAction.started -= OnClickStarted;
                 clickAction.canceled -= OnClickCanceled;
                 exitAction.started -= OnExitPerformed;
 
-                _currentPlayer.Input.SwitchCurrentActionMap(playerMapName);
+                _currentPlayer.input.SwitchCurrentActionMap(playerMapName);
             }
 
-            if (_currentPlayer.CamController != null)
+            if (_currentPlayer.camController != null)
             {
-                _currentPlayer.CamController.ReturnToStartingPosition(transitionDuration);
-                _currentPlayer.CamController.enabled = true;
+                _currentPlayer.camController.ReturnToStartingPosition(transitionDuration);
+                _currentPlayer.camController.enabled = true;
             }
         }
 

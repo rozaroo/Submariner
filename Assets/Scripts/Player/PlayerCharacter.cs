@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,44 +6,57 @@ public class PlayerCharacter : MonoBehaviour
 {
     [Header("Control Settings")]
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private string _moveActionName = "Move";
-    [SerializeField] private string _interactionActionName = "Interact";
-    [SerializeField] private string _dropActionName = "Drop";
-    [SerializeField] private string _useActionName = "Click";
-    
-    [Header("References Settings")] 
-    [SerializeField] CameraController _cameraController;
-    private PlayerInput _playerInput;
-    private CharacterController _controller;
-    
-    [Header("Movement Settings")]
-    private Vector2 _moveDirectionInput;
-    private float _moveVelocityY;
-    private float _gravity = -9.81f;
+    [SerializeField] private string moveActionName = "Move";
+    [SerializeField] private string interactionActionName = "Interact";
+    [SerializeField] private string dropActionName = "Drop";
+    [SerializeField] private string useActionName = "Click";
     
     [Header("Interaction Settings (Raycast)")]
-    [SerializeField] private Camera playerCamera; //INTERACTION ONLY
     [SerializeField] private float interactionDistance = 2.5f;
     [SerializeField] private LayerMask interactableLayer;
     
-    [Header("Inventory")]
-    [SerializeField] private InventorySystem _inventorySystem;
+    private PlayerInput _playerInput;
+    private InputAction _movementAction;
     
+    private CharacterController _controller;
+    private CameraController _cameraController;
+    private InventorySystem _inventorySystem;
     private bool _isHolding = false;
+
+    private StateMachine _stateMachine;
+    private IState _movementState;
     
-    public PlayerInput Input => _playerInput;
-    public CameraController CamController => _cameraController;
-    public CharacterController Controller => _controller;
-    public InventorySystem InventorySystem => _inventorySystem;
+    public PlayerInput input => _playerInput;
+    public CameraController camController => _cameraController;
+    public InventorySystem inventorySystem => _inventorySystem;
     
     private void Start()
     {
         _playerInput = GetComponent<PlayerInput>();
+        if (_playerInput != null)
+        {
+            _movementAction = _playerInput.actions.FindAction(moveActionName);
+        }
         _controller = GetComponent<CharacterController>();
+        _cameraController = GetComponent<CameraController>();
         _inventorySystem = GetComponent<InventorySystem>();
+
+        PlayerMovementContext playerMovementContext = new PlayerMovementContext(
+            transform,
+            moveSpeed,
+            _movementAction,
+            _controller,
+            _playerInput
+        );
+
+        _stateMachine = new StateMachine();
+        _movementState = new PlayerMovementState(playerMovementContext);
+        
+        _stateMachine.ChangeState(_movementState);
+        
         Cursor.lockState = CursorLockMode.Locked;
         
-        var interactionAction = _playerInput.actions[_interactionActionName];
+        /*var interactionAction = _playerInput.actions[_interactionActionName];
         interactionAction.started += TryInteractRaycast;
         
         var dropAction = _playerInput.actions[_dropActionName];
@@ -53,21 +65,19 @@ public class PlayerCharacter : MonoBehaviour
         var useAction = _playerInput.actions[_useActionName];
         useAction.performed += TryUseItem;
         useAction.started   += OnUseStarted;
-        useAction.canceled  += OnUseReleased;
+        useAction.canceled  += OnUseReleased;*/
     }
 
     private void Update()
     {
-        _moveDirectionInput = _playerInput.actions[_moveActionName].ReadValue<Vector2>();
-        Move();
-
+        _stateMachine.Update();
         if (_isHolding)
-            InventorySystem.UseItemHold();
+            inventorySystem.UseItemHold();
     }
     
     private void TryInteractRaycast(InputAction.CallbackContext context)
     {
-        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+        Ray ray = new Ray(_cameraController.MainCamera.transform.position, _cameraController.MainCamera.transform.forward);
         
         if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactableLayer))
         {
@@ -84,20 +94,9 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
     
-    private void Move()
-    {
-        if (_cameraController.IsTransitioning) return;
-
-        Vector3 move = transform.right * _moveDirectionInput.x + transform.forward * _moveDirectionInput.y;
-        if (_controller.isGrounded && _moveVelocityY < 0) _moveVelocityY = -2f;
-        _moveVelocityY += _gravity * Time.deltaTime;
-        move.y = _moveVelocityY;
-        _controller.Move(move * moveSpeed * Time.deltaTime);
-    }
-
     private void TryDropItem(InputAction.CallbackContext context)
     {
-        InventorySystem.DropItem();
+        inventorySystem.DropItem();
     }
     
     private void OnUseStarted(InputAction.CallbackContext ctx)
@@ -114,7 +113,7 @@ public class PlayerCharacter : MonoBehaviour
         else
         {
             _isHolding = false;
-            InventorySystem.UseItem();
+            inventorySystem.UseItem();
         }
     }
 
@@ -123,7 +122,7 @@ public class PlayerCharacter : MonoBehaviour
         if (_isHolding)
         {
             _isHolding = false;
-            InventorySystem.UseItemReleased();
+            inventorySystem.UseItemReleased();
         }
     }
 }

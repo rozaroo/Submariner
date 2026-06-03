@@ -56,7 +56,7 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
             return;
         }
 
-        player.InventorySystem.TryPickUp(this);
+        player.inventorySystem.TryPickUp(this);
     }
 
     public void OnPickUp()
