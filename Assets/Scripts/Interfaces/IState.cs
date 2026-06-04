@@ -1,3 +1,5 @@
+using System;
+
 public interface IState
 {
     void OnEnter();

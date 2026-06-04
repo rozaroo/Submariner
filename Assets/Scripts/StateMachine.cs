@@ -13,8 +13,13 @@ public class StateMachine
         currentState = state;
         currentState.OnEnter();
     }
-    
-    public void Update() => currentState?.Update();
+
+    public void Update()
+    {
+        currentState?.Update();
+        if (currentState is ITransferable { isComplete: true } transferableState) 
+            ChangeState(transferableState.nextState);
+    }
     
     public void LateUpdate() => currentState?.LateUpdate();
 }

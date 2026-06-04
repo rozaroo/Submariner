@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class CameraContext
 {
-    public ICameraRotation CameraRotation { get; private set; }
+    public ICameraRotation CameraRotationData { get; private set; }
     public Transform CameraTransform { get; private set; }
     public Transform BodyTransform { get; private set; }
     public float LookSensitivity { get; private set; }
@@ -11,10 +11,10 @@ public class CameraContext
     public float LookLerpSpeed { get; private set; }
     public InputAction LookAction { get; private set; }
 
-    public CameraContext(ICameraRotation cameraRotation, Transform cameraTransform, Transform bodyTransform, float lookSensitivity, 
+    public CameraContext(ICameraRotation cameraRotationData, Transform cameraTransform, Transform bodyTransform, float lookSensitivity, 
         float upDownLookLimit, float lookLerpSpeed, InputAction lookAction)
     {
-        CameraRotation = cameraRotation;
+        CameraRotationData = cameraRotationData;
         CameraTransform = cameraTransform;
         BodyTransform = bodyTransform;
         LookSensitivity = lookSensitivity;

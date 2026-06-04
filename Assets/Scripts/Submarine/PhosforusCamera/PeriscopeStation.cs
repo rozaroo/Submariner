@@ -24,6 +24,11 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     private PhosphorusCamera _componentCamera;
     private PlayerCharacter _currentPlayer;
     private Coroutine _exitRoutine;
+    
+    public string MapName => stationMapName;
+    public Transform CameraAnchor { get; }
+    public Transform DirectionAnchor { get; }
+    public float TransitionDuration { get; }
 
     private void Awake()
     {
@@ -32,68 +37,54 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     
     public void Interact(PlayerCharacter player)
     {
-        _currentPlayer = player;
-        if (_periscopeCameraAnchorSo != null && player != null)
-        {
-            Camera playerCam = player.camController.MainCamera;
-            if (playerCam != null)
-            {
-                _periscopeCameraAnchorSo.playerCamera = playerCam;
-            }
-        }
-        Possess();
-    }
-
-    #region PosessionLogic
-
-    public void Possess()
-    {
         if (_periscopeCameraAnchorSo.phosphorusCameraComponent == null)
         {
             Log.Warning("[Periscope Station]: No PhosphorusCamera]");
             return;
         }
+        player.OnPossessionState(this, false);
+    }
+    
+    #region PosessionLogic
+    
+    
+    public void Possess(PlayerCharacter player)
+    {
+        _currentPlayer = player;
+        _periscopeCameraAnchorSo.playerCamera = player.camController.MainCamera;
+        
+        InputAction clickAction = _currentPlayer.input.actions[takePhotoActionName];
+        clickAction.started += OnPhotoClickStarted;
+            
+        InputAction cancelAction = _currentPlayer.input.actions[exitActionName];
+        cancelAction.started += OnExitStarted;
+            
+        InputAction lookAction = _currentPlayer.input.actions[lookActionName];
+        lookAction.performed += OnLookPerformed;
+        
         enabled = true;
-        if (_currentPlayer.input != null)
-        {
-            _currentPlayer.input.SwitchCurrentActionMap(stationMapName);
-            var clickAction = _currentPlayer.input.actions[takePhotoActionName];
-            clickAction.started += OnPhotoClickStarted;
-            
-            var cancelAction = _currentPlayer.input.actions[exitActionName];
-            if (cancelAction != null) cancelAction.started += OnCancelStarted;
-            
-            var lookAction = _currentPlayer.input.actions[lookActionName];
-            lookAction.performed += OnLookPerformed;
-        }
         if (onPeriscopePossess != null) onPeriscopePossess.RaiseEvent();
         _periscopeCameraAnchorSo.phosphorusCameraComponent.BeginPeriscopeControl();
         _periscopeCameraAnchorSo.phosphorusCameraComponent.EnableCamera();
     }
-
+    
     public void UnPossess()
     {
-        enabled = false;
-        if (_currentPlayer != null)
-        {
-            if (_currentPlayer.input != null)
-            {
-                var clickAction = _currentPlayer.input.actions[takePhotoActionName];
-                clickAction.started -= OnPhotoClickStarted;
-                var cancelAction = _currentPlayer.input.actions[exitActionName];
-                if (cancelAction != null) cancelAction.started -= OnCancelStarted;
-                var lookAction = _currentPlayer.input.actions[lookActionName];
-                lookAction.performed -= OnLookPerformed;
-                _currentPlayer.input.SwitchCurrentActionMap(playerMapName);
-            }
-        }
-        if (_periscopeCameraAnchorSo.phosphorusCameraComponent  != null)
-        {
-            _periscopeCameraAnchorSo.phosphorusCameraComponent.EndPeriscopeControl();
-            _periscopeCameraAnchorSo.phosphorusCameraComponent.ForceDisable();
-        }
+        InputAction clickAction = _currentPlayer.input.actions[takePhotoActionName];
+        clickAction.started -= OnPhotoClickStarted;
+        
+        InputAction cancelAction = _currentPlayer.input.actions[exitActionName];
+        cancelAction.started -= OnExitStarted;
+        
+        InputAction lookAction = _currentPlayer.input.actions[lookActionName];
+        lookAction.performed -= OnLookPerformed;
+        
+        _periscopeCameraAnchorSo.phosphorusCameraComponent.EndPeriscopeControl();
+        _periscopeCameraAnchorSo.phosphorusCameraComponent.ForceDisable();
+        
         if (onPeriscopeUnpossess != null) onPeriscopeUnpossess.RaiseEvent();
         _currentPlayer = null;
+        enabled = false;
     }
 
     #endregion
@@ -103,6 +94,7 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     private void OnPhotoClickStarted(InputAction.CallbackContext context)
     {
         if (_periscopeCameraAnchorSo.phosphorusCameraComponent  == null) return;
+        
         if (!_periscopeCameraAnchorSo.phosphorusCameraComponent.CanTakePhoto())
         {
             return;
@@ -113,9 +105,9 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
         _periscopeCameraAnchorSo.phosphorusCameraComponent.TryTakePhoto();
     }
 
-    private void OnCancelStarted(InputAction.CallbackContext context)
+    private void OnExitStarted(InputAction.CallbackContext context)
     {
-        UnPossess();
+        _currentPlayer.OnUnPossessionState();
     }
     
     private void OnLookPerformed(InputAction.CallbackContext context)

@@ -77,78 +77,52 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     private bool _isTopConnectionSoldered;
     private bool _isBottomConnectionSoldered;
 
+    public string MapName => stationMapName;
+    public Transform CameraAnchor => cameraAnchor;
+    public Transform DirectionAnchor => directionAnchor;
+    public float TransitionDuration => transitionDuration;
+
+
     public void Interact(PlayerCharacter player)
     {
-        _currentPlayer = player;
-        Possess();
+        player.OnPossessionState(this, false);
     }
-
-    public void Possess()
+    
+    public void Possess(PlayerCharacter playerCharacter)
     {
-        if (_currentPlayer == null)
-        {
-            return;
-        }
-
-        if (_currentPlayer.input != null)
-        {
-            _currentPlayer.input.SwitchCurrentActionMap(stationMapName);
-
-            InputAction clickAction = _currentPlayer.input.actions[clickActionName];
-            InputAction exitAction = _currentPlayer.input.actions[exitActionName];
-
-            clickAction.started += OnClickStarted;
-            clickAction.canceled += OnClickCanceled;
-            exitAction.started += OnExitPerformed;
-        }
-
-        if (_currentPlayer.camController != null)
-        {
-            _playerCamera = _currentPlayer.camController.MainCamera;
-            _currentPlayer.camController.ForceMoveLookCamera(cameraAnchor.position,directionAnchor.position, transitionDuration);
-        }
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        _currentPlayer = playerCharacter;
+        _playerCamera = playerCharacter.camController.MainCamera;
+        
+        InputAction clickAction = _currentPlayer.input.actions[clickActionName];
+        InputAction exitAction = _currentPlayer.input.actions[exitActionName];
+        
+        clickAction.started += OnClickStarted;
+        clickAction.canceled += OnClickCanceled;
+        exitAction.started += OnExitPerformed;
 
         if (!_hasGeneratedParts)
         {
             GenerateParts();
         }
-
         EnsureSolderingIron();
         StartHoverTracking();
+        enabled = true;
     }
 
     public void UnPossess()
     {
-        if (_currentPlayer != null)
-        {
-            if (_currentPlayer.input != null)
-            {
-                InputAction clickAction = _currentPlayer.input.actions[clickActionName];
-                InputAction exitAction = _currentPlayer.input.actions[exitActionName];
+        InputAction clickAction = _currentPlayer.input.actions[clickActionName];
+        InputAction exitAction = _currentPlayer.input.actions[exitActionName];
 
-                clickAction.started -= OnClickStarted;
-                clickAction.canceled -= OnClickCanceled;
-                exitAction.started -= OnExitPerformed;
-
-                _currentPlayer.input.SwitchCurrentActionMap(playerMapName);
-            }
-
-            if (_currentPlayer.camController != null)
-            {
-                _currentPlayer.camController.ReturnToStartingPosition(transitionDuration);
-                _currentPlayer.camController.enabled = true;
-            }
-        }
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        clickAction.started -= OnClickStarted;
+        clickAction.canceled -= OnClickCanceled;
+        exitAction.started -= OnExitPerformed;
+        
         StopDrag();
         StopHoverTracking();
         _currentPlayer = null;
         _playerCamera = null;
+        enabled = false;
     }
 
     private void OnClickStarted(InputAction.CallbackContext context)
@@ -189,7 +163,7 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
 
     private void OnExitPerformed(InputAction.CallbackContext context)
     {
-        UnPossess();
+        _currentPlayer.OnUnPossessionState();
     }
 
     private void GenerateParts()
@@ -705,11 +679,4 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         Destroy(_assembledFuse.gameObject);
         _assembledFuse = null;
     }
-}
-
-public enum FuseWorkbenchConnectionType
-{
-    None,
-    TopToCore,
-    BottomToCore
 }

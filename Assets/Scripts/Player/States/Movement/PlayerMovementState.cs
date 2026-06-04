@@ -2,37 +2,31 @@ using UnityEngine;
 
 public class PlayerMovementState : IState
 {
-    private PlayerMovementContext _playerMovementContext;
+    public PlayerMovementContext Context { get; set; }
     private Vector2 _moveDirectionInput;
     private float _moveVelocityY;
     private float _gravity = -9.81f;
     
-    public PlayerMovementState(PlayerMovementContext playerMovementContext) => _playerMovementContext = playerMovementContext;
-    public void OnEnter()
-    {
-        Log.Info("[PlayerMovementState] Enter");
-    }
+    public PlayerMovementState(PlayerMovementContext context) => Context = context;
+    public void OnEnter() { }
 
     public void Update()
     {
-        _moveDirectionInput = _playerMovementContext.MoveAction.ReadValue<Vector2>();
+        _moveDirectionInput = Context.MoveAction.ReadValue<Vector2>();
         Movement();
     }
 
     public void LateUpdate() { }
 
-    public void OnExit()
-    {
-        Log.Info("[PlayerMovementState] Exit");
-    }
+    public void OnExit() { }
     
     private void Movement()
     {
-        Vector3 move = _playerMovementContext.PlayerTransform.right * _moveDirectionInput.x + 
-                       _playerMovementContext.PlayerTransform.forward * _moveDirectionInput.y;
-        if (_playerMovementContext.Controller.isGrounded && _moveVelocityY < 0) _moveVelocityY = -2f;
+        Vector3 move = Context.PlayerTransform.right * _moveDirectionInput.x + 
+                       Context.PlayerTransform.forward * _moveDirectionInput.y;
+        if (Context.Controller.isGrounded && _moveVelocityY < 0) _moveVelocityY = -2f;
         _moveVelocityY += _gravity * Time.deltaTime;
         move.y = _moveVelocityY;
-        _playerMovementContext.Controller.Move(move * _playerMovementContext.MoveSpeed * Time.deltaTime);
+        Context.Controller.Move(move * Context.MoveSpeed * Time.deltaTime);
     }
 }

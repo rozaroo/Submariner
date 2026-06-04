@@ -10,119 +10,80 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private string interactionActionName = "Interact";
     [SerializeField] private string dropActionName = "Drop";
     [SerializeField] private string useActionName = "Click";
-    
+
     [Header("Interaction Settings (Raycast)")]
     [SerializeField] private float interactionDistance = 2.5f;
     [SerializeField] private LayerMask interactableLayer;
-    
-    private PlayerInput _playerInput;
-    private InputAction _movementAction;
-    
-    private CharacterController _controller;
-    private CameraController _cameraController;
-    private InventorySystem _inventorySystem;
-    private bool _isHolding = false;
 
-    private StateMachine _stateMachine;
-    private IState _movementState;
+    private CharacterController _controller;
+
+    private StateMachine _gameplaySm;
+
+    private IState _lockedMovementState;
+
+    private PlayerMovementContext _playerMovementContext;
+    private PlayerGameplayContext _gameplayContext;
     
-    public PlayerInput input => _playerInput;
-    public CameraController camController => _cameraController;
-    public InventorySystem inventorySystem => _inventorySystem;
-    
+    public StateMachine playerMovementSm { get; private set; }
+    public IState movementState { get; private set; }
+    public IState lockedMovementState { get; private set; }
+    public PlayerInput input { get; private set; }
+    public CameraController camController { get; private set; }
+    public InventorySystem inventorySystem { get; private set; }
+
     private void Start()
     {
-        _playerInput = GetComponent<PlayerInput>();
-        if (_playerInput != null)
-        {
-            _movementAction = _playerInput.actions.FindAction(moveActionName);
-        }
-        _controller = GetComponent<CharacterController>();
-        _cameraController = GetComponent<CameraController>();
-        _inventorySystem = GetComponent<InventorySystem>();
+        input     = GetComponent<PlayerInput>();
+        _controller      = GetComponent<CharacterController>();
+        camController = GetComponent<CameraController>();
+        inventorySystem = GetComponent<InventorySystem>();
 
-        PlayerMovementContext playerMovementContext = new PlayerMovementContext(
-            transform,
-            moveSpeed,
-            _movementAction,
-            _controller,
-            _playerInput
-        );
+        //Movement
+        _playerMovementContext = new PlayerMovementContext(
+            transform, moveSpeed,
+            input.actions.FindAction(moveActionName),
+            _controller, input);
 
-        _stateMachine = new StateMachine();
-        _movementState = new PlayerMovementState(playerMovementContext);
-        
-        _stateMachine.ChangeState(_movementState);
-        
+        playerMovementSm = new StateMachine();
+        movementState = new PlayerMovementState(_playerMovementContext);
+        _lockedMovementState = new PlayerLockedMovementState();
+
+        //Gameplay
+        _gameplayContext = new PlayerGameplayContext(
+            this, camController, inventorySystem, input,
+            interactionDistance, interactableLayer,
+            interactionActionName, dropActionName, useActionName);
+
+        _gameplaySm = new StateMachine();
+        _gameplaySm.ChangeState(new PlayerGameplayFreeState(_gameplayContext));
+
         Cursor.lockState = CursorLockMode.Locked;
-        
-        var interactionAction = _playerInput.actions[interactionActionName];
-        interactionAction.started += TryInteractRaycast;
-        
-        var dropAction = _playerInput.actions[dropActionName];
-        dropAction.started += TryDropItem;
-        
-        var useAction = _playerInput.actions[useActionName];
-        useAction.performed += TryUseItem;
-        useAction.started   += OnUseStarted;
-        useAction.canceled  += OnUseReleased;
     }
 
     private void Update()
     {
-        _stateMachine.Update();
-        if (_isHolding)
-            inventorySystem.UseItemHold();
-    }
-    
-    private void TryInteractRaycast(InputAction.CallbackContext context)
-    {
-        Ray ray = new Ray(_cameraController.MainCamera.transform.position, _cameraController.MainCamera.transform.forward);
-        
-        if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactableLayer))
-        {
-            Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 2f);
-            
-            if (hit.collider.TryGetComponent(out IInteractable interactableObject))
-            {
-                interactableObject.Interact(this);
-            }
-        }
-        else
-        {
-            Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red, 2f);
-        }
-    }
-    
-    private void TryDropItem(InputAction.CallbackContext context)
-    {
-        inventorySystem.DropItem();
-    }
-    
-    private void OnUseStarted(InputAction.CallbackContext ctx)
-    {
-        _isHolding = false; // reset
+        _gameplaySm.Update();
+        playerMovementSm.Update();
     }
 
-    private void TryUseItem(InputAction.CallbackContext ctx)
+    private void LateUpdate()
     {
-        if (ctx.interaction is UnityEngine.InputSystem.Interactions.HoldInteraction)
-        {
-            _isHolding = true;
-        }
-        else
-        {
-            _isHolding = false;
-            inventorySystem.UseItem();
-        }
+        _gameplaySm.LateUpdate();
+        playerMovementSm.LateUpdate();
     }
 
-    private void OnUseReleased(InputAction.CallbackContext ctx)
+    #region State Machine
+
+    public void OnPossessionState(IPossessable station, bool needsTransition)
     {
-        if (_isHolding)
-        {
-            _isHolding = false;
-            inventorySystem.UseItemReleased();
-        }
+        _gameplaySm.ChangeState(new PlayerGameplayPossessionState(this, station, needsTransition));
     }
+
+    public void OnUnPossessionState()
+    {
+        _gameplaySm.ChangeState(new PlayerGameplayFreeState(_gameplayContext));
+    }
+
+    #endregion
+    
 }

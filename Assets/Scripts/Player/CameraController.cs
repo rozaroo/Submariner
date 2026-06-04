@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,9 +15,10 @@ public class CameraController : MonoBehaviour, ICameraRotation
     [SerializeField] private string lookActionName = "Look";
     [SerializeField] private Camera playerCamera;
     
-    private StateMachine _stateMachine;
+    private StateMachine _cameraStateMachine;
     private CameraLookState _cameraLookState;
     private CameraForceLookState _cameraForceLookState;
+    private CameraLockedState _cameraLockedState;
     
     private PlayerInput _playerInput;
     private InputAction _lookAction;
@@ -42,27 +42,39 @@ public class CameraController : MonoBehaviour, ICameraRotation
             lookLerpSpeed, 
             lookAction);
         
-        _stateMachine = new StateMachine();
+        _cameraStateMachine = new StateMachine();
         _cameraLookState = new CameraLookState(context);
-        _cameraForceLookState = new CameraForceLookState(context, _stateMachine);
+        _cameraLockedState = new CameraLockedState();
+        _cameraForceLookState = new CameraForceLookState(context, false, null);
         
-        _stateMachine.ChangeState(_cameraLookState);
+        _cameraStateMachine.ChangeState(_cameraLookState);
+    }
+
+    private void Update()
+    {
+        _cameraStateMachine.Update(); //TODO: Always force to put _S
     }
     
     private void LateUpdate()
     {
-        _stateMachine.LateUpdate();
+        _cameraStateMachine.LateUpdate();
     }
+
+    #region State Machine
 
     public void ForceMoveLookCamera(Vector3 targetMovePosition, Vector3 targetLookPosition, float duration)
     {
-        _cameraForceLookState.SetupTransition(targetMovePosition, targetLookPosition, duration, isReturning: false);
-        _stateMachine.ChangeState(_cameraForceLookState);
+        _cameraForceLookState.SetupState(targetMovePosition, targetLookPosition, 
+            duration, _cameraLockedState, isReturning: false);
+        _cameraStateMachine.ChangeState(_cameraForceLookState);
     }
 
     public void ReturnToStartingPosition(float duration)
     {
-        _cameraForceLookState.SetupTransition(Vector3.zero, Vector3.zero, duration, isReturning: true);
-        _stateMachine.ChangeState(_cameraForceLookState);
+        _cameraForceLookState.SetupState(Vector3.zero, Vector3.zero, 
+            duration, _cameraLookState, isReturning: true);
+        _cameraStateMachine.ChangeState(_cameraForceLookState);
     }
+
+    #endregion
 }

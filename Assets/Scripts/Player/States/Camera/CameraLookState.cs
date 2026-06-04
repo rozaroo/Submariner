@@ -16,8 +16,7 @@ public class CameraLookState : IState
 
     public void LateUpdate()
     {
-        ICameraRotation cam = _context.CameraRotation;
-        
+        ICameraRotation cam = _context.CameraRotationData;
         Vector2 lookDir = Vector2.zero;
         
         if (_context.LookAction != null && _context.LookAction.enabled)
@@ -25,25 +24,30 @@ public class CameraLookState : IState
             lookDir = _context.LookAction.ReadValue<Vector2>();
         }
         
-        cam.Yaw += lookDir.x * _context.LookSensitivity * Time.deltaTime;
-        cam.Pitch -= lookDir.y * _context.LookSensitivity * Time.deltaTime;
-        cam.Pitch = Mathf.Clamp(cam.Pitch, -_context.UpDownLookLimit, _context.UpDownLookLimit);
+        CameraMovement(cam, lookDir);
+    }
+
+    public void OnExit() { }
+    
+    private void CameraMovement(ICameraRotation rData, Vector2 lookDir)
+    {
+        rData.Yaw += lookDir.x * _context.LookSensitivity * Time.deltaTime;
+        rData.Pitch -= lookDir.y * _context.LookSensitivity * Time.deltaTime;
+        rData.Pitch = Mathf.Clamp(rData.Pitch, -_context.UpDownLookLimit, _context.UpDownLookLimit);
         
         if (_context.LookLerpSpeed <= 50)
         {
             float t = 1f - Mathf.Exp(-_context.LookLerpSpeed * Time.deltaTime);
-            cam.CurrentYaw = Mathf.LerpAngle(cam.CurrentYaw, cam.Yaw, t);
-            cam.CurrentPitch = Mathf.LerpAngle(cam.CurrentPitch, cam.Pitch, t);
+            rData.CurrentYaw = Mathf.LerpAngle(rData.CurrentYaw, rData.Yaw, t);
+            rData.CurrentPitch = Mathf.LerpAngle(rData.CurrentPitch, rData.Pitch, t);
         }
         else
         {
-            cam.CurrentYaw = cam.Yaw;
-            cam.CurrentPitch = cam.Pitch;
+            rData.CurrentYaw = rData.Yaw;
+            rData.CurrentPitch = rData.Pitch;
         }
         
-        _context.BodyTransform.rotation = Quaternion.Euler(0f, cam.CurrentYaw, 0f);
-        _context.CameraTransform.localRotation = Quaternion.Euler(cam.CurrentPitch, 0f, 0f);
+        _context.BodyTransform.rotation = Quaternion.Euler(0f, rData.CurrentYaw, 0f);
+        _context.CameraTransform.localRotation = Quaternion.Euler(rData.CurrentPitch, 0f, 0f);
     }
-
-    public void OnExit() { }
 }

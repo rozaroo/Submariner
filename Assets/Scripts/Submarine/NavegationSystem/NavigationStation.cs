@@ -23,56 +23,39 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
     [SerializeField] private BaseEventChannelSO onUnPossessNavigationStation;
     
     private PlayerCharacter _currentPlayer;
+    
+    public string MapName => stationMapName;
+    public Transform CameraAnchor => cameraAnchor;
+    public Transform DirectionAnchor => directionAnchor;
+    public float TransitionDuration => transitionDuration;
+
     public void Interact(PlayerCharacter player)
     {
-        _currentPlayer = player;
-        Possess();
+        player.OnPossessionState(this, true);
     }
 
-    public void Possess()
+    public void Possess(PlayerCharacter player)
     {
-        if (_currentPlayer.input != null)
-        {
-            _currentPlayer.input.SwitchCurrentActionMap(stationMapName);
-            var exitAction = _currentPlayer.input.actions[exitActionName];
-            exitAction.started += OnExitPerformed;
-        }
+        _currentPlayer = player;
         
-        if (_currentPlayer.camController != null)
-        {
-            _currentPlayer.camController.ForceMoveLookCamera(cameraAnchor.position,directionAnchor.position, transitionDuration);
-            mapUI.MapCanvas.worldCamera = _currentPlayer.camController.MainCamera;
-        }
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        var exitAction = _currentPlayer.input.actions[exitActionName];
+        exitAction.started += OnExitPerformed;
+        
         enabled = true;
     }
 
     public void UnPossess()
     {
-        if (_currentPlayer != null)
-        {
-            if (_currentPlayer.input != null)
-            {
-                var exitAction = _currentPlayer.input.actions[exitActionName];
-                exitAction.started -= OnExitPerformed;
-                _currentPlayer.input.SwitchCurrentActionMap(playerMapName);
-            }
-            if (_currentPlayer.camController != null) 
-            {
-                _currentPlayer.camController.ReturnToStartingPosition(transitionDuration);
-                _currentPlayer.camController.enabled = true;
-            }
-            mapUI.MapCanvas.worldCamera = null;
-            _currentPlayer = null;
-        }
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        var exitAction = _currentPlayer.input.actions[exitActionName];
+        exitAction.started -= OnExitPerformed;
+        
+        mapUI.MapCanvas.worldCamera = null;
         _currentPlayer = null;
+        enabled = false;
     }
     
     private void OnExitPerformed(InputAction.CallbackContext context)
     {
-        UnPossess();
+        _currentPlayer.OnUnPossessionState();
     }
 }
