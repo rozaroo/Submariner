@@ -1244,7 +1244,9 @@ MonoBehaviour:
   mainLever: {fileID: 5109130274364252179}
   cameraAnchor: {fileID: 891722991463712762}
   directionAnchor: {fileID: 3891704851256750377}
-  transitionDuration: 1
+  transitionDuration: 0.4
+  cursorLockMode: 0
+  showMouseCursor: 1
   playerMapName: Player
   stationMapName: Station
   clickActionName: ClickInteraction

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class PlayerGameplayFreeState : PlayerGameplayState
 {
     private readonly PlayerCharacter _player;
@@ -11,7 +13,7 @@ public class PlayerGameplayFreeState : PlayerGameplayState
     {
         _player.SetMovementStrategy(new WalkingMovement());
         _player.camController.SetCameraStrategy(new NormalCameraStrategy());
-        
+        _player.SetMouseConfiguration(CursorLockMode.Locked,false);
         _player.EnableGameplayInputs();
     }
 

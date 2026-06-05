@@ -73,7 +73,7 @@ public class PlayerCharacter : MonoBehaviour
     {
         SavedCameraPose = new CameraPose(camController.MainCamera.transform.position, camController.MainCamera.transform.rotation);
         _gameplaySm.ChangeState(
-            new PlayerGameplayPossessionState(_gameplaySm, this, station, Input.currentActionMap.name));
+            new PlayerGameplayPossessionState(_gameplaySm, this, station, Input.currentActionMap.name, station.CursorLockMode, station.IsMouseVisible));
     }
 
     public void OnUnPossessionState(IPossessable station)

@@ -26,16 +26,12 @@ public class WorldEventManager : MonoBehaviour
     private void OnInnerRadarStateChanged(SonarElementsDetectionProperty property)
     {
         if (property.WorldElement == null) return;
-        
-        var worldMono = property.WorldElement as MonoBehaviour;
-        if (worldMono == null) return;
-        
-        IEvent worldEvent = worldMono.GetComponent<IEvent>();
-        if (worldEvent == null) return;
+
+        if (property.WorldElement is not IEvent worldEvent) return;
         
         if (property.IsRevealed)
         {
-            Log.Info($"[WorldEventManager] Entered Radius of: {worldMono.name}");
+            Log.Info($"[WorldEventManager] Entered Radius of: {property.WorldElement}");
             
             if (worldEvent.CheckConditions())
             {
@@ -44,7 +40,7 @@ public class WorldEventManager : MonoBehaviour
         }
         else
         {
-            Log.Info($"[WorldEventManager] Left Radius of: {worldMono.name}");
+            Log.Info($"[WorldEventManager] Left Radius of: {property.WorldElement}");
             worldEvent.EndEvent();
         }
     }

@@ -5,14 +5,18 @@ public class PlayerGameplayPossessionState : PlayerGameplayState
     private readonly PlayerCharacter _context;
     private readonly IPossessable _station;
     private string _previousMapName;
+    private CursorLockMode _desiredLockMode;
+    private bool _showMouse;
 
 
     public PlayerGameplayPossessionState(StateMachine sm, PlayerCharacter context, 
-        IPossessable station, string previousMapName) : base(sm)
+        IPossessable station, string previousMapName, CursorLockMode desiredCursorLockMode, bool showMouse) : base(sm)
     {
         _context = context;
         _station = station;
         _previousMapName = previousMapName;
+        _desiredLockMode = desiredCursorLockMode;
+        _showMouse = showMouse;
     }
 
     public override void OnEnter()
@@ -25,6 +29,7 @@ public class PlayerGameplayPossessionState : PlayerGameplayState
             new CameraTransition(playerPose, stationPose, _station.TransitionDuration));
         
         _context.DisableGameplayInputs();
+        _context.SetMouseConfiguration(_desiredLockMode, _showMouse);
         _context.Input.SwitchCurrentActionMap(_station.MapName);
         _station.Possess(_context);
     }
@@ -34,6 +39,7 @@ public class PlayerGameplayPossessionState : PlayerGameplayState
     public override void OnExit()
     {
         _station.UnPossess();
+        _context.SetMouseConfiguration(CursorLockMode.Locked, false);
         _context.Input.SwitchCurrentActionMap(_previousMapName);
     }
     

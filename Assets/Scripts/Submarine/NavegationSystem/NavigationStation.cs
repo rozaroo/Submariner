@@ -7,6 +7,8 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
     [SerializeField] private Transform cameraAnchor;
     [SerializeField] private Transform directionAnchor;
     [SerializeField] private float transitionDuration = 0.1f;
+    [SerializeField] private CursorLockMode cursorLockMode;
+    [SerializeField] private bool showMouseCursor;
     
     [Header("Actions Maps Settings")]
     [SerializeField] private string playerMapName;
@@ -28,6 +30,8 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
     public Transform CameraAnchor => cameraAnchor;
     public Transform DirectionAnchor => directionAnchor;
     public float TransitionDuration => transitionDuration;
+    public CursorLockMode CursorLockMode => cursorLockMode;
+    public bool IsMouseVisible => showMouseCursor;
 
     public void Interact(PlayerCharacter player)
     {
@@ -40,7 +44,6 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
         mapUI.MapCanvas.worldCamera = _currentPlayer.camController.MainCamera;
         var exitAction = _currentPlayer.Input.actions[exitActionName];
         exitAction.started += OnExitPerformed;
-        
         
         enabled = true;
     }

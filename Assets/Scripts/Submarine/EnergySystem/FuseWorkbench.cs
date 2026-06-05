@@ -6,10 +6,12 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Collider))]
 public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
 {
-    [Header("Visual Config")]
+    [Header("Possession Config")]
     [SerializeField] private Transform cameraAnchor;
     [SerializeField] private Transform directionAnchor;
     [SerializeField] private float transitionDuration = 0.1f;
+    [SerializeField] private CursorLockMode cursorLockMode;
+    [SerializeField] private bool showMouseCursor;
 
     [Header("Actions Maps Settings")]
     [SerializeField] private string playerMapName;
@@ -81,6 +83,8 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     public Transform CameraAnchor => cameraAnchor;
     public Transform DirectionAnchor => directionAnchor;
     public float TransitionDuration => transitionDuration;
+    public CursorLockMode CursorLockMode => cursorLockMode;
+    public bool IsMouseVisible => showMouseCursor;
 
 
     public void Interact(PlayerCharacter player)

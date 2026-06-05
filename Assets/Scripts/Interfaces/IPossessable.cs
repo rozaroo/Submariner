@@ -6,6 +6,8 @@ public interface IPossessable
     Transform CameraAnchor { get; }
     Transform DirectionAnchor { get; }
     float TransitionDuration { get; }
+    CursorLockMode CursorLockMode { get; }
+    bool IsMouseVisible { get; }
     
     void Possess(PlayerCharacter player);
     void UnPossess();

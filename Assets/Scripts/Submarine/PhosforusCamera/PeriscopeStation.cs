@@ -7,6 +7,8 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     [SerializeField] private Transform cameraAnchor;
     [SerializeField] private Transform directionAnchor;
     [SerializeField] private float transitionDuration = 0.1f;
+    [SerializeField] private CursorLockMode cursorLockMode;
+    [SerializeField] private bool showMouseCursor;
     
     [Header("Camera Connection")]
     [SerializeField] private PeriscopeCameraAnchorSO _periscopeCameraAnchorSo;
@@ -34,6 +36,8 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     public Transform CameraAnchor => cameraAnchor;
     public Transform DirectionAnchor => directionAnchor;
     public float TransitionDuration => transitionDuration;
+    public CursorLockMode CursorLockMode => cursorLockMode;
+    public bool IsMouseVisible => showMouseCursor;
 
     private void Awake()
     {

@@ -7,10 +7,12 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     [Header("References")]
     [SerializeField] private LeverStation mainLever;
     
-    [Header("Visual Config")]
+    [Header("Possession Config")]
     [SerializeField] private Transform cameraAnchor;
     [SerializeField] private Transform directionAnchor;
     [SerializeField] private float transitionDuration = 0.1f;
+    [SerializeField] private CursorLockMode cursorLockMode;
+    [SerializeField] private bool showMouseCursor;
     
     [Header("Actions Maps Settings")]
     [SerializeField] private string playerMapName;
@@ -44,6 +46,8 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     public Transform CameraAnchor => cameraAnchor;
     public Transform DirectionAnchor => directionAnchor;
     public float TransitionDuration => transitionDuration;
+    public CursorLockMode CursorLockMode => cursorLockMode;
+    public bool IsMouseVisible => showMouseCursor;
 
     #region Initialization
 

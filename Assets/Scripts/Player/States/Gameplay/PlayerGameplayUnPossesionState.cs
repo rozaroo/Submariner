@@ -27,8 +27,7 @@ public class PlayerGameplayUnPossessionState : PlayerGameplayState
 
     public override void OnExit()
     {
-        if (_transition != null)
-            _transition.Completed -= OnTransitionFinished;
+        if (_transition != null) _transition.Completed -= OnTransitionFinished;
     }
     
     private void OnTransitionFinished()

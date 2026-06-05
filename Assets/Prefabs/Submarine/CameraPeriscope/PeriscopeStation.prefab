@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2236089150983947956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9197622544301988076}
+  m_Layer: 3
+  m_Name: DirectionAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9197622544301988076
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2236089150983947956}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.713}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7519854253384468542}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5589288712529309208
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6534777486174989250}
+  m_Layer: 3
+  m_Name: LocationAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6534777486174989250
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5589288712529309208}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.3088, z: -0.683}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7519854253384468542}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6457387169702611866
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,7 +94,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 1.8299999, z: 5.2899995}
   m_LocalScale: {x: 1.4999999, y: 1.4999999, z: 1.4999999}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 6534777486174989250}
+  - {fileID: 9197622544301988076}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &4347358874085506081
@@ -123,10 +187,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 870ef52468e7a53488a9a783718e3b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeCamera: {fileID: 0}
+  cameraAnchor: {fileID: 6534777486174989250}
+  directionAnchor: {fileID: 9197622544301988076}
+  transitionDuration: 0.1
+  cursorLockMode: 0
+  showMouseCursor: 0
+  _periscopeCameraAnchorSo: {fileID: 11400000, guid: 522a189dbd2c157479bb7efa2786b504, type: 2}
   playerMapName: Player
   stationMapName: Station
   takePhotoActionName: ClickInteraction
   exitActionName: ExitStation
   onPeriscopePossess: {fileID: 11400000, guid: 71bc8619a80d4ab44a8b5cc0dd049afa, type: 2}
   onPeriscopeUnpossess: {fileID: 11400000, guid: 7a04d80ab82883e46ac47a635c10e1bd, type: 2}
+  lookActionName: Look
