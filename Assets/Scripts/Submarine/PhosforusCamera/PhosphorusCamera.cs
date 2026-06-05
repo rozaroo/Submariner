@@ -7,7 +7,7 @@ public class PhosphorusCamera : MonoBehaviour
     [SerializeField] private Camera exteriorCamera;
 
     [Header("Camera Settings")]
-    [SerializeField] private CameraPropertyData cameraPropertyData;
+    [SerializeField] private PhosphorusCameraPropertyData phosphorusCameraPropertyData;
 
     [Header("Rotation Settings")]
     [SerializeField] private float mouseSensitivity = 0.4f;

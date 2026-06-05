@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerCharacter : MonoBehaviour
@@ -15,47 +16,42 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private float interactionDistance = 2.5f;
     [SerializeField] private LayerMask interactableLayer;
 
+    private bool _isHolding;
     private CharacterController _controller;
-
-    private StateMachine _gameplaySm;
-
-    private IState _lockedMovementState;
-
-    private PlayerMovementContext _playerMovementContext;
-    private PlayerGameplayContext _gameplayContext;
     
-    public StateMachine playerMovementSm { get; private set; }
-    public IState movementState { get; private set; }
-    public IState lockedMovementState { get; private set; }
-    public PlayerInput input { get; private set; }
+    private InputAction _interactionAction;
+    private InputAction _dropAction;
+    private InputAction _useAction;
+    
+    private StateMachine _gameplaySm;
+    
+    private IMovementStrategy _movementStrategy;
+    private MovementContext _movementContext;
+    
+    public CameraPose SavedCameraPose { get; private set; }
+    public PlayerInput Input { get; private set; }
     public CameraController camController { get; private set; }
     public InventorySystem inventorySystem { get; private set; }
+    
 
     private void Start()
     {
-        input     = GetComponent<PlayerInput>();
-        _controller      = GetComponent<CharacterController>();
+        Input = GetComponent<PlayerInput>();
+        _controller = GetComponent<CharacterController>();
         camController = GetComponent<CameraController>();
         inventorySystem = GetComponent<InventorySystem>();
-
-        //Movement
-        _playerMovementContext = new PlayerMovementContext(
-            transform, moveSpeed,
-            input.actions.FindAction(moveActionName),
-            _controller, input);
-
-        playerMovementSm = new StateMachine();
-        movementState = new PlayerMovementState(_playerMovementContext);
-        _lockedMovementState = new PlayerLockedMovementState();
-
-        //Gameplay
-        _gameplayContext = new PlayerGameplayContext(
-            this, camController, inventorySystem, input,
-            interactionDistance, interactableLayer,
-            interactionActionName, dropActionName, useActionName);
-
+        
+        _movementContext = new MovementContext
+        {
+            CharacterController = _controller,
+            Transform = transform,
+            MovementAction = Input.actions[moveActionName],
+            MoveSpeed = moveSpeed,
+        };
+        
         _gameplaySm = new StateMachine();
-        _gameplaySm.ChangeState(new PlayerGameplayFreeState(_gameplayContext));
+        PlayerGameplayState freeState = new PlayerGameplayFreeState(_gameplaySm, this);
+        _gameplaySm.SetInitialState(freeState);
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -63,27 +59,111 @@ public class PlayerCharacter : MonoBehaviour
     private void Update()
     {
         _gameplaySm.Update();
-        playerMovementSm.Update();
+        _movementStrategy.Move(_movementContext);
     }
-
-    private void LateUpdate()
+    
+    public void SetMovementStrategy(IMovementStrategy movementStrategy)
     {
-        _gameplaySm.LateUpdate();
-        playerMovementSm.LateUpdate();
+        _movementStrategy = movementStrategy;
     }
 
     #region State Machine
 
-    public void OnPossessionState(IPossessable station, bool needsTransition)
+    public void OnPossessionState(IPossessable station)
     {
-        _gameplaySm.ChangeState(new PlayerGameplayPossessionState(this, station, needsTransition));
+        SavedCameraPose = new CameraPose(camController.MainCamera.transform.position, camController.MainCamera.transform.rotation);
+        _gameplaySm.ChangeState(
+            new PlayerGameplayPossessionState(_gameplaySm, this, station, Input.currentActionMap.name));
     }
 
-    public void OnUnPossessionState()
+    public void OnUnPossessionState(IPossessable station)
     {
-        _gameplaySm.ChangeState(new PlayerGameplayFreeState(_gameplayContext));
+        _gameplaySm.ChangeState(new PlayerGameplayUnPossessionState(_gameplaySm, this, station));
     }
 
     #endregion
+
+    #region Inputs
     
+    public void EnableGameplayInputs()
+    {
+        _interactionAction =
+            Input.actions[interactionActionName];
+
+        _dropAction =
+            Input.actions[dropActionName];
+
+        _useAction =
+            Input.actions[useActionName];
+
+        _interactionAction.started += TryInteractRaycast;
+
+        _dropAction.started += TryDropItem;
+
+        _useAction.started += OnUseStarted;
+        _useAction.performed += TryUseItem;
+        _useAction.canceled += OnUseReleased;
+    }
+    
+    public void DisableGameplayInputs()
+    {
+        _interactionAction.started -= TryInteractRaycast;
+
+        _dropAction.started -= TryDropItem;
+
+        _useAction.started -= OnUseStarted;
+        _useAction.performed -= TryUseItem;
+        _useAction.canceled -= OnUseReleased;
+    }
+
+    public void SetMouseConfiguration(CursorLockMode cursorLockMode, bool isMouseVisible)
+    {
+        Cursor.lockState = cursorLockMode;
+        Cursor.visible = isMouseVisible;
+    }
+
+    private void TryInteractRaycast(InputAction.CallbackContext ctx)
+    {
+        Ray ray = new Ray(
+            camController.MainCamera.transform.position,
+            camController.MainCamera.transform.forward);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 
+                interactionDistance, interactableLayer))
+        {
+            Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 2f);
+            if (hit.collider.TryGetComponent(out IInteractable interactable))
+                interactable.Interact(this);
+        }
+        else
+        {
+            Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red, 2f);
+        }
+    }
+
+    private void TryDropItem(InputAction.CallbackContext ctx)
+        => inventorySystem.DropItem();
+
+    private void OnUseStarted(InputAction.CallbackContext ctx)
+        => _isHolding = false;
+
+    private void TryUseItem(InputAction.CallbackContext ctx)
+    {
+        if (ctx.interaction is HoldInteraction)
+            _isHolding = true;
+        else
+        {
+            _isHolding = false;
+            inventorySystem.UseItem();
+        }
+    }
+
+    private void OnUseReleased(InputAction.CallbackContext ctx)
+    {
+        if (!_isHolding) return;
+        _isHolding = false;
+        inventorySystem.UseItemReleased();
+    }
+
+    #endregion
 }

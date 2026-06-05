@@ -99,7 +99,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 
     public void Interact(PlayerCharacter player)
     {
-        player.OnPossessionState(this, true);
+        player.OnPossessionState(this);
     }
 
     #region PosessionLogic
@@ -109,8 +109,8 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         _currentPlayer = player;
         _playerCamera = player.camController.MainCamera;
         
-        var clickAction = _currentPlayer.input.actions[clickActionName];
-        var exitAction = _currentPlayer.input.actions[exitActionName];
+        var clickAction = _currentPlayer.Input.actions[clickActionName];
+        var exitAction = _currentPlayer.Input.actions[exitActionName];
         
         clickAction.started += OnClickStarted;
         clickAction.canceled += OnClickCanceled;
@@ -122,8 +122,8 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 
     public void UnPossess()
     {
-        var clickAction = _currentPlayer.input.actions[clickActionName];
-        var exitAction = _currentPlayer.input.actions[exitActionName];
+        var clickAction = _currentPlayer.Input.actions[clickActionName];
+        var exitAction = _currentPlayer.Input.actions[exitActionName];
                 
         clickAction.started -= OnClickStarted;
         clickAction.canceled -= OnClickCanceled;
@@ -170,13 +170,13 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         {
             _minigame.RestartMinigame();
         }
-        _currentPlayer.OnUnPossessionState();
+        _currentPlayer.OnUnPossessionState(this);
     }
     
     private void HandleControlDragging()
     {
         if (_currentDraggedControls == null || Mouse.current == null) return;
-        _mouseDelta = _currentPlayer.input.actions[pointerDeltaActionName].ReadValue<Vector2>();
+        _mouseDelta = _currentPlayer.Input.actions[pointerDeltaActionName].ReadValue<Vector2>();
         float mouseDeltaY = _mouseDelta.y;
         _currentDraggedControls.OnActionDrag(mouseDeltaY);
     }
@@ -211,7 +211,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         if (_energyStatus == EnergyStatus.Empty)
         {
             Log.Info("Not Enough Energy to start the drainage");
-            _currentPlayer.OnUnPossessionState();
+            _currentPlayer.OnUnPossessionState(this);
             return;
         }
         if (!_isDrainageActive)
@@ -221,7 +221,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
             HandleDrainageEnergy();
             Log.Info("Drainage Active");
         }
-        _currentPlayer.OnUnPossessionState();
+        _currentPlayer.OnUnPossessionState(this);
     }
     
     private void StopDrainage()

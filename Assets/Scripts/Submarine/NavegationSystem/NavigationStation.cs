@@ -31,14 +31,14 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
 
     public void Interact(PlayerCharacter player)
     {
-        player.OnPossessionState(this, true);
+        player.OnPossessionState(this);
     }
 
     public void Possess(PlayerCharacter player)
     {
         _currentPlayer = player;
         mapUI.MapCanvas.worldCamera = _currentPlayer.camController.MainCamera;
-        var exitAction = _currentPlayer.input.actions[exitActionName];
+        var exitAction = _currentPlayer.Input.actions[exitActionName];
         exitAction.started += OnExitPerformed;
         
         
@@ -47,7 +47,7 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
 
     public void UnPossess()
     {
-        var exitAction = _currentPlayer.input.actions[exitActionName];
+        var exitAction = _currentPlayer.Input.actions[exitActionName];
         exitAction.started -= OnExitPerformed;
         
         mapUI.MapCanvas.worldCamera = null;
@@ -57,6 +57,6 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
     
     private void OnExitPerformed(InputAction.CallbackContext context)
     {
-        _currentPlayer.OnUnPossessionState();
+        _currentPlayer.OnUnPossessionState(this);
     }
 }

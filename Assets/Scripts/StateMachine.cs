@@ -1,25 +1,24 @@
 public class StateMachine
 {
-    private IState currentState { get; set; }
+    private IState _currentState;
     
-    public void ChangeState(IState state)
+    public void SetInitialState(IState state)
     {
-        if (currentState != null)
-        {
-            currentState.OnExit();
-        }
+        _currentState = state;
+        _currentState.OnEnter();
+    }
 
-        if (state == null) return;
-        currentState = state;
-        currentState.OnEnter();
+    public void ChangeState(IState newState)
+    {
+        _currentState?.OnExit();
+
+        _currentState = newState;
+
+        _currentState?.OnEnter();
     }
 
     public void Update()
     {
-        currentState?.Update();
-        if (currentState is ITransferable { isComplete: true } transferableState) 
-            ChangeState(transferableState.nextState);
+        _currentState?.Update();
     }
-    
-    public void LateUpdate() => currentState?.LateUpdate();
 }

@@ -1,56 +1,50 @@
 using UnityEngine;
 
-public class PlayerGameplayPossessionState : IState
+public class PlayerGameplayPossessionState : PlayerGameplayState
 {
-    private PlayerCharacter _context;
-    private IPossessable _station;
-    private bool _needsTransition;
+    private readonly PlayerCharacter _context;
+    private readonly IPossessable _station;
     private string _previousMapName;
 
-    public PlayerGameplayPossessionState(PlayerCharacter context, IPossessable station, bool needsTransition)
+
+    public PlayerGameplayPossessionState(StateMachine sm, PlayerCharacter context, 
+        IPossessable station, string previousMapName) : base(sm)
     {
         _context = context;
         _station = station;
-        _needsTransition = needsTransition;
+        _previousMapName = previousMapName;
     }
-    
-    public void OnEnter()
+
+    public override void OnEnter()
     {
-        _context.playerMovementSm.ChangeState(_context.lockedMovementState);
-        _previousMapName = _context.input.currentActionMap.name;
+        _context.SetMovementStrategy(new LockedMovement());
         
-        _context.input.SwitchCurrentActionMap(_station.MapName);
+        CameraPose playerPose = _context.SavedCameraPose;
+        CameraPose stationPose = BuildStationPose();
+        _context.camController.SetCameraStrategy(
+            new CameraTransition(playerPose, stationPose, _station.TransitionDuration));
         
-        if (_needsTransition)
-        {
-            _context.camController.ForceMoveLookCamera(
-                _station.CameraAnchor.position,
-                _station.DirectionAnchor.position, 
-                _station.TransitionDuration);
-        }
-        
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        
+        _context.DisableGameplayInputs();
+        _context.Input.SwitchCurrentActionMap(_station.MapName);
         _station.Possess(_context);
     }
 
-    public void Update() { }
+    public override void Update() { }
 
-    public void LateUpdate() { }
-
-    public void OnExit()
+    public override void OnExit()
     {
         _station.UnPossess();
+        _context.Input.SwitchCurrentActionMap(_previousMapName);
+    }
+    
+    private CameraPose BuildStationPose()
+    {
+        Transform cameraAnchor = _station.CameraAnchor;
+        Transform directionAnchor = _station.DirectionAnchor;
 
-        if (_needsTransition)
-        {
-            _context.camController.ReturnToStartingPosition(_station.TransitionDuration);   
-        }
-        
-        _context.input.SwitchCurrentActionMap(_previousMapName);
-        
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Vector3 direction = directionAnchor.position - cameraAnchor.position;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+
+        return new CameraPose(cameraAnchor.position, rotation);
     }
 }

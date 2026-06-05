@@ -3,6 +3,11 @@ using UnityEngine.InputSystem;
 
 public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable 
 {
+    [Header("Visual Config")]
+    [SerializeField] private Transform cameraAnchor;
+    [SerializeField] private Transform directionAnchor;
+    [SerializeField] private float transitionDuration = 0.1f;
+    
     [Header("Camera Connection")]
     [SerializeField] private PeriscopeCameraAnchorSO _periscopeCameraAnchorSo;
     
@@ -26,9 +31,9 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     private Coroutine _exitRoutine;
     
     public string MapName => stationMapName;
-    public Transform CameraAnchor { get; }
-    public Transform DirectionAnchor { get; }
-    public float TransitionDuration { get; }
+    public Transform CameraAnchor => cameraAnchor;
+    public Transform DirectionAnchor => directionAnchor;
+    public float TransitionDuration => transitionDuration;
 
     private void Awake()
     {
@@ -42,7 +47,7 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
             Log.Warning("[Periscope Station]: No PhosphorusCamera]");
             return;
         }
-        player.OnPossessionState(this, false);
+        player.OnPossessionState(this);
     }
     
     #region PosessionLogic
@@ -53,13 +58,13 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
         _currentPlayer = player;
         _periscopeCameraAnchorSo.playerCamera = player.camController.MainCamera;
         
-        InputAction clickAction = _currentPlayer.input.actions[takePhotoActionName];
+        InputAction clickAction = _currentPlayer.Input.actions[takePhotoActionName];
         clickAction.started += OnPhotoClickStarted;
             
-        InputAction cancelAction = _currentPlayer.input.actions[exitActionName];
+        InputAction cancelAction = _currentPlayer.Input.actions[exitActionName];
         cancelAction.started += OnExitStarted;
             
-        InputAction lookAction = _currentPlayer.input.actions[lookActionName];
+        InputAction lookAction = _currentPlayer.Input.actions[lookActionName];
         lookAction.performed += OnLookPerformed;
         
         enabled = true;
@@ -70,13 +75,13 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     
     public void UnPossess()
     {
-        InputAction clickAction = _currentPlayer.input.actions[takePhotoActionName];
+        InputAction clickAction = _currentPlayer.Input.actions[takePhotoActionName];
         clickAction.started -= OnPhotoClickStarted;
         
-        InputAction cancelAction = _currentPlayer.input.actions[exitActionName];
+        InputAction cancelAction = _currentPlayer.Input.actions[exitActionName];
         cancelAction.started -= OnExitStarted;
         
-        InputAction lookAction = _currentPlayer.input.actions[lookActionName];
+        InputAction lookAction = _currentPlayer.Input.actions[lookActionName];
         lookAction.performed -= OnLookPerformed;
         
         _periscopeCameraAnchorSo.phosphorusCameraComponent.EndPeriscopeControl();
@@ -107,7 +112,7 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
 
     private void OnExitStarted(InputAction.CallbackContext context)
     {
-        _currentPlayer.OnUnPossessionState();
+        _currentPlayer.OnUnPossessionState(this);
     }
     
     private void OnLookPerformed(InputAction.CallbackContext context)

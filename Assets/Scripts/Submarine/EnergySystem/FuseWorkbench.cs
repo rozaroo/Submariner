@@ -85,7 +85,7 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
 
     public void Interact(PlayerCharacter player)
     {
-        player.OnPossessionState(this, false);
+        player.OnPossessionState(this);
     }
     
     public void Possess(PlayerCharacter playerCharacter)
@@ -93,8 +93,8 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         _currentPlayer = playerCharacter;
         _playerCamera = playerCharacter.camController.MainCamera;
         
-        InputAction clickAction = _currentPlayer.input.actions[clickActionName];
-        InputAction exitAction = _currentPlayer.input.actions[exitActionName];
+        InputAction clickAction = _currentPlayer.Input.actions[clickActionName];
+        InputAction exitAction = _currentPlayer.Input.actions[exitActionName];
         
         clickAction.started += OnClickStarted;
         clickAction.canceled += OnClickCanceled;
@@ -111,8 +111,8 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
 
     public void UnPossess()
     {
-        InputAction clickAction = _currentPlayer.input.actions[clickActionName];
-        InputAction exitAction = _currentPlayer.input.actions[exitActionName];
+        InputAction clickAction = _currentPlayer.Input.actions[clickActionName];
+        InputAction exitAction = _currentPlayer.Input.actions[exitActionName];
 
         clickAction.started -= OnClickStarted;
         clickAction.canceled -= OnClickCanceled;
@@ -163,7 +163,7 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
 
     private void OnExitPerformed(InputAction.CallbackContext context)
     {
-        _currentPlayer.OnUnPossessionState();
+        _currentPlayer.OnUnPossessionState(this);
     }
 
     private void GenerateParts()
