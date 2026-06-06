@@ -8,17 +8,14 @@ public class SuffocationEffect : MonoBehaviour
 
     [Header("Vignette")]
     [SerializeField] private float maxIntensity = 0.7f;
-    [SerializeField] private float curve = 3f;     // Potencia de la curva: valores altos (3-5) hacen que tarde más en notarse y se dispare al final
+    [SerializeField] private float curve = 3f;
 
     [Header("Pulse")]
-    [SerializeField] private float pulseAmplitude = 0.04f;     // Amplitud del titileo sobre el valor base (0 = sin titileo)
-    [SerializeField] private float pulseSpeed = 2.5f;     // Velocidad del titileo
+    [SerializeField] private float pulseAmplitude = 0.04f;
+    [SerializeField] private float pulseSpeed = 2.5f;
 
     [Header("Recover")]
-    [SerializeField] private float recoverySpeed = 0.3f;     // Velocidad a la que se recupera la visión al restaurar oxígeno
-    
-    [Header("Event Channels")]
-    public FloatEventChannelSO onSuffocationProgress;
+    [SerializeField] private float recoverySpeed = 0.3f;
     
     private Vignette _vignette;
     private float _targetProgress;
@@ -27,30 +24,28 @@ public class SuffocationEffect : MonoBehaviour
     private void Awake()
     {
         if (!volume.profile.TryGet(out _vignette)) Log.Error("[SuffocationEffect] El Volume no tiene un override de Vignette.");
-        if(onSuffocationProgress  == null) Log.Error("on Suffocation Progress Event Not placed");
     }
 
     private void OnEnable()
     {
-        onSuffocationProgress.OnEventRaised += OnSuffocationProgress;
+        GameEventChannel<OnSuffocationProgressChange>.OnEventRaised += OnSuffocationProgress;
     }
 
     private void OnDisable()
     {
-        onSuffocationProgress.OnEventRaised -= OnSuffocationProgress;
+        GameEventChannel<OnSuffocationProgressChange>.OnEventRaised -= OnSuffocationProgress;
         _targetProgress = 0f;
     }
 
-    private void OnSuffocationProgress(float currentOxygen)
+    private void OnSuffocationProgress(OnSuffocationProgressChange e)
     {
-        _targetProgress = currentOxygen;
+        _targetProgress = e.currentSuffocationProgress;
     }
 
     private void Update() //TODO: Cambiar a Corrutina.
     {
         if (_vignette == null) return;
-
-        // Sube instantáneo con la sofocación, baja suavemente al recuperarse
+        
         if (_targetProgress > _currentProgress)
             _currentProgress = _targetProgress;
         else

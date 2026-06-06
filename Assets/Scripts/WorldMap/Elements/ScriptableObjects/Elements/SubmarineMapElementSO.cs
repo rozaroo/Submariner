@@ -14,7 +14,7 @@ public class SubmarineMapElementSO : WorldMapUIElementSO
             component = go.AddComponent<WorldMapUIElement>();
         }
         
-        component.Setup(this.SonarDetectionMode, MapAsset, UpdateMode, SyncMode, SyncTime);
+        component.Setup(SonarDetectionMode, MapAsset, UpdateMode, SyncMode, SyncTime);
         
         return go;
     }

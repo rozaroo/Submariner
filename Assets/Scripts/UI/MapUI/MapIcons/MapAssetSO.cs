@@ -5,6 +5,7 @@ using UnityEngine;
 public class MapAssetSO : ScriptableObject
 {
     [Header("Visibility Properties")]
+    public string assetName;
     public bool startsVisible = true; 
 
     [Header("Visual Properties")] 

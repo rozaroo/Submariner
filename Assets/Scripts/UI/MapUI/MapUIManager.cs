@@ -16,13 +16,6 @@ public class MapUIManager : MonoBehaviour
     [Header("World Map Sync")]
     [SerializeField] private float linearSyncSpeed = 100f;
 
-    [Header("Event Channels")]
-    [SerializeField] private SonarElementsDetectionEventChannelSO onOuterRadarChanged;
-    [SerializeField] private SonarElementsDetectionEventChannelSO onInnerRadarChanged;
-    [SerializeField] private WorldMapGeneratedPropertyEventChannelSO onWorldMapGenerated;
-    [SerializeField] private WorldMapUIElementEventChannelSO onWorldSubmarineElementGenerated;
-    [SerializeField] private WorldMapUIElementEventChannelSO onWorldElementGenerated;
-
     private RectTransform _mapRect;
     private Coroutine _syncCoroutine;
     private bool _isSyncing;
@@ -43,49 +36,54 @@ public class MapUIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        onWorldMapGenerated.OnEventRaised += OnMapUpdated;
-        onWorldSubmarineElementGenerated.OnEventRaised += OnWorldElementGenerated;
-        onWorldElementGenerated.OnEventRaised += OnWorldElementGenerated;
-        
-        if (onOuterRadarChanged != null) onOuterRadarChanged.OnEventRaised += OnOuterRadarChanged;
-        if (onInnerRadarChanged != null) onInnerRadarChanged.OnEventRaised += OnInnerRadarChanged;
+        GameEventChannel<OnWorldMapGeneratedProperty>.OnEventRaised += OnMapUpdated;
+        GameEventChannel<OnWorldSubmarineGenerated>.OnEventRaised += OnWorldSubmarineGenerated;
+        GameEventChannel<OnWorldMapElementGenerated>.OnEventRaised += OnWorldElementGenerated;
+        GameEventChannel<OnSonarElementsDetection>.OnEventRaised += OnSonarChanged;
         
         InitializeMapSync();
     }
 
     private void OnDisable()
     {
-        onWorldMapGenerated.OnEventRaised -= OnMapUpdated;
-        onWorldSubmarineElementGenerated.OnEventRaised -= OnWorldElementGenerated;
-        onWorldElementGenerated.OnEventRaised -= OnWorldElementGenerated;
+        GameEventChannel<OnWorldMapGeneratedProperty>.OnEventRaised -= OnMapUpdated;
+        GameEventChannel<OnWorldSubmarineGenerated>.OnEventRaised -= OnWorldSubmarineGenerated;
+        GameEventChannel<OnWorldMapElementGenerated>.OnEventRaised -= OnWorldElementGenerated;
         
-        if (onOuterRadarChanged != null) onOuterRadarChanged.OnEventRaised -= OnOuterRadarChanged;
-        if (onInnerRadarChanged != null) onInnerRadarChanged.OnEventRaised -= OnInnerRadarChanged;
+        GameEventChannel<OnSonarElementsDetection>.OnEventRaised -= OnSonarChanged;
         
         StopMapSync();
     }
     
     #region MapUtilities
     
-    private void OnMapUpdated(WorldMapGeneratedProperty worldMapProperties)
+    private void OnMapUpdated(OnWorldMapGeneratedProperty onWorldMapProperties)
     {
         ChangeMapSize();
         ClearAllMapIcons();
-        foreach (var element in worldMapProperties.mapElements)
+        foreach (var element in onWorldMapProperties.MapElements)
         {
-            OnWorldElementGenerated(element);
+            OnWorldElementGenerated(new OnWorldMapElementGenerated(element));
         }
     }
     
-    private void OnWorldElementGenerated(IWorldMapUIElement element)
+    private void OnWorldElementGenerated(OnWorldMapElementGenerated element)
     {
-        if (_worldElementIconDictionary.ContainsKey(element)) return;
+        if (_worldElementIconDictionary.ContainsKey(element._worldElementGenerated)) return;
 
-        MapIcon generatedIcon = GenerateDesiredIcon(element);
+        MapIcon generatedIcon = GenerateDesiredIcon(element._worldElementGenerated);
         if (generatedIcon != null)
         {
-            SetIconPosition(element, generatedIcon);
-            SetIconRotation(element, generatedIcon);
+            SetIconPosition(element._worldElementGenerated, generatedIcon);
+            SetIconRotation(element._worldElementGenerated, generatedIcon);
+        }
+    }
+    
+    private void OnWorldSubmarineGenerated(OnWorldSubmarineGenerated property)
+    {
+        if (property._submarineElement != null)
+        {
+            OnWorldElementGenerated(new OnWorldMapElementGenerated(property._submarineElement));
         }
     }
     
@@ -273,24 +271,23 @@ public class MapUIManager : MonoBehaviour
 
     #region SonarCommunicationUtilities
 
-    private void OnOuterRadarChanged(SonarElementsDetectionProperty property)
+    private void OnSonarChanged(OnSonarElementsDetection property)
     {
         if (property.WorldElement is IWorldMapUIElement uiElement)
         {
-            if (_worldElementIconDictionary.TryGetValue(uiElement, out MapIcon icon))
+            if (property.SonarRegion == SonarDetectionMode.OuterOnly)
             {
-                icon.IsVisible = property.IsRevealed;
+                if (_worldElementIconDictionary.TryGetValue(uiElement, out MapIcon icon))
+                {
+                    icon.IsVisible = property.IsRevealed;
+                }
             }
-        }
-    }
-
-    private void OnInnerRadarChanged(SonarElementsDetectionProperty property)
-    {
-        if (property.WorldElement is IWorldMapUIElement uiElement)
-        {
-            if (_worldElementIconDictionary.TryGetValue(uiElement, out MapIcon icon))
+            else if (property.SonarRegion == SonarDetectionMode.InnerOnly)
             {
-                icon.IsVisible = !property.IsRevealed;
+                if (_worldElementIconDictionary.TryGetValue(uiElement, out MapIcon icon))
+                {
+                    icon.IsVisible = !property.IsRevealed;
+                }
             }
         }
     }

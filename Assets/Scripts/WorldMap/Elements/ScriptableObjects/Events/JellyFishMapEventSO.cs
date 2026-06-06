@@ -19,10 +19,10 @@ public class JellyFishMapEventSO : WorldMapUIElementSO
         flockCore.Setup(flockingSettings, flockAgentPrefab);
         flockCore.enabled = false; 
         
-        JellyFishEvent jellyFishEvent = go.AddComponent<JellyFishEvent>();
+        JellyFishWorldMapEvent jellyFishWorldMapEvent = go.AddComponent<JellyFishWorldMapEvent>();
         
-        jellyFishEvent.Setup(this.SonarDetectionMode, MapAsset, UpdateMode, SyncMode, SyncTime);
-        jellyFishEvent.InjectFlockingEngine(flockCore, patrolSpeed, canMove);
+        jellyFishWorldMapEvent.Setup(this.SonarDetectionMode, MapAsset, UpdateMode, SyncMode, SyncTime);
+        jellyFishWorldMapEvent.InjectFlockingEngine(flockCore, patrolSpeed, canMove);
         
         return go;
     }

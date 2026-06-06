@@ -29,11 +29,6 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     [Header("Energy Consumption Settings")] 
     [SerializeField] private float energyConsumption = 5;
 
-    [Header("Event Channels")]
-    [SerializeField] private EnergyStatusEventSO onEnergyStatusChange;
-    [SerializeField] private EnergyToConsumeEventChannelSO onEnergyToConsume;
-    [SerializeField] private DrainagePropertyEventChannelSO onDrainageStatusChanged;
-
     private EnergyStatus _energyStatus = EnergyStatus.Full;
     private DrainageMinigame _minigame;
     private PlayerCharacter _currentPlayer;
@@ -58,7 +53,8 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     
     private void OnEnable()
     {
-        onEnergyStatusChange.OnEventRaised += OnEnergyStatusChanged;
+        GameEventChannel<OnEnergyStatusChange>.OnEventRaised += OnEnergyStatusChanged;
+        
         if (_minigame != null)
         {
             _minigame.FinishedMiniGame += OnUnlockLever;
@@ -81,7 +77,8 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 
     private void OnDisable()
     {
-        onEnergyStatusChange.OnEventRaised -= OnEnergyStatusChanged;
+        GameEventChannel<OnEnergyStatusChange>.OnEventRaised -= OnEnergyStatusChanged;
+        
         if (_minigame != null)
         {
             _minigame.FinishedMiniGame -= OnUnlockLever;
@@ -220,7 +217,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         }
         if (!_isDrainageActive)
         {
-            onDrainageStatusChanged.RaiseEvent(CreateDrainageProperty());
+            GameEventChannel<OnDrainagePropertyChange>.RaiseEvent(new OnDrainagePropertyChange(drainagePercentage));
             _isDrainageActive = true;
             HandleDrainageEnergy();
             Log.Info("Drainage Active");
@@ -232,10 +229,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     {
         _isDrainageActive = false;
         HandleDrainageEnergy();
-        onDrainageStatusChanged.RaiseEvent(new DrainagePropertyData
-        {
-            drainagePercentage = 0f
-        });
+        GameEventChannel<OnDrainagePropertyChange>.RaiseEvent(new OnDrainagePropertyChange(drainagePercentage));
     }
     
     private void CheckDrainageMinigame()
@@ -244,14 +238,6 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         {
             _minigame.SetupMiniGame();
         }
-    }
-    
-    private DrainagePropertyData CreateDrainageProperty()
-    {
-        return new DrainagePropertyData
-        {
-            drainagePercentage = drainagePercentage
-        };
     }
     
     private void SetDrainageStatus()
@@ -274,9 +260,9 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 
     #region Energy Logic
 
-    private void OnEnergyStatusChanged(EnergyStatus status)
+    private void OnEnergyStatusChanged(OnEnergyStatusChange status)
     {
-        _energyStatus = status;
+        _energyStatus = status.energyStatus;
         SetDrainageStatus();
     }
     
@@ -284,19 +270,11 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     {
         if (_isDrainageActive)
         {
-            onEnergyToConsume?.RaiseEvent(new EnergyConsumeData
-            {
-                energyToConsumeRate = energyConsumption,
-                isAddingStress = true
-            });
+            GameEventChannel<OnEnergyConsumption>.RaiseEvent(new OnEnergyConsumption(energyConsumption, true));
         }
         else
         {
-            onEnergyToConsume?.RaiseEvent(new EnergyConsumeData
-            {
-                energyToConsumeRate = energyConsumption,
-                isAddingStress = false
-            });
+            GameEventChannel<OnEnergyConsumption>.RaiseEvent(new OnEnergyConsumption(energyConsumption, false));
         }
     }
 

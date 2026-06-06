@@ -15,9 +15,6 @@ public class HullDamageManager : MonoBehaviour
     [SerializeField] private float minSpawnInterval = 5f;
     [SerializeField] private float maxSpawnInterval = 15f;
 
-    [Header("Event Channels")]
-    [SerializeField] private HullPropertyEventSO onHullStatusChanged;
-
     private int ActiveCrackCount { get; set; }
     private Coroutine _spawnCoroutine;
     private readonly List<HullDamage> _pool = new List<HullDamage>();
@@ -72,17 +69,17 @@ public class HullDamageManager : MonoBehaviour
         var available = _pool.FindAll(c => !c.gameObject.activeSelf);
         if (available.Count == 0) return;
 
-        var crack = available[UnityEngine.Random.Range(0, available.Count)];
+        var crack = available[Random.Range(0, available.Count)];
         crack.gameObject.SetActive(true);
         ActiveCrackCount++;
 
-        onHullStatusChanged?.RaiseEvent(CreateHullProperty());
+        GameEventChannel<OnHullPropertyChange>.RaiseEvent(CreateHullProperty());
         StartSpawningBehaviour();
     }
 
-    private HullProperty CreateHullProperty()
+    private OnHullPropertyChange CreateHullProperty()
     {
-        return new HullProperty
+        return new OnHullPropertyChange
         {
             maxHullDamagePosible = spawnZones.Length,
             activeHullDamage     = ActiveCrackCount
@@ -92,7 +89,7 @@ public class HullDamageManager : MonoBehaviour
     private void OnHullRepaired(HullDamage hullDamage)
     {
         ActiveCrackCount = Mathf.Max(0, ActiveCrackCount - 1);
-        onHullStatusChanged?.RaiseEvent(CreateHullProperty());
+        GameEventChannel<OnHullPropertyChange>.RaiseEvent(CreateHullProperty());
     }
 
     private IEnumerator SpawnHullDamage(float interval)

@@ -19,10 +19,6 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
     
     [Header("Input Settings")]
     [SerializeField] private string exitActionName;
-
-    [Header("Event Channels")] 
-    [SerializeField] private BaseEventChannelSO onPossessNavigationStation;
-    [SerializeField] private BaseEventChannelSO onUnPossessNavigationStation;
     
     private PlayerCharacter _currentPlayer;
     

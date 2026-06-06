@@ -12,10 +12,6 @@ public class LightManager : MonoBehaviour
     // Duración de cada color durante la intercalación rojo/azul
     [SerializeField] private float alertCycleDuration = 1f;
 
-    [Header("Event Channels")]
-    [SerializeField] private HullPropertyEventSO onHullStatusChanged;
-    [SerializeField] private BoolEventChannelSO onLowOxygen;
-
     private Color _originalColor;
     private float[] _originalIntensities;
     private bool _originalSaved;
@@ -28,30 +24,30 @@ public class LightManager : MonoBehaviour
 
     private void OnEnable()
     {
-        onHullStatusChanged.OnEventRaised += OnHullStatusChanged;
-        onLowOxygen.OnEventRaised += OnLowOxygen;
+        GameEventChannel<OnHullPropertyChange>.OnEventRaised += OnHullStatusChanged;
+        GameEventChannel<OnLowOxygen>.OnEventRaised += OnLowOxygen;
     }
 
     private void OnDisable()
     {
-        onHullStatusChanged.OnEventRaised -= OnHullStatusChanged;
-        onLowOxygen.OnEventRaised -= OnLowOxygen;
+        GameEventChannel<OnHullPropertyChange>.OnEventRaised -= OnHullStatusChanged;
+        GameEventChannel<OnLowOxygen>.OnEventRaised -= OnLowOxygen;
     }
 
-    private void OnHullStatusChanged(HullProperty hullProperty)
+    private void OnHullStatusChanged(OnHullPropertyChange onHullPropertyChange)
     {
-        bool increased = hullProperty.activeHullDamage > _lastActiveCrackCount;
-        _lastActiveCrackCount = hullProperty.activeHullDamage;
-        _hullDamageActive = hullProperty.activeHullDamage > 0;
+        bool increased = onHullPropertyChange.activeHullDamage > _lastActiveCrackCount;
+        _lastActiveCrackCount = onHullPropertyChange.activeHullDamage;
+        _hullDamageActive = onHullPropertyChange.activeHullDamage > 0;
 
         if (increased) SaveOriginalIfNeeded();
         UpdateAlertState();
     }
 
-    private void OnLowOxygen(bool isLow)
+    private void OnLowOxygen(OnLowOxygen lowOxygen)
     {
-        _lowOxygenActive = isLow;
-        if (isLow) SaveOriginalIfNeeded();
+        _lowOxygenActive = lowOxygen.IsLow;
+        if (lowOxygen.IsLow) SaveOriginalIfNeeded();
         UpdateAlertState();
     }
 
@@ -88,7 +84,6 @@ public class LightManager : MonoBehaviour
         {
             if (_hullDamageActive)
             {
-                // Usa alertCycleDuration para la intercalación, flickerDuration solo al primer impacto
                 bool alternating = _lowOxygenActive;
                 yield return StartCoroutine(FlickerRoutine(Color.red, alternating ? alertCycleDuration : flickerDuration));
                 if (!_lowOxygenActive) SetLightColor(Color.red);

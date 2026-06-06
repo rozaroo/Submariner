@@ -16,11 +16,6 @@ public class EnergySystem : MonoBehaviour
     [SerializeField] private float timeTillFuseBreak = 10f;
     [SerializeField] private float startupEnergyPercentageAfterFuseRepair = 10f;
     [SerializeField] private bool isFuseBroken;
-    
-    [Header("Energy Events Channels")]
-    [SerializeField] private EnergyStatusEventSO onEnergyStatusChange;
-    [SerializeField] private EnergyPropertyEventChannelSO onEnergyPropertyChange;
-    [SerializeField] private EnergyToConsumeEventChannelSO onConsumeEnergy;
 
     [Header("Energy Status")]
     private EnergyStatus _energyStatus;
@@ -41,10 +36,7 @@ public class EnergySystem : MonoBehaviour
         set
         {
             _currentEnergy = Mathf.Clamp(value, 0f, maxEnergy);
-            if (onEnergyPropertyChange != null)
-            {
-                onEnergyPropertyChange.RaiseEvent(new EnergyProperty { currentEnergyPercentage = GetCurrentEnergyPercentage(), maxEnergyPercentage = 100f });
-            }
+            GameEventChannel<OnEnergyPropertyChange>.RaiseEvent(new OnEnergyPropertyChange(GetCurrentEnergyPercentage(),100f) );
             SetEnergyStatus();
         }
     }
@@ -53,18 +45,12 @@ public class EnergySystem : MonoBehaviour
 
     private void OnEnable()
     {
-        if (onConsumeEnergy != null)
-        {
-            onConsumeEnergy.OnEventRaised += OnChangeEnergyValues;
-        }
+        GameEventChannel<OnEnergyConsumption>.OnEventRaised += OnChangeEnergyValues;
     }
     
     private void OnDisable()
     {
-        if (onConsumeEnergy != null)
-        {
-            onConsumeEnergy.OnEventRaised -= OnChangeEnergyValues;
-        }
+        GameEventChannel<OnEnergyConsumption>.OnEventRaised -= OnChangeEnergyValues;
     }
     
     private void Start()
@@ -97,16 +83,16 @@ public class EnergySystem : MonoBehaviour
         }
     }
 
-    private void OnChangeEnergyValues(EnergyConsumeData consumeData)
+    private void OnChangeEnergyValues(OnEnergyConsumption consumption)
     {
-        if (consumeData.isAddingStress)
+        if (consumption.isAddingStress)
         {
-            energyConsumptionRate += consumeData.energyToConsumeRate;
+            energyConsumptionRate += consumption.energyToConsumeRate;
             _stressIndex++;
         }
         else
         {
-            energyConsumptionRate -= consumeData.energyToConsumeRate;
+            energyConsumptionRate -= consumption.energyToConsumeRate;
             _stressIndex = Mathf.Max(0, _stressIndex - 1);
         }
 
@@ -239,10 +225,10 @@ public class EnergySystem : MonoBehaviour
     
     private void TriggerEnergyEvents()
     {
-        if (onEnergyStatusChange != null )
+        GameEventChannel<OnEnergyStatusChange>.RaiseEvent(new OnEnergyStatusChange
         {
-            onEnergyStatusChange.RaiseEvent(_energyStatus);
-        }
+            energyStatus = _energyStatus
+        });
     }
 
     #endregion

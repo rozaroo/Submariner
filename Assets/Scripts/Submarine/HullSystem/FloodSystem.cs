@@ -11,11 +11,6 @@ public class FloodSystem : MonoBehaviour
     [SerializeField] private float startHeight = 0f;
     [SerializeField] private float maxHeight = 10f;
 
-    [Header("Event Channels")]
-    [SerializeField] private HullPropertyEventSO onHullStatusChanged;
-    [SerializeField] private DrainagePropertyEventChannelSO onDrainageStationStatusChanged;
-    [SerializeField] private BaseEventChannelSO onSubmarineSunk;
-
     private float _hullFloodingSpeed;
     private float _drainageSpeed;
     private float EffectiveFloodingSpeed => _hullFloodingSpeed - _drainageSpeed;
@@ -30,14 +25,14 @@ public class FloodSystem : MonoBehaviour
 
     private void OnEnable()
     {
-        onHullStatusChanged.OnEventRaised += OnHullStatusChanged;
-        onDrainageStationStatusChanged.OnEventRaised += OnDrainageStatusReceived;
+        GameEventChannel<OnHullPropertyChange>.OnEventRaised += OnHullStatusChanged;
+        GameEventChannel<OnDrainagePropertyChange>.OnEventRaised += OnDrainageStatusReceived;
     }
 
     private void OnDisable()
     {
-        onHullStatusChanged.OnEventRaised -= OnHullStatusChanged;
-        onDrainageStationStatusChanged.OnEventRaised -= OnDrainageStatusReceived;
+        GameEventChannel<OnHullPropertyChange>.OnEventRaised -= OnHullStatusChanged;
+        GameEventChannel<OnDrainagePropertyChange>.OnEventRaised -= OnDrainageStatusReceived;
     }
 
     private void Update()
@@ -49,31 +44,29 @@ public class FloodSystem : MonoBehaviour
         CheckProgress();
     }
 
-    private void OnHullStatusChanged(HullProperty hullProperty)
+    private void OnHullStatusChanged(OnHullPropertyChange onHullPropertyChange)
     {
-        if (hullProperty.activeHullDamage <= 0)
+        if (onHullPropertyChange.activeHullDamage <= 0)
         {
             _hullFloodingSpeed = 0f;
             _drainageSpeed = 0f;
             return;
         }
-        _hullFloodingSpeed = maxRiseSpeed * (hullProperty.activeHullDamage / hullProperty.maxHullDamagePosible);
+        _hullFloodingSpeed = maxRiseSpeed * (onHullPropertyChange.activeHullDamage / onHullPropertyChange.maxHullDamagePosible);
     }
 
-    private void OnDrainageStatusReceived(DrainagePropertyData drainagePropertyData)
+    private void OnDrainageStatusReceived(OnDrainagePropertyChange onDrainagePropertyChange)
     {
-        _drainageSpeed = maxRiseSpeed * drainagePropertyData.drainagePercentage;
+        _drainageSpeed = maxRiseSpeed * onDrainagePropertyChange.drainagePercentage;
     }
-
-
-
+    
     private void CheckProgress()
     {
         if (_sunkLogged) return;
         float progress = (_currentHeight - startHeight) / (maxHeight - startHeight);
         if (progress >= 0.7f)
         {
-            onSubmarineSunk?.RaiseEvent();
+            GameEventChannel<OnSubmarineSunk>.RaiseEvent(new OnSubmarineSunk());
             _sunkLogged = true;
         }
     }

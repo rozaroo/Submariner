@@ -20,10 +20,6 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     [Header("Input Settings")]
     [SerializeField] private string takePhotoActionName; 
     [SerializeField] private string exitActionName; 
-
-    [Header("Event Channels")]
-    [SerializeField] private BaseEventChannelSO onPeriscopePossess;
-    [SerializeField] private BaseEventChannelSO onPeriscopeUnpossess;
     
     [Header("Inputs")]
     [SerializeField] private string lookActionName = "Look";
@@ -72,7 +68,7 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
         lookAction.performed += OnLookPerformed;
         
         enabled = true;
-        if (onPeriscopePossess != null) onPeriscopePossess.RaiseEvent();
+        GameEventChannel<OnPeriscopePossess>.RaiseEvent(new OnPeriscopePossess());
         _periscopeCameraAnchorSo.phosphorusCameraComponent.BeginPeriscopeControl();
         _periscopeCameraAnchorSo.phosphorusCameraComponent.EnableCamera();
     }
@@ -91,7 +87,7 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
         _periscopeCameraAnchorSo.phosphorusCameraComponent.EndPeriscopeControl();
         _periscopeCameraAnchorSo.phosphorusCameraComponent.ForceDisable();
         
-        if (onPeriscopeUnpossess != null) onPeriscopeUnpossess.RaiseEvent();
+        GameEventChannel<OnPeriscopeUnPossess>.RaiseEvent(new OnPeriscopeUnPossess());
         _currentPlayer = null;
         enabled = false;
     }

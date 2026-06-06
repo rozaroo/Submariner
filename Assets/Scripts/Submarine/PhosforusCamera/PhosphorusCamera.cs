@@ -12,9 +12,6 @@ public class PhosphorusCamera : MonoBehaviour
     [Header("Rotation Settings")]
     [SerializeField] private float mouseSensitivity = 0.4f;
     [SerializeField] private float verticalClamp = 70f;
-
-    [Header("Event Channels")]
-    [SerializeField] private EnergyStatusEventSO energyStatusEventSo;
     
     [Header("Sequence Timings")]
     [SerializeField] private float flashFadeInDuration = 0.05f;
@@ -40,14 +37,12 @@ public class PhosphorusCamera : MonoBehaviour
 
     private void OnEnable()
     {
-        if (energyStatusEventSo != null) 
-            energyStatusEventSo.OnEventRaised += UpdateEnergyStatus;
+        GameEventChannel<OnEnergyStatusChange>.OnEventRaised += UpdateEnergyStatus;
     }
 
     private void OnDisable()
     {
-        if (energyStatusEventSo != null) 
-            energyStatusEventSo.OnEventRaised -= UpdateEnergyStatus;
+        GameEventChannel<OnEnergyStatusChange>.OnEventRaised -= UpdateEnergyStatus;
     } 
 
     public void Rotate(Vector2 mouseDelta)
@@ -59,9 +54,9 @@ public class PhosphorusCamera : MonoBehaviour
         exteriorCamera.transform.rotation = Quaternion.Euler(_pitch, _yaw, 0f);
     }
 
-    private void UpdateEnergyStatus(EnergyStatus newStatus)
+    private void UpdateEnergyStatus(OnEnergyStatusChange newStatus)
     {
-        _energyStatus = newStatus;
+        _energyStatus = newStatus.energyStatus;
         if (_energyStatus == EnergyStatus.Empty)
         {
             ForceDisable();

@@ -42,7 +42,7 @@ public class SonarVisualBehaviour : MonoBehaviour, ISetup, IResettable, IWorldEl
         }
         else
         {
-            Log.Warning($"[{name}] - Script 3D doesnt include ISonarProvider. Deactivating Sonar Visual.");
+            Log.Warning("[Sonar Visual Behaviour] - Script 3D doesnt include ISonarProvider. Deactivating Sonar Visual.");
             ResetState();
         }
     }

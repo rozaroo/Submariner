@@ -9,10 +9,6 @@ public class SubmarineSonar : MonoBehaviour, ISonarProvider
     [SerializeField] private float innerDetectionRadius = 25f;
     [SerializeField] private float timePerSonarCheck = 0.2f;
     
-    [Header("Event Channels")]
-    [SerializeField] private SonarElementsDetectionEventChannelSO onOuterRadarChanged;
-    [SerializeField] private SonarElementsDetectionEventChannelSO onInnerRadarChanged;
-    
     private List<IWorldElement> _worldTargets = new List<IWorldElement>();
     private List<IWorldElement> _insideOuterRadius = new List<IWorldElement>();
     private List<IWorldElement> _insideInnerRadius = new List<IWorldElement>();
@@ -61,12 +57,12 @@ public class SubmarineSonar : MonoBehaviour, ISonarProvider
                 if (isWithinOuter && !_insideOuterRadius.Contains(target))
                 {
                     _insideOuterRadius.Add(target);
-                    onOuterRadarChanged?.RaiseEvent(new SonarElementsDetectionProperty(target, true));
+                    GameEventChannel<OnSonarElementsDetection>.RaiseEvent(new OnSonarElementsDetection(target, SonarDetectionMode.OuterOnly, true));
                 }
                 else if (!isWithinOuter && _insideOuterRadius.Contains(target))
                 {
                     _insideOuterRadius.Remove(target);
-                    onOuterRadarChanged?.RaiseEvent(new SonarElementsDetectionProperty(target, false));
+                    GameEventChannel<OnSonarElementsDetection>.RaiseEvent(new OnSonarElementsDetection(target, SonarDetectionMode.OuterOnly, false));
                 }
 
                 //Interior
@@ -77,20 +73,18 @@ public class SubmarineSonar : MonoBehaviour, ISonarProvider
                     if (isWithinInner && !_insideInnerRadius.Contains(target))
                     {
                         _insideInnerRadius.Add(target);
-                        onInnerRadarChanged?.RaiseEvent(new SonarElementsDetectionProperty(target, true));
+                        GameEventChannel<OnSonarElementsDetection>.RaiseEvent(new OnSonarElementsDetection(target, SonarDetectionMode.InnerOnly, true));
                     }
                     else if (!isWithinInner && _insideInnerRadius.Contains(target))
                     {
                         _insideInnerRadius.Remove(target);
-                        onInnerRadarChanged?.RaiseEvent(new SonarElementsDetectionProperty(target, false));
+                        GameEventChannel<OnSonarElementsDetection>.RaiseEvent(new OnSonarElementsDetection(target, SonarDetectionMode.InnerOnly, false));
                     }
                 }
             }
-
             yield return new WaitForSeconds(timePerSonarCheck);
         }
     }
-    
     
     #region Testing
 

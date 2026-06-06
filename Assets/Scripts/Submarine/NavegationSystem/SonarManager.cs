@@ -3,38 +3,34 @@ using UnityEngine;
 
 public class SonarManager : MonoBehaviour
 {
-    [Header("Event Channels")] 
-    [SerializeField] private WorldMapGeneratedPropertyEventChannelSO onWorldMapGenerated;
-    [SerializeField] private WorldMapUIElementEventChannelSO onWorldSubmarineGenerated;
-    
     private SubmarineSonar _submarineSonar;
     private readonly List<IWorldElement> _worldEntities = new List<IWorldElement>();
 
     private void OnEnable()
     {
-        onWorldMapGenerated.OnEventRaised += OnMapGenerated;
-        onWorldSubmarineGenerated.OnEventRaised += OnSubmarineGenerated;
+        GameEventChannel<OnWorldMapGeneratedProperty>.OnEventRaised += OnMapGenerated;
+        GameEventChannel<OnWorldSubmarineGenerated>.OnEventRaised += OnSubmarineGenerated;
     }
     
     private void OnDisable()
     {
-        onWorldMapGenerated.OnEventRaised -= OnMapGenerated;
-        onWorldSubmarineGenerated.OnEventRaised -= OnSubmarineGenerated;
+        GameEventChannel<OnWorldMapGeneratedProperty>.OnEventRaised -= OnMapGenerated;
+        GameEventChannel<OnWorldSubmarineGenerated>.OnEventRaised -= OnSubmarineGenerated;
     }
 
-    private void OnMapGenerated(WorldMapGeneratedProperty data)
+    private void OnMapGenerated(OnWorldMapGeneratedProperty data)
     {
         _worldEntities.Clear();
-        foreach (var element in data.mapElements)
+        foreach (var element in data.MapElements)
         {
             _worldEntities.Add(element);
         }
         TryInitializeSonar();
     }
     
-    private void OnSubmarineGenerated(IWorldMapUIElement submarineElement)
+    private void OnSubmarineGenerated(OnWorldSubmarineGenerated submarineElement)
     {
-        var submarineMono = submarineElement as MonoBehaviour;
+        var submarineMono = submarineElement._submarineElement as MonoBehaviour;
         if (submarineMono != null)
         {
             _submarineSonar = submarineMono.GetComponent<SubmarineSonar>();

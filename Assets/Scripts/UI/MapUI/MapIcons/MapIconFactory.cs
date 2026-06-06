@@ -35,7 +35,7 @@ public static class MapIconFactory
     
     private static MapIcon CreateNewIcon(MapAssetSO config, RectTransform parent)
     {
-        var go = new GameObject(config.name);
+        var go = new GameObject(config.assetName);
         go.transform.SetParent(parent, false);
 
         var icon = go.AddComponent<MapIcon>();

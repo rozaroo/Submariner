@@ -20,11 +20,6 @@ public class WorldMapManager : MonoBehaviour
     //different map generation settings, or even make it so the map generation settings are defined by the MapAssetSO of each element,
     //so we can have different generation settings for each type of element.
     
-    [Header("Event Channel")] 
-    [SerializeField] private WorldMapGeneratedPropertyEventChannelSO onWorldMapGenerated;
-    [SerializeField] private WorldMapUIElementEventChannelSO onWorldSubmarineElementGenerated;
-    [SerializeField] private WorldMapUIElementEventChannelSO onWorldElementGenerated; //Not yet Used, only for individual items, Future use.
-
     private Dictionary<GameObject, float> _mapElements = new Dictionary<GameObject, float>();
     private GameObject _submarineGo;
     
@@ -73,11 +68,11 @@ public class WorldMapManager : MonoBehaviour
                 removedElements++;
             }
         }
-        WorldMapGeneratedProperty worldMapProperties = new WorldMapGeneratedProperty
+        OnWorldMapGeneratedProperty onWorldMapProperties = new OnWorldMapGeneratedProperty
         {
-            mapElements = ValidateListForUI(_mapElements)
+            MapElements = ValidateListForUI(_mapElements)
         };
-        onWorldMapGenerated.RaiseEvent(worldMapProperties);
+        GameEventChannel<OnWorldMapGeneratedProperty>.RaiseEvent(onWorldMapProperties);
         Log.Info($"Removed {removedElements} events. Total placed: {_mapElements.Count}.");
     }
     
@@ -105,7 +100,7 @@ public class WorldMapManager : MonoBehaviour
                 
                 IWorldMapUIElement uiElement = CheckForWorldMapUIElement(elementGo);
                 if (uiElement != null)
-                    onWorldElementGenerated.RaiseEvent(uiElement);
+                    GameEventChannel<OnWorldMapElementGenerated>.RaiseEvent(new  OnWorldMapElementGenerated(uiElement));
 
                 return elementGo;
             }
@@ -213,7 +208,7 @@ public class WorldMapManager : MonoBehaviour
             _mapElements.Add(_submarineGo, 0);
             IWorldMapUIElement uiElement = CheckForWorldMapUIElement(_submarineGo);
             if (uiElement != null)
-                onWorldSubmarineElementGenerated.RaiseEvent(uiElement);
+                GameEventChannel<OnWorldSubmarineGenerated>.RaiseEvent(new OnWorldSubmarineGenerated(uiElement));
             else
             {
                 Log.Warning("[WorldMapManager] Could not find a valid position.");
@@ -229,7 +224,7 @@ public class WorldMapManager : MonoBehaviour
             }
             IWorldMapUIElement uiElement = CheckForWorldMapUIElement(_submarineGo);
             if (uiElement != null)
-                onWorldSubmarineElementGenerated.RaiseEvent(uiElement);
+                GameEventChannel<OnWorldSubmarineGenerated>.RaiseEvent(new OnWorldSubmarineGenerated(uiElement));
         }
     }
     

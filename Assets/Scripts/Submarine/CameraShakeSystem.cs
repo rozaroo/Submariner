@@ -4,7 +4,6 @@ using UnityEngine;
 public class CameraShakeSystem : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private HullPropertyEventSO onHullStatusChanged;
     [SerializeField] private Camera targetCamera;
 
     [Header("Settings")]
@@ -17,23 +16,23 @@ public class CameraShakeSystem : MonoBehaviour
 
     private void OnEnable()
     {
-        onHullStatusChanged.OnEventRaised += TriggerShake;
+        GameEventChannel<OnHullPropertyChange>.OnEventRaised += TriggerShake;
     }
 
     private void OnDisable()
     {
-        onHullStatusChanged.OnEventRaised -= TriggerShake;
+        GameEventChannel<OnHullPropertyChange>.OnEventRaised -= TriggerShake;
     }
 
-    private void TriggerShake(HullProperty hullProperty)
+    private void TriggerShake(OnHullPropertyChange onHullPropertyChange)
     {
         if (!shakeEnabled) return;
-        if (hullProperty.activeHullDamage <= _lastActiveCrackCount)
+        if (onHullPropertyChange.activeHullDamage <= _lastActiveCrackCount)
         {
-            _lastActiveCrackCount = hullProperty.activeHullDamage;
+            _lastActiveCrackCount = onHullPropertyChange.activeHullDamage;
             return;
         }
-        _lastActiveCrackCount = hullProperty.activeHullDamage;
+        _lastActiveCrackCount = onHullPropertyChange.activeHullDamage;
         if (_shakeCoroutine != null) StopCoroutine(_shakeCoroutine);
         _shakeCoroutine = StartCoroutine(ShakeRoutine());
     }

@@ -12,12 +12,6 @@ public class OxygenSystem : MonoBehaviour
     [SerializeField] private float suffocationDuration = 60f;
     [SerializeField] private float suffocationTimeRemaining; //TODO: What? Para que se usa?
 
-    [Header("Event Channels")]
-    [SerializeField] private BaseEventChannelSO onDeath;
-    [SerializeField] private BoolEventChannelSO onLowOxygen;
-    [SerializeField] private FloatEventChannelSO onSuffocationProgress;
-    [SerializeField] private OxygenPropertyEventSO onOxygenChanged;
-
     public float CurrentOxygen => currentOxygen;
     public float MaxOxygen => maxOxygen;
 
@@ -28,18 +22,7 @@ public class OxygenSystem : MonoBehaviour
     private void Start()
     {
         currentOxygen = maxOxygen;
-        if(onSuffocationProgress  == null) Log.Error("on Suffocation Progress Event Not placed");
-        if(onOxygenChanged  == null) Log.Error("On Oxygen Changed Event Not placed");
         StartDrain();
-    }
-
-    private OxygenProperty MakeOxygenProperty()
-    {
-        return new OxygenProperty
-        {
-            currentOxygen = this.currentOxygen,
-            maxOxygen = this.maxOxygen,
-        };
     }
     
     #region SuffocationLogic
@@ -57,7 +40,7 @@ public class OxygenSystem : MonoBehaviour
         StopCoroutine(_suffocationCoroutine);
         _suffocationCoroutine = null;
         suffocationTimeRemaining = suffocationDuration;
-        onSuffocationProgress?.RaiseEvent(0f);
+        GameEventChannel<OnSuffocationProgressChange>.RaiseEvent(new OnSuffocationProgressChange(0f));
     }
 
     private IEnumerator SuffocationCoroutine()
@@ -69,13 +52,13 @@ public class OxygenSystem : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             suffocationTimeRemaining = suffocationDuration - elapsed;
-            onSuffocationProgress.RaiseEvent(elapsed / suffocationDuration);
+            GameEventChannel<OnSuffocationProgressChange>.RaiseEvent(new OnSuffocationProgressChange(elapsed / suffocationDuration));
             yield return null;
         }
 
         suffocationTimeRemaining = 0f;
 
-        onSuffocationProgress.RaiseEvent(1f);
+        GameEventChannel<OnSuffocationProgressChange>.RaiseEvent(new OnSuffocationProgressChange(1f));
         OxygenDepleted();
     }
 
@@ -83,14 +66,14 @@ public class OxygenSystem : MonoBehaviour
 
     #region OxygenLogic
     
-    public void StartDrain()
+    private void StartDrain()
     {
         if (_drainCoroutine != null) return;
         _drainCoroutine = StartCoroutine(DrainCoroutine());
         Log.Info("Oxygen Descending...");
     }
 
-    public void StopDrain()
+    private void StopDrain()
     {
         if (_drainCoroutine == null) return;
         StopCoroutine(_drainCoroutine);
@@ -103,13 +86,13 @@ public class OxygenSystem : MonoBehaviour
         while (true)
         {
             currentOxygen -= Time.deltaTime;
-            onOxygenChanged.RaiseEvent(MakeOxygenProperty());
+            GameEventChannel<OnOxygenChanged>.RaiseEvent(new OnOxygenChanged(currentOxygen, maxOxygen));
             CheckLowOxygenThreshold();
 
             if (currentOxygen <= 0)
             {
                 currentOxygen = 0;
-                onOxygenChanged.RaiseEvent(MakeOxygenProperty());
+                GameEventChannel<OnOxygenChanged>.RaiseEvent(new OnOxygenChanged(currentOxygen, maxOxygen));
                 _drainCoroutine = null;
                 StartSuffocation();
                 yield break;
@@ -121,7 +104,7 @@ public class OxygenSystem : MonoBehaviour
     public void RestoreOxygen(float amount)
     {
         currentOxygen = Mathf.Clamp(currentOxygen + amount, 0, maxOxygen);
-        onOxygenChanged.RaiseEvent(MakeOxygenProperty());
+        GameEventChannel<OnOxygenChanged>.RaiseEvent(new OnOxygenChanged(currentOxygen, maxOxygen));
         CheckLowOxygenThreshold();
         
         if (_suffocationCoroutine != null)         // Si se estaba asfixiando, cancelar
@@ -136,7 +119,7 @@ public class OxygenSystem : MonoBehaviour
         bool low = (currentOxygen / maxOxygen) <= 0.15f;
         if (low == _isLow) return;
         _isLow = low;
-        onLowOxygen.RaiseEvent(_isLow);
+        GameEventChannel<OnLowOxygen>.RaiseEvent(new OnLowOxygen(_isLow));
     }
 
     #endregion
@@ -144,6 +127,6 @@ public class OxygenSystem : MonoBehaviour
     private void OxygenDepleted()
     {
         Log.Info("GAME OVER - Oxygen");
-        onDeath.RaiseEvent();
+        GameEventChannel<OnDeath>.RaiseEvent(new OnDeath());
     }
 }

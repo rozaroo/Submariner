@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,10 +12,6 @@ public class SubmarineMovement : MonoBehaviour
     [SerializeField] private float distanceOffset = 0.1f;
     [SerializeField] private float smoothDeaccelerationTime = 1f;
     
-    [Header("Event Channels")]
-    [SerializeField] private ListVector3EventChannelSO onRouteChangedChannel; 
-    [SerializeField] private BaseEventChannelSO onSubmarineArrivedAtWaypoint;
-    
     private List<Vector3> _currentWaypoints;
     private List<Vector3> _newWaypoints;
     private bool _hasTarget;
@@ -29,14 +24,12 @@ public class SubmarineMovement : MonoBehaviour
     
     private void OnEnable()
     {
-        if (onRouteChangedChannel != null)
-            onRouteChangedChannel.OnEventRaised += GetNewWaypointList; 
+            GameEventChannel<OnSubmarineRouteChanged>.OnEventRaised += GetNewWaypointList; 
     }
 
     private void OnDisable()
     {
-        if (onRouteChangedChannel != null)
-            onRouteChangedChannel.OnEventRaised -= GetNewWaypointList;
+            GameEventChannel<OnSubmarineRouteChanged>.OnEventRaised -= GetNewWaypointList;
     }
 
     private void Start()
@@ -211,18 +204,17 @@ public class SubmarineMovement : MonoBehaviour
 
     private void OnWaypoint()
     {
-        if (onSubmarineArrivedAtWaypoint != null)
-            onSubmarineArrivedAtWaypoint.RaiseEvent();
+        GameEventChannel<OnSubmarineArrivedAtCheckpoint>.RaiseEvent(new OnSubmarineArrivedAtCheckpoint());
         UpdateToNewWaypointList();
     }
 
-    public void GetNewWaypointList(List<Vector3> waypoints)
+    private void GetNewWaypointList(OnSubmarineRouteChanged data)
     {
-        _newWaypoints = waypoints;
+        _newWaypoints = data._waypoints;
         UpdateToNewWaypointList();
     }
 
-    public void UpdateToNewWaypointList()
+    private void UpdateToNewWaypointList()
     {
         if (_newWaypoints != null && _newWaypoints.Count > 0)
         {

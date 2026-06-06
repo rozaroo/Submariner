@@ -14,27 +14,18 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
     [Header("Anchors")]
     [SerializeField] private RectTransform mapRect;
     [SerializeField] private RectTransformAnchorSO submarineRectAnchor; 
-
-    [Header("Event Channels")]
-    [SerializeField] private ListVector3EventChannelSO onSubmarineRouteChanged; 
-    [SerializeField] private BaseEventChannelSO onSubmarineArrivedAtWaypoint;
     
     private readonly List<WaypointData> _waypoints = new();
     private RectTransform _mapRect;
-
-    public event Action OnRouteStarted;
-    public event Action OnRouteModified;
     
     private void OnEnable()
     {
-        if (onSubmarineArrivedAtWaypoint != null)
-            onSubmarineArrivedAtWaypoint.OnEventRaised += RemoveWaypointOnArrival;
+        GameEventChannel<OnSubmarineArrivedAtCheckpoint>.OnEventRaised += RemoveWaypointOnArrival;
     }
 
     private void OnDisable()
     {
-        if (onSubmarineArrivedAtWaypoint != null)
-            onSubmarineArrivedAtWaypoint.OnEventRaised -= RemoveWaypointOnArrival;
+        GameEventChannel<OnSubmarineArrivedAtCheckpoint>.OnEventRaised -= RemoveWaypointOnArrival;
     }
 
     #region Pointer Events Handlers
@@ -49,7 +40,7 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
     {
         if (submarineRectAnchor == null || submarineRectAnchor.Value == null || mapRect == null)
         {
-            Log.Info($"[{name}]- No Map Rect or Submarine Anchor Assigned/Active");
+            Log.Info("[Waypoint Manager]- No Map Rect or Submarine Anchor Assigned/Active");
             return;
         }
         
@@ -89,7 +80,7 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
         
         if (data.Behaviour == null)
         {
-            Log.Warning($"WaypointBehaviour not found on {mapIcon.name}");
+            Log.Warning($"WaypointBehaviour not found on {mapIcon}");
             Destroy(mapIcon);
             return;
         }
@@ -103,23 +94,18 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
         void OnRightClick() => RemovedWaypointByPlayer(data);
         data.Behaviour.SetAction(OnRightClick);
         _waypoints.Add(data);
-
-        if (_waypoints.Count == 1) OnRouteStarted?.Invoke();
-        else OnRouteModified?.Invoke();
     }
     
     private void RemovedWaypointByPlayer(WaypointData data)
     {
         RemoveWaypoint(data);
-        OnRouteModified?.Invoke();
     }
     
-    public void RemoveWaypointOnArrival()
+    private void RemoveWaypointOnArrival(OnSubmarineArrivedAtCheckpoint data)
     {
         if (_waypoints.Count > 0)
         {
             RemoveWaypoint(_waypoints[0]);
-            OnRouteModified?.Invoke();
         }
     }
     
@@ -159,7 +145,7 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
 
     private void SendWorldRoute()
     {
-        if (onSubmarineRouteChanged == null || mapRuntimeData == null) return;
+        if (mapRuntimeData == null) return;
 
         List<Vector3> worldWaypoints = new List<Vector3>();
         for (int i = 0; i < _waypoints.Count; i++)
@@ -171,10 +157,8 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
             );
             worldWaypoints.Add(worldPos);
         }
-        onSubmarineRouteChanged.RaiseEvent(worldWaypoints);
+        GameEventChannel<OnSubmarineRouteChanged>.RaiseEvent(new OnSubmarineRouteChanged(worldWaypoints));
     }
-    
-    public IReadOnlyList<WaypointData> GetWaypoints() => _waypoints;
     
     #endregion
 }
