@@ -4,6 +4,7 @@ public class WalkingMovement : IMovementStrategy
 {
     private float _moveVelocityY;
     private float _gravity = 9.81f;
+
     public void Move(MovementContext ctx)
     {
         Vector2 input = ctx.MovementAction.ReadValue<Vector2>();

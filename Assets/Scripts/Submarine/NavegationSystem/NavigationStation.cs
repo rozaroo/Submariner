@@ -37,7 +37,7 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
     public void Possess(PlayerCharacter player)
     {
         _currentPlayer = player;
-        mapUI.MapCanvas.worldCamera = _currentPlayer.camController.MainCamera;
+        mapUI.MapCanvas.worldCamera = _currentPlayer.CamController.MainCamera;
         var exitAction = _currentPlayer.Input.actions[exitActionName];
         exitAction.started += OnExitPerformed;
         

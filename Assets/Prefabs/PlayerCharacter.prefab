@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 471372131358332951}
   - component: {fileID: 3307760291457062342}
   - component: {fileID: 8590537888755363150}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: PlayerCharacter
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -50,17 +50,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  _moveActionName: Move
-  _interactionActionName: Interact
-  _dropActionName: DropItem
-  _useActionName: Click
-  _cameraController: {fileID: 2988871602860453287}
-  playerCamera: {fileID: 3246600704839594514}
+  moveActionName: Move
+  interactionActionName: Interact
+  dropActionName: DropItem
+  useActionName: Click
   interactionDistance: 2.5
   interactableLayer:
     serializedVersion: 2
     m_Bits: 8
-  _inventorySystem: {fileID: 471372131358332951}
 --- !u!114 &2988871602860453287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,9 +70,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb41d959a1f4bac43ab1b01fd5ec98c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookSensitivity: 100
-  upDownLookLimit: 80
-  lookLerpSpeed: 20
+  lookSensitivity: 20
+  upDownPitchLimit: 70
+  lookLerpSpeed: 40
   showGizmos: 1
   lookActionName: Look
   playerCamera: {fileID: 3246600704839594514}
@@ -187,6 +184,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 77bb0985-d961-4664-a369-5186d1465c9c
     m_ActionName: 'Station/Pointer[/Mouse/delta]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 38a20c18-470c-41ab-af0d-253b4eba83d8
+    m_ActionName: 'Station/Look[/Mouse/delta]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -204,7 +205,7 @@ GameObject:
   - component: {fileID: 3246600704839594514}
   - component: {fileID: 2447678229703385746}
   - component: {fileID: 8164654673162403251}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}

@@ -89,7 +89,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
         }
 
         fuse.DetachFromPanel();
-        if (!player.inventorySystem.TryPickUp(fuse))
+        if (!player.InventorySystem.TryPickUp(fuse))
         {
             InstallFuseInSlot(fuse, fuseIndex);
             return false;
@@ -193,7 +193,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
             return false;
         }
 
-        if (!player.inventorySystem.TryGetHeldItem(out Fuse fuse))
+        if (!player.InventorySystem.TryGetHeldItem(out Fuse fuse))
         {
             return false;
         }
@@ -201,7 +201,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
         if (!fuse.IsFunctional)
         {
             Log.Warning("The selected fuse is burned and cannot restore the panel.");
-            player.inventorySystem.TryPickUp(fuse);
+            player.InventorySystem.TryPickUp(fuse);
             return false;
         }
 

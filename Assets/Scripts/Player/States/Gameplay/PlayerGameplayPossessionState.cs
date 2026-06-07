@@ -25,7 +25,7 @@ public class PlayerGameplayPossessionState : PlayerGameplayState
         
         CameraPose playerPose = _context.SavedCameraPose;
         CameraPose stationPose = BuildStationPose();
-        _context.camController.SetCameraStrategy(
+        _context.CamController.SetCameraStrategy(
             new CameraTransition(playerPose, stationPose, _station.TransitionDuration));
         
         _context.DisableGameplayInputs();

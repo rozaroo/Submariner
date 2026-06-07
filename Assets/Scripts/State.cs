@@ -11,7 +11,5 @@ public class State : IState
 
     public virtual void Update() { }
 
-    public virtual void LateUpdate() { }
-
     public virtual void OnExit() { }
 }

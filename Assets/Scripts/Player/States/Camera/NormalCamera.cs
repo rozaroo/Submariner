@@ -2,30 +2,47 @@ using UnityEngine;
 
 public class NormalCameraStrategy : ICameraStrategy
 {
-    public void Enter(CameraContext ctx) { }
+    public void Enter(CameraContext ctx)
+    {
+        if(ctx == null) return;
+        float currentBodyYaw = ctx.PlayerTransform.eulerAngles.y;
+        
+        ctx.InputYaw = currentBodyYaw;
+        ctx.SmoothedYaw = currentBodyYaw;
+        
+        float currentCamPitch = ctx.CameraTransform.localEulerAngles.x;
+        
+        if (currentCamPitch > 180f) 
+        {
+            currentCamPitch -= 360f;
+        }
+
+        ctx.InputPitch = currentCamPitch;
+        ctx.SmoothedPitch = currentCamPitch;
+    }
 
     public void Look(CameraContext ctx)
     {
         Vector2 lookDir = ctx.LookAction.ReadValue<Vector2>();
         
-        ctx.Yaw += lookDir.x * ctx.LookSensitivity * Time.deltaTime;
-        ctx.Pitch -= lookDir.y * ctx.LookSensitivity * Time.deltaTime;
-        ctx.Pitch = Mathf.Clamp(ctx.Pitch, -ctx.UpDownPitchLimit, ctx.UpDownPitchLimit);
+        ctx.InputYaw += lookDir.x * ctx.LookSensitivity * Time.deltaTime;
+        ctx.InputPitch -= lookDir.y * ctx.LookSensitivity * Time.deltaTime;
+        ctx.InputPitch = Mathf.Clamp(ctx.InputPitch, -ctx.UpDownPitchLimit, ctx.UpDownPitchLimit);
         
         if (ctx.LookLerpSpeed <= 50)
         {
             float t = 1f - Mathf.Exp(-ctx.LookLerpSpeed * Time.deltaTime);
-            ctx.CurrentYaw = Mathf.LerpAngle(ctx.CurrentYaw, ctx.Yaw, t);
-            ctx.CurrentPitch = Mathf.LerpAngle(ctx.CurrentPitch, ctx.Pitch, t);
+            ctx.SmoothedYaw = Mathf.LerpAngle(ctx.SmoothedYaw, ctx.InputYaw, t);
+            ctx.SmoothedPitch = Mathf.LerpAngle(ctx.SmoothedPitch, ctx.InputPitch, t);
         }
         else
         {
-            ctx.CurrentYaw = ctx.Yaw;
-            ctx.CurrentPitch = ctx.Pitch;
+            ctx.SmoothedYaw = ctx.InputYaw;
+            ctx.SmoothedPitch = ctx.InputPitch;
         }
         
-        ctx.PlayerTransform.rotation = Quaternion.Euler(0f, ctx.CurrentYaw, 0f);
-        ctx.CameraTransform.localRotation = Quaternion.Euler(ctx.CurrentPitch, 0f, 0f);
+        ctx.PlayerTransform.rotation = Quaternion.Euler(0f, ctx.SmoothedYaw, 0f);
+        ctx.CameraTransform.localRotation = Quaternion.Euler(ctx.SmoothedPitch, 0f, 0f);
     }
 
     public void Exit(CameraContext ctx) { }

@@ -5,42 +5,44 @@ using UnityEngine.InputSystem.Interactions;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerCharacter : MonoBehaviour
 {
-    [Header("Control Settings")]
+    [Header("Control Settings")] 
     [SerializeField] private float moveSpeed = 5f;
+
     [SerializeField] private string moveActionName = "Move";
     [SerializeField] private string interactionActionName = "Interact";
     [SerializeField] private string dropActionName = "Drop";
     [SerializeField] private string useActionName = "Click";
 
-    [Header("Interaction Settings (Raycast)")]
+    [Header("Interaction Settings (Raycast)")] 
     [SerializeField] private float interactionDistance = 2.5f;
     [SerializeField] private LayerMask interactableLayer;
 
     private bool _isHolding;
     private CharacterController _controller;
-    
+
     private InputAction _interactionAction;
     private InputAction _dropAction;
     private InputAction _useAction;
-    
+
     private StateMachine _gameplaySm;
-    
+
     private IMovementStrategy _movementStrategy;
     private MovementContext _movementContext;
-    
+
     public CameraPose SavedCameraPose { get; private set; }
     public PlayerInput Input { get; private set; }
-    public CameraController camController { get; private set; }
-    public InventorySystem inventorySystem { get; private set; }
-    
+    public CameraController CamController { get; private set; }
+    public InventorySystem InventorySystem { get; private set; }
+    public CharacterController CharacterController => _controller;
+
 
     private void Start()
     {
         Input = GetComponent<PlayerInput>();
         _controller = GetComponent<CharacterController>();
-        camController = GetComponent<CameraController>();
-        inventorySystem = GetComponent<InventorySystem>();
-        
+        CamController = GetComponent<CameraController>();
+        InventorySystem = GetComponent<InventorySystem>();
+
         _movementContext = new MovementContext
         {
             CharacterController = _controller,
@@ -48,7 +50,7 @@ public class PlayerCharacter : MonoBehaviour
             MovementAction = Input.actions[moveActionName],
             MoveSpeed = moveSpeed,
         };
-        
+
         _gameplaySm = new StateMachine();
         PlayerGameplayState freeState = new PlayerGameplayFreeState(_gameplaySm, this);
         _gameplaySm.SetInitialState(freeState);
@@ -61,7 +63,7 @@ public class PlayerCharacter : MonoBehaviour
         _gameplaySm.Update();
         _movementStrategy.Move(_movementContext);
     }
-    
+
     public void SetMovementStrategy(IMovementStrategy movementStrategy)
     {
         _movementStrategy = movementStrategy;
@@ -71,9 +73,11 @@ public class PlayerCharacter : MonoBehaviour
 
     public void OnPossessionState(IPossessable station)
     {
-        SavedCameraPose = new CameraPose(camController.MainCamera.transform.position, camController.MainCamera.transform.rotation);
+        SavedCameraPose = new CameraPose(CamController.MainCamera.transform.position,
+            CamController.MainCamera.transform.rotation);
         _gameplaySm.ChangeState(
-            new PlayerGameplayPossessionState(_gameplaySm, this, station, Input.currentActionMap.name, station.CursorLockMode, station.IsMouseVisible));
+            new PlayerGameplayPossessionState(_gameplaySm, this, station, Input.currentActionMap.name,
+                station.CursorLockMode, station.IsMouseVisible));
     }
 
     public void OnUnPossessionState(IPossessable station)
@@ -84,7 +88,7 @@ public class PlayerCharacter : MonoBehaviour
     #endregion
 
     #region Inputs
-    
+
     public void EnableGameplayInputs()
     {
         _interactionAction =
@@ -104,9 +108,11 @@ public class PlayerCharacter : MonoBehaviour
         _useAction.performed += TryUseItem;
         _useAction.canceled += OnUseReleased;
     }
-    
+
     public void DisableGameplayInputs()
     {
+        if (_interactionAction == null) return;
+        
         _interactionAction.started -= TryInteractRaycast;
 
         _dropAction.started -= TryDropItem;
@@ -125,11 +131,10 @@ public class PlayerCharacter : MonoBehaviour
     private void TryInteractRaycast(InputAction.CallbackContext ctx)
     {
         Ray ray = new Ray(
-            camController.MainCamera.transform.position,
-            camController.MainCamera.transform.forward);
+            CamController.MainCamera.transform.position,
+            CamController.MainCamera.transform.forward);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 
-                interactionDistance, interactableLayer))
+        if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactableLayer))
         {
             Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 2f);
             if (hit.collider.TryGetComponent(out IInteractable interactable))
@@ -141,11 +146,9 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 
-    private void TryDropItem(InputAction.CallbackContext ctx)
-        => inventorySystem.DropItem();
+    private void TryDropItem(InputAction.CallbackContext ctx) => InventorySystem.DropItem();
 
-    private void OnUseStarted(InputAction.CallbackContext ctx)
-        => _isHolding = false;
+    private void OnUseStarted(InputAction.CallbackContext ctx) => _isHolding = false;
 
     private void TryUseItem(InputAction.CallbackContext ctx)
     {
@@ -154,7 +157,7 @@ public class PlayerCharacter : MonoBehaviour
         else
         {
             _isHolding = false;
-            inventorySystem.UseItem();
+            InventorySystem.UseItem();
         }
     }
 
@@ -162,8 +165,32 @@ public class PlayerCharacter : MonoBehaviour
     {
         if (!_isHolding) return;
         _isHolding = false;
-        inventorySystem.UseItemReleased();
+        InventorySystem.UseItemReleased();
     }
 
     #endregion
+    
+    [ContextMenu("Change to Desired Set Movement Strategy")] //ONLY FOR TESTING
+    public void SetMovementStrategy()
+    {
+        Vector3 randomDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
+        _movementStrategy = new KnockbackMovement(randomDirection, 5f, 1f);
+    }
+
+    [ContextMenu("Change to Desired Gameplay State")] //ONLY FOR TESTING
+    public void SetGameplayState()
+    {
+        if (_gameplaySm != null)
+        {
+            Vector3 randomDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
+            _gameplaySm.ChangeState(new PlayerGameplayExplosionState(_gameplaySm, this, randomDirection, 5f, 1f, 1f));
+        }
+    }
+
+    [ContextMenu("Change to Normal Gameplay State")] //ONLY FOR TESTING
+    public void ReturnToNormalState()
+    {
+        if(_gameplaySm != null)
+            _gameplaySm.ChangeState(new PlayerGameplayFreeState(_gameplaySm, this));
+    }
 }

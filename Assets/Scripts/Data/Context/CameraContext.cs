@@ -7,10 +7,12 @@ public class CameraContext
     public Transform CameraTransform;
     public InputAction LookAction;
     
-    public float Yaw;
-    public float Pitch;
-    public float CurrentYaw;
-    public float CurrentPitch;
+    public float InputYaw;
+    public float InputPitch;
+    public float InputRoll;
+    public float SmoothedYaw;
+    public float SmoothedPitch;
+    public float SmoothedRoll;
     
     public float LookSensitivity;
     public float UpDownPitchLimit;

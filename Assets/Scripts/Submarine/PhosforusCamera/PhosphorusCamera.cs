@@ -6,9 +6,6 @@ public class PhosphorusCamera : MonoBehaviour
     [SerializeField] private PeriscopeCameraAnchorSO periscopeCameraAnchorSo;
     [SerializeField] private Camera exteriorCamera;
 
-    [Header("Camera Settings")]
-    [SerializeField] private PhosphorusCameraPropertyData phosphorusCameraPropertyData;
-
     [Header("Rotation Settings")]
     [SerializeField] private float mouseSensitivity = 0.4f;
     [SerializeField] private float verticalClamp = 70f;

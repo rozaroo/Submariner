@@ -20,7 +20,7 @@ public class PlayerGameplayUnPossessionState : PlayerGameplayState
         _transition = new CameraTransition(stationPose, playerPose, _station.TransitionDuration);
         _transition.Completed += OnTransitionFinished;
         _player.SetMovementStrategy(new LockedMovement());
-        _player.camController.SetCameraStrategy(_transition);
+        _player.CamController.SetCameraStrategy(_transition);
     }
 
     public override void Update() { }

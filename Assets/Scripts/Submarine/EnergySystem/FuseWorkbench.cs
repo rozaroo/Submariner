@@ -95,7 +95,7 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     public void Possess(PlayerCharacter playerCharacter)
     {
         _currentPlayer = playerCharacter;
-        _playerCamera = playerCharacter.camController.MainCamera;
+        _playerCamera = playerCharacter.CamController.MainCamera;
         
         InputAction clickAction = _currentPlayer.Input.actions[clickActionName];
         InputAction exitAction = _currentPlayer.Input.actions[exitActionName];

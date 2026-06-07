@@ -56,7 +56,7 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     public void Possess(PlayerCharacter player)
     {
         _currentPlayer = player;
-        _periscopeCameraAnchorSo.playerCamera = player.camController.MainCamera;
+        _periscopeCameraAnchorSo.playerCamera = player.CamController.MainCamera;
         
         InputAction clickAction = _currentPlayer.Input.actions[takePhotoActionName];
         clickAction.started += OnPhotoClickStarted;

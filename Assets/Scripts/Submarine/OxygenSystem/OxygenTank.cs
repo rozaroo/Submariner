@@ -44,7 +44,7 @@ public class OxygenTank : MonoBehaviour, IInteractable, IPickable
 
     public void Interact(PlayerCharacter player)
     {
-        player.inventorySystem.TryPickUp(this);
+        player.InventorySystem.TryPickUp(this);
     }
 
     public void OnPickUp()

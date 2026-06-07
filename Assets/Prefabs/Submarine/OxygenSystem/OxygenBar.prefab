@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5423722866885092997}
   - component: {fileID: 1756972789596548898}
   - component: {fileID: 6898584476124063758}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: OxygenBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,6 +121,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be176b938d25b3249a06476bfa32f188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barTransform: {fileID: 8740069131410398371}
-  onSuffocationProgress: {fileID: 11400000, guid: 5d1169d521586294bba46c03ccc3c2f4, type: 2}
-  onOxygenChanged: {fileID: 11400000, guid: 6067dc80e58be5e4593ee05004842ef3, type: 2}

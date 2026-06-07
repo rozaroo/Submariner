@@ -108,7 +108,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     public void Possess(PlayerCharacter player)
     {
         _currentPlayer = player;
-        _playerCamera = player.camController.MainCamera;
+        _playerCamera = player.CamController.MainCamera;
         
         var clickAction = _currentPlayer.Input.actions[clickActionName];
         var exitAction = _currentPlayer.Input.actions[exitActionName];

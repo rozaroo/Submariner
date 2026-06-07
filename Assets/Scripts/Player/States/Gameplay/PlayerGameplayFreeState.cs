@@ -12,14 +12,12 @@ public class PlayerGameplayFreeState : PlayerGameplayState
     public override void OnEnter()
     {
         _player.SetMovementStrategy(new WalkingMovement());
-        _player.camController.SetCameraStrategy(new NormalCameraStrategy());
+        _player.CamController.SetCameraStrategy(new NormalCameraStrategy());
         _player.SetMouseConfiguration(CursorLockMode.Locked,false);
         _player.EnableGameplayInputs();
     }
 
     public override void Update() { }
-
-    public override void LateUpdate() { }
 
     public override void OnExit()
     {
