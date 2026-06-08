@@ -6,6 +6,11 @@
 				<MusicPlaylistContainer Name="TensionPlaylist" ID="{697C8FED-AAF1-413D-BC13-8FA7301F7C76}" ShortID="585913925">
 					<PropertyList>
 						<Property Name="Tempo" Type="Real64" Value="150"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-6</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
@@ -50,12 +55,12 @@
 																<Flags>5</Flags>
 															</Point>
 															<Point>
-																<XPos>40</XPos>
+																<XPos>0.4</XPos>
 																<YPos>-200</YPos>
 																<Flags>0</Flags>
 															</Point>
 															<Point>
-																<XPos>100</XPos>
+																<XPos>1</XPos>
 																<YPos>-200</YPos>
 																<Flags>37</Flags>
 															</Point>
@@ -251,7 +256,7 @@
 																<Flags>5</Flags>
 															</Point>
 															<Point>
-																<XPos>100</XPos>
+																<XPos>1</XPos>
 																<YPos>0</YPos>
 																<Flags>37</Flags>
 															</Point>
@@ -334,23 +339,23 @@
 																<Flags>5</Flags>
 															</Point>
 															<Point>
-																<XPos>19.9559</XPos>
+																<XPos>0.199559</XPos>
 																<YPos>-200</YPos>
 																<Flags>0</Flags>
 															</Point>
 															<Point>
-																<XPos>79.93385</XPos>
+																<XPos>0.7993385</XPos>
 																<YPos>0.00243</YPos>
 																<Flags>0</Flags>
 															</Point>
 															<Point>
-																<XPos>90.07718</XPos>
+																<XPos>0.9007718</XPos>
 																<YPos>-200</YPos>
 																<Flags>0</Flags>
 															</Point>
 															<Point>
-																<XPos>100</XPos>
-																<YPos>0</YPos>
+																<XPos>1</XPos>
+																<YPos>-200</YPos>
 																<Flags>37</Flags>
 															</Point>
 														</PointList>
@@ -415,7 +420,7 @@
 									<PropertyList>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>-12</Value>
+												<Value>-6</Value>
 											</ValueList>
 											<RTPCList>
 												<RTPC Name="" ID="{5557C59E-672B-45DC-96A9-BF4DB3CFB4BE}" ShortID="321386097">
@@ -435,13 +440,13 @@
 																<Flags>5</Flags>
 															</Point>
 															<Point>
-																<XPos>80.0441</XPos>
+																<XPos>0.800441</XPos>
 																<YPos>-200</YPos>
 																<Flags>0</Flags>
 															</Point>
 															<Point>
-																<XPos>100</XPos>
-																<YPos>0</YPos>
+																<XPos>1</XPos>
+																<YPos>-5.71447</YPos>
 																<Flags>37</Flags>
 															</Point>
 														</PointList>
@@ -523,13 +528,14 @@
 																<Flags>5</Flags>
 															</Point>
 															<Point>
-																<XPos>40.02205</XPos>
+																<XPos>0.4002205</XPos>
 																<YPos>-200</YPos>
 																<Flags>0</Flags>
+																<SegmentShape>Exp1</SegmentShape>
 															</Point>
 															<Point>
-																<XPos>100</XPos>
-																<YPos>0</YPos>
+																<XPos>1</XPos>
+																<YPos>3.81234</YPos>
 																<Flags>37</Flags>
 															</Point>
 														</PointList>
@@ -594,7 +600,7 @@
 									<PropertyList>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>-8</Value>
+												<Value>-6</Value>
 											</ValueList>
 											<RTPCList>
 												<RTPC Name="" ID="{397144F4-C3A0-4B4D-B9FD-3299F9896344}" ShortID="882778434">
@@ -614,22 +620,22 @@
 																<Flags>5</Flags>
 															</Point>
 															<Point>
-																<XPos>59.97795</XPos>
+																<XPos>0.5997795</XPos>
 																<YPos>-200</YPos>
 																<Flags>0</Flags>
 															</Point>
 															<Point>
-																<XPos>79.82359</XPos>
+																<XPos>0.7982359</XPos>
 																<YPos>-0.03928</YPos>
 																<Flags>0</Flags>
 															</Point>
 															<Point>
-																<XPos>89.96692</XPos>
+																<XPos>0.8996692</XPos>
 																<YPos>-0.04206</YPos>
 																<Flags>0</Flags>
 															</Point>
 															<Point>
-																<XPos>100</XPos>
+																<XPos>1</XPos>
 																<YPos>-200</YPos>
 																<Flags>37</Flags>
 															</Point>
@@ -712,7 +718,7 @@
 																<Flags>5</Flags>
 															</Point>
 															<Point>
-																<XPos>100</XPos>
+																<XPos>1</XPos>
 																<YPos>0</YPos>
 																<Flags>37</Flags>
 															</Point>

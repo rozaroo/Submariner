@@ -4,9 +4,6 @@
 		<WorkUnit Name="Default Work Unit" ID="{BD9639A8-0629-40D0-B5BF-DBE07E7A93D5}" PersistMode="Standalone">
 			<ChildrenList>
 				<StateGroup Name="Player_State" ID="{E6F0C986-7EA9-445E-87F2-C62236FE5080}">
-					<PropertyList>
-						<Property Name="DefaultTransitionTime" Type="Real64" Value="0"/>
-					</PropertyList>
 					<ChildrenList>
 						<State Name="None" ID="{342CF4E7-6DD8-41CC-A36F-4380235B5988}"/>
 						<State Name="Alive" ID="{27CCEF96-E986-4239-8783-B018BFADC7EC}"/>
@@ -20,6 +17,14 @@
 							<IsShared>true</IsShared>
 						</Transition>
 					</TransitionList>
+				</StateGroup>
+				<StateGroup Name="Energy_Status" ID="{47AFB86B-07E1-4368-AE6B-F248AEA5823B}">
+					<ChildrenList>
+						<State Name="None" ID="{9EB3B7D9-52B4-475A-A769-C726EC9D0F4B}"/>
+						<State Name="Full" ID="{9994C281-2EA3-401E-B1AB-86D2A52AAEE4}"/>
+						<State Name="Low" ID="{A5BB699C-970F-4297-A432-86D4813BDB27}"/>
+						<State Name="Empty" ID="{9B25FCBF-5CCB-4DD4-B4BD-7590E516F771}"/>
+					</ChildrenList>
 				</StateGroup>
 			</ChildrenList>
 		</WorkUnit>

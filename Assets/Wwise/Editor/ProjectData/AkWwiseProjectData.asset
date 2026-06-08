@@ -193,7 +193,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\VoicesOfTides
     guid: 6cfb55a730df374090e3de101ed00759
     GuidInternal: 
-    m_lastTime: -8584206673183656927
+    m_lastTime: -8584206614757260723
     List:
     - name: GamePlay_SFX
       guid: 8f55fbaac4adf94c90c05b67fca3cb88
@@ -234,7 +234,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584206676102695537
+    m_lastTime: -8584206526371084825
     List:
     - name: Start_BackgroundSubmarineMFX
       guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
@@ -270,6 +270,57 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.115269
       minDuration: 0.082455
+    - name: Start_Closing_Pressure_DoorSFX
+      guid: 552c3fbabfe9bd458dfedc14383be9f9
+      id: 378872923
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_Closing_Pressure_DoorSFX
+        ObjectType: 3
+        guid: 552c3fbabfe9bd458dfedc14383be9f9
+      Path: Events\Gameplay_SFX\Start_Closing_Pressure_DoorSFX
+      maxAttenuation: 0
+      maxDuration: 2.257351
+      minDuration: 2.07
+    - name: Start_LeverPullFinished
+      guid: 708c8da4d475f64785a10bef769af746
+      id: 2469108041
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_LeverPullFinished
+        ObjectType: 3
+        guid: 708c8da4d475f64785a10bef769af746
+      Path: Events\Gameplay_SFX\Start_LeverPullFinished
+      maxAttenuation: 0
+      maxDuration: 0.398979
+      minDuration: 0.398979
+    - name: Start_Opening_Pressure_DoorSFX
+      guid: 1cec1fc9c843b94eb94c33b41770a6d6
+      id: 4235702204
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_Opening_Pressure_DoorSFX
+        ObjectType: 3
+        guid: 1cec1fc9c843b94eb94c33b41770a6d6
+      Path: Events\Gameplay_SFX\Start_Opening_Pressure_DoorSFX
+      maxAttenuation: 0
+      maxDuration: 1.35771
+      minDuration: 1.35771
     - name: Start_PhosphorusCameraFlash_Event
       guid: 75d2e8942c2e0447ad01f759a9c2dfa4
       id: 3214537693
@@ -286,7 +337,41 @@ MonoBehaviour:
       Path: Events\Gameplay_SFX\Start_PhosphorusCameraFlash_Event
       maxAttenuation: 0
       maxDuration: 2.752797
-      minDuration: 2.752797
+      minDuration: 1.902773
+    - name: Start_SonarPingInner
+      guid: 1229c9717802a54a8d32dbeb8e91b82d
+      id: 1735885581
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_SonarPingInner
+        ObjectType: 3
+        guid: 1229c9717802a54a8d32dbeb8e91b82d
+      Path: Events\Gameplay_SFX\Start_SonarPingInner
+      maxAttenuation: 0
+      maxDuration: 3.2
+      minDuration: 3.2
+    - name: Start_SonarPingOuter
+      guid: 7ab25205714fe24eb2eb9728f9017b7d
+      id: 997126444
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_SonarPingOuter
+        ObjectType: 3
+        guid: 7ab25205714fe24eb2eb9728f9017b7d
+      Path: Events\Gameplay_SFX\Start_SonarPingOuter
+      maxAttenuation: 0
+      maxDuration: 3.2
+      minDuration: 3.2
     - name: Start_TensionEvent
       guid: fd0c6db95aa59a4bba27964681c14af4
       id: 1403223316
@@ -363,7 +448,7 @@ MonoBehaviour:
     ParentPath: Game Parameters\ParametersVOT
     guid: 7ca9e527ff3296499ba38599ac94cf84
     GuidInternal: 
-    m_lastTime: -8584206687637136614
+    m_lastTime: -8584206557774011998
     List:
     - name: IncrementalTension
       guid: d25f24295014334983de5c38da9aaa4d
@@ -405,8 +490,90 @@ MonoBehaviour:
     ParentPath: States\Default Work Unit
     guid: a83996bd2906d040b5bfdbe07e7a93d5
     GuidInternal: 
-    m_lastTime: -8584206675281205392
+    m_lastTime: -8584206557773991988
     List:
+    - name: Energy_Status
+      guid: 6bb8af47e1076843ae6bf248aea5823b
+      id: 894977922
+      PathAndIcons:
+      - ElementName: States
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: a83996bd2906d040b5bfdbe07e7a93d5
+      - ElementName: Energy_Status
+        ObjectType: 9
+        guid: 6bb8af47e1076843ae6bf248aea5823b
+      Path: States\Default Work Unit\Energy_Status
+      values:
+      - name: Empty
+        guid: bffc259bcb5cd44db4bd7590e516f771
+        id: 3354297748
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: a83996bd2906d040b5bfdbe07e7a93d5
+        - ElementName: Energy_Status
+          ObjectType: 9
+          guid: 6bb8af47e1076843ae6bf248aea5823b
+        - ElementName: Empty
+          ObjectType: 8
+          guid: bffc259bcb5cd44db4bd7590e516f771
+      - name: Full
+        guid: 81c29499a32e1e40b1ab86d2a52aaee4
+        id: 2510516222
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: a83996bd2906d040b5bfdbe07e7a93d5
+        - ElementName: Energy_Status
+          ObjectType: 9
+          guid: 6bb8af47e1076843ae6bf248aea5823b
+        - ElementName: Full
+          ObjectType: 8
+          guid: 81c29499a32e1e40b1ab86d2a52aaee4
+      - name: Low
+        guid: 9c69bba50f979742a43286d4813bdb27
+        id: 545371365
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: a83996bd2906d040b5bfdbe07e7a93d5
+        - ElementName: Energy_Status
+          ObjectType: 9
+          guid: 6bb8af47e1076843ae6bf248aea5823b
+        - ElementName: Low
+          ObjectType: 8
+          guid: 9c69bba50f979742a43286d4813bdb27
+      - name: None
+        guid: d9b7b39eb4525a47a769c726ec9d0f4b
+        id: 748895195
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: a83996bd2906d040b5bfdbe07e7a93d5
+        - ElementName: Energy_Status
+          ObjectType: 9
+          guid: 6bb8af47e1076843ae6bf248aea5823b
+        - ElementName: None
+          ObjectType: 8
+          guid: d9b7b39eb4525a47a769c726ec9d0f4b
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
     - name: Player_State
       guid: 86c9f0e6a97e5e4487f2c62236fe5080
       id: 4071417932
@@ -485,74 +652,8 @@ MonoBehaviour:
     ParentPath: Switches\Default Work Unit
     guid: c07239db9f6acd43b302be800a106cfe
     GuidInternal: 
-    m_lastTime: -8584206762390962640
-    List:
-    - name: Energy_Status
-      guid: d803ecbfac7fcb4cb4342a8d562a552b
-      id: 894977922
-      PathAndIcons:
-      - ElementName: Switches
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: c07239db9f6acd43b302be800a106cfe
-      - ElementName: Energy_Status
-        ObjectType: 11
-        guid: d803ecbfac7fcb4cb4342a8d562a552b
-      Path: Switches\Default Work Unit\Energy_Status
-      values:
-      - name: High_Energy
-        guid: 910bd1080cdf934e9d9f4651b0fb9e1f
-        id: 154043800
-        PathAndIcons:
-        - ElementName: Switches
-          ObjectType: 5
-          guid: 00000000000000000000000000000000
-        - ElementName: Default Work Unit
-          ObjectType: 12
-          guid: c07239db9f6acd43b302be800a106cfe
-        - ElementName: Energy_Status
-          ObjectType: 11
-          guid: d803ecbfac7fcb4cb4342a8d562a552b
-        - ElementName: High_Energy
-          ObjectType: 10
-          guid: 910bd1080cdf934e9d9f4651b0fb9e1f
-      - name: Low_Energy
-        guid: 737e71d23d63f3499eceae68f1aad1e3
-        id: 2073286940
-        PathAndIcons:
-        - ElementName: Switches
-          ObjectType: 5
-          guid: 00000000000000000000000000000000
-        - ElementName: Default Work Unit
-          ObjectType: 12
-          guid: c07239db9f6acd43b302be800a106cfe
-        - ElementName: Energy_Status
-          ObjectType: 11
-          guid: d803ecbfac7fcb4cb4342a8d562a552b
-        - ElementName: Low_Energy
-          ObjectType: 10
-          guid: 737e71d23d63f3499eceae68f1aad1e3
-      - name: None_Energy
-        guid: c69fe623e64536419a429888e26dea6b
-        id: 2623246582
-        PathAndIcons:
-        - ElementName: Switches
-          ObjectType: 5
-          guid: 00000000000000000000000000000000
-        - ElementName: Default Work Unit
-          ObjectType: 12
-          guid: c07239db9f6acd43b302be800a106cfe
-        - ElementName: Energy_Status
-          ObjectType: 11
-          guid: d803ecbfac7fcb4cb4342a8d562a552b
-        - ElementName: None_Energy
-          ObjectType: 10
-          guid: c69fe623e64536419a429888e26dea6b
-      ValueGuids: []
-      ValueIcons: []
-      valuesInternal: []
+    m_lastTime: -8584206591426140896
+    List: []
   TriggerWwu:
   - PhysicalPath: Triggers\Default Work Unit.wwu
     PathAndIcons:
@@ -568,7 +669,7 @@ MonoBehaviour:
     m_lastTime: -8584206873757984189
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 01000000030000000400000005000000060000000700000008000000090000000f0000001000000011000000120000001400000016000000170000001b0000001d0000002100000022000000d1000000740100007601000026ca070037ca0700
+  ExpandedWaapiItemIds: 01000000030000000400000005000000060000000700000008000000090000000f0000001000000011000000120000001300000014000000160000001700000018000000190000001a0000001b0000001d0000001f0000002100000022000000230000002400000043000000d1000000740100007601000026ca070037ca0700
   AutoSyncSelection: 1
   autoPopulateEnabled: 1
   currentDataSource: 0

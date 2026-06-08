@@ -7,19 +7,18 @@
 					<RTPCValueList ShowAll="true">
 						<RTPCValue>
 							<GameParameterRef Name="IncrementalTension" ID="{29245FD2-1450-4933-83DE-5C38DA9AAA4D}"/>
-							<Value>100</Value>
+							<Value>0</Value>
 						</RTPCValue>
 						<RTPCValue>
 							<GameParameterRef Name="Submarine_Colision_Distance" ID="{C033A24E-9AE2-4C4A-828C-BE8E6DE87FFE}"/>
-							<Value>100</Value>
+							<Value>0</Value>
 						</RTPCValue>
 					</RTPCValueList>
 					<CurrentStateList ShowAll="true">
-						<CurrentStateRef Name="Alive" ID="{27CCEF96-E986-4239-8783-B018BFADC7EC}"/>
+						<CurrentStateRef Name="None" ID="{9EB3B7D9-52B4-475A-A769-C726EC9D0F4B}"/>
+						<CurrentStateRef Name="None" ID="{342CF4E7-6DD8-41CC-A36F-4380235B5988}"/>
 					</CurrentStateList>
-					<CurrentSwitchList ShowAll="true">
-						<CurrentSwitchRef Name="High_Energy" ID="{08D10B91-DF0C-4E93-9D9F-4651B0FB9E1F}"/>
-					</CurrentSwitchList>
+					<CurrentSwitchList ShowAll="true"/>
 				</SoundcasterSession>
 			</ChildrenList>
 		</WorkUnit>

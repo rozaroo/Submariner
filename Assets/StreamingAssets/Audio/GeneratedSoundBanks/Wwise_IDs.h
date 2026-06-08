@@ -15,7 +15,12 @@ namespace AK
     {
         static const AkUniqueID START_BACKGROUNDSUBMARINEMFX = 3003027233U;
         static const AkUniqueID START_BUTTONPRESS = 738466431U;
+        static const AkUniqueID START_CLOSING_PRESSURE_DOORSFX = 378872923U;
+        static const AkUniqueID START_LEVERPULLFINISHED = 2469108041U;
+        static const AkUniqueID START_OPENING_PRESSURE_DOORSFX = 4235702204U;
         static const AkUniqueID START_PHOSPHORUSCAMERAFLASH_EVENT = 3214537693U;
+        static const AkUniqueID START_SONARPINGINNER = 1735885581U;
+        static const AkUniqueID START_SONARPINGOUTER = 997126444U;
         static const AkUniqueID START_TENSIONEVENT = 1403223316U;
         static const AkUniqueID STOP_BACKGROUNDSUBMARINEMFX = 116843463U;
         static const AkUniqueID STOP_TENSIONEVENT = 3884825202U;
@@ -23,6 +28,19 @@ namespace AK
 
     namespace STATES
     {
+        namespace ENERGY_STATUS
+        {
+            static const AkUniqueID GROUP = 894977922U;
+
+            namespace STATE
+            {
+                static const AkUniqueID EMPTY = 3354297748U;
+                static const AkUniqueID FULL = 2510516222U;
+                static const AkUniqueID LOW = 545371365U;
+                static const AkUniqueID NONE = 748895195U;
+            } // namespace STATE
+        } // namespace ENERGY_STATUS
+
         namespace PLAYER_STATE
         {
             static const AkUniqueID GROUP = 4071417932U;
@@ -36,22 +54,6 @@ namespace AK
         } // namespace PLAYER_STATE
 
     } // namespace STATES
-
-    namespace SWITCHES
-    {
-        namespace ENERGY_STATUS
-        {
-            static const AkUniqueID GROUP = 894977922U;
-
-            namespace SWITCH
-            {
-                static const AkUniqueID HIGH_ENERGY = 154043800U;
-                static const AkUniqueID LOW_ENERGY = 2073286940U;
-                static const AkUniqueID NONE_ENERGY = 2623246582U;
-            } // namespace SWITCH
-        } // namespace ENERGY_STATUS
-
-    } // namespace SWITCHES
 
     namespace GAME_PARAMETERS
     {

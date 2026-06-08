@@ -1415,7 +1415,7 @@
 								</Effect>
 								<Effect Name="Aluminium_Tank" ID="{0D20C91A-F750-47E0-AE32-00E5F2AA1272}" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3">
 									<PropertyList>
-										<Property Name="DecayTime" Type="Real32" Value="10"/>
+										<Property Name="DecayTime" Type="Real32" Value="3"/>
 										<Property Name="Density" Type="Real32" Value="100"/>
 										<Property Name="Diffusion" Type="Real32" Value="53"/>
 										<Property Name="ERLevel" Type="Real32" Value="-25"/>

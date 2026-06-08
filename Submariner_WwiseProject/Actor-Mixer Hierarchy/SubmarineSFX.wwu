@@ -3,32 +3,6 @@
 	<AudioObjects>
 		<WorkUnit Name="SubmarineSFX" ID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}" PersistMode="Standalone">
 			<ChildrenList>
-				<Sound Name="Project_1_Sonar" ID="{A33B48EA-BB1B-4E80-AF37-B2651D123D4D}" ShortID="287548449">
-					<PropertyList>
-						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="Project_1_Sonar" ID="{337AD216-9917-4BA6-81B3-081ACF73CB21}">
-							<Language>SFX</Language>
-							<AudioFile>Project_1_Sonar.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="565251534"/>
-							</MediaIDList>
-						</AudioFileSource>
-					</ChildrenList>
-					<ObjectLists/>
-					<ActiveSourceList>
-						<ActiveSource Name="Project_1_Sonar" ID="{337AD216-9917-4BA6-81B3-081ACF73CB21}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
 				<RandomSequenceContainer Name="BackgroudNoisesRandom" ID="{72A47F02-7AB6-451E-8697-4A66D52DA602}" ShortID="175363584">
 					<PropertyList>
 						<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>
@@ -165,13 +139,13 @@
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
 						</Reference>
 						<Reference Name="DefaultSwitchOrState">
-							<ObjectRef Name="High_Energy" ID="{08D10B91-DF0C-4E93-9D9F-4651B0FB9E1F}" WorkUnitID="{DB3972C0-6A9F-43CD-B302-BE800A106CFE}"/>
+							<ObjectRef Name="Full" ID="{9994C281-2EA3-401E-B1AB-86D2A52AAEE4}" WorkUnitID="{BD9639A8-0629-40D0-B5BF-DBE07E7A93D5}"/>
 						</Reference>
 						<Reference Name="OutputBus">
 							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
 						</Reference>
 						<Reference Name="SwitchGroupOrStateGroup">
-							<ObjectRef Name="Energy_Status" ID="{BFEC03D8-7FAC-4CCB-B434-2A8D562A552B}" WorkUnitID="{DB3972C0-6A9F-43CD-B302-BE800A106CFE}"/>
+							<ObjectRef Name="Energy_Status" ID="{47AFB86B-07E1-4368-AE6B-F248AEA5823B}" WorkUnitID="{BD9639A8-0629-40D0-B5BF-DBE07E7A93D5}"/>
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>
@@ -338,21 +312,27 @@
 						</GroupingBehaviorList>
 						<GroupingList>
 							<Grouping>
-								<SwitchRef Name="Low_Energy" ID="{D2717E73-633D-49F3-9ECE-AE68F1AAD1E3}"/>
+								<SwitchRef Name="Full" ID="{9994C281-2EA3-401E-B1AB-86D2A52AAEE4}"/>
 								<ItemList>
 									<ItemRef Name="PhosporusCamera_Functional" ID="{D3FEDB70-DD37-48DA-96B7-3A44D7D1ECA8}"/>
 								</ItemList>
 							</Grouping>
 							<Grouping>
-								<SwitchRef Name="High_Energy" ID="{08D10B91-DF0C-4E93-9D9F-4651B0FB9E1F}"/>
+								<SwitchRef Name="Low" ID="{A5BB699C-970F-4297-A432-86D4813BDB27}"/>
 								<ItemList>
 									<ItemRef Name="PhosporusCamera_Functional" ID="{D3FEDB70-DD37-48DA-96B7-3A44D7D1ECA8}"/>
 								</ItemList>
 							</Grouping>
 							<Grouping>
-								<SwitchRef Name="None_Energy" ID="{23E69FC6-45E6-4136-9A42-9888E26DEA6B}"/>
+								<SwitchRef Name="Empty" ID="{9B25FCBF-5CCB-4DD4-B4BD-7590E516F771}"/>
 								<ItemList>
 									<ItemRef Name="FlashNoEnergy" ID="{7F75CD9C-9F00-41A7-90A0-121E0CBD0A65}"/>
+								</ItemList>
+							</Grouping>
+							<Grouping>
+								<SwitchRef Name="None" ID="{9EB3B7D9-52B4-475A-A769-C726EC9D0F4B}"/>
+								<ItemList>
+									<ItemRef Name="PhosporusCamera_Functional" ID="{D3FEDB70-DD37-48DA-96B7-3A44D7D1ECA8}"/>
 								</ItemList>
 							</Grouping>
 						</GroupingList>
@@ -360,6 +340,7 @@
 				</SwitchContainer>
 				<RandomSequenceContainer Name="ButtonRandom" ID="{88C64706-B3E5-4429-99F6-0C2BE9ABEAF9}" ShortID="934221547">
 					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
 						<Property Name="Lowpass" Type="int16">
 							<ValueList>
 								<Value>35</Value>
@@ -692,6 +673,434 @@
 						<ItemRef Name="Distance_Countdown2" ID="{9BC71EFF-90EE-435A-8244-52C69A0FADFC}"/>
 					</Playlist>
 				</RandomSequenceContainer>
+				<Sound Name="33637__herbertboland__cinematicboomnorm" ID="{261D5018-3449-44D3-9A74-4871761F9FBC}" ShortID="848722797">
+					<PropertyList>
+						<Property Name="Inclusion" Type="bool">
+							<ValueList>
+								<Value>False</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="33637__herbertboland__cinematicboomnorm" ID="{806FE28A-1F5E-42EB-AC83-5548492E25A0}">
+							<Language>SFX</Language>
+							<AudioFile>33637__herbertboland__cinematicboomnorm.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="108859605"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="33637__herbertboland__cinematicboomnorm" ID="{806FE28A-1F5E-42EB-AC83-5548492E25A0}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="218050__hykenfreak__ringing-in-the-ears" ID="{ECC94187-A671-4356-8FC4-C9037D6DA81A}" ShortID="146418586">
+					<PropertyList>
+						<Property Name="Inclusion" Type="bool">
+							<ValueList>
+								<Value>False</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="218050__hykenfreak__ringing-in-the-ears" ID="{2EE3FB2E-3CC7-4051-B310-2412016F4FD0}">
+							<Language>SFX</Language>
+							<AudioFile>218050__hykenfreak__ringing-in-the-ears.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="884323545"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="218050__hykenfreak__ringing-in-the-ears" ID="{2EE3FB2E-3CC7-4051-B310-2412016F4FD0}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="255111__rhapsodize__cinematic_boom_rhapsodize" ID="{CA32C706-826F-4C42-9CF8-B7F0DEAB1414}" ShortID="214233715">
+					<PropertyList>
+						<Property Name="Inclusion" Type="bool">
+							<ValueList>
+								<Value>False</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="255111__rhapsodize__cinematic_boom_rhapsodize" ID="{50460A7C-700B-49B2-AEAE-D83E58E62A2E}">
+							<Language>SFX</Language>
+							<AudioFile>255111__rhapsodize__cinematic_boom_rhapsodize.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="1000183383"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="255111__rhapsodize__cinematic_boom_rhapsodize" ID="{50460A7C-700B-49B2-AEAE-D83E58E62A2E}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="244983__ani_music__ani-big-pipe-hit" ID="{745E1D05-D281-496C-AAC9-C1086633BC86}" ShortID="625091385">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+						</Reference>
+						<Reference Name="Effect0">
+							<Custom CreatedFrom="{99F80B38-1C45-42CE-9BCD-E94F3885DCAA}">
+								<Effect Name="Monsterize (Custom)" ID="{FEF1C148-E3CE-4D4A-BDD9-D3B7EDAD43DD}" ShortID="780411401" PluginName="Wwise Pitch Shifter" CompanyID="0" PluginID="136" PluginType="3">
+									<PropertyList>
+										<Property Name="DelayTime" Type="Real32" Value="85"/>
+										<Property Name="DryLevel" Type="Real32" Value="-20"/>
+										<Property Name="FilterFrequency" Type="Real32" Value="2000"/>
+										<Property Name="Pitch" Type="Real32" Value="-1300"/>
+										<Property Name="WetLevel" Type="Real32" Value="6"/>
+									</PropertyList>
+								</Effect>
+							</Custom>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="244983__ani_music__ani-big-pipe-hit" ID="{5F6332B6-DDE2-4E93-9280-AB0C1C973A64}">
+							<Language>SFX</Language>
+							<AudioFile>244983__ani_music__ani-big-pipe-hit.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="30412895"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="244983__ani_music__ani-big-pipe-hit" ID="{5F6332B6-DDE2-4E93-9280-AB0C1C973A64}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<RandomSequenceContainer Name="PressureDoorOpenRandom" ID="{899746EC-3F56-4F3A-A977-DB9A0C76674A}" ShortID="695862189">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-6</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="PressureDoorOpen" ID="{4A07AB2A-4DCB-4428-939E-3A3B79CD4D34}" ShortID="904466041">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="425090__neospica__pressurized-door-opening" ID="{81CDF8E3-EEEF-4811-AD53-DFD509DC7FAB}">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="0.294301246510165"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.317845346230978"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>425090__neospica__pressurized-door-opening.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="1002913569"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="425090__neospica__pressurized-door-opening" ID="{81CDF8E3-EEEF-4811-AD53-DFD509DC7FAB}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="PressureDoorOpen_01" ID="{6A0BE818-8F2B-4397-8400-D8E54437305C}" ShortID="185836909">
+							<PropertyList>
+								<Property Name="Highpass" Type="int16">
+									<ValueList>
+										<Value>28</Value>
+									</ValueList>
+								</Property>
+								<Property Name="Lowpass" Type="int16">
+									<ValueList>
+										<Value>19</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="425090__neospica__pressurized-door-opening" ID="{C4F1A397-2FDC-4438-A35F-E98E7F6D0D50}">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="0.178542756216167"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.317845346230978"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>425090__neospica__pressurized-door-opening.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="794426764"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="425090__neospica__pressurized-door-opening" ID="{C4F1A397-2FDC-4438-A35F-E98E7F6D0D50}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="PressureDoorOpen_02" ID="{60B98151-3FE9-4A68-A34C-2778BDE30C63}" ShortID="525954584">
+							<PropertyList>
+								<Property Name="Highpass" Type="int16">
+									<ValueList>
+										<Value>14</Value>
+									</ValueList>
+								</Property>
+								<Property Name="Lowpass" Type="int16">
+									<ValueList>
+										<Value>35</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="425090__neospica__pressurized-door-opening" ID="{2B6C008C-63C7-455D-872E-DE3FC7AF129D}">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="0.178542756216167"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.317845346230978"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>425090__neospica__pressurized-door-opening.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="794426764"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="425090__neospica__pressurized-door-opening" ID="{2B6C008C-63C7-455D-872E-DE3FC7AF129D}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+					<ObjectLists/>
+				</RandomSequenceContainer>
+				<RandomSequenceContainer Name="PressureDoorCloseRandom" ID="{9D8CF215-63CA-416B-85E7-3B442CCFA1D1}" ShortID="375298628">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-6</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="PressureDoorClose2" ID="{617EB0C0-F9EC-4D17-B036-F0DBE3CEADEA}" ShortID="908725919">
+							<PropertyList>
+								<Property Name="Highpass" Type="int16">
+									<ValueList>
+										<Value>24</Value>
+									</ValueList>
+								</Property>
+								<Property Name="Pitch" Type="int32">
+									<ValueList>
+										<Value>-150</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="PressureDoorClose" ID="{04E32B95-7AC9-4A7F-90A8-F5EF1F2A8CEE}">
+									<Language>SFX</Language>
+									<AudioFile>PressureDoorClose.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="479738779"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="PressureDoorClose" ID="{04E32B95-7AC9-4A7F-90A8-F5EF1F2A8CEE}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="PressureDoorClose" ID="{1C1590D5-AF02-4C18-A2C6-1879E133176B}" ShortID="1060478043">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="PressureDoorClose" ID="{6FDC30C2-093A-4FF7-8B2F-2C9B56093A9D}">
+									<Language>SFX</Language>
+									<AudioFile>PressureDoorClose.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="479738779"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="PressureDoorClose" ID="{6FDC30C2-093A-4FF7-8B2F-2C9B56093A9D}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+					<ObjectLists/>
+				</RandomSequenceContainer>
+				<Sound Name="LeverPull" ID="{84BC1573-C8C7-4588-B2E3-990707627984}" ShortID="947178671">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="404049__deathscyp__breaker-1" ID="{A607F41D-1FE5-4528-92C4-141CE54DF2B2}">
+							<Language>SFX</Language>
+							<AudioFile>404049__deathscyp__breaker-1.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="307274219"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="404049__deathscyp__breaker-1" ID="{A607F41D-1FE5-4528-92C4-141CE54DF2B2}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="SonarPingOuter" ID="{A33B48EA-BB1B-4E80-AF37-B2651D123D4D}" ShortID="287548449">
+					<PropertyList>
+						<Property Name="OverrideEffect" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+						</Reference>
+						<Reference Name="Effect0" PluginName="Wwise Compressor" CompanyID="0" PluginID="108" PluginType="3">
+							<ObjectRef Name="Attack_Remover" ID="{174E7B9A-A16F-4CA7-86D0-530212B5A6AA}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Project_1_Sonar" ID="{337AD216-9917-4BA6-81B3-081ACF73CB21}">
+							<Language>SFX</Language>
+							<AudioFile>Project_1_Sonar.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="383140111"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="Project_1_Sonar" ID="{337AD216-9917-4BA6-81B3-081ACF73CB21}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="SonarPingInner" ID="{152E0A4E-6888-476B-8DEF-7321AEEED901}" ShortID="671265797">
+					<PropertyList>
+						<Property Name="Highpass" Type="int16">
+							<ValueList>
+								<Value>11</Value>
+							</ValueList>
+						</Property>
+						<Property Name="Lowpass" Type="int16">
+							<ValueList>
+								<Value>22</Value>
+							</ValueList>
+						</Property>
+						<Property Name="OverrideEffect" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+						</Reference>
+						<Reference Name="Effect0" PluginName="Wwise Compressor" CompanyID="0" PluginID="108" PluginType="3">
+							<ObjectRef Name="Attack_Remover" ID="{174E7B9A-A16F-4CA7-86D0-530212B5A6AA}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
+						</Reference>
+						<Reference Name="Effect1" PluginName="Wwise Pitch Shifter" CompanyID="0" PluginID="136" PluginType="3">
+							<ObjectRef Name="Octave_Down" ID="{062EC4B1-5372-4D1E-917B-C757293F2B42}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Project_1_Sonar" ID="{03FC139E-9D43-46B5-B8CD-59372FBA0398}">
+							<Language>SFX</Language>
+							<AudioFile>Project_1_Sonar.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="383140111"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="Project_1_Sonar" ID="{03FC139E-9D43-46B5-B8CD-59372FBA0398}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

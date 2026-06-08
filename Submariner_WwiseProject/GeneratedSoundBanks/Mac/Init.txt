@@ -1,7 +1,12 @@
 State Group	ID	Name			Wwise Object Path	Notes
+	894977922	Energy_Status			\Default Work Unit\Energy_Status	
 	4071417932	Player_State			\Default Work Unit\Player_State	
 
 State	ID	Name	State Group			Notes
+	545371365	Low	Energy_Status			
+	748895195	None	Energy_Status			
+	2510516222	Full	Energy_Status			
+	3354297748	Empty	Energy_Status			
 	124361234	Stunned	Player_State			
 	655265632	Alive	Player_State			
 	748895195	None	Player_State			
