@@ -30,6 +30,7 @@ public class LeverStation : MonoBehaviour, ILeverControls
         {
             isActive = true;
             onActivation?.Invoke();
+            SFXManager.PostEvent("Start_LeverPullFinished", gameObject);
             SetLeverRotation(maxAngleActivation);
         }
         else

@@ -7,7 +7,6 @@ public class WorldMapManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject worldContainerGo;
     
-    
     [Header("Map Properties")] 
     [SerializeField] private MapRuntimeDataSO mapRuntimeData;
     [SerializeField] private int desiredEventsAmount;
@@ -68,10 +67,9 @@ public class WorldMapManager : MonoBehaviour
                 removedElements++;
             }
         }
-        OnWorldMapGeneratedProperty onWorldMapProperties = new OnWorldMapGeneratedProperty
-        {
-            MapElements = ValidateListForUI(_mapElements)
-        };
+
+        OnWorldMapGeneratedProperty onWorldMapProperties =
+            new OnWorldMapGeneratedProperty(ValidateListForUI(_mapElements));
         GameEventChannel<OnWorldMapGeneratedProperty>.RaiseEvent(onWorldMapProperties);
         Log.Info($"Removed {removedElements} events. Total placed: {_mapElements.Count}.");
     }

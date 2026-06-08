@@ -52,7 +52,7 @@ public class HullDamageManager : MonoBehaviour
     private void StartSpawningBehaviour()
     {
         if (_spawnCoroutine != null) StopCoroutine(_spawnCoroutine);
-        _spawnCoroutine = StartCoroutine(SpawnHullDamage(Time.time + UnityEngine.Random.Range(minSpawnInterval, maxSpawnInterval)));
+        _spawnCoroutine = StartCoroutine(SpawnHullDamage(Random.Range(minSpawnInterval, maxSpawnInterval)));
     }
 
     private void StopSpawningBehaviour()
@@ -94,7 +94,7 @@ public class HullDamageManager : MonoBehaviour
 
     private IEnumerator SpawnHullDamage(float interval)
     {
-        yield return new WaitForSeconds(interval);
+            yield return new WaitForSeconds(interval);
         TrySpawnCrack();
     }
 }

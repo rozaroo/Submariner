@@ -28,9 +28,9 @@ public static class SFXManager //Wrapper For Wwise
         AkSoundEngine.SetRTPCValue(rtpcName, value);
     }
 
-    public static void SetState(string stateCollection, string stateName)
+    public static void SetState(string stateName, string stateCollection)
     {
-        AkSoundEngine.SetState(stateName, stateCollection);
+        AkSoundEngine.SetState(stateCollection, stateName);
     }
 
     public static void SetSwitch(string switchName, string switchValue, GameObject gameObject)

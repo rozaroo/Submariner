@@ -52,6 +52,7 @@ public class ButtonStation : MonoBehaviour, IButtonControls
         if (!isPressed && !isLocked)
         {
             isPressed = true;
+            SFXManager.PostEvent("Start_ButtonPress", gameObject);
             ChangeColor(pressedColor);
             onActivation?.Invoke();
         }
