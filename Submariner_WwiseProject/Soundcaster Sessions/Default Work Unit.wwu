@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{5D8C490C-4ABF-4C71-BA26-511ABE5DDD66}" SchemaVersion="103">
+	<SoundcasterSessions>
+		<WorkUnit Name="Default Work Unit" ID="{5D8C490C-4ABF-4C71-BA26-511ABE5DDD66}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundcasterSession Name="VOT" ID="{AE9BEF46-8D41-4162-9744-2C7DD0FD5A3C}">
+					<RTPCValueList ShowAll="true">
+						<RTPCValue>
+							<GameParameterRef Name="IncrementalTension" ID="{29245FD2-1450-4933-83DE-5C38DA9AAA4D}"/>
+							<Value>100</Value>
+						</RTPCValue>
+						<RTPCValue>
+							<GameParameterRef Name="Submarine_Colision_Distance" ID="{C033A24E-9AE2-4C4A-828C-BE8E6DE87FFE}"/>
+							<Value>100</Value>
+						</RTPCValue>
+					</RTPCValueList>
+					<CurrentStateList ShowAll="true">
+						<CurrentStateRef Name="Alive" ID="{27CCEF96-E986-4239-8783-B018BFADC7EC}"/>
+					</CurrentStateList>
+					<CurrentSwitchList ShowAll="true">
+						<CurrentSwitchRef Name="High_Energy" ID="{08D10B91-DF0C-4E93-9D9F-4651B0FB9E1F}"/>
+					</CurrentSwitchList>
+				</SoundcasterSession>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundcasterSessions>
+</WwiseDocument>

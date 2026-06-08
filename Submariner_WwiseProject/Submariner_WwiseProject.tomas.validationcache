@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ValidationCache Version="1" SchemaVersion="103">
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Virtual Acoustics\Default Work Unit.wwu" DateLow="1780919509" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Triggers\Default Work Unit.wwu" DateLow="1780919509" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Switches\Default Work Unit.wwu" DateLow="1780930646" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Submariner_WwiseProject.wproj" DateLow="1780928084" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Submariner_WwiseProject.tomas.wsettings" DateLow="1780932891" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\States\Default Work Unit.wwu" DateLow="1780939357" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Soundcaster Sessions\Default Work Unit.wwu" DateLow="1780939275" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\SoundBanks\VoicesOfTides.wwu" DateLow="1780939567" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\SoundBanks\Default Work Unit.wwu" DateLow="1780919509" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Queries\Factory Queries.wwu" DateLow="1773095404" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Queries\Default Work Unit.wwu" DateLow="1780919509" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Presets\Factory Spatial Audio.wwu" DateLow="1773095404" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Presets\Default Work Unit.wwu" DateLow="1780919509" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Modulators\Default Work Unit.wwu" DateLow="1780919509" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Mixing Sessions\Default Work Unit.wwu" DateLow="1780919509" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Metadata\Default Work Unit.wwu" DateLow="1780919509" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Master-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1780939275" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Interactive Music Hierarchy\SubmarineMFX.wwu" DateLow="1780939275" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="1780927584" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Game Parameters\ParametersVOT.wwu" DateLow="1780938121" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Game Parameters\Default Work Unit.wwu" DateLow="1780927815" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Events\Gameplay_SFX.wwu" DateLow="1780939275" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Events\Default Work Unit.wwu" DateLow="1780928069" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Effects\Factory Effects.wwu" DateLow="1780939275" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Effects\Default Work Unit.wwu" DateLow="1780919509" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Dynamic Dialogue\Default Work Unit.wwu" DateLow="1780919509" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Conversion Settings\Factory Conversion Settings.wwu" DateLow="1773095404" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Conversion Settings\Default Work Unit.wwu" DateLow="1780919509" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Control Surface Sessions\Default Work Unit.wwu" DateLow="1780919755" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Audio Devices\Default Work Unit.wwu" DateLow="1780919509" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Attenuations\Default Work Unit.wwu" DateLow="1780919509" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Actor-Mixer Hierarchy\SubmarineSFX.wwu" DateLow="1780939567" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Actor-Mixer Hierarchy\PlayerSFX.wwu" DateLow="1780928869" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Github\Submariner\Submariner_WwiseProject\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1780927584" DateHigh="0"/>
+</ValidationCache>

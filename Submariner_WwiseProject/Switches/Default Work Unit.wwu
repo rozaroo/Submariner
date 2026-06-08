@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{DB3972C0-6A9F-43CD-B302-BE800A106CFE}" SchemaVersion="103">
+	<Switches>
+		<WorkUnit Name="Default Work Unit" ID="{DB3972C0-6A9F-43CD-B302-BE800A106CFE}" PersistMode="Standalone">
+			<ChildrenList>
+				<SwitchGroup Name="Energy_Status" ID="{BFEC03D8-7FAC-4CCB-B434-2A8D562A552B}">
+					<ChildrenList>
+						<Switch Name="High_Energy" ID="{08D10B91-DF0C-4E93-9D9F-4651B0FB9E1F}"/>
+						<Switch Name="Low_Energy" ID="{D2717E73-633D-49F3-9ECE-AE68F1AAD1E3}"/>
+						<Switch Name="None_Energy" ID="{23E69FC6-45E6-4136-9A42-9888E26DEA6B}"/>
+					</ChildrenList>
+				</SwitchGroup>
+			</ChildrenList>
+		</WorkUnit>
+	</Switches>
+</WwiseDocument>

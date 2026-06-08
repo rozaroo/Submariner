@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}" SchemaVersion="103">
+	<Busses>
+		<WorkUnit Name="Default Work Unit" ID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}" PersistMode="Standalone">
+			<ChildrenList>
+				<Bus Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}">
+					<ReferenceList>
+						<Reference Name="AudioDevice">
+							<ObjectRef Name="System" ID="{86B42AA5-7A23-425E-A92C-F0D6AC6EFB3A}" WorkUnitID="{05396205-5113-4944-92BB-F91B486A45F9}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Bus Name="General_SFX" ID="{7D58A2F4-D121-43DD-BB96-2F34B0A30465}">
+							<ChildrenList>
+								<Bus Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}">
+									<ReferenceList>
+										<Reference Name="UserAuxSend0">
+											<ObjectRef Name="Reverb_AUX_SFX" ID="{5134DDF8-7AE6-4D57-8304-0B7263E73F39}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<StateInfo>
+										<StatePropertyList>
+											<Property Name="Highpass"/>
+											<Property Name="Lowpass"/>
+											<Property Name="Pitch"/>
+											<Property Name="UserAuxSendVolume0"/>
+											<Property Name="Volume"/>
+										</StatePropertyList>
+										<StateGroupList>
+											<StateGroupInfo>
+												<StateGroupRef Name="Player_State" ID="{E6F0C986-7EA9-445E-87F2-C62236FE5080}"/>
+											</StateGroupInfo>
+										</StateGroupList>
+										<CustomStateList>
+											<CustomState>
+												<StateRef Name="Alive" ID="{27CCEF96-E986-4239-8783-B018BFADC7EC}"/>
+												<CustomState Name="" ID="{9A56CF5A-AC50-4469-BC74-A71B426CC08A}" ShortID="588599853"/>
+											</CustomState>
+											<CustomState>
+												<StateRef Name="Stunned" ID="{DFBAFB8E-6EA2-46FE-ABB5-3956C9D89CCC}"/>
+												<CustomState Name="" ID="{A2C69059-6A91-44E1-91BE-F462B6CED9FD}" ShortID="583547046"/>
+											</CustomState>
+										</CustomStateList>
+									</StateInfo>
+									<ObjectLists/>
+								</Bus>
+								<AuxBus Name="Reverb_AUX_SFX" ID="{5134DDF8-7AE6-4D57-8304-0B7263E73F39}">
+									<ReferenceList>
+										<Reference Name="Effect0" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3">
+											<ObjectRef Name="Aluminium_Tank" ID="{0D20C91A-F750-47E0-AE32-00E5F2AA1272}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
+										</Reference>
+									</ReferenceList>
+									<ObjectLists/>
+								</AuxBus>
+							</ChildrenList>
+							<ObjectLists/>
+						</Bus>
+						<Bus Name="General_MFX" ID="{E27468A2-9D02-41D5-A162-1432A7B66C24}">
+							<ChildrenList>
+								<Bus Name="Submarine_MFX" ID="{26BCDD28-5BD2-4640-A80C-657C9E0B2FF3}">
+									<ReferenceList>
+										<Reference Name="UserAuxSend0">
+											<ObjectRef Name="Reverb_Muffled_MFX_AUX" ID="{87D81CB9-C393-4E4E-B250-99CB020DD8E5}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<StateInfo>
+										<StatePropertyList>
+											<Property Name="BusVolume"/>
+											<Property Name="Highpass"/>
+											<Property Name="Lowpass"/>
+											<Property Name="Pitch"/>
+											<Property Name="UserAuxSendVolume0"/>
+											<Property Name="Volume"/>
+										</StatePropertyList>
+										<StateGroupList>
+											<StateGroupInfo>
+												<StateGroupRef Name="Player_State" ID="{E6F0C986-7EA9-445E-87F2-C62236FE5080}"/>
+											</StateGroupInfo>
+										</StateGroupList>
+										<CustomStateList>
+											<CustomState>
+												<StateRef Name="Alive" ID="{27CCEF96-E986-4239-8783-B018BFADC7EC}"/>
+												<CustomState Name="" ID="{736D3782-1687-4388-A2AE-1AB493857437}" ShortID="57613382">
+													<PropertyList>
+														<Property Name="UserAuxSendVolume0" Type="Real64" Value="-108"/>
+													</PropertyList>
+												</CustomState>
+											</CustomState>
+											<CustomState>
+												<StateRef Name="Stunned" ID="{DFBAFB8E-6EA2-46FE-ABB5-3956C9D89CCC}"/>
+												<CustomState Name="" ID="{D8D66060-2B64-4152-A3DA-C61FEA010D7C}" ShortID="550051199">
+													<PropertyList>
+														<Property Name="Highpass" Type="int16" Value="21"/>
+														<Property Name="Lowpass" Type="int16" Value="68"/>
+														<Property Name="Volume" Type="Real64" Value="-5"/>
+													</PropertyList>
+												</CustomState>
+											</CustomState>
+										</CustomStateList>
+									</StateInfo>
+									<ObjectLists/>
+								</Bus>
+								<AuxBus Name="Reverb_Muffled_MFX_AUX" ID="{87D81CB9-C393-4E4E-B250-99CB020DD8E5}">
+									<ReferenceList>
+										<Reference Name="Effect0">
+											<Custom CreatedFrom="{172402A8-22F4-40FC-BE1D-5269594CB633}">
+												<Effect Name="Big_Garage1 (Custom)" ID="{F4B3CFB1-5FA9-46B0-842C-38B6B5569FF1}" ShortID="1051689273" PluginName="Wwise Matrix Reverb" CompanyID="0" PluginID="115" PluginType="3">
+													<PropertyList>
+														<Property Name="HFRatio" Type="Real32" Value="3"/>
+														<Property Name="NumberOfDelays" Type="int32" Value="12"/>
+														<Property Name="ReverbTime" Type="Real32" Value="2"/>
+														<Property Name="WetLevel" Type="Real32" Value="-30"/>
+													</PropertyList>
+												</Effect>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ObjectLists/>
+								</AuxBus>
+							</ChildrenList>
+							<ObjectLists/>
+						</Bus>
+					</ChildrenList>
+					<ObjectLists/>
+				</Bus>
+			</ChildrenList>
+		</WorkUnit>
+	</Busses>
+</WwiseDocument>

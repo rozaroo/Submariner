@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{BD9639A8-0629-40D0-B5BF-DBE07E7A93D5}" SchemaVersion="103">
+	<States>
+		<WorkUnit Name="Default Work Unit" ID="{BD9639A8-0629-40D0-B5BF-DBE07E7A93D5}" PersistMode="Standalone">
+			<ChildrenList>
+				<StateGroup Name="Player_State" ID="{E6F0C986-7EA9-445E-87F2-C62236FE5080}">
+					<PropertyList>
+						<Property Name="DefaultTransitionTime" Type="Real64" Value="0"/>
+					</PropertyList>
+					<ChildrenList>
+						<State Name="None" ID="{342CF4E7-6DD8-41CC-A36F-4380235B5988}"/>
+						<State Name="Alive" ID="{27CCEF96-E986-4239-8783-B018BFADC7EC}"/>
+						<State Name="Stunned" ID="{DFBAFB8E-6EA2-46FE-ABB5-3956C9D89CCC}"/>
+					</ChildrenList>
+					<TransitionList>
+						<Transition>
+							<StartState Name="Stunned" ID="{DFBAFB8E-6EA2-46FE-ABB5-3956C9D89CCC}"/>
+							<EndState Name="Alive" ID="{27CCEF96-E986-4239-8783-B018BFADC7EC}"/>
+							<Time>0.5</Time>
+							<IsShared>true</IsShared>
+						</Transition>
+					</TransitionList>
+				</StateGroup>
+			</ChildrenList>
+		</WorkUnit>
+	</States>
+</WwiseDocument>

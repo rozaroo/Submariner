@@ -1,0 +1,31 @@
+State Group	ID	Name			Wwise Object Path	Notes
+	4071417932	Player_State			\Default Work Unit\Player_State	
+
+State	ID	Name	State Group			Notes
+	124361234	Stunned	Player_State			
+	655265632	Alive	Player_State			
+	748895195	None	Player_State			
+
+Custom State	ID	Name	State Group	Owner		Notes
+	57613382	Alive	Player_State	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_MFX\Submarine_MFX		
+	550051199	Stunned	Player_State	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_MFX\Submarine_MFX		
+
+Audio Bus	ID	Name			Wwise Object Path	Notes
+	54673317	General_MFX			\Default Work Unit\Master Audio Bus\General_MFX	
+	322129659	General_SFX			\Default Work Unit\Master Audio Bus\General_SFX	
+	1690215283	Submarine_SFX			\Default Work Unit\Master Audio Bus\General_SFX\Submarine_SFX	
+	1957082925	Submarine_MFX			\Default Work Unit\Master Audio Bus\General_MFX\Submarine_MFX	
+	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
+
+Auxiliary Bus	ID	Name			Wwise Object Path	Notes
+	1714574586	Reverb_AUX_SFX			\Default Work Unit\Master Audio Bus\General_SFX\Reverb_AUX_SFX	
+	2315337392	Reverb_Muffled_MFX_AUX			\Default Work Unit\Master Audio Bus\General_MFX\Reverb_Muffled_MFX_AUX	
+
+Effect plug-ins	ID	Name	Type				Notes
+	1051689273	Big_Garage1 (Custom)	Wwise Matrix Reverb			
+	3290519051	Aluminium_Tank	Wwise RoomVerb			
+
+Audio Devices	ID	Name	Type				Notes
+	2317455096	No_Output	No Output			
+	3859886410	System	System			
+
