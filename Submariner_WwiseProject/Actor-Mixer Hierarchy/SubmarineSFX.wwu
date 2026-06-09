@@ -8,6 +8,11 @@
 						<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>
 						<Property Name="PlayMechanismSpecialTransitions" Type="bool" Value="True"/>
 						<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
+						<Property Name="RenderEffect0" Type="bool">
+							<ValueList>
+								<Value>True</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
@@ -27,6 +32,11 @@
 								<Property Name="Pitch" Type="int32">
 									<ValueList>
 										<Value>760</Value>
+									</ValueList>
+								</Property>
+								<Property Name="RenderEffect0" Type="bool">
+									<ValueList>
+										<Value>True</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -673,132 +683,6 @@
 						<ItemRef Name="Distance_Countdown2" ID="{9BC71EFF-90EE-435A-8244-52C69A0FADFC}"/>
 					</Playlist>
 				</RandomSequenceContainer>
-				<Sound Name="33637__herbertboland__cinematicboomnorm" ID="{261D5018-3449-44D3-9A74-4871761F9FBC}" ShortID="848722797">
-					<PropertyList>
-						<Property Name="Inclusion" Type="bool">
-							<ValueList>
-								<Value>False</Value>
-							</ValueList>
-						</Property>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="33637__herbertboland__cinematicboomnorm" ID="{806FE28A-1F5E-42EB-AC83-5548492E25A0}">
-							<Language>SFX</Language>
-							<AudioFile>33637__herbertboland__cinematicboomnorm.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="108859605"/>
-							</MediaIDList>
-						</AudioFileSource>
-					</ChildrenList>
-					<ObjectLists/>
-					<ActiveSourceList>
-						<ActiveSource Name="33637__herbertboland__cinematicboomnorm" ID="{806FE28A-1F5E-42EB-AC83-5548492E25A0}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
-				<Sound Name="218050__hykenfreak__ringing-in-the-ears" ID="{ECC94187-A671-4356-8FC4-C9037D6DA81A}" ShortID="146418586">
-					<PropertyList>
-						<Property Name="Inclusion" Type="bool">
-							<ValueList>
-								<Value>False</Value>
-							</ValueList>
-						</Property>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="218050__hykenfreak__ringing-in-the-ears" ID="{2EE3FB2E-3CC7-4051-B310-2412016F4FD0}">
-							<Language>SFX</Language>
-							<AudioFile>218050__hykenfreak__ringing-in-the-ears.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="884323545"/>
-							</MediaIDList>
-						</AudioFileSource>
-					</ChildrenList>
-					<ObjectLists/>
-					<ActiveSourceList>
-						<ActiveSource Name="218050__hykenfreak__ringing-in-the-ears" ID="{2EE3FB2E-3CC7-4051-B310-2412016F4FD0}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
-				<Sound Name="255111__rhapsodize__cinematic_boom_rhapsodize" ID="{CA32C706-826F-4C42-9CF8-B7F0DEAB1414}" ShortID="214233715">
-					<PropertyList>
-						<Property Name="Inclusion" Type="bool">
-							<ValueList>
-								<Value>False</Value>
-							</ValueList>
-						</Property>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="255111__rhapsodize__cinematic_boom_rhapsodize" ID="{50460A7C-700B-49B2-AEAE-D83E58E62A2E}">
-							<Language>SFX</Language>
-							<AudioFile>255111__rhapsodize__cinematic_boom_rhapsodize.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="1000183383"/>
-							</MediaIDList>
-						</AudioFileSource>
-					</ChildrenList>
-					<ObjectLists/>
-					<ActiveSourceList>
-						<ActiveSource Name="255111__rhapsodize__cinematic_boom_rhapsodize" ID="{50460A7C-700B-49B2-AEAE-D83E58E62A2E}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
-				<Sound Name="244983__ani_music__ani-big-pipe-hit" ID="{745E1D05-D281-496C-AAC9-C1086633BC86}" ShortID="625091385">
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
-						</Reference>
-						<Reference Name="Effect0">
-							<Custom CreatedFrom="{99F80B38-1C45-42CE-9BCD-E94F3885DCAA}">
-								<Effect Name="Monsterize (Custom)" ID="{FEF1C148-E3CE-4D4A-BDD9-D3B7EDAD43DD}" ShortID="780411401" PluginName="Wwise Pitch Shifter" CompanyID="0" PluginID="136" PluginType="3">
-									<PropertyList>
-										<Property Name="DelayTime" Type="Real32" Value="85"/>
-										<Property Name="DryLevel" Type="Real32" Value="-20"/>
-										<Property Name="FilterFrequency" Type="Real32" Value="2000"/>
-										<Property Name="Pitch" Type="Real32" Value="-1300"/>
-										<Property Name="WetLevel" Type="Real32" Value="6"/>
-									</PropertyList>
-								</Effect>
-							</Custom>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="244983__ani_music__ani-big-pipe-hit" ID="{5F6332B6-DDE2-4E93-9280-AB0C1C973A64}">
-							<Language>SFX</Language>
-							<AudioFile>244983__ani_music__ani-big-pipe-hit.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="30412895"/>
-							</MediaIDList>
-						</AudioFileSource>
-					</ChildrenList>
-					<ObjectLists/>
-					<ActiveSourceList>
-						<ActiveSource Name="244983__ani_music__ani-big-pipe-hit" ID="{5F6332B6-DDE2-4E93-9280-AB0C1C973A64}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
 				<RandomSequenceContainer Name="PressureDoorOpenRandom" ID="{899746EC-3F56-4F3A-A977-DB9A0C76674A}" ShortID="695862189">
 					<PropertyList>
 						<Property Name="3DSpatialization" Type="int16" Value="1"/>
@@ -1033,6 +917,11 @@
 				<Sound Name="SonarPingOuter" ID="{A33B48EA-BB1B-4E80-AF37-B2651D123D4D}" ShortID="287548449">
 					<PropertyList>
 						<Property Name="OverrideEffect" Type="bool" Value="True"/>
+						<Property Name="RenderEffect0" Type="bool">
+							<ValueList>
+								<Value>True</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
@@ -1072,6 +961,16 @@
 							</ValueList>
 						</Property>
 						<Property Name="OverrideEffect" Type="bool" Value="True"/>
+						<Property Name="RenderEffect0" Type="bool">
+							<ValueList>
+								<Value>True</Value>
+							</ValueList>
+						</Property>
+						<Property Name="RenderEffect1" Type="bool">
+							<ValueList>
+								<Value>True</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
@@ -1092,7 +991,7 @@
 							<Language>SFX</Language>
 							<AudioFile>Project_1_Sonar.wav</AudioFile>
 							<MediaIDList>
-								<MediaID ID="383140111"/>
+								<MediaID ID="824057027"/>
 							</MediaIDList>
 						</AudioFileSource>
 					</ChildrenList>

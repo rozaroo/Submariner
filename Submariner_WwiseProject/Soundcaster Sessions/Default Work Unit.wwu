@@ -7,7 +7,7 @@
 					<RTPCValueList ShowAll="true">
 						<RTPCValue>
 							<GameParameterRef Name="IncrementalTension" ID="{29245FD2-1450-4933-83DE-5C38DA9AAA4D}"/>
-							<Value>0</Value>
+							<Value>1</Value>
 						</RTPCValue>
 						<RTPCValue>
 							<GameParameterRef Name="Submarine_Colision_Distance" ID="{C033A24E-9AE2-4C4A-828C-BE8E6DE87FFE}"/>
