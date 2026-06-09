@@ -21,7 +21,8 @@ public class SubmarineMovement : MonoBehaviour
     private Coroutine _movementCoroutine;
     private float _rotationVelocity = 0f;
     private Vector3 _velocity = Vector3.zero;
-    
+    private float _speedMultiplier = 1f;
+
     private void OnEnable()
     {
             GameEventChannel<OnSubmarineRouteChanged>.OnEventRaised += GetNewWaypointList; 
@@ -42,14 +43,11 @@ public class SubmarineMovement : MonoBehaviour
     #region CoroutinesHandlers
 
     [ContextMenu("Movement/StartMovementTowards")]
-    private void OnStartMovingTowards()
+    public void StartMovingTowards()
     {
-        if (_movementCoroutine != null)
-            StopCoroutine(_movementCoroutine);
-
+        if (_movementCoroutine != null) StopCoroutine(_movementCoroutine);
         GetCurrentTarget();
-        if (_hasTarget)
-            _movementCoroutine = StartCoroutine(MoveSmoothTowards());
+        if (_hasTarget) _movementCoroutine = StartCoroutine(MoveSmoothTowards());
     }
 
     public void StopMovingTowards()
@@ -75,13 +73,7 @@ public class SubmarineMovement : MonoBehaviour
 
         while (_hasTarget && (_currentTarget - _selfTransform.position).sqrMagnitude > sqrDistanceOffset)
         {
-            _selfTransform.position = Vector3.SmoothDamp(
-                _selfTransform.position,
-                _currentTarget,
-                ref _velocity,
-                smoothTime,
-                maxMovementSpeed
-            );
+            _selfTransform.position = Vector3.SmoothDamp(_selfTransform.position, _currentTarget,ref _velocity, smoothTime, maxMovementSpeed * _speedMultiplier);
             yield return null;
         }
         _velocity = Vector3.zero; 
@@ -99,11 +91,7 @@ public class SubmarineMovement : MonoBehaviour
                 _velocity = Vector3.SmoothDamp(_velocity, Vector3.zero, ref brakingVelocityRef, smoothTime, maxMovementSpeed);
                 _selfTransform.position += _velocity * Time.deltaTime;
             }
-            else
-            {
-                _velocity = Vector3.zero;
-            }
-            
+            else _velocity = Vector3.zero;
             Vector3 dir = _currentTarget - _selfTransform.position;
             dir.y = 0;
             
@@ -223,7 +211,7 @@ public class SubmarineMovement : MonoBehaviour
             if (!_hasTarget || Vector3.Distance(_currentWaypoints[0], _currentTarget) > 0.05f)
             {
                 _currentIndex = 0;
-                OnStartMovingTowards();
+                StartMovingTowards();
             }
         }
         else
@@ -233,7 +221,10 @@ public class SubmarineMovement : MonoBehaviour
             StopMovingTowards();
         }
     }
-    
+
     #endregion
-    
+    public void SetSpeedMultiplier(float multiplier)
+    {
+        _speedMultiplier = multiplier;
+    }
 }
