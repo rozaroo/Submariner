@@ -9,12 +9,13 @@ public class EnergySystem : MonoBehaviour
     [SerializeField] private float _currentEnergy;
     [SerializeField] private float energyToRegenPercentage = 1f;
     [SerializeField] private float timeToRegenerateEnergy = 60f;
-    [SerializeField] private float energyConsumptionRate = 0f;
     
     [Header("Fuse Settings")]
     [SerializeField] private float fuseBreakConsumptionThreshold = 25f;
+    [SerializeField] private float energyConsumptionRate = 0f;
     [SerializeField] private float timeTillFuseBreak = 10f;
     [SerializeField] private float startupEnergyPercentageAfterFuseRepair = 10f;
+    [SerializeField] private float overloadCheckDelayAfterFuseRepair = 1f;
     [SerializeField] private bool isFuseBroken;
 
     [Header("Energy Status")]
@@ -25,6 +26,8 @@ public class EnergySystem : MonoBehaviour
     private Coroutine _energyRegenerationCoroutine;
     private Coroutine _energyConsumptionCoroutine;
     private Coroutine _fuseBreakCoroutine;
+    private Coroutine _delayedFuseOverloadCheckCoroutine;
+    private float _baseFuseBreakConsumptionThreshold;
 
     public event Action FuseBurned;
     public event Action FuseRestored;
@@ -42,6 +45,13 @@ public class EnergySystem : MonoBehaviour
     }
 
     #region Initialization
+
+    private void Awake()
+    {
+        _baseFuseBreakConsumptionThreshold = fuseBreakConsumptionThreshold;
+        energyConsumptionRate = 0f;
+        _stressIndex = 0;
+    }
 
     private void OnEnable()
     {
@@ -255,15 +265,14 @@ public class EnergySystem : MonoBehaviour
 
     private IEnumerator FuseOverloadSequence()
     {
-        Log.Info("Fuse overload sequence activated...");
+        Log.Info($"Fuse overload sequence activated. Consumption: {energyConsumptionRate}A, Fuse Threshold: {fuseBreakConsumptionThreshold}A.");
         yield return new WaitForSeconds(timeTillFuseBreak);
+        _fuseBreakCoroutine = null;
 
         if (energyConsumptionRate >= fuseBreakConsumptionThreshold)
         {
             BurnFuse();
         }
-
-        _fuseBreakCoroutine = null;
     }
     
     private void BurnFuse()
@@ -286,11 +295,33 @@ public class EnergySystem : MonoBehaviour
         ActivateBlackout(false);
     }
 
+    public void SetFuseBreakConsumptionThreshold(float newThreshold)
+    {
+        fuseBreakConsumptionThreshold = Mathf.Max(0f, newThreshold);
+        Log.Info($"Fuse break consumption threshold set to {fuseBreakConsumptionThreshold}A.");
+
+        if (!isFuseBroken)
+        {
+            CheckFuseOverload();
+        }
+    }
+
+    public void ResetFuseBreakConsumptionThreshold()
+    {
+        SetFuseBreakConsumptionThreshold(_baseFuseBreakConsumptionThreshold);
+    }
+
+    public void ApplyFuseBreakConsumptionThresholdMultiplier(float multiplier)
+    {
+        SetFuseBreakConsumptionThreshold(_baseFuseBreakConsumptionThreshold * Mathf.Max(0f, multiplier));
+    }
+
     private void ActivateBlackout(bool notifyFuseBurned)
     {
         isFuseBroken = true;
         StopEnergyConsumption();
         StopEnergyRegeneration();
+        StopDelayedFuseOverloadCheck();
         CurrentEnergy = 0f;
         Log.Info("Fuse burned. Total blackout activated.");
 
@@ -308,13 +339,40 @@ public class EnergySystem : MonoBehaviour
         }
 
         isFuseBroken = false;
+        StopFuseOverloadCheck();
+        StopDelayedFuseOverloadCheck();
         CurrentEnergy = Mathf.Max(CurrentEnergy, GetPercentageToEnergy(startupEnergyPercentageAfterFuseRepair));
         Log.Info("Fuse restored. Energy flow resumed.");
         FuseRestored?.Invoke();
 
         CheckEnergyConsumption();
         CheckEnergyRegeneration();
+        _delayedFuseOverloadCheckCoroutine = StartCoroutine(DelayedFuseOverloadCheck());
+    }
+
+    private IEnumerator DelayedFuseOverloadCheck()
+    {
+        yield return new WaitForSeconds(overloadCheckDelayAfterFuseRepair);
+        _delayedFuseOverloadCheckCoroutine = null;
         CheckFuseOverload();
+    }
+
+    private void StopFuseOverloadCheck()
+    {
+        if (_fuseBreakCoroutine != null)
+        {
+            StopCoroutine(_fuseBreakCoroutine);
+            _fuseBreakCoroutine = null;
+        }
+    }
+
+    private void StopDelayedFuseOverloadCheck()
+    {
+        if (_delayedFuseOverloadCheckCoroutine != null)
+        {
+            StopCoroutine(_delayedFuseOverloadCheckCoroutine);
+            _delayedFuseOverloadCheckCoroutine = null;
+        }
     }
 
     #endregion

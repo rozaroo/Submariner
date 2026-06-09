@@ -8,12 +8,17 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
     [SerializeField] private EnergySystem energySystem;
 
     [Header("Fuse Slots")]
+    [SerializeField] private Fuse fusePrefab;
+    [SerializeField] private bool generateInitialFusesOnStart = true;
+    [SerializeField] private int generatedFuseSlotCount;
     [SerializeField] private List<Fuse> fuseSlots = new();
+    [SerializeField] private List<Transform> fuseSlotPivots = new();
 
     [Header("Fuse Amperage")]
     [SerializeField] private FuseRecipeCatalogSO fuseRecipeCatalog;
     [SerializeField] private List<int> fallbackRequiredAmperages = new() { 30, 35, 40, 45, 50 };
     [SerializeField] private List<int> requiredAmperages = new();
+    [SerializeField] private float underAmperageThresholdMultiplier = 0.5f;
     [SerializeField] private float underAmperageFuseLifetime = 25f;
     [SerializeField] private float overAmperageBurnDelay = 1f;
 
@@ -21,6 +26,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
     private readonly List<Vector3> _slotLocalPositions = new();
     private readonly List<Quaternion> _slotLocalRotations = new();
     private int _burnedSlotIndex = -1;
+    private int _lastInstalledFuseSlotIndex = -1;
     private Coroutine _wrongFuseCoroutine;
 
     private void OnEnable()
@@ -43,8 +49,10 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
 
     private void Start()
     {
+        EnsureSlotListSize();
         CacheSlotTransforms();
         SetupRequiredAmperages();
+        GenerateInitialFuses();
         RegisterInitialFuses();
     }
 
@@ -56,14 +64,14 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
             return;
         }
 
-        if (!energySystem.IsFuseBroken)
+        if (TryInstallFuse(player))
         {
-            Log.Info("Energy panel stable.");
             return;
         }
 
-        if (TryInstallFuse(player))
+        if (!energySystem.IsFuseBroken)
         {
+            Log.Info("Energy panel stable.");
             return;
         }
 
@@ -101,6 +109,28 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
         return true;
     }
 
+    private void EnsureSlotListSize()
+    {
+        int slotCount = GetConfiguredSlotCount();
+        if (slotCount == 0)
+        {
+            Log.Warning("[EnergyPanelControl] No fuse slots or pivots configured");
+            return;
+        }
+
+        while (fuseSlots.Count < slotCount)
+        {
+            fuseSlots.Add(null);
+        }
+    }
+
+    private int GetConfiguredSlotCount()
+    {
+        int slotCount = Mathf.Max(fuseSlots.Count, fuseSlotPivots.Count);
+        slotCount = Mathf.Max(slotCount, generatedFuseSlotCount);
+        return slotCount;
+    }
+
     private void CacheSlotTransforms()
     {
         _slotParents.Clear();
@@ -114,7 +144,11 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
             Vector3 slotLocalPosition = Vector3.zero;
             Quaternion slotLocalRotation = Quaternion.identity;
 
-            if (fuse != null)
+            if (TryGetSlotPivot(i, out Transform slotPivot))
+            {
+                slotParent = slotPivot;
+            }
+            else if (fuse != null)
             {
                 slotParent = fuse.transform.parent;
                 slotLocalPosition = fuse.transform.localPosition;
@@ -127,6 +161,32 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
         }
     }
 
+    private void GenerateInitialFuses()
+    {
+        if (!generateInitialFusesOnStart)
+        {
+            return;
+        }
+
+        if (fusePrefab == null)
+        {
+            Log.Warning("[EnergyPanelControl] Fuse Prefab Not Set");
+            return;
+        }
+
+        for (int i = 0; i < fuseSlots.Count; i++)
+        {
+            if (fuseSlots[i] != null)
+            {
+                continue;
+            }
+
+            Fuse generatedFuse = Instantiate(fusePrefab);
+            generatedFuse.Restore();
+            fuseSlots[i] = generatedFuse;
+        }
+    }
+
     private void RegisterInitialFuses()
     {
         for (int i = 0; i < fuseSlots.Count; i++)
@@ -135,7 +195,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
             if (fuse != null)
             {
                 fuse.SetAmperage(requiredAmperages[i]);
-                fuse.InstallInPanel(this);
+                InstallFuseInSlot(fuse, i);
             }
         }
     }
@@ -159,8 +219,16 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
             return;
         }
 
-        int randomIndex = Random.Range(0, functionalFuseIndexes.Count);
-        _burnedSlotIndex = functionalFuseIndexes[randomIndex];
+        if (TryGetLastInstalledFunctionalFuseSlotIndex(out int lastInstalledFuseSlotIndex))
+        {
+            _burnedSlotIndex = lastInstalledFuseSlotIndex;
+        }
+        else
+        {
+            int randomIndex = Random.Range(0, functionalFuseIndexes.Count);
+            _burnedSlotIndex = functionalFuseIndexes[randomIndex];
+        }
+
         fuseSlots[_burnedSlotIndex].Burn();
         Log.Info($"Fuse burned in slot {_burnedSlotIndex}");
     }
@@ -183,18 +251,25 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
 
     private bool TryInstallFuse(PlayerCharacter player)
     {
-        if (_burnedSlotIndex < 0 || _burnedSlotIndex >= fuseSlots.Count)
+        if (!TryGetRepairSlotIndex(out int repairSlotIndex))
         {
+            if (energySystem != null && energySystem.IsFuseBroken)
+            {
+                Log.Info("Remove the burned fuse before installing a new one.");
+            }
+
             return false;
         }
 
-        if (fuseSlots[_burnedSlotIndex] != null)
+        if (fuseSlots[repairSlotIndex] != null)
         {
+            Log.Info("Remove the burned fuse before installing a new one.");
             return false;
         }
 
         if (!player.InventorySystem.TryGetHeldItem(out Fuse fuse))
         {
+            Log.Info("Hold a functional fuse to install it.");
             return false;
         }
 
@@ -205,8 +280,10 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
             return false;
         }
 
-        int requiredAmperage = requiredAmperages[_burnedSlotIndex];
-        InstallFuseInSlot(fuse, _burnedSlotIndex);
+        _burnedSlotIndex = repairSlotIndex;
+        int requiredAmperage = GetRequiredAmperage(repairSlotIndex);
+        InstallFuseInSlot(fuse, repairSlotIndex);
+        _lastInstalledFuseSlotIndex = repairSlotIndex;
 
         if (fuse.Amperage == requiredAmperage)
         {
@@ -224,10 +301,56 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
         return true;
     }
 
+    private bool TryGetRepairSlotIndex(out int repairSlotIndex)
+    {
+        repairSlotIndex = -1;
+
+        if (_burnedSlotIndex >= 0 && _burnedSlotIndex < fuseSlots.Count)
+        {
+            if (fuseSlots[_burnedSlotIndex] == null)
+            {
+                repairSlotIndex = _burnedSlotIndex;
+                return true;
+            }
+
+            return false;
+        }
+
+        for (int i = 0; i < fuseSlots.Count; i++)
+        {
+            if (fuseSlots[i] == null)
+            {
+                repairSlotIndex = i;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool TryGetLastInstalledFunctionalFuseSlotIndex(out int slotIndex)
+    {
+        slotIndex = -1;
+
+        if (_lastInstalledFuseSlotIndex < 0 || _lastInstalledFuseSlotIndex >= fuseSlots.Count)
+        {
+            return false;
+        }
+
+        Fuse fuse = fuseSlots[_lastInstalledFuseSlotIndex];
+        if (fuse == null || !fuse.IsFunctional)
+        {
+            return false;
+        }
+
+        slotIndex = _lastInstalledFuseSlotIndex;
+        return true;
+    }
+
     private void InstallFuseInSlot(Fuse fuse, int slotIndex)
     {
         fuseSlots[slotIndex] = fuse;
-        fuse.transform.SetParent(_slotParents[slotIndex]);
+        fuse.transform.SetParent(_slotParents[slotIndex], false);
         fuse.transform.localPosition = _slotLocalPositions[slotIndex];
         fuse.transform.localRotation = _slotLocalRotations[slotIndex];
         fuse.InstallInPanel(this);
@@ -259,6 +382,19 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
         return GetRequiredAmperage(_burnedSlotIndex);
     }
 
+    private bool TryGetSlotPivot(int slotIndex, out Transform slotPivot)
+    {
+        slotPivot = null;
+
+        if (slotIndex < 0 || slotIndex >= fuseSlotPivots.Count)
+        {
+            return false;
+        }
+
+        slotPivot = fuseSlotPivots[slotIndex];
+        return slotPivot != null;
+    }
+
     private int GetRandomRequiredAmperage()
     {
         if (fuseRecipeCatalog != null)
@@ -283,6 +419,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
     private void RestoreEnergyWithCorrectFuse()
     {
         StopWrongFuseCoroutine();
+        ResetEnergyThreshold();
 
         if (energySystem != null)
         {
@@ -295,6 +432,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
     private void RestoreEnergyWithUnderAmperageFuse(Fuse fuse)
     {
         StopWrongFuseCoroutine();
+        ApplyUnderAmperageEnergyThreshold();
 
         if (energySystem != null)
         {
@@ -308,6 +446,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
     private void RestoreEnergyWithOverAmperageFuse(Fuse fuse)
     {
         StopWrongFuseCoroutine();
+        ResetEnergyThreshold();
 
         if (energySystem != null)
         {
@@ -354,5 +493,25 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
             StopCoroutine(_wrongFuseCoroutine);
             _wrongFuseCoroutine = null;
         }
+    }
+
+    private void ResetEnergyThreshold()
+    {
+        if (energySystem == null)
+        {
+            return;
+        }
+
+        energySystem.ResetFuseBreakConsumptionThreshold();
+    }
+
+    private void ApplyUnderAmperageEnergyThreshold()
+    {
+        if (energySystem == null)
+        {
+            return;
+        }
+
+        energySystem.ApplyFuseBreakConsumptionThresholdMultiplier(underAmperageThresholdMultiplier);
     }
 }

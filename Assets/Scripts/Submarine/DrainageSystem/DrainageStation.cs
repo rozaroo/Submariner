@@ -36,6 +36,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     private ILeverControls _currentDraggedControls;
     private Vector2 _mouseDelta;
     private bool _isDrainageActive;
+    private bool _hasRegisteredDrainageConsumption;
 
     public string MapName => stationMapName;
     public Transform CameraAnchor => cameraAnchor;
@@ -110,8 +111,8 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         _currentPlayer = player;
         _playerCamera = player.CamController.MainCamera;
         
-        var clickAction = _currentPlayer.Input.actions[clickActionName];
-        var exitAction = _currentPlayer.Input.actions[exitActionName];
+        InputAction clickAction = _currentPlayer.Input.actions[clickActionName];
+        InputAction exitAction = _currentPlayer.Input.actions[exitActionName];
         
         clickAction.started += OnClickStarted;
         clickAction.canceled += OnClickCanceled;
@@ -123,8 +124,8 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 
     public void UnPossess()
     {
-        var clickAction = _currentPlayer.Input.actions[clickActionName];
-        var exitAction = _currentPlayer.Input.actions[exitActionName];
+        InputAction clickAction = _currentPlayer.Input.actions[clickActionName];
+        InputAction exitAction = _currentPlayer.Input.actions[exitActionName];
                 
         clickAction.started -= OnClickStarted;
         clickAction.canceled -= OnClickCanceled;
@@ -133,7 +134,6 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         _currentDraggedControls = null;
         _currentPlayer = null;
         _playerCamera = null;
-        enabled = false;
     }
 
     #endregion
@@ -219,7 +219,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         {
             GameEventChannel<OnDrainagePropertyChange>.RaiseEvent(new OnDrainagePropertyChange(drainagePercentage));
             _isDrainageActive = true;
-            HandleDrainageEnergy();
+            StartDrainageEnergyConsumption();
             Log.Info("Drainage Active");
         }
         _currentPlayer.OnUnPossessionState(this);
@@ -227,9 +227,16 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     
     private void StopDrainage()
     {
+        if (!_isDrainageActive && !_hasRegisteredDrainageConsumption)
+        {
+            GameEventChannel<OnDrainagePropertyChange>.RaiseEvent(new OnDrainagePropertyChange(0f));
+            return;
+        }
+
         _isDrainageActive = false;
-        HandleDrainageEnergy();
-        GameEventChannel<OnDrainagePropertyChange>.RaiseEvent(new OnDrainagePropertyChange(drainagePercentage));
+        StopDrainageEnergyConsumption();
+        GameEventChannel<OnDrainagePropertyChange>.RaiseEvent(new OnDrainagePropertyChange(0f));
+        Log.Info("Drainage Stopped");
     }
     
     private void CheckDrainageMinigame()
@@ -251,7 +258,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
                 drainagePercentage = 0.5f;
                 break;
             case EnergyStatus.Empty:
-                StopDrainage();
+                drainagePercentage = 0f;
                 break; 
         }
     }
@@ -266,16 +273,28 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         SetDrainageStatus();
     }
     
-    private void HandleDrainageEnergy()
+    private void StartDrainageEnergyConsumption()
     {
-        if (_isDrainageActive)
+        if (_hasRegisteredDrainageConsumption)
         {
-            GameEventChannel<OnEnergyConsumption>.RaiseEvent(new OnEnergyConsumption(energyConsumption, true));
+            return;
         }
-        else
+
+        _hasRegisteredDrainageConsumption = true;
+        GameEventChannel<OnEnergyConsumption>.RaiseEvent(new OnEnergyConsumption(energyConsumption, true));
+        Log.Info($"Drainage consumption registered: {energyConsumption}");
+    }
+
+    private void StopDrainageEnergyConsumption()
+    {
+        if (!_hasRegisteredDrainageConsumption)
         {
-            GameEventChannel<OnEnergyConsumption>.RaiseEvent(new OnEnergyConsumption(energyConsumption, false));
+            return;
         }
+
+        _hasRegisteredDrainageConsumption = false;
+        GameEventChannel<OnEnergyConsumption>.RaiseEvent(new OnEnergyConsumption(energyConsumption, false));
+        Log.Info($"Drainage consumption relieved: {energyConsumption}");
     }
 
     #endregion
