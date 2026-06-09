@@ -54,6 +54,7 @@ public class PhosphorusCamera : MonoBehaviour
     private void UpdateEnergyStatus(OnEnergyStatusChange newStatus)
     {
         _energyStatus = newStatus.energyStatus;
+        Log.Info($"{newStatus} - Phosphorus Camera Status");
         if (_energyStatus == EnergyStatus.Empty)
         {
             ForceDisable();
@@ -65,9 +66,14 @@ public class PhosphorusCamera : MonoBehaviour
 
     public void TryTakePhoto()
     {
-        if (!CanTakePhoto()) return;
+        if (!CanTakePhoto())
+        {
+            SFXManager.PostEvent("Start_PhosphorusCameraFlash_Event", gameObject);
+            return;
+        }
         
         if (_photoSequenceRoutine != null) StopCoroutine(_photoSequenceRoutine);
+        SFXManager.PostEvent("Start_PhosphorusCameraFlash_Event", gameObject);
         _photoSequenceRoutine = StartCoroutine(PhotoSequenceRoutine());
     }
     

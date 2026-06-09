@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{A755FB6C-DF30-4037-90E3-DE101ED00759}" SchemaVersion="103">
+	<SoundBanks>
+		<WorkUnit Name="VoicesOfTides" ID="{A755FB6C-DF30-4037-90E3-DE101ED00759}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundBank Name="GamePlay_SFX" ID="{AAFB558F-ADC4-4CF9-90C0-5B67FCA3CB88}">
+					<ObjectInclusionList>
+						<ObjectRef Name="Default Work Unit" ID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="SubmarineMFX" ID="{D36549F1-7A07-4154-AA3F-8C9545328D11}" WorkUnitID="{D36549F1-7A07-4154-AA3F-8C9545328D11}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="SubmarineSFX" ID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="General_MFX" ID="{E27468A2-9D02-41D5-A162-1432A7B66C24}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="PlayerSFX" ID="{093F7533-F3CA-42E3-8978-8BADA2BDA91F}" WorkUnitID="{093F7533-F3CA-42E3-8978-8BADA2BDA91F}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="General_SFX" ID="{7D58A2F4-D121-43DD-BB96-2F34B0A30465}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}" Origin="Manual" Filter="7"/>
+					</ObjectInclusionList>
+					<ObjectExclusionList/>
+					<GameSyncExclusionList/>
+				</SoundBank>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundBanks>
+</WwiseDocument>

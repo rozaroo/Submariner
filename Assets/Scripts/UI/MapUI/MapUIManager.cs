@@ -279,6 +279,7 @@ public class MapUIManager : MonoBehaviour
             {
                 if (_worldElementIconDictionary.TryGetValue(uiElement, out MapIcon icon))
                 {
+                    SFXManager.PostEvent("Start_SonarPingOuter", gameObject);
                     icon.IsVisible = property.IsRevealed;
                 }
             }
@@ -286,6 +287,7 @@ public class MapUIManager : MonoBehaviour
             {
                 if (_worldElementIconDictionary.TryGetValue(uiElement, out MapIcon icon))
                 {
+                    SFXManager.PostEvent("Start_SonarPingInner", gameObject);
                     icon.IsVisible = !property.IsRevealed;
                 }
             }

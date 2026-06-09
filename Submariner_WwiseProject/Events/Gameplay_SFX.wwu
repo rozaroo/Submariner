@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{B45C07A7-CC80-4B80-BBAC-EF59F1484550}" SchemaVersion="103">
+	<Events>
+		<WorkUnit Name="Gameplay_SFX" ID="{B45C07A7-CC80-4B80-BBAC-EF59F1484550}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="Start_TensionEvent" ID="{B96D0CFD-A55A-4B9A-BA27-964681C14AF4}">
+					<ChildrenList>
+						<Action Name="" ID="{5A2B5548-B8F4-4FAA-83E7-56F6EF46F75C}" ShortID="1071535656">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BackgroudNoisesRandom" ID="{72A47F02-7AB6-451E-8697-4A66D52DA602}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{DF4C055A-0BF2-4B1E-8A88-4B0FC88F04FD}" ShortID="929038205">
+							<PropertyList>
+								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="TensionPlaylist" ID="{697C8FED-AAF1-413D-BC13-8FA7301F7C76}" WorkUnitID="{D36549F1-7A07-4154-AA3F-8C9545328D11}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_TensionEvent" ID="{36B543C8-F2F2-42E6-8000-0DBC70D8A202}">
+					<ChildrenList>
+						<Action Name="" ID="{2E6D460B-25C9-4E7E-97C9-F68FC971CB06}" ShortID="108759519">
+							<PropertyList>
+								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BackgroudNoisesRandom" ID="{72A47F02-7AB6-451E-8697-4A66D52DA602}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{82851228-F4D6-460E-B0F7-EAB6448D970C}" ShortID="154233677">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="TensionPlaylist" ID="{697C8FED-AAF1-413D-BC13-8FA7301F7C76}" WorkUnitID="{D36549F1-7A07-4154-AA3F-8C9545328D11}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_PhosphorusCameraFlash_Event" ID="{94E8D275-2E2C-4704-AD01-F759A9C2DFA4}">
+					<ChildrenList>
+						<Action Name="" ID="{C9B80D13-1023-4E1F-9C82-8B5B3B6BDEE9}" ShortID="551367939">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PhosphorusCamera" ID="{5CA054BC-F314-4CF5-8484-F0E2D346914E}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{FDC81D8B-284E-4F6A-902A-168C6EE6C1F3}" ShortID="419446063">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PhosphorusCamera" ID="{5CA054BC-F314-4CF5-8484-F0E2D346914E}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_ButtonPress" ID="{99ED68D2-C3FB-45AA-9AD3-A8342256D0A7}">
+					<ChildrenList>
+						<Action Name="" ID="{570B8D07-AC32-4E09-9FA2-961A478F44CB}" ShortID="448787462">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ButtonRandom" ID="{88C64706-B3E5-4429-99F6-0C2BE9ABEAF9}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_BackgroundSubmarineMFX" ID="{04CF443D-B4C3-47DC-9F06-9F53E9C2CA5F}">
+					<ChildrenList>
+						<Action Name="" ID="{84C7286A-B863-49E5-B53A-8DB72FDFC759}" ShortID="427394090">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BackgroudNoisesRandom" ID="{72A47F02-7AB6-451E-8697-4A66D52DA602}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_BackgroundSubmarineMFX" ID="{2170674A-5FB4-4F5F-8D00-FB1DB4EFF360}">
+					<ChildrenList>
+						<Action Name="" ID="{FAF5B838-39EB-4931-8B7D-369F628072C5}" ShortID="518384348">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BackgroudNoisesRandom" ID="{72A47F02-7AB6-451E-8697-4A66D52DA602}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_Opening_Pressure_DoorSFX" ID="{C91FEC1C-43C8-4EB9-B94C-33B41770A6D6}">
+					<ChildrenList>
+						<Action Name="" ID="{4A6E392C-5FA9-48AA-BB6B-3A92904236F6}" ShortID="286984711">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PressureDoorOpenRandom" ID="{899746EC-3F56-4F3A-A977-DB9A0C76674A}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_Closing_Pressure_DoorSFX" ID="{BA3F2C55-E9BF-45BD-8DFE-DC14383BE9F9}">
+					<ChildrenList>
+						<Action Name="" ID="{C2FA707F-674A-4C89-AC81-3A5244E072C5}" ShortID="958464224">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PressureDoorCloseRandom" ID="{9D8CF215-63CA-416B-85E7-3B442CCFA1D1}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_LeverPullFinished" ID="{A48D8C70-75D4-47F6-85A1-0BEF769AF746}">
+					<ChildrenList>
+						<Action Name="" ID="{D4E1578F-3228-4031-A5B7-6E3B072866A2}" ShortID="144210326">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="LeverPull" ID="{84BC1573-C8C7-4588-B2E3-990707627984}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_SonarPingOuter" ID="{0552B27A-4F71-4EE2-B2EB-9728F9017B7D}">
+					<ChildrenList>
+						<Action Name="" ID="{B8476EFE-6131-4373-B863-AC507E22322D}" ShortID="791339515">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SonarPingOuter" ID="{A33B48EA-BB1B-4E80-AF37-B2651D123D4D}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_SonarPingInner" ID="{71C92912-0278-4AA5-8D32-DBEB8E91B82D}">
+					<ChildrenList>
+						<Action Name="" ID="{334183A7-95B4-496F-9B17-162FF96F824B}" ShortID="526352382">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SonarPingInner" ID="{152E0A4E-6888-476B-8DEF-7321AEEED901}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

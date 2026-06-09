@@ -1,0 +1,78 @@
+Event	ID	Name			Wwise Object Path	Notes
+	116843463	Stop_BackgroundSubmarineMFX			\Gameplay_SFX\Stop_BackgroundSubmarineMFX	
+	378872923	Start_Closing_Pressure_DoorSFX			\Gameplay_SFX\Start_Closing_Pressure_DoorSFX	
+	738466431	Start_ButtonPress			\Gameplay_SFX\Start_ButtonPress	
+	997126444	Start_SonarPingOuter			\Gameplay_SFX\Start_SonarPingOuter	
+	1403223316	Start_TensionEvent			\Gameplay_SFX\Start_TensionEvent	
+	1735885581	Start_SonarPingInner			\Gameplay_SFX\Start_SonarPingInner	
+	2469108041	Start_LeverPullFinished			\Gameplay_SFX\Start_LeverPullFinished	
+	3003027233	Start_BackgroundSubmarineMFX			\Gameplay_SFX\Start_BackgroundSubmarineMFX	
+	3214537693	Start_PhosphorusCameraFlash_Event			\Gameplay_SFX\Start_PhosphorusCameraFlash_Event	
+	3884825202	Stop_TensionEvent			\Gameplay_SFX\Stop_TensionEvent	
+	4235702204	Start_Opening_Pressure_DoorSFX			\Gameplay_SFX\Start_Opening_Pressure_DoorSFX	
+
+State Group	ID	Name			Wwise Object Path	Notes
+	894977922	Energy_Status			\Default Work Unit\Energy_Status	
+	4071417932	Player_State			\Default Work Unit\Player_State	
+
+State	ID	Name	State Group			Notes
+	545371365	Low	Energy_Status			
+	748895195	None	Energy_Status			
+	2510516222	Full	Energy_Status			
+	3354297748	Empty	Energy_Status			
+	124361234	Stunned	Player_State			
+	655265632	Alive	Player_State			
+	748895195	None	Player_State			
+
+Custom State	ID	Name	State Group	Owner		Notes
+	57613382	Alive	Player_State	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_MFX\Submarine_MFX		
+	550051199	Stunned	Player_State	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_MFX\Submarine_MFX		
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	511617432	Submarine_Colision_Distance			\ParametersVOT\Submarine_Colision_Distance	
+	3138205067	IncrementalTension			\ParametersVOT\IncrementalTension	
+
+Audio Bus	ID	Name			Wwise Object Path	Notes
+	54673317	General_MFX			\Default Work Unit\Master Audio Bus\General_MFX	
+	322129659	General_SFX			\Default Work Unit\Master Audio Bus\General_SFX	
+	1690215283	Submarine_SFX			\Default Work Unit\Master Audio Bus\General_SFX\Submarine_SFX	
+	1957082925	Submarine_MFX			\Default Work Unit\Master Audio Bus\General_MFX\Submarine_MFX	
+	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
+
+Auxiliary Bus	ID	Name			Wwise Object Path	Notes
+	1714574586	Reverb_AUX_SFX			\Default Work Unit\Master Audio Bus\General_SFX\Reverb_AUX_SFX	
+	2315337392	Reverb_Muffled_MFX_AUX			\Default Work Unit\Master Audio Bus\General_MFX\Reverb_Muffled_MFX_AUX	
+
+Effect plug-ins	ID	Name	Type				Notes
+	86245554	Attack_Remover	Wwise Compressor			
+	877258973	Wwise Time Stretch (Custom)	Wwise Time Stretch			
+	1051689273	Big_Garage1 (Custom)	Wwise Matrix Reverb			
+	1588715066	Echoes_Linear	Wwise Delay			
+	1904434771	Medium_Room1	Wwise Matrix Reverb			
+	3290519051	Aluminium_Tank	Wwise RoomVerb			
+	3948262040	Octave_Down	Wwise Pitch Shifter			
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	150726513	Project_1_BackgroundWhiteNoise	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_BackgroundWhiteNoise_D7115337.wem		\Actor-Mixer Hierarchy\SubmarineSFX\BackgroudNoisesRandom\Project_1_BackgroundWhiteNoise		486700
+	175779074	Distance_CountDown	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\17216__meatball4u__countdown_DB187815.wem		\Actor-Mixer Hierarchy\SubmarineSFX\Distance\Distance_CountDown		3880
+	307274219	LeverPull	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\404049__deathscyp__breaker-1_10C4C929.wem		\Actor-Mixer Hierarchy\SubmarineSFX\LeverPull		76668
+	383140111	SonarPingOuter	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_Sonar_10C4C929.wem		\Actor-Mixer Hierarchy\SubmarineSFX\SonarPingOuter		564608
+	412602450	Project_1_TinyMelody	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_TinyMelody_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_TinyMelody		564608
+	441572400	FlashNoEnergy	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Flash reversed 001_4C940592.wem		\Actor-Mixer Hierarchy\SubmarineSFX\PhosphorusCamera\FlashNoEnergy		99280
+	479738779	PressureDoorClose2	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\PressureDoorClose_10C4C929.wem		\Actor-Mixer Hierarchy\SubmarineSFX\PressureDoorCloseRandom\PressureDoorClose2		365212
+	485392549	Project_1_Tension 5	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_Tension 5_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_Tension 5		564608
+	495489055	ButtonPress	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\17216__meatball4u__countdown_43B927F8.wem		\Actor-Mixer Hierarchy\SubmarineSFX\ButtonRandom\ButtonPress		4644
+	550708862	Project_1_Tension2	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_Tension2_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_Tension2		564608
+	586941861	Project_1_Tension1	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_Tension1_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_Tension1		564608
+	655064136	Project_1_BassTension1	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_BassTension1_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_BassTension1		564608
+	657499168	Project_1_Tension3	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_Tension3_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_Tension3		564608
+	674079710	CameraIntro	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\CameraIntro_B03F89E8.wem		\Actor-Mixer Hierarchy\SubmarineSFX\PhosphorusCamera\PhosporusCamera_Functional\CameraIntro		146924
+	678727613	Project_1_BackgroundWhiteNoise	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_BackgroundWhiteNoise_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_BackgroundWhiteNoise		564608
+	794426764	PressureDoorOpen_01	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\425090__neospica__pressurized-door-opening_2EA370B6.wem		\Actor-Mixer Hierarchy\SubmarineSFX\PressureDoorOpenRandom\PressureDoorOpen_01		239564
+	813881389	Project_1_BAS Pilobass	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_BAS Pilobass_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_BAS Pilobass		564608
+	851935918	Project_1_BackgroundWhiteNoise_01	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_BackgroundWhiteNoise_B5D95101.wem		\Actor-Mixer Hierarchy\SubmarineSFX\BackgroudNoisesRandom\Project_1_BackgroundWhiteNoise_01		487408
+	866744274	Project_1_BackgroundWhiteNoise_02	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_BackgroundWhiteNoise_80816046.wem		\Actor-Mixer Hierarchy\SubmarineSFX\BackgroudNoisesRandom\Project_1_BackgroundWhiteNoise_02		487408
+	886412129	FlashSFX	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Flash_82F5351A.wem		\Actor-Mixer Hierarchy\SubmarineSFX\PhosphorusCamera\PhosporusCamera_Functional\FlashSFX		242860
+	892432398	Project_1_Tension 4	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_Tension 4_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_Tension 4		564608
+	1002913569	PressureDoorOpen	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\425090__neospica__pressurized-door-opening_7AA2CC43.wem		\Actor-Mixer Hierarchy\SubmarineSFX\PressureDoorOpenRandom\PressureDoorOpen		239564
+

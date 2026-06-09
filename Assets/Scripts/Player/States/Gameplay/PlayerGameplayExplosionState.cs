@@ -41,6 +41,7 @@ public class PlayerGameplayExplosionState : PlayerGameplayState
     {
         _player.CharacterController.enabled = false;
         _player.CharacterController.enabled = true;
+        SFXManager.SetState("Stunned", "Player_State");
 
         _knockbackMovement = new KnockbackMovement(_impactDir, _force, _drag, _accelerationTime);
         _player.SetMovementStrategy(_knockbackMovement);
@@ -98,6 +99,7 @@ public class PlayerGameplayExplosionState : PlayerGameplayState
  
     public override void OnExit()
     {
+        SFXManager.SetState("Alive", "Player_State");
         _player.EnableGameplayInputs();
     }
  

@@ -24,7 +24,20 @@ public class PressureDoor : MonoBehaviour, IInteractable
         {
             StopCoroutine(_animationCoroutine);
         }
-        _animationCoroutine = StartCoroutine(AnimateDoor(_isOpen ? _openRotation : _closedRotation));
+
+        Quaternion rotation;
+        if (_isOpen)
+        {
+            SFXManager.PostEvent("Start_Opening_Pressure_DoorSFX", gameObject);
+            rotation = _openRotation;
+        }
+        else
+        {
+            SFXManager.PostEvent("Start_Closing_Pressure_DoorSFX", gameObject);
+            rotation = _closedRotation;
+        }
+        
+        _animationCoroutine = StartCoroutine(AnimateDoor(rotation));
     }
 
     private IEnumerator AnimateDoor(Quaternion targetRotation)

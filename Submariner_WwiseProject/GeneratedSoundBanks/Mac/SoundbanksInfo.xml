@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Mac" BasePlatform="Mac" SchemaVersion="12" SoundbankVersion="140">
+	<RootPaths>
+		<ProjectRoot>F:\Github\Submariner\Submariner_WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\</SourceFilesRoot>
+		<SoundBanksRoot>F:\Github\Submariner\Submariner_WwiseProject\GeneratedSoundBanks\Mac\</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>F:\Github\Submariner\Submariner_WwiseProject\GeneratedSoundBanks\Mac</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<StreamedFiles/>
+	<MediaFilesNotInAnyBank/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Language="SFX" Hash="3087925315">
+			<ObjectPath>Init</ObjectPath>
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+			<IncludedAuxBusses>
+				<AuxBus Id="1714574586" Name="Reverb_AUX_SFX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Reverb_AUX_SFX"/>
+				<AuxBus Id="2315337392" Name="Reverb_Muffled_MFX_AUX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_MFX\Reverb_Muffled_MFX_AUX"/>
+			</IncludedAuxBusses>
+			<StateGroups>
+				<StateGroup Id="4071417932" Name="Player_State" ObjectPath="\States\Default Work Unit\Player_State" GUID="{E6F0C986-7EA9-445E-87F2-C62236FE5080}">
+					<States>
+						<State Id="748895195" Name="None" ObjectPath="\States\Default Work Unit\Player_State\None" GUID="{342CF4E7-6DD8-41CC-A36F-4380235B5988}"/>
+						<State Id="655265632" Name="Alive" ObjectPath="\States\Default Work Unit\Player_State\Alive" GUID="{27CCEF96-E986-4239-8783-B018BFADC7EC}"/>
+						<State Id="124361234" Name="Stunned" ObjectPath="\States\Default Work Unit\Player_State\Stunned" GUID="{DFBAFB8E-6EA2-46FE-ABB5-3956C9D89CCC}"/>
+					</States>
+				</StateGroup>
+			</StateGroups>
+		</SoundBank>
+		<SoundBank Id="3401228817" Language="SFX" Hash="1121126389">
+			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
+			<ShortName>GamePlay_SFX</ShortName>
+			<Path>GamePlay_SFX.bnk</Path>
+			<IncludedEvents>
+				<Event Id="3003027233" Name="Start_BackgroundSubmarineMFX" ObjectPath="\Events\Gameplay_SFX\Start_BackgroundSubmarineMFX" DurationType="Infinite"/>
+				<Event Id="738466431" Name="Start_ButtonPress" ObjectPath="\Events\Gameplay_SFX\Start_ButtonPress" DurationType="OneShot" DurationMin="0.082455" DurationMax="0.115269"/>
+				<Event Id="378872923" Name="Start_Closing_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Closing_Pressure_DoorSFX" DurationType="OneShot" DurationMin="2.07" DurationMax="2.257351"/>
+				<Event Id="2469108041" Name="Start_LeverPullFinished" ObjectPath="\Events\Gameplay_SFX\Start_LeverPullFinished" DurationType="OneShot" DurationMin="0.398979" DurationMax="0.398979"/>
+				<Event Id="4235702204" Name="Start_Opening_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Opening_Pressure_DoorSFX" DurationType="OneShot" DurationMin="1.35771" DurationMax="1.35771"/>
+				<Event Id="3214537693" Name="Start_PhosphorusCameraFlash_Event" ObjectPath="\Events\Gameplay_SFX\Start_PhosphorusCameraFlash_Event" DurationType="OneShot" DurationMin="1.902773" DurationMax="2.752797"/>
+				<Event Id="1735885581" Name="Start_SonarPingInner" ObjectPath="\Events\Gameplay_SFX\Start_SonarPingInner" DurationType="OneShot" DurationMin="3.2" DurationMax="3.2"/>
+				<Event Id="997126444" Name="Start_SonarPingOuter" ObjectPath="\Events\Gameplay_SFX\Start_SonarPingOuter" DurationType="OneShot" DurationMin="3.2" DurationMax="3.2"/>
+				<Event Id="1403223316" Name="Start_TensionEvent" ObjectPath="\Events\Gameplay_SFX\Start_TensionEvent" DurationType="Infinite"/>
+				<Event Id="116843463" Name="Stop_BackgroundSubmarineMFX" ObjectPath="\Events\Gameplay_SFX\Stop_BackgroundSubmarineMFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
+				<Event Id="3884825202" Name="Stop_TensionEvent" ObjectPath="\Events\Gameplay_SFX\Stop_TensionEvent" DurationType="Infinite"/>
+			</IncludedEvents>
+			<IncludedAuxBusses>
+				<AuxBus Id="1714574586" Name="Reverb_AUX_SFX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Reverb_AUX_SFX"/>
+				<AuxBus Id="2315337392" Name="Reverb_Muffled_MFX_AUX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_MFX\Reverb_Muffled_MFX_AUX"/>
+			</IncludedAuxBusses>
+			<IncludedMemoryFiles>
+				<File Id="150726513" Language="SFX">
+					<ShortName>Project_1_BackgroundWhiteNoise.wav</ShortName>
+					<Path>SFX\Project_1_BackgroundWhiteNoise_D7115337.wem</Path>
+				</File>
+				<File Id="175779074" Language="SFX">
+					<ShortName>17216__meatball4u__countdown.wav</ShortName>
+					<Path>SFX\17216__meatball4u__countdown_DB187815.wem</Path>
+				</File>
+				<File Id="307274219" Language="SFX">
+					<ShortName>404049__deathscyp__breaker-1.wav</ShortName>
+					<Path>SFX\404049__deathscyp__breaker-1_10C4C929.wem</Path>
+				</File>
+				<File Id="383140111" Language="SFX">
+					<ShortName>Project_1_Sonar.wav</ShortName>
+					<Path>SFX\Project_1_Sonar_10C4C929.wem</Path>
+				</File>
+				<File Id="412602450" Language="SFX">
+					<ShortName>Project_1_TinyMelody.wav</ShortName>
+					<Path>SFX\Project_1_TinyMelody_D79FB2B7.wem</Path>
+				</File>
+				<File Id="441572400" Language="SFX">
+					<ShortName>Flash reversed 001.wav</ShortName>
+					<Path>SFX\Flash reversed 001_4C940592.wem</Path>
+				</File>
+				<File Id="479738779" Language="SFX">
+					<ShortName>PressureDoorClose.wav</ShortName>
+					<Path>SFX\PressureDoorClose_10C4C929.wem</Path>
+				</File>
+				<File Id="485392549" Language="SFX">
+					<ShortName>Project_1_Tension 5.wav</ShortName>
+					<Path>SFX\Project_1_Tension 5_D79FB2B7.wem</Path>
+				</File>
+				<File Id="495489055" Language="SFX">
+					<ShortName>17216__meatball4u__countdown.wav</ShortName>
+					<Path>SFX\17216__meatball4u__countdown_43B927F8.wem</Path>
+				</File>
+				<File Id="550708862" Language="SFX">
+					<ShortName>Project_1_Tension2.wav</ShortName>
+					<Path>SFX\Project_1_Tension2_D79FB2B7.wem</Path>
+				</File>
+				<File Id="586941861" Language="SFX">
+					<ShortName>Project_1_Tension1.wav</ShortName>
+					<Path>SFX\Project_1_Tension1_D79FB2B7.wem</Path>
+				</File>
+				<File Id="655064136" Language="SFX">
+					<ShortName>Project_1_BassTension1.wav</ShortName>
+					<Path>SFX\Project_1_BassTension1_D79FB2B7.wem</Path>
+				</File>
+				<File Id="657499168" Language="SFX">
+					<ShortName>Project_1_Tension3.wav</ShortName>
+					<Path>SFX\Project_1_Tension3_D79FB2B7.wem</Path>
+				</File>
+				<File Id="674079710" Language="SFX">
+					<ShortName>CameraIntro.wav</ShortName>
+					<Path>SFX\CameraIntro_B03F89E8.wem</Path>
+				</File>
+				<File Id="678727613" Language="SFX">
+					<ShortName>Project_1_BackgroundWhiteNoise.wav</ShortName>
+					<Path>SFX\Project_1_BackgroundWhiteNoise_D79FB2B7.wem</Path>
+				</File>
+				<File Id="794426764" Language="SFX">
+					<ShortName>425090__neospica__pressurized-door-opening.wav</ShortName>
+					<Path>SFX\425090__neospica__pressurized-door-opening_2EA370B6.wem</Path>
+				</File>
+				<File Id="813881389" Language="SFX">
+					<ShortName>Project_1_BAS Pilobass.wav</ShortName>
+					<Path>SFX\Project_1_BAS Pilobass_D79FB2B7.wem</Path>
+				</File>
+				<File Id="851935918" Language="SFX">
+					<ShortName>Project_1_BackgroundWhiteNoise.wav</ShortName>
+					<Path>SFX\Project_1_BackgroundWhiteNoise_B5D95101.wem</Path>
+				</File>
+				<File Id="866744274" Language="SFX">
+					<ShortName>Project_1_BackgroundWhiteNoise.wav</ShortName>
+					<Path>SFX\Project_1_BackgroundWhiteNoise_80816046.wem</Path>
+				</File>
+				<File Id="886412129" Language="SFX">
+					<ShortName>Flash.wav</ShortName>
+					<Path>SFX\Flash_82F5351A.wem</Path>
+				</File>
+				<File Id="892432398" Language="SFX">
+					<ShortName>Project_1_Tension 4.wav</ShortName>
+					<Path>SFX\Project_1_Tension 4_D79FB2B7.wem</Path>
+				</File>
+				<File Id="1002913569" Language="SFX">
+					<ShortName>425090__neospica__pressurized-door-opening.wav</ShortName>
+					<Path>SFX\425090__neospica__pressurized-door-opening_7AA2CC43.wem</Path>
+				</File>
+			</IncludedMemoryFiles>
+			<GameParameters>
+				<GameParameter Id="511617432" Name="Submarine_Colision_Distance" ObjectPath="\Game Parameters\ParametersVOT\Submarine_Colision_Distance"/>
+				<GameParameter Id="3138205067" Name="IncrementalTension" ObjectPath="\Game Parameters\ParametersVOT\IncrementalTension"/>
+			</GameParameters>
+			<StateGroups>
+				<StateGroup Id="894977922" Name="Energy_Status" ObjectPath="\States\Default Work Unit\Energy_Status" GUID="{47AFB86B-07E1-4368-AE6B-F248AEA5823B}">
+					<States>
+						<State Id="748895195" Name="None" ObjectPath="\States\Default Work Unit\Energy_Status\None" GUID="{9EB3B7D9-52B4-475A-A769-C726EC9D0F4B}"/>
+						<State Id="2510516222" Name="Full" ObjectPath="\States\Default Work Unit\Energy_Status\Full" GUID="{9994C281-2EA3-401E-B1AB-86D2A52AAEE4}"/>
+						<State Id="545371365" Name="Low" ObjectPath="\States\Default Work Unit\Energy_Status\Low" GUID="{A5BB699C-970F-4297-A432-86D4813BDB27}"/>
+						<State Id="3354297748" Name="Empty" ObjectPath="\States\Default Work Unit\Energy_Status\Empty" GUID="{9B25FCBF-5CCB-4DD4-B4BD-7590E516F771}"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="4071417932" Name="Player_State" ObjectPath="\States\Default Work Unit\Player_State" GUID="{E6F0C986-7EA9-445E-87F2-C62236FE5080}">
+					<States>
+						<State Id="748895195" Name="None" ObjectPath="\States\Default Work Unit\Player_State\None" GUID="{342CF4E7-6DD8-41CC-A36F-4380235B5988}"/>
+						<State Id="655265632" Name="Alive" ObjectPath="\States\Default Work Unit\Player_State\Alive" GUID="{27CCEF96-E986-4239-8783-B018BFADC7EC}"/>
+						<State Id="124361234" Name="Stunned" ObjectPath="\States\Default Work Unit\Player_State\Stunned" GUID="{DFBAFB8E-6EA2-46FE-ABB5-3956C9D89CCC}"/>
+					</States>
+				</StateGroup>
+			</StateGroups>
+		</SoundBank>
+	</SoundBanks>
+</SoundBanksInfo>

@@ -1,0 +1,676 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ae85e20056c79418bb09c90b71cc55, type: 3}
+  m_Name: AkWwiseProjectData
+  m_EditorClassIdentifier: 
+  AcousticTextureWwu:
+  - PhysicalPath: Virtual Acoustics\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Virtual Acoustics
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: fadc46e67b34394890f3a3b45fb9c58d
+    ParentPath: Virtual Acoustics\Default Work Unit
+    guid: fadc46e67b34394890f3a3b45fb9c58d
+    GuidInternal: 
+    m_lastTime: -8584206873757944163
+    List: []
+  AuxBusWwu:
+  - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Master-Mixer Hierarchy
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: eb88c8468a8b7740b7f87fe70f3aa207
+    ParentPath: Master-Mixer Hierarchy\Default Work Unit
+    guid: eb88c8468a8b7740b7f87fe70f3aa207
+    GuidInternal: 
+    m_lastTime: -8584206676102715556
+    List:
+    - name: General_MFX
+      guid: a26874e2029dd541a1621432a7b66c24
+      id: 54673317
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: eb88c8468a8b7740b7f87fe70f3aa207
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: General_MFX
+        ObjectType: 2
+        guid: a26874e2029dd541a1621432a7b66c24
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_MFX
+    - name: General_SFX
+      guid: f4a2587d21d1dd43bb962f34b0a30465
+      id: 322129659
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: eb88c8468a8b7740b7f87fe70f3aa207
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: General_SFX
+        ObjectType: 2
+        guid: f4a2587d21d1dd43bb962f34b0a30465
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX
+    - name: Master Audio Bus
+      guid: d8a41415a61d2a41a17e75ca0c2149f3
+      id: 3803692087
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: eb88c8468a8b7740b7f87fe70f3aa207
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus
+    - name: Reverb_AUX_SFX
+      guid: f8dd3451e67a574d83040b7263e73f39
+      id: 1714574586
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: eb88c8468a8b7740b7f87fe70f3aa207
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: General_SFX
+        ObjectType: 2
+        guid: f4a2587d21d1dd43bb962f34b0a30465
+      - ElementName: Reverb_AUX_SFX
+        ObjectType: 1
+        guid: f8dd3451e67a574d83040b7263e73f39
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Reverb_AUX_SFX
+    - name: Reverb_Muffled_MFX_AUX
+      guid: b91cd88793c34e4eb25099cb020dd8e5
+      id: 2315337392
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: eb88c8468a8b7740b7f87fe70f3aa207
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: General_MFX
+        ObjectType: 2
+        guid: a26874e2029dd541a1621432a7b66c24
+      - ElementName: Reverb_Muffled_MFX_AUX
+        ObjectType: 1
+        guid: b91cd88793c34e4eb25099cb020dd8e5
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_MFX\Reverb_Muffled_MFX_AUX
+    - name: Submarine_MFX
+      guid: 28ddbc26d25b4046a80c657c9e0b2ff3
+      id: 1957082925
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: eb88c8468a8b7740b7f87fe70f3aa207
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: General_MFX
+        ObjectType: 2
+        guid: a26874e2029dd541a1621432a7b66c24
+      - ElementName: Submarine_MFX
+        ObjectType: 2
+        guid: 28ddbc26d25b4046a80c657c9e0b2ff3
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_MFX\Submarine_MFX
+    - name: Submarine_SFX
+      guid: 557d2b9f4270d243a162c72f6eef196b
+      id: 1690215283
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: eb88c8468a8b7740b7f87fe70f3aa207
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: General_SFX
+        ObjectType: 2
+        guid: f4a2587d21d1dd43bb962f34b0a30465
+      - ElementName: Submarine_SFX
+        ObjectType: 2
+        guid: 557d2b9f4270d243a162c72f6eef196b
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Submarine_SFX
+  BankWwu:
+  - PhysicalPath: SoundBanks\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: SoundBanks
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 78d019e9a98b624b95f48ecd972e88f9
+    ParentPath: SoundBanks\Default Work Unit
+    guid: 78d019e9a98b624b95f48ecd972e88f9
+    GuidInternal: 
+    m_lastTime: -8584206873758144345
+    List: []
+  - PhysicalPath: SoundBanks\VoicesOfTides.wwu
+    PathAndIcons:
+    - ElementName: SoundBanks
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: VoicesOfTides
+      ObjectType: 12
+      guid: 6cfb55a730df374090e3de101ed00759
+    ParentPath: SoundBanks\VoicesOfTides
+    guid: 6cfb55a730df374090e3de101ed00759
+    GuidInternal: 
+    m_lastTime: -8584206614757260723
+    List:
+    - name: GamePlay_SFX
+      guid: 8f55fbaac4adf94c90c05b67fca3cb88
+      id: 3401228817
+      PathAndIcons:
+      - ElementName: SoundBanks
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: VoicesOfTides
+        ObjectType: 12
+        guid: 6cfb55a730df374090e3de101ed00759
+      - ElementName: GamePlay_SFX
+        ObjectType: 7
+        guid: 8f55fbaac4adf94c90c05b67fca3cb88
+      Path: SoundBanks\VoicesOfTides\GamePlay_SFX
+  EventWwu:
+  - PhysicalPath: Events\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 21ceb8a29a2d9141bf9458ff73f9eb44
+    ParentPath: Events\Default Work Unit
+    guid: 21ceb8a29a2d9141bf9458ff73f9eb44
+    GuidInternal: 
+    m_lastTime: -8584206788157992586
+    List: []
+  - PhysicalPath: Events\Gameplay_SFX.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Gameplay_SFX
+      ObjectType: 12
+      guid: a7075cb480cc804bbbacef59f1484550
+    ParentPath: Events\Gameplay_SFX
+    guid: a7075cb480cc804bbbacef59f1484550
+    GuidInternal: 
+    m_lastTime: -8584206526371084825
+    List:
+    - name: Start_BackgroundSubmarineMFX
+      guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
+      id: 3003027233
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_BackgroundSubmarineMFX
+        ObjectType: 3
+        guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
+      Path: Events\Gameplay_SFX\Start_BackgroundSubmarineMFX
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Start_ButtonPress
+      guid: d268ed99fbc3aa459ad3a8342256d0a7
+      id: 738466431
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_ButtonPress
+        ObjectType: 3
+        guid: d268ed99fbc3aa459ad3a8342256d0a7
+      Path: Events\Gameplay_SFX\Start_ButtonPress
+      maxAttenuation: 0
+      maxDuration: 0.115269
+      minDuration: 0.082455
+    - name: Start_Closing_Pressure_DoorSFX
+      guid: 552c3fbabfe9bd458dfedc14383be9f9
+      id: 378872923
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_Closing_Pressure_DoorSFX
+        ObjectType: 3
+        guid: 552c3fbabfe9bd458dfedc14383be9f9
+      Path: Events\Gameplay_SFX\Start_Closing_Pressure_DoorSFX
+      maxAttenuation: 0
+      maxDuration: 2.257351
+      minDuration: 2.07
+    - name: Start_LeverPullFinished
+      guid: 708c8da4d475f64785a10bef769af746
+      id: 2469108041
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_LeverPullFinished
+        ObjectType: 3
+        guid: 708c8da4d475f64785a10bef769af746
+      Path: Events\Gameplay_SFX\Start_LeverPullFinished
+      maxAttenuation: 0
+      maxDuration: 0.398979
+      minDuration: 0.398979
+    - name: Start_Opening_Pressure_DoorSFX
+      guid: 1cec1fc9c843b94eb94c33b41770a6d6
+      id: 4235702204
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_Opening_Pressure_DoorSFX
+        ObjectType: 3
+        guid: 1cec1fc9c843b94eb94c33b41770a6d6
+      Path: Events\Gameplay_SFX\Start_Opening_Pressure_DoorSFX
+      maxAttenuation: 0
+      maxDuration: 1.35771
+      minDuration: 1.35771
+    - name: Start_PhosphorusCameraFlash_Event
+      guid: 75d2e8942c2e0447ad01f759a9c2dfa4
+      id: 3214537693
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_PhosphorusCameraFlash_Event
+        ObjectType: 3
+        guid: 75d2e8942c2e0447ad01f759a9c2dfa4
+      Path: Events\Gameplay_SFX\Start_PhosphorusCameraFlash_Event
+      maxAttenuation: 0
+      maxDuration: 2.752797
+      minDuration: 1.902773
+    - name: Start_SonarPingInner
+      guid: 1229c9717802a54a8d32dbeb8e91b82d
+      id: 1735885581
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_SonarPingInner
+        ObjectType: 3
+        guid: 1229c9717802a54a8d32dbeb8e91b82d
+      Path: Events\Gameplay_SFX\Start_SonarPingInner
+      maxAttenuation: 0
+      maxDuration: 3.2
+      minDuration: 3.2
+    - name: Start_SonarPingOuter
+      guid: 7ab25205714fe24eb2eb9728f9017b7d
+      id: 997126444
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_SonarPingOuter
+        ObjectType: 3
+        guid: 7ab25205714fe24eb2eb9728f9017b7d
+      Path: Events\Gameplay_SFX\Start_SonarPingOuter
+      maxAttenuation: 0
+      maxDuration: 3.2
+      minDuration: 3.2
+    - name: Start_TensionEvent
+      guid: fd0c6db95aa59a4bba27964681c14af4
+      id: 1403223316
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_TensionEvent
+        ObjectType: 3
+        guid: fd0c6db95aa59a4bba27964681c14af4
+      Path: Events\Gameplay_SFX\Start_TensionEvent
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Stop_BackgroundSubmarineMFX
+      guid: 4a677021b45f5f4f8d00fb1db4eff360
+      id: 116843463
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Stop_BackgroundSubmarineMFX
+        ObjectType: 3
+        guid: 4a677021b45f5f4f8d00fb1db4eff360
+      Path: Events\Gameplay_SFX\Stop_BackgroundSubmarineMFX
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Stop_TensionEvent
+      guid: c843b536f2f2e64280000dbc70d8a202
+      id: 3884825202
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Stop_TensionEvent
+        ObjectType: 3
+        guid: c843b536f2f2e64280000dbc70d8a202
+      Path: Events\Gameplay_SFX\Stop_TensionEvent
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+  RtpcWwu:
+  - PhysicalPath: Game Parameters\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Game Parameters
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: a7ff66bd37ebcb4d8742b321de6f68dd
+    ParentPath: Game Parameters\Default Work Unit
+    guid: a7ff66bd37ebcb4d8742b321de6f68dd
+    GuidInternal: 
+    m_lastTime: -8584206790701957542
+    List: []
+  - PhysicalPath: Game Parameters\ParametersVOT.wwu
+    PathAndIcons:
+    - ElementName: Game Parameters
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: ParametersVOT
+      ObjectType: 12
+      guid: 7ca9e527ff3296499ba38599ac94cf84
+    ParentPath: Game Parameters\ParametersVOT
+    guid: 7ca9e527ff3296499ba38599ac94cf84
+    GuidInternal: 
+    m_lastTime: -8584206557774011998
+    List:
+    - name: IncrementalTension
+      guid: d25f24295014334983de5c38da9aaa4d
+      id: 3138205067
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: ParametersVOT
+        ObjectType: 12
+        guid: 7ca9e527ff3296499ba38599ac94cf84
+      - ElementName: IncrementalTension
+        ObjectType: 13
+        guid: d25f24295014334983de5c38da9aaa4d
+      Path: Game Parameters\ParametersVOT\IncrementalTension
+    - name: Submarine_Colision_Distance
+      guid: 4ea233c0e29a4a4c828cbe8e6de87ffe
+      id: 511617432
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: ParametersVOT
+        ObjectType: 12
+        guid: 7ca9e527ff3296499ba38599ac94cf84
+      - ElementName: Submarine_Colision_Distance
+        ObjectType: 13
+        guid: 4ea233c0e29a4a4c828cbe8e6de87ffe
+      Path: Game Parameters\ParametersVOT\Submarine_Colision_Distance
+  StateWwu:
+  - PhysicalPath: States\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: States
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: a83996bd2906d040b5bfdbe07e7a93d5
+    ParentPath: States\Default Work Unit
+    guid: a83996bd2906d040b5bfdbe07e7a93d5
+    GuidInternal: 
+    m_lastTime: -8584206557773991988
+    List:
+    - name: Energy_Status
+      guid: 6bb8af47e1076843ae6bf248aea5823b
+      id: 894977922
+      PathAndIcons:
+      - ElementName: States
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: a83996bd2906d040b5bfdbe07e7a93d5
+      - ElementName: Energy_Status
+        ObjectType: 9
+        guid: 6bb8af47e1076843ae6bf248aea5823b
+      Path: States\Default Work Unit\Energy_Status
+      values:
+      - name: Empty
+        guid: bffc259bcb5cd44db4bd7590e516f771
+        id: 3354297748
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: a83996bd2906d040b5bfdbe07e7a93d5
+        - ElementName: Energy_Status
+          ObjectType: 9
+          guid: 6bb8af47e1076843ae6bf248aea5823b
+        - ElementName: Empty
+          ObjectType: 8
+          guid: bffc259bcb5cd44db4bd7590e516f771
+      - name: Full
+        guid: 81c29499a32e1e40b1ab86d2a52aaee4
+        id: 2510516222
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: a83996bd2906d040b5bfdbe07e7a93d5
+        - ElementName: Energy_Status
+          ObjectType: 9
+          guid: 6bb8af47e1076843ae6bf248aea5823b
+        - ElementName: Full
+          ObjectType: 8
+          guid: 81c29499a32e1e40b1ab86d2a52aaee4
+      - name: Low
+        guid: 9c69bba50f979742a43286d4813bdb27
+        id: 545371365
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: a83996bd2906d040b5bfdbe07e7a93d5
+        - ElementName: Energy_Status
+          ObjectType: 9
+          guid: 6bb8af47e1076843ae6bf248aea5823b
+        - ElementName: Low
+          ObjectType: 8
+          guid: 9c69bba50f979742a43286d4813bdb27
+      - name: None
+        guid: d9b7b39eb4525a47a769c726ec9d0f4b
+        id: 748895195
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: a83996bd2906d040b5bfdbe07e7a93d5
+        - ElementName: Energy_Status
+          ObjectType: 9
+          guid: 6bb8af47e1076843ae6bf248aea5823b
+        - ElementName: None
+          ObjectType: 8
+          guid: d9b7b39eb4525a47a769c726ec9d0f4b
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
+    - name: Player_State
+      guid: 86c9f0e6a97e5e4487f2c62236fe5080
+      id: 4071417932
+      PathAndIcons:
+      - ElementName: States
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: a83996bd2906d040b5bfdbe07e7a93d5
+      - ElementName: Player_State
+        ObjectType: 9
+        guid: 86c9f0e6a97e5e4487f2c62236fe5080
+      Path: States\Default Work Unit\Player_State
+      values:
+      - name: Alive
+        guid: 96efcc2786e939428783b018bfadc7ec
+        id: 655265632
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: a83996bd2906d040b5bfdbe07e7a93d5
+        - ElementName: Player_State
+          ObjectType: 9
+          guid: 86c9f0e6a97e5e4487f2c62236fe5080
+        - ElementName: Alive
+          ObjectType: 8
+          guid: 96efcc2786e939428783b018bfadc7ec
+      - name: None
+        guid: e7f42c34d86dcc41a36f4380235b5988
+        id: 748895195
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: a83996bd2906d040b5bfdbe07e7a93d5
+        - ElementName: Player_State
+          ObjectType: 9
+          guid: 86c9f0e6a97e5e4487f2c62236fe5080
+        - ElementName: None
+          ObjectType: 8
+          guid: e7f42c34d86dcc41a36f4380235b5988
+      - name: Stunned
+        guid: 8efbbadfa26efe46abb53956c9d89ccc
+        id: 124361234
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: a83996bd2906d040b5bfdbe07e7a93d5
+        - ElementName: Player_State
+          ObjectType: 9
+          guid: 86c9f0e6a97e5e4487f2c62236fe5080
+        - ElementName: Stunned
+          ObjectType: 8
+          guid: 8efbbadfa26efe46abb53956c9d89ccc
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
+  SwitchWwu:
+  - PhysicalPath: Switches\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Switches
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: c07239db9f6acd43b302be800a106cfe
+    ParentPath: Switches\Default Work Unit
+    guid: c07239db9f6acd43b302be800a106cfe
+    GuidInternal: 
+    m_lastTime: -8584206591426140896
+    List: []
+  TriggerWwu:
+  - PhysicalPath: Triggers\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Triggers
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 7913290596eebc4e9a3278cf25c2e527
+    ParentPath: Triggers\Default Work Unit
+    guid: 7913290596eebc4e9a3278cf25c2e527
+    GuidInternal: 
+    m_lastTime: -8584206873757984189
+    List: []
+  ExpandedFileSystemItemIds: 
+  ExpandedWaapiItemIds: 01000000030000000400000005000000060000000700000008000000090000000f0000001000000011000000120000001300000014000000160000001700000018000000190000001a0000001b0000001d0000001f0000002100000022000000230000002400000043000000d1000000740100007601000026ca070037ca0700
+  AutoSyncSelection: 1
+  autoPopulateEnabled: 1
+  currentDataSource: 0
+  CurrentPluginConfig: 

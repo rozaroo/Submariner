@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{093F7533-F3CA-42E3-8978-8BADA2BDA91F}" SchemaVersion="103">
+	<AudioObjects>
+		<WorkUnit Name="PlayerSFX" ID="{093F7533-F3CA-42E3-8978-8BADA2BDA91F}" PersistMode="Standalone"/>
+	</AudioObjects>
+</WwiseDocument>

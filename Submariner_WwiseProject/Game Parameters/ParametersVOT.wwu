@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{27E5A97C-32FF-4996-9BA3-8599AC94CF84}" SchemaVersion="103">
+	<GameParameters>
+		<WorkUnit Name="ParametersVOT" ID="{27E5A97C-32FF-4996-9BA3-8599AC94CF84}" PersistMode="Standalone">
+			<ChildrenList>
+				<GameParameter Name="IncrementalTension" ID="{29245FD2-1450-4933-83DE-5C38DA9AAA4D}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="Max" Type="Real64" Value="1"/>
+					</PropertyList>
+				</GameParameter>
+				<GameParameter Name="Submarine_Colision_Distance" ID="{C033A24E-9AE2-4C4A-828C-BE8E6DE87FFE}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+					</PropertyList>
+				</GameParameter>
+			</ChildrenList>
+		</WorkUnit>
+	</GameParameters>
+</WwiseDocument>

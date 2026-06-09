@@ -19,7 +19,7 @@ public class EnergySystem : MonoBehaviour
     [SerializeField] private bool isFuseBroken;
 
     [Header("Energy Status")]
-    private EnergyStatus _energyStatus;
+    [SerializeField] private EnergyStatus _energyStatus;
     private int _stressIndex;
     
     [Header("Coroutines")]
@@ -226,7 +226,6 @@ public class EnergySystem : MonoBehaviour
         {
             _energyStatus = EnergyStatus.Full;
         }
-        
         if (_energyStatus != previousStatus)
         {
             TriggerEnergyEvents();
@@ -235,6 +234,7 @@ public class EnergySystem : MonoBehaviour
     
     private void TriggerEnergyEvents()
     {
+        SFXManager.SetState(_energyStatus.ToString(),"Energy_Status");
         GameEventChannel<OnEnergyStatusChange>.RaiseEvent(new OnEnergyStatusChange
         {
             energyStatus = _energyStatus
@@ -323,6 +323,9 @@ public class EnergySystem : MonoBehaviour
         StopEnergyRegeneration();
         StopDelayedFuseOverloadCheck();
         CurrentEnergy = 0f;
+        SetEnergyStatus();
+        Log.Info(_energyStatus.ToString());
+        
         Log.Info("Fuse burned. Total blackout activated.");
 
         if (notifyFuseBurned)
