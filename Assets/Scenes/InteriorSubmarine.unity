@@ -1918,25 +1918,9 @@ PrefabInstance:
       propertyPath: oxygenSystem
       value: 
       objectReference: {fileID: 1090482527}
-    - target: {fileID: 1291331685304795843, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: -5446339983960169314, guid: b2306b53d20874244b455cf4fb09d7ec, type: 3}
-    - target: {fileID: 3578906719317099886, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: -7653320374374263372, guid: b2306b53d20874244b455cf4fb09d7ec, type: 3}
-    - target: {fileID: 5459571740724939218, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 3317418737318411608, guid: b2306b53d20874244b455cf4fb09d7ec, type: 3}
     - target: {fileID: 7270950656445705046, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
       propertyPath: m_Name
       value: SubmarineInterior
-      objectReference: {fileID: 0}
-    - target: {fileID: 7270950656445705046, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
-      propertyPath: m_Layer
-      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8046889878361125356, guid: fb7c894349b4d374c97f726cad3fbb70, type: 3}
       propertyPath: m_LocalPosition.x
