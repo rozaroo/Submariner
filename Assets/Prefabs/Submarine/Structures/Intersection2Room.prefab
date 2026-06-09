@@ -218,6 +218,7 @@ GameObject:
   - component: {fileID: 6383632466570919497}
   - component: {fileID: 8380749551269066645}
   - component: {fileID: 6594430069453395229}
+  - component: {fileID: 5997855971843075541}
   m_Layer: 0
   m_Name: WallIntersection.001
   m_TagString: Untagged
@@ -293,6 +294,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5997855971843075541
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7977323461089403017}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.11000022, y: 2.19519, z: 2.7099586}
+  m_Center: {x: 0, y: -0.000000119209275, z: 0}
 --- !u!1 &8173608248537258829
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,6 +326,7 @@ GameObject:
   - component: {fileID: 8598893738980509457}
   - component: {fileID: 6191320090663821542}
   - component: {fileID: 7102504257390173521}
+  - component: {fileID: 8510970483705706483}
   m_Layer: 0
   m_Name: Intersection_2
   m_TagString: Untagged
@@ -379,3 +402,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8510970483705706483
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8173608248537258829}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 597820938294520340, guid: c493fc2032feb2a4ab35b64d4caa6099, type: 3}

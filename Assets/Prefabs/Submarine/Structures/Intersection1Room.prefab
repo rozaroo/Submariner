@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 6348532392969857426}
   - component: {fileID: 3494859513350850096}
   - component: {fileID: 8610877901241681101}
+  - component: {fileID: 195471833890370272}
   m_Layer: 0
   m_Name: WallIntersection
   m_TagString: Untagged
@@ -207,6 +208,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &195471833890370272
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4850125187119519406}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.11000022, y: 2.19519, z: 2.7099586}
+  m_Center: {x: 0, y: -0.0000001490116, z: -0.00000011920929}
 --- !u!1 &5368523587944977952
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,6 +326,7 @@ GameObject:
   - component: {fileID: 7344784695997502883}
   - component: {fileID: 2198329803691589587}
   - component: {fileID: 6341331051212926510}
+  - component: {fileID: 4657294688516861090}
   m_Layer: 0
   m_Name: Intersection_1
   m_TagString: Untagged
@@ -379,3 +402,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4657294688516861090
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6095711051219425378}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3487672328462085334, guid: 458befe9a78e5fd4b84faaefaef504f8, type: 3}

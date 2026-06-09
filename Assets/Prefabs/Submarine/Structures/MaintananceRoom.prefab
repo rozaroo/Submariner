@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 2539336289575263898}
   - component: {fileID: 5737305249497701450}
   - component: {fileID: 193367239491405224}
+  - component: {fileID: 8733357299959662379}
   m_Layer: 0
   m_Name: WallDoorRoom
   m_TagString: Untagged
@@ -211,6 +212,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8733357299959662379
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3463788094261889605}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6628725033297426027, guid: c04b5a248493b7c4f943b73e746d881c, type: 3}
 --- !u!1 &9074737289322319655
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,6 +331,7 @@ GameObject:
   - component: {fileID: 8202834107574264416}
   - component: {fileID: 2164287305363880820}
   - component: {fileID: 3788826340356717083}
+  - component: {fileID: 2269608222960324053}
   m_Layer: 0
   m_Name: MaintananceRoom
   m_TagString: Untagged
@@ -383,6 +407,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &2269608222960324053
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9211253004762282073}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7054831170901988263, guid: c04b5a248493b7c4f943b73e746d881c, type: 3}
 --- !u!1001 &2416349101866363930
 PrefabInstance:
   m_ObjectHideFlags: 0
