@@ -266,7 +266,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5884555834835477001}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 9196285967973267831, guid: d659f956f4674234fad53c9f9e3a8375, type: 3}
 --- !u!23 &2359197797554349624
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -333,8 +333,6 @@ MonoBehaviour:
   stationMapName: Station
   mapUI: {fileID: 5470208694286536802}
   exitActionName: ExitStation
-  onPossessNavigationStation: {fileID: 11400000, guid: 9d7721e5ed8c4694da036a8e187c895d, type: 2}
-  onUnPossessNavigationStation: {fileID: 11400000, guid: 24f839960bfdc354eaa0885df5a543a3, type: 2}
 --- !u!65 &7908977916091411220
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -354,8 +352,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.7120707, y: 1.0523924, z: 1.7120707}
+  m_Center: {x: -0.00000029802322, y: -0.17065461, z: -0.00000020861626}
 --- !u!1 &6790099172866622295
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,7 +416,7 @@ RectTransform:
   m_GameObject: {fileID: 7674729298555578926}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.009, y: 0.009, z: 0.009}
+  m_LocalScale: {x: 0.0142, y: 0.0142, z: 0.0142}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2730347280318521443}
@@ -427,7 +425,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 180}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.501}
+  m_AnchoredPosition: {x: 0, y: 0.336}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3213251917815154126
@@ -500,11 +498,6 @@ MonoBehaviour:
   backgroundImage: {fileID: 1392104818439153845}
   mapRuntimeData: {fileID: 11400000, guid: f993c08ecc9c4a340b86e7895003b85a, type: 2}
   linearSyncSpeed: 100
-  onOuterRadarChanged: {fileID: 11400000, guid: 61b22e0d7be78c742a5ebc0254a26204, type: 2}
-  onInnerRadarChanged: {fileID: 11400000, guid: ec7695e88b7faa540bf9e9d3cc8ab22d, type: 2}
-  onWorldMapGenerated: {fileID: 11400000, guid: e2a69c9673a356a448d648541516a618, type: 2}
-  onWorldSubmarineElementGenerated: {fileID: 11400000, guid: 07ac95b2616c88b4bae6167e5e7cbff9, type: 2}
-  onWorldElementGenerated: {fileID: 11400000, guid: 164a221a1f6083648a0be64ed4bba397, type: 2}
 --- !u!114 &9215001087029248979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -522,8 +515,6 @@ MonoBehaviour:
   mapRuntimeData: {fileID: 11400000, guid: f993c08ecc9c4a340b86e7895003b85a, type: 2}
   mapRect: {fileID: 7004154974895054004}
   submarineRectAnchor: {fileID: 11400000, guid: a049d780d44eabe43a81575462f84cb6, type: 2}
-  onSubmarineRouteChanged: {fileID: 11400000, guid: f33c6b3472f828649a0718e0af4a1f29, type: 2}
-  onSubmarineArrivedAtWaypoint: {fileID: 11400000, guid: 917246a49e199df469a04952c5bb8eb3, type: 2}
 --- !u!222 &541381395745317324
 CanvasRenderer:
   m_ObjectHideFlags: 0
