@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5413819904729514110}
-  - component: {fileID: 7614399701263139767}
   m_Layer: 3
   m_Name: PressureDoor
   m_TagString: Untagged
@@ -33,20 +32,6 @@ Transform:
   - {fileID: 5545377250265654341}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7614399701263139767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4231615063455406237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb194fa2a823ab44ca744d3ae15d872b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _openAngle: {x: 0, y: 90, z: 0}
-  _openSpeed: 5
 --- !u!1 &8633695453604670957
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,8 +43,9 @@ GameObject:
   - component: {fileID: 5545377250265654341}
   - component: {fileID: 8198333978183407013}
   - component: {fileID: 8655491650528350336}
-  - component: {fileID: 4750480885164723932}
-  m_Layer: 6
+  - component: {fileID: 7846199245300807428}
+  - component: {fileID: 2520030585760634802}
+  m_Layer: 3
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +120,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8633695453604670957}
   m_Mesh: {fileID: 2619086233303812490, guid: ef5d8f94ab0ba4e46850328566016ab3, type: 3}
---- !u!65 &4750480885164723932
+--- !u!114 &7846199245300807428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8633695453604670957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb194fa2a823ab44ca744d3ae15d872b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _openAngle: {x: 0, y: 90, z: 0}
+  _openSpeed: 5
+--- !u!65 &2520030585760634802
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,5 +153,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.97118765, y: 2.036768, z: 0.24411494}
-  m_Center: {x: 0.48559383, y: 0, z: -0.000000055879354}
+  m_Size: {x: 0.9898971, y: 2.0411546, z: 0.09}
+  m_Center: {x: 0.49494854, y: 0, z: -0.00000021606684}

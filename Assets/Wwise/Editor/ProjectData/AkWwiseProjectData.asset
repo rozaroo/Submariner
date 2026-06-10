@@ -268,8 +268,8 @@ MonoBehaviour:
         guid: d268ed99fbc3aa459ad3a8342256d0a7
       Path: Events\Gameplay_SFX\Start_ButtonPress
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.115269
+      minDuration: 0.082455
     - name: Start_Closing_Pressure_DoorSFX
       guid: 552c3fbabfe9bd458dfedc14383be9f9
       id: 378872923
@@ -285,8 +285,8 @@ MonoBehaviour:
         guid: 552c3fbabfe9bd458dfedc14383be9f9
       Path: Events\Gameplay_SFX\Start_Closing_Pressure_DoorSFX
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 2.257351
+      minDuration: 2.07
     - name: Start_LeverPullFinished
       guid: 708c8da4d475f64785a10bef769af746
       id: 2469108041
@@ -302,8 +302,8 @@ MonoBehaviour:
         guid: 708c8da4d475f64785a10bef769af746
       Path: Events\Gameplay_SFX\Start_LeverPullFinished
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.398979
+      minDuration: 0.398979
     - name: Start_Opening_Pressure_DoorSFX
       guid: 1cec1fc9c843b94eb94c33b41770a6d6
       id: 4235702204
@@ -319,8 +319,8 @@ MonoBehaviour:
         guid: 1cec1fc9c843b94eb94c33b41770a6d6
       Path: Events\Gameplay_SFX\Start_Opening_Pressure_DoorSFX
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 1.35771
+      minDuration: 1.35771
     - name: Start_PhosphorusCameraFlash_Event
       guid: 75d2e8942c2e0447ad01f759a9c2dfa4
       id: 3214537693
@@ -336,8 +336,8 @@ MonoBehaviour:
         guid: 75d2e8942c2e0447ad01f759a9c2dfa4
       Path: Events\Gameplay_SFX\Start_PhosphorusCameraFlash_Event
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 2.752797
+      minDuration: 1.902773
     - name: Start_SonarPingInner
       guid: 1229c9717802a54a8d32dbeb8e91b82d
       id: 1735885581
@@ -353,8 +353,8 @@ MonoBehaviour:
         guid: 1229c9717802a54a8d32dbeb8e91b82d
       Path: Events\Gameplay_SFX\Start_SonarPingInner
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 3.2
+      minDuration: 3.2
     - name: Start_SonarPingOuter
       guid: 7ab25205714fe24eb2eb9728f9017b7d
       id: 997126444
@@ -370,8 +370,8 @@ MonoBehaviour:
         guid: 7ab25205714fe24eb2eb9728f9017b7d
       Path: Events\Gameplay_SFX\Start_SonarPingOuter
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 3.2
+      minDuration: 3.2
     - name: Start_TensionEvent
       guid: fd0c6db95aa59a4bba27964681c14af4
       id: 1403223316
@@ -404,8 +404,8 @@ MonoBehaviour:
         guid: 4a677021b45f5f4f8d00fb1db4eff360
       Path: Events\Gameplay_SFX\Stop_BackgroundSubmarineMFX
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Stop_TensionEvent
       guid: c843b536f2f2e64280000dbc70d8a202
       id: 3884825202
