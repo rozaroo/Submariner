@@ -136,6 +136,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: SubmarineInteriorV2
       objectReference: {fileID: 0}
+    - target: {fileID: 803735804586373096, guid: defd4d52c211799429abc7028f35a909, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 803735804586373096, guid: defd4d52c211799429abc7028f35a909, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 803735804586373096, guid: defd4d52c211799429abc7028f35a909, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 827326972155197176, guid: defd4d52c211799429abc7028f35a909, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -216,6 +228,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 8854750803988126140, guid: 5f51e023dfa338c468917334c7011031, type: 3}
+    - target: {fileID: 5134158356706745164, guid: defd4d52c211799429abc7028f35a909, type: 3}
+      propertyPath: oxygenSystem
+      value: 
+      objectReference: {fileID: 763829602}
     - target: {fileID: 6465965127316598937, guid: defd4d52c211799429abc7028f35a909, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -766,6 +782,17 @@ Light:
   m_CorrespondingSourceObject: {fileID: 7535877283833824726, guid: defd4d52c211799429abc7028f35a909, type: 3}
   m_PrefabInstance: {fileID: 5524311}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &763829602 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2520860549417467482, guid: cdc16cd52343474428df4555318b315c, type: 3}
+  m_PrefabInstance: {fileID: 2725972567633721026}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad6860af3661d5b418419a5ac60a7509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &855093578
 GameObject:
   m_ObjectHideFlags: 0
