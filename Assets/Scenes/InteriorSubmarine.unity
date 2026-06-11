@@ -176,6 +176,10 @@ PrefabInstance:
       propertyPath: _openAngle.y
       value: 120
       objectReference: {fileID: 0}
+    - target: {fileID: 2349696251110336542, guid: defd4d52c211799429abc7028f35a909, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4993767373533655309, guid: 35adb4f185fd0a14481eb499bcadea66, type: 3}
     - target: {fileID: 2789017499496501860, guid: defd4d52c211799429abc7028f35a909, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -228,6 +232,10 @@ PrefabInstance:
       propertyPath: _openAngle.y
       value: -120
       objectReference: {fileID: 0}
+    - target: {fileID: 4025949994135346850, guid: defd4d52c211799429abc7028f35a909, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1164467500710133606, guid: 35adb4f185fd0a14481eb499bcadea66, type: 3}
     - target: {fileID: 5089258074753937659, guid: defd4d52c211799429abc7028f35a909, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -288,6 +296,8 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 2868752882673512117, guid: defd4d52c211799429abc7028f35a909, type: 3}
     - {fileID: 5490995795283164315, guid: defd4d52c211799429abc7028f35a909, type: 3}
+    - {fileID: 3062812945790837028, guid: defd4d52c211799429abc7028f35a909, type: 3}
+    - {fileID: 8460431584806895888, guid: defd4d52c211799429abc7028f35a909, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: defd4d52c211799429abc7028f35a909, type: 3}
