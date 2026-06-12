@@ -390,7 +390,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6135305115094682697}
-  m_Mesh: {fileID: 886620772131722615, guid: f7951c8af14a5e341bda731b36ce7492, type: 3}
+  m_Mesh: {fileID: 886620772131722615, guid: eba41bd12c87abf4ba00d712bab6b988, type: 3}
 --- !u!23 &3792490501164516243
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -781,8 +781,6 @@ MonoBehaviour:
   maxRotationSpeed: 50
   distanceOffset: 0.1
   smoothDeaccelerationTime: 1
-  onRouteChangedChannel: {fileID: 11400000, guid: f33c6b3472f828649a0718e0af4a1f29, type: 2}
-  onSubmarineArrivedAtWaypoint: {fileID: 11400000, guid: 917246a49e199df469a04952c5bb8eb3, type: 2}
 --- !u!114 &7807609392984242170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -798,8 +796,6 @@ MonoBehaviour:
   outerDetectionRadius: 200
   innerDetectionRadius: 50
   timePerSonarCheck: 0.2
-  onOuterRadarChanged: {fileID: 11400000, guid: 61b22e0d7be78c742a5ebc0254a26204, type: 2}
-  onInnerRadarChanged: {fileID: 11400000, guid: ec7695e88b7faa540bf9e9d3cc8ab22d, type: 2}
 --- !u!1001 &5700268274874215639
 PrefabInstance:
   m_ObjectHideFlags: 0

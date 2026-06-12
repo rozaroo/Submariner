@@ -6,7 +6,7 @@ public enum LogType { Info, Warning, Error }
 public class GameLogger : MonoBehaviour
 {
     public static GameLogger Instance;
-
+    
     [SerializeField] private bool showInBuild = true;
     [SerializeField] private Vector2 location = new Vector2(0, 0);
     [SerializeField] private Vector2 boxSize = new Vector2(420, 300);
@@ -48,8 +48,7 @@ public class GameLogger : MonoBehaviour
         logs.Add(($"[{timestamp}] {message}", type));
 
         if (logs.Count > 100) logs.RemoveAt(0); // límite de memoria
-
-
+        
         _scrollPos.y = Mathf.Infinity;
     }
 

@@ -1452,6 +1452,11 @@ Light:
   m_CorrespondingSourceObject: {fileID: 7661846254720534492, guid: defd4d52c211799429abc7028f35a909, type: 3}
   m_PrefabInstance: {fileID: 5524311}
   m_PrefabAsset: {fileID: 0}
+--- !u!108 &1950941776 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 2354931761268868914, guid: defd4d52c211799429abc7028f35a909, type: 3}
+  m_PrefabInstance: {fileID: 5524311}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1983122236 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2988871602860453287, guid: 45c12e2cd143bca45b4aa14fbbdd1952, type: 3}
@@ -1522,7 +1527,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: lights.Array.size
-      value: 29
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[0]'
@@ -1640,6 +1645,10 @@ PrefabInstance:
       propertyPath: 'lights.Array.data[28]'
       value: 
       objectReference: {fileID: 1111148281}
+    - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
+      propertyPath: 'lights.Array.data[29]'
+      value: 
+      objectReference: {fileID: 1950941776}
     - target: {fileID: 5048406391843588682, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.45
@@ -2313,7 +2322,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3296531921577520442, guid: 2d45668ca99ba1b418a6ca96f950aa6d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13.57
+      value: -12.6
       objectReference: {fileID: 0}
     - target: {fileID: 3296531921577520442, guid: 2d45668ca99ba1b418a6ca96f950aa6d, type: 3}
       propertyPath: m_LocalRotation.w

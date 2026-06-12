@@ -169,7 +169,6 @@ GameObject:
   - component: {fileID: 3442688763614490878}
   - component: {fileID: 8616237675809204612}
   - component: {fileID: 5965507430124912535}
-  - component: {fileID: 4775174307776610238}
   m_Layer: 3
   m_Name: FuseWorkbench
   m_TagString: Untagged
@@ -187,7 +186,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.11181927, z: -0, w: 0.9937286}
   m_LocalPosition: {x: 1.218, y: -42.414, z: -10.221}
-  m_LocalScale: {x: 1.0778745, y: 1, z: 2.2827}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4011550096604756677}
@@ -224,7 +223,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 1, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5965507430124912535
 MonoBehaviour:
@@ -290,27 +289,6 @@ MonoBehaviour:
   - {fileID: 1441902343227388721}
   - {fileID: 4588287455068366174}
   - {fileID: 6827921567648315694}
---- !u!65 &4775174307776610238
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1987557414530555208}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.0000001, y: 1, z: 1.0000001}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2996896299618113712
 GameObject:
   m_ObjectHideFlags: 0

@@ -706,7 +706,6 @@ GameObject:
   - component: {fileID: 4729182660511707736}
   - component: {fileID: 1936748934425315368}
   - component: {fileID: 2884111558536446353}
-  - component: {fileID: 7685635921714053586}
   m_Layer: 6
   m_Name: HullRoom
   m_TagString: Untagged
@@ -804,19 +803,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -864712786128924203, guid: 35adb4f185fd0a14481eb499bcadea66, type: 3}
---- !u!114 &7685635921714053586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2136013248907845766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3960b99b511a2d249810c3c2ca48dccb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  surfaceType: 1
 --- !u!1 &3349695041746977544
 GameObject:
   m_ObjectHideFlags: 0
