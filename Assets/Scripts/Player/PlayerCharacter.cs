@@ -61,7 +61,7 @@ public class PlayerCharacter : MonoBehaviour
     private void Update()
     {
         _gameplaySm.Update();
-        _movementStrategy.Move(_movementContext);
+        _movementStrategy?.Move(_movementContext);
     }
 
     public void SetMovementStrategy(IMovementStrategy movementStrategy)

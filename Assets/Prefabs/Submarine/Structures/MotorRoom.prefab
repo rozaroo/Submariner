@@ -520,6 +520,7 @@ GameObject:
   - component: {fileID: 3785586507459195580}
   - component: {fileID: 6481435720588809495}
   - component: {fileID: 5391410241160616032}
+  - component: {fileID: 6865931331128156969}
   m_Layer: 6
   m_Name: MotorRoom_Mesh
   m_TagString: Untagged
@@ -617,6 +618,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3863309181339357444, guid: 4800587e6db22354fa2eb8c4d8efec6b, type: 3}
+--- !u!114 &6865931331128156969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3674470464909519283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3960b99b511a2d249810c3c2ca48dccb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceType: 1
 --- !u!1 &3722299917608454798
 GameObject:
   m_ObjectHideFlags: 0

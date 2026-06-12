@@ -322,6 +322,79 @@
 						<ActiveSource Name="218050__hykenfreak__ringing-in-the-ears" ID="{2EE3FB2E-3CC7-4051-B310-2412016F4FD0}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<Folder Name="Footsteps" ID="{77F15C99-C11F-4965-B038-A9B5F30DC2E8}" ShortID="950402782">
+					<ChildrenList>
+						<Sound Name="50723__rutgermuller__footsteps-metallic-muffled" ID="{87AFE0D6-E591-4864-BC40-0B9F72608BA6}" ShortID="559339151">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="50723__rutgermuller__footsteps-metallic-muffled" ID="{A5ED4899-1BBB-4873-AF12-E6940D63B359}">
+									<Language>SFX</Language>
+									<AudioFile>50723__rutgermuller__footsteps-metallic-muffled.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="271028664"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="50723__rutgermuller__footsteps-metallic-muffled" ID="{A5ED4899-1BBB-4873-AF12-E6940D63B359}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="50724__rutgermuller__footsteps-metallic-muffled-louder" ID="{A59E8863-7B40-4ADD-9484-4144791E0E7A}" ShortID="351058473">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="50724__rutgermuller__footsteps-metallic-muffled-louder" ID="{32E3ECDD-6A91-43FA-9766-D43C533E0ED6}">
+									<Language>SFX</Language>
+									<AudioFile>50724__rutgermuller__footsteps-metallic-muffled-louder.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="784631175"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="50724__rutgermuller__footsteps-metallic-muffled-louder" ID="{32E3ECDD-6A91-43FA-9766-D43C533E0ED6}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="253735__kodack__wet-metal-footsteps" ID="{5BF02A1B-8CDD-438C-A7F3-A16CE1CA763F}" ShortID="472156877">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="253735__kodack__wet-metal-footsteps" ID="{FD38DB00-EFE8-40F7-9E2E-67B8DC6CFF73}">
+									<Language>SFX</Language>
+									<AudioFile>253735__kodack__wet-metal-footsteps.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="645114867"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="253735__kodack__wet-metal-footsteps" ID="{FD38DB00-EFE8-40F7-9E2E-67B8DC6CFF73}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</Folder>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

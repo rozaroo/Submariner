@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 2164287305363880820}
   - component: {fileID: 3788826340356717083}
   - component: {fileID: 2269608222960324053}
+  - component: {fileID: 3858422845775036380}
   m_Layer: 6
   m_Name: MaintananceRoom
   m_TagString: Untagged
@@ -234,6 +235,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7054831170901988263, guid: c04b5a248493b7c4f943b73e746d881c, type: 3}
+--- !u!114 &3858422845775036380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9211253004762282073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3960b99b511a2d249810c3c2ca48dccb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceType: 1
 --- !u!1001 &1046428992286998161
 PrefabInstance:
   m_ObjectHideFlags: 0

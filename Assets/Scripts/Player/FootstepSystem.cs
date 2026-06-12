@@ -1,16 +1,22 @@
+using System;
 using UnityEngine;
 
-public class FootStepSystem : MonoBehaviour
+public class FootstepSystem : MonoBehaviour
 {
+    [Header("Footsteps Config")]
     [SerializeField] private float minSpeedClamp = 1f;
     [SerializeField] private float maxSpeedClamp = 3f;
-    [SerializeField] private float _velocityThreshold = 0.4f;
+    [SerializeField] private float _soundTimeThreshold = 0.4f;
     [SerializeField] private float _maxVelocityThreshold = 0.2f;
-    
-    private CharacterController _characterController;
     private float _stepTimer;
+    private CharacterController _characterController;
     
-    private void Update()
+    private void Start()
+    {
+        _characterController = GetComponent<CharacterController>();
+    }
+    
+    public void Update()
     {
         if (_characterController == null) return;
         
@@ -19,7 +25,7 @@ public class FootStepSystem : MonoBehaviour
         float speed = new Vector3(_characterController.velocity.x, 0, _characterController.velocity.z).magnitude;
         if (speed < _maxVelocityThreshold) return;
 
-        float currentInterval = _velocityThreshold / Mathf.Clamp(speed, minSpeedClamp, maxSpeedClamp);
+        float currentInterval = _soundTimeThreshold / Mathf.Clamp(speed, minSpeedClamp, maxSpeedClamp);
         
         _stepTimer += Time.deltaTime;
         if (_stepTimer >= currentInterval)
@@ -28,9 +34,9 @@ public class FootStepSystem : MonoBehaviour
             PlayFootsteps();
         }
     }
-
+    
     private void PlayFootsteps()
     {
-        SFXManager.PostEvent("Start_LeverPullFinished", gameObject);
+        SFXManager.PostEvent("Start_PlayerFootsteps", gameObject);
     }
 }

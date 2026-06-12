@@ -18,13 +18,15 @@ Custom State	ID	Name	State Group	Owner		Notes
 Audio Bus	ID	Name			Wwise Object Path	Notes
 	54673317	General_MFX			\Default Work Unit\Master Audio Bus\General_MFX	
 	322129659	General_SFX			\Default Work Unit\Master Audio Bus\General_SFX	
+	817096458	Player_SFX			\Default Work Unit\Master Audio Bus\General_SFX\Player_SFX	
 	1690215283	Submarine_SFX			\Default Work Unit\Master Audio Bus\General_SFX\Submarine_SFX	
 	1957082925	Submarine_MFX			\Default Work Unit\Master Audio Bus\General_MFX\Submarine_MFX	
 	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
 
 Auxiliary Bus	ID	Name			Wwise Object Path	Notes
-	1714574586	Reverb_AUX_SFX			\Default Work Unit\Master Audio Bus\General_SFX\Reverb_AUX_SFX	
+	2070985102	Player_Reverb_AUX_SFX			\Default Work Unit\Master Audio Bus\General_SFX\Player_Reverb_AUX_SFX	
 	2315337392	Reverb_Muffled_MFX_AUX			\Default Work Unit\Master Audio Bus\General_MFX\Reverb_Muffled_MFX_AUX	
+	3031736565	Submarine_Reverb_AUX_SFX			\Default Work Unit\Master Audio Bus\General_SFX\Submarine_Reverb_AUX_SFX	
 
 Effect plug-ins	ID	Name	Type				Notes
 	1051689273	Big_Garage1 (Custom)	Wwise Matrix Reverb			

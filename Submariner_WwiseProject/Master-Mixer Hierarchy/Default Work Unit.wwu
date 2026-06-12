@@ -15,7 +15,7 @@
 								<Bus Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}">
 									<ReferenceList>
 										<Reference Name="UserAuxSend0">
-											<ObjectRef Name="Reverb_AUX_SFX" ID="{5134DDF8-7AE6-4D57-8304-0B7263E73F39}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+											<ObjectRef Name="Submarine_Reverb_AUX_SFX" ID="{5134DDF8-7AE6-4D57-8304-0B7263E73F39}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
 										</Reference>
 									</ReferenceList>
 									<StateInfo>
@@ -44,7 +44,47 @@
 									</StateInfo>
 									<ObjectLists/>
 								</Bus>
-								<AuxBus Name="Reverb_AUX_SFX" ID="{5134DDF8-7AE6-4D57-8304-0B7263E73F39}">
+								<AuxBus Name="Submarine_Reverb_AUX_SFX" ID="{5134DDF8-7AE6-4D57-8304-0B7263E73F39}">
+									<ReferenceList>
+										<Reference Name="Effect0" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3">
+											<ObjectRef Name="Aluminium_Tank" ID="{0D20C91A-F750-47E0-AE32-00E5F2AA1272}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
+										</Reference>
+									</ReferenceList>
+									<ObjectLists/>
+								</AuxBus>
+								<Bus Name="Player_SFX" ID="{DED04D6C-EE6A-4C48-A604-08B46AB54B3D}">
+									<ReferenceList>
+										<Reference Name="UserAuxSend0">
+											<ObjectRef Name="Player_Reverb_AUX_SFX" ID="{1ADFE3B7-5DE2-4BF6-A197-FF2DFEBD7A31}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<StateInfo>
+										<StatePropertyList>
+											<Property Name="Highpass"/>
+											<Property Name="Lowpass"/>
+											<Property Name="Pitch"/>
+											<Property Name="UserAuxSendVolume0"/>
+											<Property Name="Volume"/>
+										</StatePropertyList>
+										<StateGroupList>
+											<StateGroupInfo>
+												<StateGroupRef Name="Player_State" ID="{E6F0C986-7EA9-445E-87F2-C62236FE5080}"/>
+											</StateGroupInfo>
+										</StateGroupList>
+										<CustomStateList>
+											<CustomState>
+												<StateRef Name="Alive" ID="{27CCEF96-E986-4239-8783-B018BFADC7EC}"/>
+												<CustomState Name="" ID="{298C2F83-31D9-4BF1-B7C6-9E746F4A4AA4}" ShortID="923299253"/>
+											</CustomState>
+											<CustomState>
+												<StateRef Name="Stunned" ID="{DFBAFB8E-6EA2-46FE-ABB5-3956C9D89CCC}"/>
+												<CustomState Name="" ID="{5812A69A-1153-4809-9C20-190CC4A80BF5}" ShortID="251518888"/>
+											</CustomState>
+										</CustomStateList>
+									</StateInfo>
+									<ObjectLists/>
+								</Bus>
+								<AuxBus Name="Player_Reverb_AUX_SFX" ID="{1ADFE3B7-5DE2-4BF6-A197-FF2DFEBD7A31}">
 									<ReferenceList>
 										<Reference Name="Effect0" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3">
 											<ObjectRef Name="Aluminium_Tank" ID="{0D20C91A-F750-47E0-AE32-00E5F2AA1272}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>

@@ -11,13 +11,14 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Language="SFX" Hash="1886463413">
+		<SoundBank Id="1355168291" Language="SFX" Hash="471139988">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 			<IncludedAuxBusses>
-				<AuxBus Id="1714574586" Name="Reverb_AUX_SFX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Reverb_AUX_SFX"/>
+				<AuxBus Id="2070985102" Name="Player_Reverb_AUX_SFX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Player_Reverb_AUX_SFX"/>
 				<AuxBus Id="2315337392" Name="Reverb_Muffled_MFX_AUX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_MFX\Reverb_Muffled_MFX_AUX"/>
+				<AuxBus Id="3031736565" Name="Submarine_Reverb_AUX_SFX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Submarine_Reverb_AUX_SFX"/>
 			</IncludedAuxBusses>
 			<StateGroups>
 				<StateGroup Id="4071417932" Name="Player_State" ObjectPath="\States\Default Work Unit\Player_State" GUID="{E6F0C986-7EA9-445E-87F2-C62236FE5080}">
@@ -29,7 +30,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3401228817" Language="SFX" Hash="1121126389">
+		<SoundBank Id="3401228817" Language="SFX" Hash="1010842286">
 			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
 			<ShortName>GamePlay_SFX</ShortName>
 			<Path>GamePlay_SFX.bnk</Path>
@@ -40,6 +41,7 @@
 				<Event Id="2469108041" Name="Start_LeverPullFinished" ObjectPath="\Events\Gameplay_SFX\Start_LeverPullFinished" DurationType="OneShot" DurationMin="0.398979" DurationMax="0.398979"/>
 				<Event Id="4235702204" Name="Start_Opening_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Opening_Pressure_DoorSFX" DurationType="OneShot" DurationMin="1.35771" DurationMax="1.35771"/>
 				<Event Id="3214537693" Name="Start_PhosphorusCameraFlash_Event" ObjectPath="\Events\Gameplay_SFX\Start_PhosphorusCameraFlash_Event" DurationType="OneShot" DurationMin="1.902773" DurationMax="2.752797"/>
+				<Event Id="2940474702" Name="Start_PlayerFootsteps" ObjectPath="\Events\Gameplay_SFX\Start_PlayerFootsteps" DurationType="OneShot" DurationMin="0.502769" DurationMax="1.307199"/>
 				<Event Id="1735885581" Name="Start_SonarPingInner" ObjectPath="\Events\Gameplay_SFX\Start_SonarPingInner" DurationType="OneShot" DurationMin="3.2" DurationMax="3.2"/>
 				<Event Id="997126444" Name="Start_SonarPingOuter" ObjectPath="\Events\Gameplay_SFX\Start_SonarPingOuter" DurationType="OneShot" DurationMin="3.2" DurationMax="3.2"/>
 				<Event Id="1403223316" Name="Start_TensionEvent" ObjectPath="\Events\Gameplay_SFX\Start_TensionEvent" DurationType="Infinite"/>
@@ -47,25 +49,54 @@
 				<Event Id="3884825202" Name="Stop_TensionEvent" ObjectPath="\Events\Gameplay_SFX\Stop_TensionEvent" DurationType="Infinite"/>
 			</IncludedEvents>
 			<IncludedAuxBusses>
-				<AuxBus Id="1714574586" Name="Reverb_AUX_SFX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Reverb_AUX_SFX"/>
+				<AuxBus Id="2070985102" Name="Player_Reverb_AUX_SFX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Player_Reverb_AUX_SFX"/>
 				<AuxBus Id="2315337392" Name="Reverb_Muffled_MFX_AUX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_MFX\Reverb_Muffled_MFX_AUX"/>
+				<AuxBus Id="3031736565" Name="Submarine_Reverb_AUX_SFX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Submarine_Reverb_AUX_SFX"/>
 			</IncludedAuxBusses>
 			<IncludedMemoryFiles>
+				<File Id="103211724" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_191AADB4.wem</Path>
+				</File>
+				<File Id="134703114" Language="SFX">
+					<ShortName>696374__sanderboah__walking-on-metal.wav</ShortName>
+					<Path>SFX\696374__sanderboah__walking-on-metal_08A414DF.wem</Path>
+				</File>
 				<File Id="150726513" Language="SFX">
 					<ShortName>Project_1_BackgroundWhiteNoise.wav</ShortName>
-					<Path>SFX\Project_1_BackgroundWhiteNoise_D7115337.wem</Path>
+					<Path>SFX\Project_1_BackgroundWhiteNoise_B6873822.wem</Path>
 				</File>
 				<File Id="175779074" Language="SFX">
 					<ShortName>17216__meatball4u__countdown.wav</ShortName>
 					<Path>SFX\17216__meatball4u__countdown_DB187815.wem</Path>
 				</File>
+				<File Id="183692339" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_C54DDBC5.wem</Path>
+				</File>
+				<File Id="269478501" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_E6DD8854.wem</Path>
+				</File>
 				<File Id="307274219" Language="SFX">
 					<ShortName>404049__deathscyp__breaker-1.wav</ShortName>
 					<Path>SFX\404049__deathscyp__breaker-1_10C4C929.wem</Path>
 				</File>
+				<File Id="324386202" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_90F3FF8A.wem</Path>
+				</File>
+				<File Id="363360337" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_D20C9472.wem</Path>
+				</File>
 				<File Id="383140111" Language="SFX">
 					<ShortName>Project_1_Sonar.wav</ShortName>
-					<Path>SFX\Project_1_Sonar_10C4C929.wem</Path>
+					<Path>SFX\Project_1_Sonar_6915DE9A.wem</Path>
+				</File>
+				<File Id="397077542" Language="SFX">
+					<ShortName>696374__sanderboah__walking-on-metal.wav</ShortName>
+					<Path>SFX\696374__sanderboah__walking-on-metal_F3540663.wem</Path>
 				</File>
 				<File Id="412602450" Language="SFX">
 					<ShortName>Project_1_TinyMelody.wav</ShortName>
@@ -74,6 +105,10 @@
 				<File Id="441572400" Language="SFX">
 					<ShortName>Flash reversed 001.wav</ShortName>
 					<Path>SFX\Flash reversed 001_4C940592.wem</Path>
+				</File>
+				<File Id="458355858" Language="SFX">
+					<ShortName>696374__sanderboah__walking-on-metal.wav</ShortName>
+					<Path>SFX\696374__sanderboah__walking-on-metal_3E8AF12D.wem</Path>
 				</File>
 				<File Id="479738779" Language="SFX">
 					<ShortName>PressureDoorClose.wav</ShortName>
@@ -90,6 +125,10 @@
 				<File Id="550708862" Language="SFX">
 					<ShortName>Project_1_Tension2.wav</ShortName>
 					<Path>SFX\Project_1_Tension2_D79FB2B7.wem</Path>
+				</File>
+				<File Id="566744649" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_086D7909.wem</Path>
 				</File>
 				<File Id="586941861" Language="SFX">
 					<ShortName>Project_1_Tension1.wav</ShortName>
@@ -111,6 +150,10 @@
 					<ShortName>Project_1_BackgroundWhiteNoise.wav</ShortName>
 					<Path>SFX\Project_1_BackgroundWhiteNoise_D79FB2B7.wem</Path>
 				</File>
+				<File Id="783648702" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_8CACD102.wem</Path>
+				</File>
 				<File Id="794426764" Language="SFX">
 					<ShortName>425090__neospica__pressurized-door-opening.wav</ShortName>
 					<Path>SFX\425090__neospica__pressurized-door-opening_2EA370B6.wem</Path>
@@ -119,13 +162,21 @@
 					<ShortName>Project_1_BAS Pilobass.wav</ShortName>
 					<Path>SFX\Project_1_BAS Pilobass_D79FB2B7.wem</Path>
 				</File>
+				<File Id="820298617" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_D0B43910.wem</Path>
+				</File>
+				<File Id="824057027" Language="SFX">
+					<ShortName>Project_1_Sonar.wav</ShortName>
+					<Path>SFX\Project_1_Sonar_DAF8F2F4.wem</Path>
+				</File>
 				<File Id="851935918" Language="SFX">
 					<ShortName>Project_1_BackgroundWhiteNoise.wav</ShortName>
-					<Path>SFX\Project_1_BackgroundWhiteNoise_B5D95101.wem</Path>
+					<Path>SFX\Project_1_BackgroundWhiteNoise_B546D908.wem</Path>
 				</File>
 				<File Id="866744274" Language="SFX">
 					<ShortName>Project_1_BackgroundWhiteNoise.wav</ShortName>
-					<Path>SFX\Project_1_BackgroundWhiteNoise_80816046.wem</Path>
+					<Path>SFX\Project_1_BackgroundWhiteNoise_3019D2B5.wem</Path>
 				</File>
 				<File Id="886412129" Language="SFX">
 					<ShortName>Flash.wav</ShortName>
@@ -135,9 +186,21 @@
 					<ShortName>Project_1_Tension 4.wav</ShortName>
 					<Path>SFX\Project_1_Tension 4_D79FB2B7.wem</Path>
 				</File>
+				<File Id="974555202" Language="SFX">
+					<ShortName>696374__sanderboah__walking-on-metal.wav</ShortName>
+					<Path>SFX\696374__sanderboah__walking-on-metal_15B4D9E4.wem</Path>
+				</File>
+				<File Id="999257298" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_F86FEB61.wem</Path>
+				</File>
 				<File Id="1002913569" Language="SFX">
 					<ShortName>425090__neospica__pressurized-door-opening.wav</ShortName>
 					<Path>SFX\425090__neospica__pressurized-door-opening_7AA2CC43.wem</Path>
+				</File>
+				<File Id="1004030655" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_8BA8F09A.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 			<GameParameters>
@@ -161,6 +224,20 @@
 					</States>
 				</StateGroup>
 			</StateGroups>
+			<SwitchGroups>
+				<SwitchGroup Id="290589761" Name="Water_Level" ObjectPath="\Switches\Default Work Unit\Water_Level" GUID="{4F00CDE3-4CE5-4764-ADD2-05473B1362C7}">
+					<Switches>
+						<Switch Id="3550808449" Name="High" ObjectPath="\Switches\Default Work Unit\Water_Level\High" GUID="{36F88B60-73C2-4F81-BBD2-E2E59C48D57D}"/>
+						<Switch Id="545371365" Name="Low" ObjectPath="\Switches\Default Work Unit\Water_Level\Low" GUID="{CAF7903E-177D-453E-8513-FCD2C2C2797E}"/>
+					</Switches>
+				</SwitchGroup>
+				<SwitchGroup Id="1044191727" Name="Player_FootstepsSurface" ObjectPath="\Switches\Default Work Unit\Player_FootstepsSurface" GUID="{9F93EFC1-AC5B-4E21-8097-CA0E8200F4A9}">
+					<Switches>
+						<Switch Id="2473969246" Name="Metal" ObjectPath="\Switches\Default Work Unit\Player_FootstepsSurface\Metal" GUID="{E5DA8ADC-6D02-4891-B440-204CCB777310}"/>
+						<Switch Id="2654748154" Name="Water" ObjectPath="\Switches\Default Work Unit\Player_FootstepsSurface\Water" GUID="{9A1ABF5D-53A5-4656-8A58-D33AB3CEC431}"/>
+					</Switches>
+				</SwitchGroup>
+			</SwitchGroups>
 		</SoundBank>
 	</SoundBanks>
 </SoundBanksInfo>

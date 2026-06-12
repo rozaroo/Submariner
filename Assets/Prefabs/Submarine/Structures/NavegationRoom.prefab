@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 2559293419160643527}
   - component: {fileID: 3188164100165424989}
   - component: {fileID: 5627164952874392412}
+  - component: {fileID: 5211830662666534665}
   m_Layer: 6
   m_Name: Navegation_Room
   m_TagString: Untagged
@@ -367,6 +368,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -8900255773572554699, guid: d08f9ec253230c84b87e7a90fdc101e9, type: 3}
+--- !u!114 &5211830662666534665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6654007178098551808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3960b99b511a2d249810c3c2ca48dccb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceType: 1
 --- !u!1 &7979755224212633209
 GameObject:
   m_ObjectHideFlags: 0

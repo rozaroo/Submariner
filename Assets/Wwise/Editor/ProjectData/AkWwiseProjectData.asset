@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: eb88c8468a8b7740b7f87fe70f3aa207
     GuidInternal: 
-    m_lastTime: -8584205803457251995
+    m_lastTime: -8584203681734551688
     List:
     - name: General_MFX
       guid: a26874e2029dd541a1621432a7b66c24
@@ -88,9 +88,9 @@ MonoBehaviour:
         ObjectType: 2
         guid: d8a41415a61d2a41a17e75ca0c2149f3
       Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus
-    - name: Reverb_AUX_SFX
-      guid: f8dd3451e67a574d83040b7263e73f39
-      id: 1714574586
+    - name: Player_Reverb_AUX_SFX
+      guid: b7e3df1ae25df64ba197ff2dfebd7a31
+      id: 2070985102
       PathAndIcons:
       - ElementName: Master-Mixer Hierarchy
         ObjectType: 5
@@ -104,10 +104,30 @@ MonoBehaviour:
       - ElementName: General_SFX
         ObjectType: 2
         guid: f4a2587d21d1dd43bb962f34b0a30465
-      - ElementName: Reverb_AUX_SFX
+      - ElementName: Player_Reverb_AUX_SFX
         ObjectType: 1
-        guid: f8dd3451e67a574d83040b7263e73f39
-      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Reverb_AUX_SFX
+        guid: b7e3df1ae25df64ba197ff2dfebd7a31
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Player_Reverb_AUX_SFX
+    - name: Player_SFX
+      guid: 6c4dd0de6aee484ca60408b46ab54b3d
+      id: 817096458
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: eb88c8468a8b7740b7f87fe70f3aa207
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: General_SFX
+        ObjectType: 2
+        guid: f4a2587d21d1dd43bb962f34b0a30465
+      - ElementName: Player_SFX
+        ObjectType: 2
+        guid: 6c4dd0de6aee484ca60408b46ab54b3d
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Player_SFX
     - name: Reverb_Muffled_MFX_AUX
       guid: b91cd88793c34e4eb25099cb020dd8e5
       id: 2315337392
@@ -148,6 +168,26 @@ MonoBehaviour:
         ObjectType: 2
         guid: 28ddbc26d25b4046a80c657c9e0b2ff3
       Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_MFX\Submarine_MFX
+    - name: Submarine_Reverb_AUX_SFX
+      guid: f8dd3451e67a574d83040b7263e73f39
+      id: 3031736565
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: eb88c8468a8b7740b7f87fe70f3aa207
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: General_SFX
+        ObjectType: 2
+        guid: f4a2587d21d1dd43bb962f34b0a30465
+      - ElementName: Submarine_Reverb_AUX_SFX
+        ObjectType: 1
+        guid: f8dd3451e67a574d83040b7263e73f39
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Submarine_Reverb_AUX_SFX
     - name: Submarine_SFX
       guid: 557d2b9f4270d243a162c72f6eef196b
       id: 1690215283
@@ -193,7 +233,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\VoicesOfTides
     guid: 6cfb55a730df374090e3de101ed00759
     GuidInternal: 
-    m_lastTime: -8584205803454774175
+    m_lastTime: -8584203663153671133
     List:
     - name: GamePlay_SFX
       guid: 8f55fbaac4adf94c90c05b67fca3cb88
@@ -234,7 +274,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584205803458369019
+    m_lastTime: -8584203654779991019
     List:
     - name: Start_BackgroundSubmarineMFX
       guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
@@ -338,6 +378,23 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 2.752797
       minDuration: 1.902773
+    - name: Start_PlayerFootsteps
+      guid: 07726e6f7f9f004580ebce0988d8aa93
+      id: 2940474702
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_PlayerFootsteps
+        ObjectType: 3
+        guid: 07726e6f7f9f004580ebce0988d8aa93
+      Path: Events\Gameplay_SFX\Start_PlayerFootsteps
+      maxAttenuation: 0
+      maxDuration: 1.307199
+      minDuration: 0.502769
     - name: Start_SonarPingInner
       guid: 1229c9717802a54a8d32dbeb8e91b82d
       id: 1735885581
@@ -652,8 +709,108 @@ MonoBehaviour:
     ParentPath: Switches\Default Work Unit
     guid: c07239db9f6acd43b302be800a106cfe
     GuidInternal: 
-    m_lastTime: -8584205803454738653
-    List: []
+    m_lastTime: -8584203686381601993
+    List:
+    - name: Player_FootstepsSurface
+      guid: c1ef939f5bac214e8097ca0e8200f4a9
+      id: 1044191727
+      PathAndIcons:
+      - ElementName: Switches
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c07239db9f6acd43b302be800a106cfe
+      - ElementName: Player_FootstepsSurface
+        ObjectType: 11
+        guid: c1ef939f5bac214e8097ca0e8200f4a9
+      Path: Switches\Default Work Unit\Player_FootstepsSurface
+      values:
+      - name: Metal
+        guid: dc8adae5026d9148b440204ccb777310
+        id: 2473969246
+        PathAndIcons:
+        - ElementName: Switches
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: c07239db9f6acd43b302be800a106cfe
+        - ElementName: Player_FootstepsSurface
+          ObjectType: 11
+          guid: c1ef939f5bac214e8097ca0e8200f4a9
+        - ElementName: Metal
+          ObjectType: 10
+          guid: dc8adae5026d9148b440204ccb777310
+      - name: Water
+        guid: 5dbf1a9aa55356468a58d33ab3cec431
+        id: 2654748154
+        PathAndIcons:
+        - ElementName: Switches
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: c07239db9f6acd43b302be800a106cfe
+        - ElementName: Player_FootstepsSurface
+          ObjectType: 11
+          guid: c1ef939f5bac214e8097ca0e8200f4a9
+        - ElementName: Water
+          ObjectType: 10
+          guid: 5dbf1a9aa55356468a58d33ab3cec431
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
+    - name: Water_Level
+      guid: e3cd004fe54c6447add205473b1362c7
+      id: 290589761
+      PathAndIcons:
+      - ElementName: Switches
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c07239db9f6acd43b302be800a106cfe
+      - ElementName: Water_Level
+        ObjectType: 11
+        guid: e3cd004fe54c6447add205473b1362c7
+      Path: Switches\Default Work Unit\Water_Level
+      values:
+      - name: High
+        guid: 608bf836c273814fbbd2e2e59c48d57d
+        id: 3550808449
+        PathAndIcons:
+        - ElementName: Switches
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: c07239db9f6acd43b302be800a106cfe
+        - ElementName: Water_Level
+          ObjectType: 11
+          guid: e3cd004fe54c6447add205473b1362c7
+        - ElementName: High
+          ObjectType: 10
+          guid: 608bf836c273814fbbd2e2e59c48d57d
+      - name: Low
+        guid: 3e90f7ca7d173e458513fcd2c2c2797e
+        id: 545371365
+        PathAndIcons:
+        - ElementName: Switches
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: c07239db9f6acd43b302be800a106cfe
+        - ElementName: Water_Level
+          ObjectType: 11
+          guid: e3cd004fe54c6447add205473b1362c7
+        - ElementName: Low
+          ObjectType: 10
+          guid: 3e90f7ca7d173e458513fcd2c2c2797e
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
   TriggerWwu:
   - PhysicalPath: Triggers\Default Work Unit.wwu
     PathAndIcons:
@@ -669,7 +826,7 @@ MonoBehaviour:
     m_lastTime: -8584205803454730240
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 01000000030000000400000005000000060000000700000008000000090000000f0000001000000011000000120000001300000014000000160000001700000018000000190000001a0000001b0000001d0000001f0000002100000022000000230000002400000043000000d1000000740100007601000026ca070037ca0700
+  ExpandedWaapiItemIds: 01000000030000000400000005000000060000000700000008000000090000000f0000001000000011000000120000001300000014000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f0000002000000021000000220000002300000024000000290000002a00000043000000d1000000740100007601000026ca070037ca0700
   AutoSyncSelection: 1
   autoPopulateEnabled: 1
   currentDataSource: 0

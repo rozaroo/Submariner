@@ -533,6 +533,7 @@ GameObject:
   - component: {fileID: 6191320090663821542}
   - component: {fileID: 7102504257390173521}
   - component: {fileID: 8510970483705706483}
+  - component: {fileID: 4460085323116682002}
   m_Layer: 6
   m_Name: Intersection_2
   m_TagString: Untagged
@@ -630,6 +631,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 597820938294520340, guid: c493fc2032feb2a4ab35b64d4caa6099, type: 3}
+--- !u!114 &4460085323116682002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8173608248537258829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3960b99b511a2d249810c3c2ca48dccb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceType: 1
 --- !u!1 &8880590577959781190
 GameObject:
   m_ObjectHideFlags: 0

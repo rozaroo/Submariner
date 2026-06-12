@@ -19,6 +19,7 @@ namespace AK
         static const AkUniqueID START_LEVERPULLFINISHED = 2469108041U;
         static const AkUniqueID START_OPENING_PRESSURE_DOORSFX = 4235702204U;
         static const AkUniqueID START_PHOSPHORUSCAMERAFLASH_EVENT = 3214537693U;
+        static const AkUniqueID START_PLAYERFOOTSTEPS = 2940474702U;
         static const AkUniqueID START_SONARPINGINNER = 1735885581U;
         static const AkUniqueID START_SONARPINGOUTER = 997126444U;
         static const AkUniqueID START_TENSIONEVENT = 1403223316U;
@@ -55,6 +56,32 @@ namespace AK
 
     } // namespace STATES
 
+    namespace SWITCHES
+    {
+        namespace PLAYER_FOOTSTEPSSURFACE
+        {
+            static const AkUniqueID GROUP = 1044191727U;
+
+            namespace SWITCH
+            {
+                static const AkUniqueID METAL = 2473969246U;
+                static const AkUniqueID WATER = 2654748154U;
+            } // namespace SWITCH
+        } // namespace PLAYER_FOOTSTEPSSURFACE
+
+        namespace WATER_LEVEL
+        {
+            static const AkUniqueID GROUP = 290589761U;
+
+            namespace SWITCH
+            {
+                static const AkUniqueID HIGH = 3550808449U;
+                static const AkUniqueID LOW = 545371365U;
+            } // namespace SWITCH
+        } // namespace WATER_LEVEL
+
+    } // namespace SWITCHES
+
     namespace GAME_PARAMETERS
     {
         static const AkUniqueID INCREMENTALTENSION = 3138205067U;
@@ -72,14 +99,16 @@ namespace AK
         static const AkUniqueID GENERAL_MFX = 54673317U;
         static const AkUniqueID GENERAL_SFX = 322129659U;
         static const AkUniqueID MASTER_AUDIO_BUS = 3803692087U;
+        static const AkUniqueID PLAYER_SFX = 817096458U;
         static const AkUniqueID SUBMARINE_MFX = 1957082925U;
         static const AkUniqueID SUBMARINE_SFX = 1690215283U;
     } // namespace BUSSES
 
     namespace AUX_BUSSES
     {
-        static const AkUniqueID REVERB_AUX_SFX = 1714574586U;
+        static const AkUniqueID PLAYER_REVERB_AUX_SFX = 2070985102U;
         static const AkUniqueID REVERB_MUFFLED_MFX_AUX = 2315337392U;
+        static const AkUniqueID SUBMARINE_REVERB_AUX_SFX = 3031736565U;
     } // namespace AUX_BUSSES
 
     namespace AUDIO_DEVICES

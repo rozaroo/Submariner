@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{DB3972C0-6A9F-43CD-B302-BE800A106CFE}" SchemaVersion="103">
 	<Switches>
-		<WorkUnit Name="Default Work Unit" ID="{DB3972C0-6A9F-43CD-B302-BE800A106CFE}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{DB3972C0-6A9F-43CD-B302-BE800A106CFE}" PersistMode="Standalone">
+			<ChildrenList>
+				<SwitchGroup Name="Player_FootstepsSurface" ID="{9F93EFC1-AC5B-4E21-8097-CA0E8200F4A9}">
+					<ChildrenList>
+						<Switch Name="Metal" ID="{E5DA8ADC-6D02-4891-B440-204CCB777310}"/>
+						<Switch Name="Water" ID="{9A1ABF5D-53A5-4656-8A58-D33AB3CEC431}"/>
+					</ChildrenList>
+				</SwitchGroup>
+				<SwitchGroup Name="Water_Level" ID="{4F00CDE3-4CE5-4764-ADD2-05473B1362C7}">
+					<ChildrenList>
+						<Switch Name="High" ID="{36F88B60-73C2-4F81-BBD2-E2E59C48D57D}"/>
+						<Switch Name="Low" ID="{CAF7903E-177D-453E-8513-FCD2C2C2797E}"/>
+					</ChildrenList>
+				</SwitchGroup>
+			</ChildrenList>
+		</WorkUnit>
 	</Switches>
 </WwiseDocument>

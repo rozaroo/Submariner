@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2840888752674136054}
   - component: {fileID: 2988871602860453287}
   - component: {fileID: 471372131358332951}
+  - component: {fileID: 7621986580251920949}
   - component: {fileID: 3307760291457062342}
   - component: {fileID: 8590537888755363150}
   - component: {fileID: 1056754517332843801}
@@ -92,6 +93,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHoldingObject: 0
   _heldObjectPlacement: {fileID: 3246600704839594514}
+--- !u!114 &7621986580251920949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7324493023298970460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9120afc4ae9ad5b428bae203fc0730e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpeedClamp: 1
+  maxSpeedClamp: 3
+  _soundTimeThreshold: 2
+  _maxVelocityThreshold: 0.2
 --- !u!143 &3307760291457062342
 CharacterController:
   m_ObjectHideFlags: 0

@@ -6,10 +6,21 @@ Event	ID	Name			Wwise Object Path	Notes
 	1403223316	Start_TensionEvent			\Gameplay_SFX\Start_TensionEvent	
 	1735885581	Start_SonarPingInner			\Gameplay_SFX\Start_SonarPingInner	
 	2469108041	Start_LeverPullFinished			\Gameplay_SFX\Start_LeverPullFinished	
+	2940474702	Start_PlayerFootsteps			\Gameplay_SFX\Start_PlayerFootsteps	
 	3003027233	Start_BackgroundSubmarineMFX			\Gameplay_SFX\Start_BackgroundSubmarineMFX	
 	3214537693	Start_PhosphorusCameraFlash_Event			\Gameplay_SFX\Start_PhosphorusCameraFlash_Event	
 	3884825202	Stop_TensionEvent			\Gameplay_SFX\Stop_TensionEvent	
 	4235702204	Start_Opening_Pressure_DoorSFX			\Gameplay_SFX\Start_Opening_Pressure_DoorSFX	
+
+Switch Group	ID	Name			Wwise Object Path	Notes
+	290589761	Water_Level			\Default Work Unit\Water_Level	
+	1044191727	Player_FootstepsSurface			\Default Work Unit\Player_FootstepsSurface	
+
+Switch	ID	Name	Switch Group			Notes
+	545371365	Low	Water_Level			
+	3550808449	High	Water_Level			
+	2473969246	Metal	Player_FootstepsSurface			
+	2654748154	Water	Player_FootstepsSurface			
 
 State Group	ID	Name			Wwise Object Path	Notes
 	894977922	Energy_Status			\Default Work Unit\Energy_Status	
@@ -35,44 +46,57 @@ Game Parameter	ID	Name			Wwise Object Path	Notes
 Audio Bus	ID	Name			Wwise Object Path	Notes
 	54673317	General_MFX			\Default Work Unit\Master Audio Bus\General_MFX	
 	322129659	General_SFX			\Default Work Unit\Master Audio Bus\General_SFX	
+	817096458	Player_SFX			\Default Work Unit\Master Audio Bus\General_SFX\Player_SFX	
 	1690215283	Submarine_SFX			\Default Work Unit\Master Audio Bus\General_SFX\Submarine_SFX	
 	1957082925	Submarine_MFX			\Default Work Unit\Master Audio Bus\General_MFX\Submarine_MFX	
 	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
 
 Auxiliary Bus	ID	Name			Wwise Object Path	Notes
-	1714574586	Reverb_AUX_SFX			\Default Work Unit\Master Audio Bus\General_SFX\Reverb_AUX_SFX	
+	2070985102	Player_Reverb_AUX_SFX			\Default Work Unit\Master Audio Bus\General_SFX\Player_Reverb_AUX_SFX	
 	2315337392	Reverb_Muffled_MFX_AUX			\Default Work Unit\Master Audio Bus\General_MFX\Reverb_Muffled_MFX_AUX	
+	3031736565	Submarine_Reverb_AUX_SFX			\Default Work Unit\Master Audio Bus\General_SFX\Submarine_Reverb_AUX_SFX	
 
 Effect plug-ins	ID	Name	Type				Notes
-	86245554	Attack_Remover	Wwise Compressor			
 	877258973	Wwise Time Stretch (Custom)	Wwise Time Stretch			
 	1051689273	Big_Garage1 (Custom)	Wwise Matrix Reverb			
-	1588715066	Echoes_Linear	Wwise Delay			
-	1904434771	Medium_Room1	Wwise Matrix Reverb			
 	3290519051	Aluminium_Tank	Wwise RoomVerb			
-	3948262040	Octave_Down	Wwise Pitch Shifter			
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	150726513	Project_1_BackgroundWhiteNoise	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_BackgroundWhiteNoise_D7115337.wem		\Actor-Mixer Hierarchy\SubmarineSFX\BackgroudNoisesRandom\Project_1_BackgroundWhiteNoise		486700
+	103211724	LowWaterLevelWalk_3	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\490951__nox_sound__footsteps_walk_191AADB4.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Water_Steps_Level\LowWaterLevel\LowWaterLevelWalk_3		57984
+	134703114	MetalSteps_1	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\696374__sanderboah__walking-on-metal_08A414DF.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Metal_Steps_Random\MetalSteps_1		58782
+	150726513	Project_1_BackgroundWhiteNoise	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_BackgroundWhiteNoise_B6873822.wem		\Actor-Mixer Hierarchy\SubmarineSFX\BackgroudNoisesRandom\Project_1_BackgroundWhiteNoise		2252928
 	175779074	Distance_CountDown	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\17216__meatball4u__countdown_DB187815.wem		\Actor-Mixer Hierarchy\SubmarineSFX\Distance\Distance_CountDown		3880
+	183692339	LowWaterLevelWalk_1	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\490951__nox_sound__footsteps_walk_C54DDBC5.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Water_Steps_Level\LowWaterLevel\LowWaterLevelWalk_1		57982
+	269478501	HighWaterLevelWalk_5	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\490951__nox_sound__footsteps_walk_E6DD8854.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Water_Steps_Level\HighWaterLevel\HighWaterLevelWalk_5		77288
 	307274219	LeverPull	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\404049__deathscyp__breaker-1_10C4C929.wem		\Actor-Mixer Hierarchy\SubmarineSFX\LeverPull		76668
-	383140111	SonarPingOuter	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_Sonar_10C4C929.wem		\Actor-Mixer Hierarchy\SubmarineSFX\SonarPingOuter		564608
+	324386202	HighWaterLevelWalk_2	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\490951__nox_sound__footsteps_walk_90F3FF8A.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Water_Steps_Level\HighWaterLevel\HighWaterLevelWalk_2		111076
+	363360337	LowWaterLevelWalk_5	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\490951__nox_sound__footsteps_walk_D20C9472.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Water_Steps_Level\LowWaterLevel\LowWaterLevelWalk_5		53156
+	383140111	SonarPingOuter	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_Sonar_6915DE9A.wem		\Actor-Mixer Hierarchy\SubmarineSFX\SonarPingOuter		564608
+	397077542	MetalSteps_4	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\696374__sanderboah__walking-on-metal_F3540663.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Metal_Steps_Random\MetalSteps_4		65900
 	412602450	Project_1_TinyMelody	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_TinyMelody_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_TinyMelody		564608
 	441572400	FlashNoEnergy	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Flash reversed 001_4C940592.wem		\Actor-Mixer Hierarchy\SubmarineSFX\PhosphorusCamera\FlashNoEnergy		99280
+	458355858	MetalSteps_2	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\696374__sanderboah__walking-on-metal_3E8AF12D.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Metal_Steps_Random\MetalSteps_2		57004
 	479738779	PressureDoorClose2	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\PressureDoorClose_10C4C929.wem		\Actor-Mixer Hierarchy\SubmarineSFX\PressureDoorCloseRandom\PressureDoorClose2		365212
 	485392549	Project_1_Tension 5	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_Tension 5_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_Tension 5		564608
 	495489055	ButtonPress	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\17216__meatball4u__countdown_43B927F8.wem		\Actor-Mixer Hierarchy\SubmarineSFX\ButtonRandom\ButtonPress		4644
 	550708862	Project_1_Tension2	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_Tension2_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_Tension2		564608
+	566744649	HighWaterLevelWalk_1	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\490951__nox_sound__footsteps_walk_086D7909.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Water_Steps_Level\HighWaterLevel\HighWaterLevelWalk_1		125556
 	586941861	Project_1_Tension1	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_Tension1_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_Tension1		564608
 	655064136	Project_1_BassTension1	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_BassTension1_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_BassTension1		564608
 	657499168	Project_1_Tension3	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_Tension3_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_Tension3		564608
 	674079710	CameraIntro	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\CameraIntro_B03F89E8.wem		\Actor-Mixer Hierarchy\SubmarineSFX\PhosphorusCamera\PhosporusCamera_Functional\CameraIntro		146924
 	678727613	Project_1_BackgroundWhiteNoise	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_BackgroundWhiteNoise_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_BackgroundWhiteNoise		564608
+	783648702	HighWaterLevelWalk_4	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\490951__nox_sound__footsteps_walk_8CACD102.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Water_Steps_Level\HighWaterLevel\HighWaterLevelWalk_4		106248
 	794426764	PressureDoorOpen_01	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\425090__neospica__pressurized-door-opening_2EA370B6.wem		\Actor-Mixer Hierarchy\SubmarineSFX\PressureDoorOpenRandom\PressureDoorOpen_01		239564
 	813881389	Project_1_BAS Pilobass	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_BAS Pilobass_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_BAS Pilobass		564608
-	851935918	Project_1_BackgroundWhiteNoise_01	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_BackgroundWhiteNoise_B5D95101.wem		\Actor-Mixer Hierarchy\SubmarineSFX\BackgroudNoisesRandom\Project_1_BackgroundWhiteNoise_01		487408
-	866744274	Project_1_BackgroundWhiteNoise_02	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_BackgroundWhiteNoise_80816046.wem		\Actor-Mixer Hierarchy\SubmarineSFX\BackgroudNoisesRandom\Project_1_BackgroundWhiteNoise_02		487408
+	820298617	LowWaterLevelWalk_2	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\490951__nox_sound__footsteps_walk_D0B43910.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Water_Steps_Level\LowWaterLevel\LowWaterLevelWalk_2		62810
+	824057027	SonarPingInner	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_Sonar_DAF8F2F4.wem		\Actor-Mixer Hierarchy\SubmarineSFX\SonarPingInner		573568
+	851935918	Project_1_BackgroundWhiteNoise_01	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_BackgroundWhiteNoise_B546D908.wem		\Actor-Mixer Hierarchy\SubmarineSFX\BackgroudNoisesRandom\Project_1_BackgroundWhiteNoise_01		2252928
+	866744274	Project_1_BackgroundWhiteNoise_02	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_BackgroundWhiteNoise_3019D2B5.wem		\Actor-Mixer Hierarchy\SubmarineSFX\BackgroudNoisesRandom\Project_1_BackgroundWhiteNoise_02		811136
 	886412129	FlashSFX	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Flash_82F5351A.wem		\Actor-Mixer Hierarchy\SubmarineSFX\PhosphorusCamera\PhosporusCamera_Functional\FlashSFX		242860
 	892432398	Project_1_Tension 4	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_Tension 4_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_Tension 4		564608
+	974555202	MetalSteps_3	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\696374__sanderboah__walking-on-metal_15B4D9E4.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Metal_Steps_Random\MetalSteps_3		53446
+	999257298	LowWaterLevelWalk_4	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\490951__nox_sound__footsteps_walk_F86FEB61.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Water_Steps_Level\LowWaterLevel\LowWaterLevelWalk_4		48330
 	1002913569	PressureDoorOpen	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\425090__neospica__pressurized-door-opening_7AA2CC43.wem		\Actor-Mixer Hierarchy\SubmarineSFX\PressureDoorOpenRandom\PressureDoorOpen		239564
+	1004030655	HighWaterLevelWalk_3	F:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\490951__nox_sound__footsteps_walk_8BA8F09A.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Water_Steps_Level\HighWaterLevel\HighWaterLevelWalk_3		115902
 

@@ -1415,7 +1415,7 @@
 								</Effect>
 								<Effect Name="Aluminium_Tank" ID="{0D20C91A-F750-47E0-AE32-00E5F2AA1272}" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3">
 									<PropertyList>
-										<Property Name="DecayTime" Type="Real32" Value="3"/>
+										<Property Name="DecayTime" Type="Real32" Value="0.5"/>
 										<Property Name="Density" Type="Real32" Value="100"/>
 										<Property Name="Diffusion" Type="Real32" Value="53"/>
 										<Property Name="ERLevel" Type="Real32" Value="-25"/>
@@ -1427,10 +1427,10 @@
 										<Property Name="Filter3Freq" Type="Real32" Value="15000"/>
 										<Property Name="Filter3Gain" Type="Real32" Value="-3.5"/>
 										<Property Name="HFDamping" Type="Real32" Value="10"/>
-										<Property Name="PreDelay" Type="Real32" Value="100"/>
+										<Property Name="PreDelay" Type="Real32" Value="89"/>
 										<Property Name="Quality" Type="int32" Value="6"/>
 										<Property Name="ReverbLevel" Type="Real32" Value="-14"/>
-										<Property Name="RoomSize" Type="Real32" Value="71"/>
+										<Property Name="RoomSize" Type="Real32" Value="54"/>
 										<Property Name="StereoWidth" Type="Real32" Value="130"/>
 									</PropertyList>
 								</Effect>

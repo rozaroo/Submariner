@@ -1,6 +1,530 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{093F7533-F3CA-42E3-8978-8BADA2BDA91F}" SchemaVersion="103">
 	<AudioObjects>
-		<WorkUnit Name="PlayerSFX" ID="{093F7533-F3CA-42E3-8978-8BADA2BDA91F}" PersistMode="Standalone"/>
+		<WorkUnit Name="PlayerSFX" ID="{093F7533-F3CA-42E3-8978-8BADA2BDA91F}" PersistMode="Standalone">
+			<ChildrenList>
+				<SwitchContainer Name="FootstepsType" ID="{DDBB3D08-73D6-40BA-A0C7-B952D6071A56}" ShortID="88685267">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+						</Reference>
+						<Reference Name="DefaultSwitchOrState">
+							<ObjectRef Name="Metal" ID="{E5DA8ADC-6D02-4891-B440-204CCB777310}" WorkUnitID="{DB3972C0-6A9F-43CD-B302-BE800A106CFE}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Player_SFX" ID="{DED04D6C-EE6A-4C48-A604-08B46AB54B3D}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+						</Reference>
+						<Reference Name="SwitchGroupOrStateGroup">
+							<ObjectRef Name="Player_FootstepsSurface" ID="{9F93EFC1-AC5B-4E21-8097-CA0E8200F4A9}" WorkUnitID="{DB3972C0-6A9F-43CD-B302-BE800A106CFE}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<RandomSequenceContainer Name="Metal_Steps_Random" ID="{1615057E-38C2-4685-9BDB-DCE18731EE00}" ShortID="405074951">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="MetalSteps_3" ID="{39F1CD87-D7CF-4F5D-B6C3-315DE890674A}" ShortID="986334201">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="696374__sanderboah__walking-on-metal" ID="{E686DFBA-C494-4BE1-867A-70836BB8F28B}">
+											<PropertyList>
+												<Property Name="FadeOutDuration" Type="Real64" Value="0.556058074421962"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimBegin" Type="Real64" Value="8.11844788656069"/>
+												<Property Name="TrimEnd" Type="Real64" Value="8.67450596098266"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>696374__sanderboah__walking-on-metal.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="974555202"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="696374__sanderboah__walking-on-metal" ID="{E686DFBA-C494-4BE1-867A-70836BB8F28B}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="MetalSteps_4" ID="{752C9968-1FAF-4B5B-97B3-1C5545CB1263}" ShortID="522829995">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="696374__sanderboah__walking-on-metal" ID="{058B082B-2E8F-4087-B50A-BDC774AA35B2}">
+											<PropertyList>
+												<Property Name="FadeOutDuration" Type="Real64" Value="0.556058074421962"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimBegin" Type="Real64" Value="11.6772195628613"/>
+												<Property Name="TrimEnd" Type="Real64" Value="12.363024521315"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>696374__sanderboah__walking-on-metal.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="397077542"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="696374__sanderboah__walking-on-metal" ID="{058B082B-2E8F-4087-B50A-BDC774AA35B2}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="MetalSteps_1" ID="{6142666B-8E93-419E-81B2-29747F54EA20}" ShortID="825336209">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="696374__sanderboah__walking-on-metal" ID="{FB5ACD9C-4A84-4DD3-BBB0-2D2150C4AE65}">
+											<PropertyList>
+												<Property Name="FadeOutDuration" Type="Real64" Value="0.611663881864163"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimBegin" Type="Real64" Value="1.13065141799133"/>
+												<Property Name="TrimEnd" Type="Real64" Value="1.74231529985549"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>696374__sanderboah__walking-on-metal.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="134703114"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="696374__sanderboah__walking-on-metal" ID="{FB5ACD9C-4A84-4DD3-BBB0-2D2150C4AE65}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="MetalSteps_2" ID="{EAC6CC4E-0785-4772-90BE-ACE94A2DAB27}" ShortID="325245563">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="696374__sanderboah__walking-on-metal" ID="{469630A5-8D4A-4323-A5E1-07ADF7EB6E0B}">
+											<PropertyList>
+												<Property Name="FadeOutDuration" Type="Real64" Value="0.556058074421963"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimBegin" Type="Real64" Value="3.28074263908959"/>
+												<Property Name="TrimEnd" Type="Real64" Value="3.87387125180635"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>696374__sanderboah__walking-on-metal.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="458355858"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="696374__sanderboah__walking-on-metal" ID="{469630A5-8D4A-4323-A5E1-07ADF7EB6E0B}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+							<ObjectLists/>
+						</RandomSequenceContainer>
+						<SwitchContainer Name="Water_Steps_Level" ID="{6702E7A0-1D55-438A-89BE-4159BB002BE1}" ShortID="120446842">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="DefaultSwitchOrState">
+									<ObjectRef Name="Low" ID="{CAF7903E-177D-453E-8513-FCD2C2C2797E}" WorkUnitID="{DB3972C0-6A9F-43CD-B302-BE800A106CFE}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+								<Reference Name="SwitchGroupOrStateGroup">
+									<ObjectRef Name="Water_Level" ID="{4F00CDE3-4CE5-4764-ADD2-05473B1362C7}" WorkUnitID="{DB3972C0-6A9F-43CD-B302-BE800A106CFE}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<RandomSequenceContainer Name="LowWaterLevel" ID="{CB6BB768-011C-4276-ADC0-117C7B13122F}" ShortID="1001618915">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="LowWaterLevelWalk_1" ID="{4C156FA1-DDC5-4F9C-AB99-A85E7191B0B2}" ShortID="432217649">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="490951__nox_sound__footsteps_walk" ID="{A294AB31-E180-49B9-B567-4C4A3DBEA37F}">
+													<PropertyList>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimBegin" Type="Real64" Value="11.362575927264"/>
+														<Property Name="TrimEnd" Type="Real64" Value="11.9658985428709"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>490951__nox_sound__footsteps_walk.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="183692339"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="490951__nox_sound__footsteps_walk" ID="{A294AB31-E180-49B9-B567-4C4A3DBEA37F}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="LowWaterLevelWalk_2" ID="{26333007-3825-4E92-927A-8EA2D5BB5BA6}" ShortID="370466109">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="490951__nox_sound__footsteps_walk" ID="{F019AA6E-2FD3-49F4-AF8C-1582757544CC}">
+													<PropertyList>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimBegin" Type="Real64" Value="12.6194980431117"/>
+														<Property Name="TrimEnd" Type="Real64" Value="13.2730975433526"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>490951__nox_sound__footsteps_walk.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="820298617"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="490951__nox_sound__footsteps_walk" ID="{F019AA6E-2FD3-49F4-AF8C-1582757544CC}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="LowWaterLevelWalk_3" ID="{E39B4F1F-D0AB-4D68-B16E-0B3B7335525A}" ShortID="591095864">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="490951__nox_sound__footsteps_walk" ID="{871A976E-611D-4F61-8E25-49D5B61E696B}">
+													<PropertyList>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimBegin" Type="Real64" Value="13.8764201589595"/>
+														<Property Name="TrimEnd" Type="Real64" Value="14.4797427745665"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>490951__nox_sound__footsteps_walk.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="103211724"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="490951__nox_sound__footsteps_walk" ID="{871A976E-611D-4F61-8E25-49D5B61E696B}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="LowWaterLevelWalk_4" ID="{076D2120-8196-4BB8-8250-A2807C2F155F}" ShortID="919341117">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="490951__nox_sound__footsteps_walk" ID="{1827EAD7-BCE9-464F-9739-8FA523138A7C}">
+													<PropertyList>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimBegin" Type="Real64" Value="15.2338960440751"/>
+														<Property Name="TrimEnd" Type="Real64" Value="15.7366648904143"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>490951__nox_sound__footsteps_walk.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="999257298"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="490951__nox_sound__footsteps_walk" ID="{1827EAD7-BCE9-464F-9739-8FA523138A7C}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="LowWaterLevelWalk_5" ID="{6343F65A-E1E9-4363-8D5F-EEC0232B5197}" ShortID="292385561">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="490951__nox_sound__footsteps_walk" ID="{EECDFB43-1916-4331-A91A-2DCD80704FCC}">
+													<PropertyList>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimBegin" Type="Real64" Value="16.3902643906551"/>
+														<Property Name="TrimEnd" Type="Real64" Value="16.9433101216281"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>490951__nox_sound__footsteps_walk.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="363360337"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="490951__nox_sound__footsteps_walk" ID="{EECDFB43-1916-4331-A91A-2DCD80704FCC}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+									<ObjectLists/>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="HighWaterLevel" ID="{394C2797-F76A-43FD-95CE-6F9EDBB1ED4E}" ShortID="554815375">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="HighWaterLevelWalk_1" ID="{276E1FFE-5095-49E3-AEA4-17DDA9B8FAFF}" ShortID="876529510">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="490951__nox_sound__footsteps_walk" ID="{49DCF785-E58B-4C6F-959A-A3AD8B727329}">
+													<PropertyList>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimBegin" Type="Real64" Value="18.3510628913776"/>
+														<Property Name="TrimEnd" Type="Real64" Value="19.6582618918593"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>490951__nox_sound__footsteps_walk.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="566744649"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="490951__nox_sound__footsteps_walk" ID="{49DCF785-E58B-4C6F-959A-A3AD8B727329}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="HighWaterLevelWalk_2" ID="{21FF701E-951C-458C-88D8-FED5CCA424D2}" ShortID="643544581">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="490951__nox_sound__footsteps_walk" ID="{A01CCDC1-A12F-4D53-9147-AD06A8C9C481}">
+													<PropertyList>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimBegin" Type="Real64" Value="20.3118613921002"/>
+														<Property Name="TrimEnd" Type="Real64" Value="21.4682297386802"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>490951__nox_sound__footsteps_walk.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="324386202"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="490951__nox_sound__footsteps_walk" ID="{A01CCDC1-A12F-4D53-9147-AD06A8C9C481}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="HighWaterLevelWalk_3" ID="{E5CF69F7-F038-46AC-B735-FD2FE498B80A}" ShortID="190608226">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="490951__nox_sound__footsteps_walk" ID="{3E57474B-05B5-4586-A7EF-275B1C54C418}">
+													<PropertyList>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimBegin" Type="Real64" Value="22.1721061235549"/>
+														<Property Name="TrimEnd" Type="Real64" Value="23.3787513547688"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>490951__nox_sound__footsteps_walk.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="1004030655"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="490951__nox_sound__footsteps_walk" ID="{3E57474B-05B5-4586-A7EF-275B1C54C418}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="HighWaterLevelWalk_4" ID="{6852DCE3-5A7C-453E-B04D-F338C44228E1}" ShortID="1039635819">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="490951__nox_sound__footsteps_walk" ID="{DF8E1D42-7FCA-49C8-B8B1-C58B3EDB14B3}">
+													<PropertyList>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimBegin" Type="Real64" Value="23.9820739703757"/>
+														<Property Name="TrimEnd" Type="Real64" Value="25.0881654323218"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>490951__nox_sound__footsteps_walk.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="783648702"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="490951__nox_sound__footsteps_walk" ID="{DF8E1D42-7FCA-49C8-B8B1-C58B3EDB14B3}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="HighWaterLevelWalk_5" ID="{B9044D9C-B03E-4F53-A696-18A730812F6C}" ShortID="367824140">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="490951__nox_sound__footsteps_walk" ID="{1D9C0550-BE6A-402C-A8A4-D26AE5A0ACB5}">
+													<PropertyList>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimBegin" Type="Real64" Value="25.7417649325626"/>
+														<Property Name="TrimEnd" Type="Real64" Value="26.5461950867052"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>490951__nox_sound__footsteps_walk.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="269478501"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="490951__nox_sound__footsteps_walk" ID="{1D9C0550-BE6A-402C-A8A4-D26AE5A0ACB5}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+									<ObjectLists/>
+								</RandomSequenceContainer>
+							</ChildrenList>
+							<ObjectLists/>
+							<GroupingInfo>
+								<GroupingBehaviorList>
+									<GroupingBehavior>
+										<ItemRef Name="LowWaterLevel" ID="{CB6BB768-011C-4276-ADC0-117C7B13122F}"/>
+									</GroupingBehavior>
+									<GroupingBehavior>
+										<ItemRef Name="HighWaterLevel" ID="{394C2797-F76A-43FD-95CE-6F9EDBB1ED4E}"/>
+									</GroupingBehavior>
+								</GroupingBehaviorList>
+								<GroupingList>
+									<Grouping>
+										<SwitchRef Name="Low" ID="{CAF7903E-177D-453E-8513-FCD2C2C2797E}"/>
+										<ItemList>
+											<ItemRef Name="LowWaterLevel" ID="{CB6BB768-011C-4276-ADC0-117C7B13122F}"/>
+										</ItemList>
+									</Grouping>
+									<Grouping>
+										<SwitchRef Name="High" ID="{36F88B60-73C2-4F81-BBD2-E2E59C48D57D}"/>
+										<ItemList>
+											<ItemRef Name="HighWaterLevel" ID="{394C2797-F76A-43FD-95CE-6F9EDBB1ED4E}"/>
+										</ItemList>
+									</Grouping>
+								</GroupingList>
+							</GroupingInfo>
+						</SwitchContainer>
+					</ChildrenList>
+					<ObjectLists/>
+					<GroupingInfo>
+						<GroupingBehaviorList>
+							<GroupingBehavior>
+								<ItemRef Name="Metal_Steps_Random" ID="{1615057E-38C2-4685-9BDB-DCE18731EE00}"/>
+							</GroupingBehavior>
+							<GroupingBehavior>
+								<ItemRef Name="Water_Steps_Level" ID="{6702E7A0-1D55-438A-89BE-4159BB002BE1}"/>
+							</GroupingBehavior>
+						</GroupingBehaviorList>
+						<GroupingList>
+							<Grouping>
+								<SwitchRef Name="Water" ID="{9A1ABF5D-53A5-4656-8A58-D33AB3CEC431}"/>
+								<ItemList>
+									<ItemRef Name="Water_Steps_Level" ID="{6702E7A0-1D55-438A-89BE-4159BB002BE1}"/>
+								</ItemList>
+							</Grouping>
+							<Grouping>
+								<SwitchRef Name="Metal" ID="{E5DA8ADC-6D02-4891-B440-204CCB777310}"/>
+								<ItemList>
+									<ItemRef Name="Metal_Steps_Random" ID="{1615057E-38C2-4685-9BDB-DCE18731EE00}"/>
+								</ItemList>
+							</Grouping>
+						</GroupingList>
+					</GroupingInfo>
+				</SwitchContainer>
+			</ChildrenList>
+		</WorkUnit>
 	</AudioObjects>
 </WwiseDocument>
