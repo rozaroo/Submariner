@@ -52,7 +52,6 @@ public class AutomaticDoorClose : MonoBehaviour
         while (elapsedTime < automaticDoorCloseTime)
         {
             elapsedTime += Time.deltaTime;
-            Log.Info($"{elapsedTime}");
             yield return null;
         }
         pressureDoor.CloseDoor();
