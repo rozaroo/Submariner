@@ -22,6 +22,7 @@ public class PlayerGameplayPossessionState : PlayerGameplayState
     public override void OnEnter()
     {
         _context.SetMovementStrategy(new LockedMovement());
+        _context?.FootstepSystem.SetActive(false);
         
         CameraPose playerPose = _context.SavedCameraPose;
         CameraPose stationPose = BuildStationPose();

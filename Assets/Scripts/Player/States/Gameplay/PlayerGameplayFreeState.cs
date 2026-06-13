@@ -2,25 +2,26 @@ using UnityEngine;
 
 public class PlayerGameplayFreeState : PlayerGameplayState
 {
-    private readonly PlayerCharacter _player;
+    private readonly PlayerCharacter _context;
 
-    public PlayerGameplayFreeState(StateMachine sm, PlayerCharacter player) : base(sm)
+    public PlayerGameplayFreeState(StateMachine sm, PlayerCharacter context) : base(sm)
     {
-        _player = player;
+        _context = context;
     }
 
     public override void OnEnter()
     {
-        _player.SetMovementStrategy(new WalkingMovement());
-        _player.CamController.SetCameraStrategy(new NormalCameraStrategy());
-        _player.SetMouseConfiguration(CursorLockMode.Locked,false);
-        _player.EnableGameplayInputs();
+        _context.SetMovementStrategy(new WalkingMovement());
+        _context.CamController.SetCameraStrategy(new NormalCameraStrategy());
+        _context.FootstepSystem.SetActive(true);
+        _context.SetMouseConfiguration(CursorLockMode.Locked,false);
+        _context.EnableGameplayInputs();
     }
 
     public override void Update() { }
 
     public override void OnExit()
     {
-        _player.DisableGameplayInputs();
+        _context.DisableGameplayInputs();
     }
 }

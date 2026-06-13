@@ -16,6 +16,12 @@ public class FootstepSystem : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
     }
     
+    public void SetActive(bool active)
+    {
+        enabled = active;
+        _stepTimer = 0f;
+    }
+    
     public void Update()
     {
         if (_characterController == null) return;

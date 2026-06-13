@@ -33,6 +33,7 @@ public class PlayerCharacter : MonoBehaviour
     public PlayerInput Input { get; private set; }
     public CameraController CamController { get; private set; }
     public InventorySystem InventorySystem { get; private set; }
+    public FootstepSystem FootstepSystem { get; private set; }
     public CharacterController CharacterController => _controller;
 
 
@@ -42,6 +43,7 @@ public class PlayerCharacter : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         CamController = GetComponent<CameraController>();
         InventorySystem = GetComponent<InventorySystem>();
+        FootstepSystem = GetComponent<FootstepSystem>();
 
         _movementContext = new MovementContext
         {
