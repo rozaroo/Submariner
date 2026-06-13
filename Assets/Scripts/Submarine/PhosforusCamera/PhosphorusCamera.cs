@@ -68,60 +68,59 @@ public class PhosphorusCamera : MonoBehaviour
     {
         if (!CanTakePhoto())
         {
-            SFXManager.PostEvent("Start_PhosphorusCameraFlash_Event", gameObject);
             return;
         }
         
-        if (_photoSequenceRoutine != null) StopCoroutine(_photoSequenceRoutine);
         SFXManager.PostEvent("Start_PhosphorusCameraFlash_Event", gameObject);
+        if (_photoSequenceRoutine != null) StopCoroutine(_photoSequenceRoutine);
         _photoSequenceRoutine = StartCoroutine(PhotoSequenceRoutine());
     }
     
     private IEnumerator PhotoSequenceRoutine()
-{
-    _isProcessingPhoto = true;
-    PeriscopeFlash3D flash = periscopeCameraAnchorSo.flashComponent;
-    
-    if (flash != null) 
-        flash.SetOverlayColor(Color.black, 1f);
-    
-    float timer = 0f;
-    while (timer < flashFadeInDuration)
     {
-        timer += Time.deltaTime;
-        float progress = timer / flashFadeInDuration;
-        
-        float smoothWhiteAlpha = Mathf.SmoothStep(0f, 1f, progress); 
+        _isProcessingPhoto = true;
+        PeriscopeFlash3D flash = periscopeCameraAnchorSo.flashComponent;
         
         if (flash != null) 
-            flash.SetOverlayColor(Color.white, smoothWhiteAlpha);
-        yield return null;
-    }
-    if (flash != null) 
-        flash.SetOverlayColor(Color.white, 1f);
-    
-    yield return new WaitForSeconds(whiteScreenDuration);
-    
-    if (flash != null) flash.SetOverlayAlpha(0f); 
-    
-    yield return new WaitForSeconds(exteriorCameraDuration);
-    
-    timer = 0f;
-    while (timer < finalFadeOutDuration)
-    {
-        timer += Time.deltaTime;
-        float progress = timer / finalFadeOutDuration;
+            flash.SetOverlayColor(Color.black, 1f);
         
-        float smoothBlackAlpha = Mathf.SmoothStep(0f, 1f, progress);
-        
+        float timer = 0f;
+        while (timer < flashFadeInDuration)
+        {
+            timer += Time.deltaTime;
+            float progress = timer / flashFadeInDuration;
+            
+            float smoothWhiteAlpha = Mathf.SmoothStep(0f, 1f, progress); 
+            
+            if (flash != null) 
+                flash.SetOverlayColor(Color.white, smoothWhiteAlpha);
+            yield return null;
+        }
         if (flash != null) 
-            flash.SetOverlayColor(Color.black, smoothBlackAlpha);
-        yield return null;
-    }
-    if (flash != null) flash.SetOverlayColor(Color.black, 1f);
-    
-    _isProcessingPhoto = false;
-}
+            flash.SetOverlayColor(Color.white, 1f);
+        
+        yield return new WaitForSeconds(whiteScreenDuration);
+        
+        if (flash != null) flash.SetOverlayAlpha(0f); 
+        
+        yield return new WaitForSeconds(exteriorCameraDuration);
+        
+        timer = 0f;
+        while (timer < finalFadeOutDuration)
+        {
+            timer += Time.deltaTime;
+            float progress = timer / finalFadeOutDuration;
+            
+            float smoothBlackAlpha = Mathf.SmoothStep(0f, 1f, progress);
+            
+            if (flash != null) 
+                flash.SetOverlayColor(Color.black, smoothBlackAlpha);
+            yield return null;
+        }
+        if (flash != null) flash.SetOverlayColor(Color.black, 1f);
+        
+        _isProcessingPhoto = false;
+    }   
 
     public void EnableCamera()
     {

@@ -1,6 +1,7 @@
 Event	ID	Name			Wwise Object Path	Notes
 	116843463	Stop_BackgroundSubmarineMFX			\Gameplay_SFX\Stop_BackgroundSubmarineMFX	
 	378872923	Start_Closing_Pressure_DoorSFX			\Gameplay_SFX\Start_Closing_Pressure_DoorSFX	
+	438413481	Start_PhosphorusCameraCooldown			\Gameplay_SFX\Start_PhosphorusCameraCooldown	
 	738466431	Start_ButtonPress			\Gameplay_SFX\Start_ButtonPress	
 	997126444	Start_SonarPingOuter			\Gameplay_SFX\Start_SonarPingOuter	
 	1403223316	Start_TensionEvent			\Gameplay_SFX\Start_TensionEvent	

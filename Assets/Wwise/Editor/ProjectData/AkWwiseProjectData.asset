@@ -274,7 +274,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584203617584815904
+    m_lastTime: -8584202609718147544
     List:
     - name: Start_BackgroundSubmarineMFX
       guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
@@ -361,6 +361,23 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 1.35771
       minDuration: 1.35771
+    - name: Start_PhosphorusCameraCooldown
+      guid: 1f3407ab7ebe284383f12bdd48ad9ecd
+      id: 438413481
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_PhosphorusCameraCooldown
+        ObjectType: 3
+        guid: 1f3407ab7ebe284383f12bdd48ad9ecd
+      Path: Events\Gameplay_SFX\Start_PhosphorusCameraCooldown
+      maxAttenuation: 0
+      maxDuration: 1.902773
+      minDuration: 1.902773
     - name: Start_PhosphorusCameraFlash_Event
       guid: 75d2e8942c2e0447ad01f759a9c2dfa4
       id: 3214537693
@@ -709,7 +726,7 @@ MonoBehaviour:
     ParentPath: Switches\Default Work Unit
     guid: c07239db9f6acd43b302be800a106cfe
     GuidInternal: 
-    m_lastTime: -8584203617582884155
+    m_lastTime: -8584202614947122827
     List:
     - name: Player_FootstepsSurface
       guid: c1ef939f5bac214e8097ca0e8200f4a9

@@ -30,7 +30,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3401228817" Language="SFX" Hash="1010842286">
+		<SoundBank Id="3401228817" Language="SFX" Hash="2358873609">
 			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
 			<ShortName>GamePlay_SFX</ShortName>
 			<Path>GamePlay_SFX.bnk</Path>
@@ -40,6 +40,7 @@
 				<Event Id="378872923" Name="Start_Closing_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Closing_Pressure_DoorSFX" DurationType="OneShot" DurationMin="2.07" DurationMax="2.257351"/>
 				<Event Id="2469108041" Name="Start_LeverPullFinished" ObjectPath="\Events\Gameplay_SFX\Start_LeverPullFinished" DurationType="OneShot" DurationMin="0.398979" DurationMax="0.398979"/>
 				<Event Id="4235702204" Name="Start_Opening_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Opening_Pressure_DoorSFX" DurationType="OneShot" DurationMin="1.35771" DurationMax="1.35771"/>
+				<Event Id="438413481" Name="Start_PhosphorusCameraCooldown" ObjectPath="\Events\Gameplay_SFX\Start_PhosphorusCameraCooldown" DurationType="OneShot" DurationMin="1.902773" DurationMax="1.902773"/>
 				<Event Id="3214537693" Name="Start_PhosphorusCameraFlash_Event" ObjectPath="\Events\Gameplay_SFX\Start_PhosphorusCameraFlash_Event" DurationType="OneShot" DurationMin="1.902773" DurationMax="2.752797"/>
 				<Event Id="2940474702" Name="Start_PlayerFootsteps" ObjectPath="\Events\Gameplay_SFX\Start_PlayerFootsteps" DurationType="OneShot" DurationMin="0.502769" DurationMax="1.307199"/>
 				<Event Id="1735885581" Name="Start_SonarPingInner" ObjectPath="\Events\Gameplay_SFX\Start_SonarPingInner" DurationType="OneShot" DurationMin="3.2" DurationMax="3.2"/>

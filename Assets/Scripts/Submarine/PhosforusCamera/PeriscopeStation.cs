@@ -102,12 +102,10 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
         
         if (!_periscopeCameraAnchorSo.phosphorusCameraComponent.CanTakePhoto())
         {
-            SFXManager.PostEvent("Start_PhosphorusCameraFlash_Event", gameObject);
+            SFXManager.PostEvent("Start_PhosphorusCameraCooldown", gameObject);
             return;
         }
-
         Log.Info("[PeriscopeStation] Taking Photo");
-        
         _periscopeCameraAnchorSo.phosphorusCameraComponent.TryTakePhoto();
     }
 

@@ -55,13 +55,13 @@
 				</Event>
 				<Event Name="Start_PhosphorusCameraFlash_Event" ID="{94E8D275-2E2C-4704-AD01-F759A9C2DFA4}">
 					<ChildrenList>
-						<Action Name="" ID="{C9B80D13-1023-4E1F-9C82-8B5B3B6BDEE9}" ShortID="551367939">
+						<Action Name="" ID="{9B8FB710-B735-4FF7-9DC3-40C83136F721}" ShortID="115234346">
 							<PropertyList>
 								<Property Name="ActionType" Type="int16" Value="2"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="PhosphorusCamera" ID="{5CA054BC-F314-4CF5-8484-F0E2D346914E}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+									<ObjectRef Name="FlashNoEnergy" ID="{7F75CD9C-9F00-41A7-90A0-121E0CBD0A65}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -171,6 +171,17 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="FootstepsType" ID="{DDBB3D08-73D6-40BA-A0C7-B952D6071A56}" WorkUnitID="{093F7533-F3CA-42E3-8978-8BADA2BDA91F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_PhosphorusCameraCooldown" ID="{AB07341F-BE7E-4328-83F1-2BDD48AD9ECD}">
+					<ChildrenList>
+						<Action Name="" ID="{C216A692-FC79-4A47-B275-E7F4AAE7B3AB}" ShortID="784181596">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="FlashNoEnergy" ID="{7F75CD9C-9F00-41A7-90A0-121E0CBD0A65}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
