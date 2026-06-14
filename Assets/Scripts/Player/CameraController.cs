@@ -8,9 +8,6 @@ public class CameraController : MonoBehaviour, ICameraRotation
     [SerializeField] private float upDownPitchLimit = 70f;
     [SerializeField] private float lookLerpSpeed = 10f;
     
-    [Header("Debug Settings")] 
-    [SerializeField] private bool showGizmos = true;
-    
     [Header("References Settings")] 
     [SerializeField] private string lookActionName = "Look";
     [SerializeField] private Camera playerCamera;
@@ -44,6 +41,11 @@ public class CameraController : MonoBehaviour, ICameraRotation
     private void LateUpdate()
     {
         _cameraStrategy?.Look(_cameraContext);
+    }
+    
+    public void ClearCameraStrategy() //Use only if there is no Requirement for an Exit execution of a Strategy in SetCameraStrategy
+    {
+        _cameraStrategy = null;
     }
 
     public void SetCameraStrategy(ICameraStrategy newStrategy)

@@ -19,7 +19,7 @@ public class WorldMapManager : MonoBehaviour
     //different map generation settings, or even make it so the map generation settings are defined by the MapAssetSO of each element,
     //so we can have different generation settings for each type of element.
     
-    private Dictionary<GameObject, float> _mapElements = new Dictionary<GameObject, float>();
+    private readonly Dictionary<GameObject, float> _mapElements = new Dictionary<GameObject, float>();
     private GameObject _submarineGo;
     
     private void Start()
@@ -55,7 +55,7 @@ public class WorldMapManager : MonoBehaviour
 
         foreach (var pair in generatedElements)
         {
-            if (TryAssignPosition(pair.Key.transform, pair.Value))
+            if (TryAssignPosition(pair.Key, pair.Value))
             {
                 elementsNumber++;
                 _mapElements.Add(pair.Key, pair.Value);
@@ -91,7 +91,7 @@ public class WorldMapManager : MonoBehaviour
         if (elementGo != null)
         {
             elementGo.transform.SetParent(worldContainerGo.transform, false);
-            if (TryAssignPosition(elementGo.transform, mapElementSo.RequiredSize))
+            if (TryAssignPosition(elementGo, mapElementSo.RequiredSize))
             {
                 _mapElements.Add(elementGo, mapElementSo.RequiredSize);
                 Log.Info($"Spawning at {elementGo.transform.position}");
@@ -128,8 +128,11 @@ public class WorldMapManager : MonoBehaviour
     
     #region Positioning Tools
 
-    private bool TryAssignPosition(Transform goTransform, float requiredSize = 0f)
+    private bool TryAssignPosition(GameObject go, float requiredSize = 0f)
     {
+        Transform goTransform = go.transform;
+        Rigidbody rb = go.GetComponent<Rigidbody>();
+        
         if (_mapElements.Count > 0)
         {
             for (int i = 0; i <= mapSpawnAttempts; i++)
@@ -137,13 +140,20 @@ public class WorldMapManager : MonoBehaviour
                 Vector3 desiredPosition = GenerateRandomPosition();
                 if (TrySetPosition(desiredPosition, requiredSize))
                 {
-                    goTransform.position = desiredPosition;
-                    return true;
+                    if (rb != null)
+                    {
+                        rb.position = desiredPosition;
+                    }
+                    else
+                    {
+                        goTransform.transform.position = desiredPosition;
+                    }
+                    return true;   
                 }
             }
             return false;
         }
-        goTransform.position = GenerateRandomPosition();
+        goTransform.transform.position  = GenerateRandomPosition();
         return true;
     }
     
@@ -201,8 +211,7 @@ public class WorldMapManager : MonoBehaviour
     {
         if(_submarineGo != null)
         {
-            _submarineGo.transform.position = GenerateRandomPosition();
-            _submarineGo.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+            SetSubmarineTransform(_submarineGo, GenerateRandomPosition(), Quaternion.Euler(0, Random.Range(0, 360), 0));
             _mapElements.Add(_submarineGo, 0);
             IWorldMapUIElement uiElement = CheckForWorldMapUIElement(_submarineGo);
             if (uiElement != null)
@@ -223,6 +232,21 @@ public class WorldMapManager : MonoBehaviour
             IWorldMapUIElement uiElement = CheckForWorldMapUIElement(_submarineGo);
             if (uiElement != null)
                 GameEventChannel<OnWorldSubmarineGenerated>.RaiseEvent(new OnWorldSubmarineGenerated(uiElement));
+        }
+    }
+    
+    private void SetSubmarineTransform(GameObject submarine, Vector3 position, Quaternion rotation)
+    {
+        Rigidbody rb = submarine.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.position = position;
+            rb.rotation = rotation;
+        }
+        else
+        {
+            submarine.transform.position = position;
+            submarine.transform.rotation = rotation;
         }
     }
     

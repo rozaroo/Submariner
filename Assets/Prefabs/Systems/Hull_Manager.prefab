@@ -57,10 +57,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  gracePeriod: 20
-  minSpawnInterval: 5
-  maxSpawnInterval: 15
-  onHullStatusChanged: {fileID: 11400000, guid: 57df504b4607b5347a6e29e893996736, type: 2}
+  gracePeriod: 5
+  minSpawnInterval: 10
+  maxSpawnInterval: 20
 --- !u!114 &4284337136202105156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,6 +76,3 @@ MonoBehaviour:
   maxRiseSpeed: 0.5
   startHeight: -45.81
   maxHeight: -43
-  onHullStatusChanged: {fileID: 11400000, guid: 57df504b4607b5347a6e29e893996736, type: 2}
-  onDrainageStationStatusChanged: {fileID: 11400000, guid: 5a7bb3adb7a704049a7284d9251b63ac, type: 2}
-  onSubmarineSunk: {fileID: 11400000, guid: 8843acf92ed3c2148ae8a3af63850cae, type: 2}

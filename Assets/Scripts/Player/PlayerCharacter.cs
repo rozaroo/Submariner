@@ -16,6 +16,16 @@ public class PlayerCharacter : MonoBehaviour
     [Header("Interaction Settings (Raycast)")] 
     [SerializeField] private float interactionDistance = 2.5f;
     [SerializeField] private LayerMask interactableLayer;
+    
+    [Header("Knockback From Submarine Impact")]
+    [SerializeField] private float minImpactSpeed = 1f;
+    [SerializeField] private float maxExpectedImpactSpeed = 15f;
+    [SerializeField] private float minForce = 2f;
+    [SerializeField] private float maxForce = 10f;
+    [SerializeField] private float minDrag = 0.5f;
+    [SerializeField] private float maxDrag = 2f;
+    [SerializeField] private float minAccelTime = 0.5f;
+    [SerializeField] private float maxAccelTime = 1.5f;
 
     private bool _isHolding;
     private CharacterController _controller;
@@ -28,15 +38,29 @@ public class PlayerCharacter : MonoBehaviour
 
     private IMovementStrategy _movementStrategy;
     private MovementContext _movementContext;
+    
+    private Vector3 _defaultCameraLocalPosition;
+    private Quaternion _defaultCameraLocalRotation;
 
     public CameraPose SavedCameraPose { get; private set; }
     public PlayerInput Input { get; private set; }
     public CameraController CamController { get; private set; }
     public InventorySystem InventorySystem { get; private set; }
+    public Vector3 DefaultCameraLocalPosition => _defaultCameraLocalPosition;
+    public Quaternion DefaultCameraLocalRotation => _defaultCameraLocalRotation;
     public FootstepSystem FootstepSystem { get; private set; }
     public CharacterController CharacterController => _controller;
+    
+    private void OnEnable()
+    {
+        GameEventChannel<OnSubmarineImpact>.OnEventRaised += OnSubmarineImpact;
+    }
 
-
+    private void OnDisable()
+    {
+        GameEventChannel<OnSubmarineImpact>.OnEventRaised -= OnSubmarineImpact;
+    }
+    
     private void Start()
     {
         Input = GetComponent<PlayerInput>();
@@ -44,6 +68,12 @@ public class PlayerCharacter : MonoBehaviour
         CamController = GetComponent<CameraController>();
         InventorySystem = GetComponent<InventorySystem>();
         FootstepSystem = GetComponent<FootstepSystem>();
+        
+        if (CamController != null)
+        {
+            _defaultCameraLocalPosition = CamController.MainCamera.transform.localPosition;
+            _defaultCameraLocalRotation = CamController.MainCamera.transform.localRotation;
+        }
 
         _movementContext = new MovementContext
         {
@@ -171,7 +201,38 @@ public class PlayerCharacter : MonoBehaviour
     }
 
     #endregion
+
+    #region Events
+
+    private void OnSubmarineImpact(OnSubmarineImpact data)
+    {
+        if (data.ImpactSpeed < minImpactSpeed) return;
+
+        SetGameplayStateFromImpact(data.Normal, data.ImpactSpeed);
+    }
     
+    private void SetGameplayStateFromImpact(Vector3 impactNormal, float impactSpeed)
+    {
+        if (_gameplaySm == null) return;
+        
+        float t = Mathf.Clamp01(impactSpeed / maxExpectedImpactSpeed);
+        
+        Vector3 direction = impactNormal;
+        direction.y = 0;
+        direction = direction.sqrMagnitude > 0.001f ? direction.normalized : -transform.forward;
+
+        float force = Mathf.Lerp(minForce, maxForce, t);
+        float drag = Mathf.Lerp(maxDrag, minDrag, t);
+        float accelerationTime = Mathf.Lerp(minAccelTime, maxAccelTime, t);
+
+        _gameplaySm.ChangeState(new PlayerGameplayExplosionState(_gameplaySm, this, direction, force, drag, accelerationTime));
+    }
+
+    #endregion
+    
+
+    #region Testing
+
     [ContextMenu("Change to Desired Set Movement Strategy")] //ONLY FOR TESTING
     public void SetMovementStrategy()
     {
@@ -195,4 +256,6 @@ public class PlayerCharacter : MonoBehaviour
         if(_gameplaySm != null)
             _gameplaySm.ChangeState(new PlayerGameplayFreeState(_gameplaySm, this));
     }
+
+    #endregion
 }

@@ -23,6 +23,7 @@ namespace AK
         static const AkUniqueID START_PLAYERFOOTSTEPS = 2940474702U;
         static const AkUniqueID START_SONARPINGINNER = 1735885581U;
         static const AkUniqueID START_SONARPINGOUTER = 997126444U;
+        static const AkUniqueID START_SUBMARINECOLLISION = 3771492726U;
         static const AkUniqueID START_TENSIONEVENT = 1403223316U;
         static const AkUniqueID STOP_BACKGROUNDSUBMARINEMFX = 116843463U;
         static const AkUniqueID STOP_TENSIONEVENT = 3884825202U;

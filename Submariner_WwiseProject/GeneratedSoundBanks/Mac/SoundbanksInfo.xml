@@ -30,7 +30,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3401228817" Language="SFX" Hash="2358873609">
+		<SoundBank Id="3401228817" Language="SFX" Hash="2575891699">
 			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
 			<ShortName>GamePlay_SFX</ShortName>
 			<Path>GamePlay_SFX.bnk</Path>

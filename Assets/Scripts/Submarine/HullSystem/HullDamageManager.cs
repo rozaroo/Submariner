@@ -31,12 +31,25 @@ public class HullDamageManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        GameEventChannel<OnSubmarineCollision>.OnEventRaised += OnSubmarineCollision;
+    }
+
+    private void OnDisable()
+    {
+        GameEventChannel<OnSubmarineCollision>.OnEventRaised -= OnSubmarineCollision;
+    }
+
     private void OnDestroy()
     {
         foreach (var crack in _pool)
             if (crack != null) crack.OnCrackRepaired -= OnHullRepaired;
     }
-
+    
+    /// <summary>
+    /// Maybe remove the Grace Period.
+    /// </summary>
     [ContextMenu("Start Hull Grace Period")]
     private void OnStartGracePeriod()
     {
@@ -48,11 +61,20 @@ public class HullDamageManager : MonoBehaviour
         yield return new WaitForSeconds(gracePeriod);
         StartSpawningBehaviour();
     }
+    
+    private void OnSubmarineCollision(OnSubmarineCollision collision)
+    {
+        SFXManager.PostEvent("Start_SubmarineCollision", gameObject);
+        StartSpawningBehaviour();
+    }
 
     private void StartSpawningBehaviour()
     {
         if (_spawnCoroutine != null) StopCoroutine(_spawnCoroutine);
-        _spawnCoroutine = StartCoroutine(SpawnHullDamage(Random.Range(minSpawnInterval, maxSpawnInterval)));
+        
+        TrySpawnCrack(); 
+        
+        _spawnCoroutine = StartCoroutine(SpawnHullDamageRoutine());
     }
 
     private void StopSpawningBehaviour()
@@ -64,37 +86,38 @@ public class HullDamageManager : MonoBehaviour
         }
     }
 
+    private IEnumerator SpawnHullDamageRoutine()
+    {
+        while (true) 
+        {
+            yield return new WaitForSeconds(Random.Range(minSpawnInterval, maxSpawnInterval));
+            TrySpawnCrack();
+        }
+    }
+    
     private void TrySpawnCrack()
     {
         var available = _pool.FindAll(c => !c.gameObject.activeSelf);
-        if (available.Count == 0) return;
-
+    
+        if (available.Count == 0) 
+        {
+            StopSpawningBehaviour();
+            return;
+        }
+    
+        Log.Info("Spawned Crack");
+    
         var crack = available[Random.Range(0, available.Count)];
         crack.gameObject.SetActive(true);
         ActiveCrackCount++;
 
-        GameEventChannel<OnHullPropertyChange>.RaiseEvent(CreateHullProperty());
-        StartSpawningBehaviour();
-    }
-
-    private OnHullPropertyChange CreateHullProperty()
-    {
-        return new OnHullPropertyChange
-        {
-            maxHullDamagePosible = spawnZones.Length,
-            activeHullDamage     = ActiveCrackCount
-        };
+        GameEventChannel<OnHullPropertyChange>.RaiseEvent(new OnHullPropertyChange(spawnZones.Length, ActiveCrackCount));
     }
 
     private void OnHullRepaired(HullDamage hullDamage)
     {
         ActiveCrackCount = Mathf.Max(0, ActiveCrackCount - 1);
-        GameEventChannel<OnHullPropertyChange>.RaiseEvent(CreateHullProperty());
+        GameEventChannel<OnHullPropertyChange>.RaiseEvent(new OnHullPropertyChange(spawnZones.Length, ActiveCrackCount));
     }
-
-    private IEnumerator SpawnHullDamage(float interval)
-    {
-            yield return new WaitForSeconds(interval);
-        TrySpawnCrack();
-    }
+    
 }

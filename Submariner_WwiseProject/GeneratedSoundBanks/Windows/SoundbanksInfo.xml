@@ -30,7 +30,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3401228817" Language="SFX" Hash="2575891699">
+		<SoundBank Id="3401228817" Language="SFX" Hash="1830655215">
 			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
 			<ShortName>GamePlay_SFX</ShortName>
 			<Path>GamePlay_SFX.bnk</Path>
@@ -45,6 +45,7 @@
 				<Event Id="2940474702" Name="Start_PlayerFootsteps" ObjectPath="\Events\Gameplay_SFX\Start_PlayerFootsteps" DurationType="OneShot" DurationMin="0.502769" DurationMax="1.307199"/>
 				<Event Id="1735885581" Name="Start_SonarPingInner" ObjectPath="\Events\Gameplay_SFX\Start_SonarPingInner" DurationType="OneShot" DurationMin="3.2" DurationMax="3.2"/>
 				<Event Id="997126444" Name="Start_SonarPingOuter" ObjectPath="\Events\Gameplay_SFX\Start_SonarPingOuter" DurationType="OneShot" DurationMin="3.2" DurationMax="3.2"/>
+				<Event Id="3771492726" Name="Start_SubmarineCollision" ObjectPath="\Events\Gameplay_SFX\Start_SubmarineCollision" DurationType="OneShot" DurationMin="6.492021" DurationMax="8.007982"/>
 				<Event Id="1403223316" Name="Start_TensionEvent" ObjectPath="\Events\Gameplay_SFX\Start_TensionEvent" DurationType="Infinite"/>
 				<Event Id="116843463" Name="Stop_BackgroundSubmarineMFX" ObjectPath="\Events\Gameplay_SFX\Stop_BackgroundSubmarineMFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="3884825202" Name="Stop_TensionEvent" ObjectPath="\Events\Gameplay_SFX\Stop_TensionEvent" DurationType="Infinite"/>
@@ -55,6 +56,14 @@
 				<AuxBus Id="3031736565" Name="Submarine_Reverb_AUX_SFX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Submarine_Reverb_AUX_SFX"/>
 			</IncludedAuxBusses>
 			<IncludedMemoryFiles>
+				<File Id="23372763" Language="SFX">
+					<ShortName>338969__timkahn__massive-metal-hit.wav</ShortName>
+					<Path>SFX\338969__timkahn__massive-metal-hit_10C4C929.wem</Path>
+				</File>
+				<File Id="30412895" Language="SFX">
+					<ShortName>244983__ani_music__ani-big-pipe-hit.wav</ShortName>
+					<Path>SFX\244983__ani_music__ani-big-pipe-hit_10C4C929.wem</Path>
+				</File>
 				<File Id="103211724" Language="SFX">
 					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
 					<Path>SFX\490951__nox_sound__footsteps_walk_191AADB4.wem</Path>
@@ -75,6 +84,10 @@
 					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
 					<Path>SFX\490951__nox_sound__footsteps_walk_C54DDBC5.wem</Path>
 				</File>
+				<File Id="227317674" Language="SFX">
+					<ShortName>151624__qubodup__clank-car-crash-collision.wav</ShortName>
+					<Path>SFX\151624__qubodup__clank-car-crash-collision_10C4C929.wem</Path>
+				</File>
 				<File Id="269478501" Language="SFX">
 					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
 					<Path>SFX\490951__nox_sound__footsteps_walk_E6DD8854.wem</Path>
@@ -90,6 +103,10 @@
 				<File Id="363360337" Language="SFX">
 					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
 					<Path>SFX\490951__nox_sound__footsteps_walk_D20C9472.wem</Path>
+				</File>
+				<File Id="375624474" Language="SFX">
+					<ShortName>653294__osvoldon__big-structure-collision-heard-from-inside.wav</ShortName>
+					<Path>SFX\653294__osvoldon__big-structure-collision-heard-from-inside_10C4C929.wem</Path>
 				</File>
 				<File Id="383140111" Language="SFX">
 					<ShortName>Project_1_Sonar.wav</ShortName>
@@ -123,6 +140,10 @@
 					<ShortName>17216__meatball4u__countdown.wav</ShortName>
 					<Path>SFX\17216__meatball4u__countdown_43B927F8.wem</Path>
 				</File>
+				<File Id="507675057" Language="SFX">
+					<ShortName>556714__nachtmahrtv__bending-metal.wav</ShortName>
+					<Path>SFX\556714__nachtmahrtv__bending-metal_10C4C929.wem</Path>
+				</File>
 				<File Id="550708862" Language="SFX">
 					<ShortName>Project_1_Tension2.wav</ShortName>
 					<Path>SFX\Project_1_Tension2_D79FB2B7.wem</Path>
@@ -150,6 +171,10 @@
 				<File Id="678727613" Language="SFX">
 					<ShortName>Project_1_BackgroundWhiteNoise.wav</ShortName>
 					<Path>SFX\Project_1_BackgroundWhiteNoise_D79FB2B7.wem</Path>
+				</File>
+				<File Id="750154524" Language="SFX">
+					<ShortName>244394__werra__bangexplosion-metallic.wav</ShortName>
+					<Path>SFX\244394__werra__bangexplosion-metallic_10C4C929.wem</Path>
 				</File>
 				<File Id="783648702" Language="SFX">
 					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
@@ -186,6 +211,10 @@
 				<File Id="892432398" Language="SFX">
 					<ShortName>Project_1_Tension 4.wav</ShortName>
 					<Path>SFX\Project_1_Tension 4_D79FB2B7.wem</Path>
+				</File>
+				<File Id="912122509" Language="SFX">
+					<ShortName>556708__nachtmahrtv__metal-hit.wav</ShortName>
+					<Path>SFX\556708__nachtmahrtv__metal-hit_10C4C929.wem</Path>
 				</File>
 				<File Id="974555202" Language="SFX">
 					<ShortName>696374__sanderboah__walking-on-metal.wav</ShortName>

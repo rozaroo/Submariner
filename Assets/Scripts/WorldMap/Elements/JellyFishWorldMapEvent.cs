@@ -10,7 +10,7 @@ public class JellyFishWorldMapEvent : WorldMapUIElement, IWorldMapEvent
     private Transform _selfTransform;
     private Vector3 _patrolTarget;
 
-    public bool IsActive { get; set; }
+    private bool IsActive { get; set; }
 
     private void Awake()
     {
@@ -49,7 +49,6 @@ public class JellyFishWorldMapEvent : WorldMapUIElement, IWorldMapEvent
     public void Execute()
     {
         IsActive = true;
-        Log.Info("[JellyFishEvent] - Submarine entered danger zone. Activating visual flock.");
         
         if (_flockManager != null) 
         {
@@ -61,7 +60,6 @@ public class JellyFishWorldMapEvent : WorldMapUIElement, IWorldMapEvent
     public void EndEvent()
     {
         IsActive = false;
-        Log.Info("[JellyFishEvent] - Submarine escaped. Hiding flock and freezing calculations.");
         
         if (_flockManager != null) 
         {
