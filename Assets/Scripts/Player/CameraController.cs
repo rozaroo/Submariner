@@ -42,6 +42,11 @@ public class CameraController : MonoBehaviour, ICameraRotation
     {
         _cameraStrategy?.Look(_cameraContext);
     }
+    
+    public void ClearCameraStrategy() //Use only if there is no Requirement for an Exit execution of a Strategy in SetCameraStrategy
+    {
+        _cameraStrategy = null;
+    }
 
     public void SetCameraStrategy(ICameraStrategy newStrategy)
     {

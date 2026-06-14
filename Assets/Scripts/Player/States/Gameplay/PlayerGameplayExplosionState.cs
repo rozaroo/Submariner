@@ -16,7 +16,7 @@ public class PlayerGameplayExplosionState : PlayerGameplayState
     private readonly float _fallDuration = 1f;
  
     private float _floorTimer;
-    private readonly float _timeOnFloor = 2.0f;
+    private readonly float _timeOnFloor = 1.0f;
  
     private float _getUpTimer;
     private readonly float _timeGettingUp = 1.5f;
@@ -42,13 +42,18 @@ public class PlayerGameplayExplosionState : PlayerGameplayState
         _player.CharacterController.enabled = false;
         _player.CharacterController.enabled = true;
         SFXManager.SetState("Stunned", "Player_State");
+        
+        _player.CamController.ClearCameraStrategy();    
+        
+        _player.CamController.MainCamera.transform.localPosition = _player.DefaultCameraLocalPosition;
+        _player.CamController.MainCamera.transform.localRotation = _player.DefaultCameraLocalRotation;
 
         _knockbackMovement = new KnockbackMovement(_impactDir, _force, _drag, _accelerationTime);
         _player.SetMovementStrategy(_knockbackMovement);
         
         _dazedCamera = new DazedCameraStrategy(_getUpCurve, _impactDir, 0.35f, 2.5f,50f);
- 
         _player.CamController.SetCameraStrategy(_dazedCamera);
+        
         _fallTimer      = 0f;
         _floorTimer     = 0f;
         _getUpTimer     = 0f;

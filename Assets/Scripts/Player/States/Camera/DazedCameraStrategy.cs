@@ -10,9 +10,7 @@ public class DazedCameraStrategy : ICameraStrategy
     
     private Vector3 _standingLocalPosition;
     private Vector3 _proneLocalPosition;
-    
     private Vector3 _positionOnGetUp;
-
     
     private float _frozenBodyYaw;
     

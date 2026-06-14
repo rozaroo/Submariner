@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class FloodSystem : MonoBehaviour
@@ -18,27 +17,31 @@ public class FloodSystem : MonoBehaviour
     private bool _sunkLogged;
     private bool _isFlooding;
 
+    private void Awake()
+    {
+        GameEventChannel<OnHullPropertyChange>.OnEventRaised += OnHullStatusChanged;
+        GameEventChannel<OnDrainagePropertyChange>.OnEventRaised += OnDrainageStatusReceived;
+    }
+    
     private void Start()
     {
         _currentHeight = startHeight;
         SetWaterHeight(_currentHeight);
     }
 
-    private void OnEnable()
-    {
-        GameEventChannel<OnHullPropertyChange>.OnEventRaised += OnHullStatusChanged;
-        GameEventChannel<OnDrainagePropertyChange>.OnEventRaised += OnDrainageStatusReceived;
-    }
-
-    private void OnDisable()
+    private void OnDestroy()
     {
         GameEventChannel<OnHullPropertyChange>.OnEventRaised -= OnHullStatusChanged;
         GameEventChannel<OnDrainagePropertyChange>.OnEventRaised -= OnDrainageStatusReceived;
     }
-
+    
     private void Update()
     {
-        if (EffectiveFloodingSpeed == 0) return;
+        if (_currentHeight <= startHeight && EffectiveFloodingSpeed <= 0)
+        {
+            enabled = false;
+            return;
+        }
 
         _currentHeight = Mathf.Clamp(_currentHeight + EffectiveFloodingSpeed * Time.deltaTime, startHeight, maxHeight);
         SetWaterHeight(_currentHeight);
@@ -50,20 +53,21 @@ public class FloodSystem : MonoBehaviour
         if (onHullPropertyChange.activeHullDamage <= 0)
         {
             _hullFloodingSpeed = 0f;
-            _drainageSpeed = 0f;
             _isFlooding = false;
-            enabled = false;
             SFXManager.PostEvent("Stop_TensionEvent", gameObject);
             return;
         }
+
         enabled = true;
-        _hullFloodingSpeed = maxRiseSpeed * (onHullPropertyChange.activeHullDamage / onHullPropertyChange.maxHullDamagePosible);
+        
+        float damageRatio = onHullPropertyChange.activeHullDamage / onHullPropertyChange.maxHullDamagePosible;
+        _hullFloodingSpeed = maxRiseSpeed * damageRatio;
+
         if (!_isFlooding)
         {        
             _isFlooding = true;
             SFXManager.PostEvent("Start_TensionEvent", gameObject);
         }
-        
     }
 
     private void OnDrainageStatusReceived(OnDrainagePropertyChange onDrainagePropertyChange)
@@ -76,9 +80,10 @@ public class FloodSystem : MonoBehaviour
         if (_sunkLogged) return;
         float progress = (_currentHeight - startHeight) / (maxHeight - startHeight);
         SFXManager.SetRtpcValue("IncrementalTension", progress);
-        if (progress >= 1f)
+        if (progress >= 0.8f)
         {
-            GameEventChannel<OnSubmarineSunk>.RaiseEvent(new OnSubmarineSunk());
+            Log.Info("Submarine Sunk");
+            GameEventChannel<OnDeath>.RaiseEvent(new OnDeath(DeathType.SubmarineSunk));
             _sunkLogged = true;
         }
     }

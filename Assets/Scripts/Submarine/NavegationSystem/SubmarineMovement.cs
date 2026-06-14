@@ -52,6 +52,7 @@ public class SubmarineMovement : MonoBehaviour
         Vector3 normal = _rb.position - closestPoint;
 
         normal = normal.sqrMagnitude > 0.001f ? normal.normalized : -_velocity.normalized;
+        float impactSpeed = _velocity.magnitude;
         
         _hasTarget = false;
         _currentWaypoints?.Clear();
@@ -62,6 +63,7 @@ public class SubmarineMovement : MonoBehaviour
         _movementCoroutine = StartCoroutine(DecelerateToStop());
 
         GameEventChannel<OnSubmarineRouteCleared>.RaiseEvent(new OnSubmarineRouteCleared());
+        GameEventChannel<OnSubmarineImpact>.RaiseEvent(new OnSubmarineImpact(normal, impactSpeed));
     }
 
     #region CoroutinesHandlers

@@ -251,15 +251,14 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     {
         switch (_energyStatus)
         {
-            case EnergyStatus.Full:
-                drainagePercentage = 1f;
-                break;
-            case EnergyStatus.Low:
-                drainagePercentage = 0.5f;
-                break;
-            case EnergyStatus.Empty:
-                drainagePercentage = 0f;
-                break; 
+            case EnergyStatus.Full: drainagePercentage = 1f; break;
+            case EnergyStatus.Low: drainagePercentage = 0.5f; break;
+            case EnergyStatus.Empty: drainagePercentage = 0f; break; 
+        }
+
+        if (_isDrainageActive)
+        {
+            GameEventChannel<OnDrainagePropertyChange>.RaiseEvent(new OnDrainagePropertyChange(drainagePercentage));
         }
     }
     

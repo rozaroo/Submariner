@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -31,7 +30,6 @@ public class OxygenSystem : MonoBehaviour
     {
         if (_suffocationCoroutine != null) return;
         _suffocationCoroutine = StartCoroutine(SuffocationCoroutine());
-        Log.Info("Suffocation started...");
     }
 
     private void StopSuffocation()
@@ -126,7 +124,6 @@ public class OxygenSystem : MonoBehaviour
 
     private void OxygenDepleted()
     {
-        Log.Info("GAME OVER - Oxygen");
-        GameEventChannel<OnDeath>.RaiseEvent(new OnDeath());
+        GameEventChannel<OnDeath>.RaiseEvent(new OnDeath(DeathType.OxygenDepravation));
     }
 }

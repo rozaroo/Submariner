@@ -7,7 +7,7 @@ public class KnockbackMovement : IMovementStrategy
     private readonly float _drag;
  
     private float _timeActive;
-    private  float _accelerationTime = 0.25f;
+    private readonly float _accelerationTime = 0.25f;
  
     private readonly Vector3 _targetVelocity;
  

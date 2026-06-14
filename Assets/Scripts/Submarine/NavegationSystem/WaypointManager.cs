@@ -27,7 +27,7 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
     private void OnDisable()
     {
         GameEventChannel<OnSubmarineArrivedAtCheckpoint>.OnEventRaised -= RemoveWaypointOnArrival;
-        GameEventChannel<OnSubmarineRouteCleared>.OnEventRaised += RemoveAllWaypoints;
+        GameEventChannel<OnSubmarineRouteCleared>.OnEventRaised -= RemoveAllWaypoints;
     }
 
     #region Pointer Events Handlers
