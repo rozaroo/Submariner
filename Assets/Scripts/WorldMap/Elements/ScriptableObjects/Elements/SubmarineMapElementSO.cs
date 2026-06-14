@@ -3,19 +3,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "WorldMap/Elements/SubmarineElement")]
 public class SubmarineMapElementSO : WorldMapUIElementSO
 {
-    [SerializeField] private GameObject submarinePrefab;
-    
-    public override GameObject CreateElement()
+    protected override void ConfigureElement(GameObject go)
     {
-        GameObject go = Instantiate(submarinePrefab);
-        
         if (!go.TryGetComponent<WorldMapUIElement>(out var component))
         {
             component = go.AddComponent<WorldMapUIElement>();
         }
-        
-        component.Setup(SonarDetectionMode, MapAsset, UpdateMode, SyncMode, SyncTime);
-        
-        return go;
+
+        component.Setup(DetectionMode, MapAsset, UpdateMode, SyncMode, SyncTime);
     }
 }

@@ -21,11 +21,13 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
     private void OnEnable()
     {
         GameEventChannel<OnSubmarineArrivedAtCheckpoint>.OnEventRaised += RemoveWaypointOnArrival;
+        GameEventChannel<OnSubmarineRouteCleared>.OnEventRaised += RemoveAllWaypoints;
     }
 
     private void OnDisable()
     {
         GameEventChannel<OnSubmarineArrivedAtCheckpoint>.OnEventRaised -= RemoveWaypointOnArrival;
+        GameEventChannel<OnSubmarineRouteCleared>.OnEventRaised += RemoveAllWaypoints;
     }
 
     #region Pointer Events Handlers
@@ -113,6 +115,16 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
     {
         _waypoints.Remove(data);
         MapIconFactory.Release(data.Icon); 
+        RefreshIndices();
+    }
+
+    private void RemoveAllWaypoints(OnSubmarineRouteCleared data)
+    {
+        for (int i = _waypoints.Count - 1; i >= 0; i--)
+        {
+            MapIconFactory.Release(_waypoints[i].Icon);
+        }
+        _waypoints.Clear();
         RefreshIndices();
     }
 

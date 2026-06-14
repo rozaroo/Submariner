@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: JellyFishElementEvent
   m_EditorClassIdentifier: 
   elementName: JellyFishEvent
+  prefab: {fileID: 0}
   requiredSize: 10
-  sonarDetectionMode: 3
+  SonarDetectionMode: 3
   mapAsset: {fileID: 11400000, guid: 625f41b7342b984468f93681823168fc, type: 2}
   updateMode: 1
   syncMode: 1

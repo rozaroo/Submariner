@@ -25,12 +25,12 @@ public class WorldMapElement : MonoBehaviour, IWorldElement, ISetup
         IsInitialized = true;
     }
 
-#if UNITY_EDITOR
+    #if UNITY_EDITOR
     public void OnDrawGizmos()
     {
         float radius = 1f;
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(position, radius);
     }
-#endif
+    #endif
 }

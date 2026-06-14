@@ -2,42 +2,66 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class SubmarineMovement : MonoBehaviour
 {
-    [Header("Properties")]
+    [Header("Movement Properties")]
     [SerializeField] private float smoothTime = 0.9f;
     [SerializeField] private float rotationSmoothTime = 0.15f;
     [SerializeField] private float maxMovementSpeed = 20f;
     [SerializeField] private float maxRotationSpeed = 40f;
     [SerializeField] private float distanceOffset = 0.1f;
     [SerializeField] private float smoothDeaccelerationTime = 1f;
+
+    [Header("Collision Properties")] 
+    [SerializeField] private float _bounceFactor = 0.4f;
     
+    private Rigidbody _rb;
     private List<Vector3> _currentWaypoints;
     private List<Vector3> _newWaypoints;
     private bool _hasTarget;
     private int _currentIndex;
-    private Transform _selfTransform;
     private Vector3 _currentTarget;
+    private Vector3 _velocity = Vector3.zero;
     private Coroutine _movementCoroutine;
     private float _rotationVelocity = 0f;
-    private Vector3 _velocity = Vector3.zero;
     private float _speedMultiplier = 1f;
-
+    
     private void OnEnable()
     {
-            GameEventChannel<OnSubmarineRouteChanged>.OnEventRaised += GetNewWaypointList; 
+        GameEventChannel<OnSubmarineRouteChanged>.OnEventRaised += GetNewWaypointList;
+        GameEventChannel<OnSubmarineCollision>.OnEventRaised += OnSubmarineCollision;
     }
 
     private void OnDisable()
     {
-            GameEventChannel<OnSubmarineRouteChanged>.OnEventRaised -= GetNewWaypointList;
+        GameEventChannel<OnSubmarineRouteChanged>.OnEventRaised -= GetNewWaypointList;
+        GameEventChannel<OnSubmarineCollision>.OnEventRaised -= OnSubmarineCollision;
     }
 
     private void Start()
     {
-        _selfTransform = transform;
+        _rb = GetComponent<Rigidbody>();
         _currentWaypoints = new List<Vector3>();
         _newWaypoints = new List<Vector3>();
+    }
+
+    private void OnSubmarineCollision(OnSubmarineCollision collision)
+    {
+        Vector3 closestPoint = collision.subCollider.ClosestPoint(_rb.position);
+        Vector3 normal = _rb.position - closestPoint;
+
+        normal = normal.sqrMagnitude > 0.001f ? normal.normalized : -_velocity.normalized;
+        
+        _hasTarget = false;
+        _currentWaypoints?.Clear();
+        _newWaypoints?.Clear();
+
+        if (_movementCoroutine != null) StopCoroutine(_movementCoroutine);
+        _velocity = Vector3.Reflect(_velocity, normal) * _bounceFactor;
+        _movementCoroutine = StartCoroutine(DecelerateToStop());
+
+        GameEventChannel<OnSubmarineRouteCleared>.RaiseEvent(new OnSubmarineRouteCleared());
     }
 
     #region CoroutinesHandlers
@@ -68,13 +92,13 @@ public class SubmarineMovement : MonoBehaviour
         _rotationVelocity = 0f;
 
         yield return RotateTowardsTarget();
-        
+    
         float sqrDistanceOffset = distanceOffset * distanceOffset;
 
-        while (_hasTarget && (_currentTarget - _selfTransform.position).sqrMagnitude > sqrDistanceOffset)
+        while (_hasTarget && (_currentTarget - _rb.position).sqrMagnitude > sqrDistanceOffset)
         {
-            _selfTransform.position = Vector3.SmoothDamp(_selfTransform.position, _currentTarget,ref _velocity, smoothTime, maxMovementSpeed * _speedMultiplier);
-            yield return null;
+            _rb.MovePosition(Vector3.SmoothDamp(_rb.position, _currentTarget, ref _velocity, smoothTime, maxMovementSpeed * _speedMultiplier));
+            yield return new WaitForFixedUpdate();
         }
         _velocity = Vector3.zero; 
         CheckTargetAvailability();
@@ -82,23 +106,15 @@ public class SubmarineMovement : MonoBehaviour
 
     private IEnumerator RotateTowardsTarget()
     {
-        Vector3 brakingVelocityRef = Vector3.zero;
-        
         while (_hasTarget)
         {
-            if (_velocity.sqrMagnitude > 0.001f)
-            {
-                _velocity = Vector3.SmoothDamp(_velocity, Vector3.zero, ref brakingVelocityRef, smoothTime, maxMovementSpeed);
-                _selfTransform.position += _velocity * Time.deltaTime;
-            }
-            else _velocity = Vector3.zero;
-            Vector3 dir = _currentTarget - _selfTransform.position;
+            Vector3 dir = _currentTarget - _rb.position;
             dir.y = 0;
-            
+
             if (dir.sqrMagnitude < 0.001f) yield break;
-            
+
             float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
-            float currentAngle = _selfTransform.eulerAngles.y;
+            float currentAngle = _rb.rotation.eulerAngles.y;
 
             float smoothAngle = Mathf.SmoothDampAngle(
                 currentAngle, 
@@ -107,10 +123,10 @@ public class SubmarineMovement : MonoBehaviour
                 rotationSmoothTime, 
                 maxRotationSpeed);
 
-            _selfTransform.rotation = Quaternion.Euler(
-                _selfTransform.eulerAngles.x, 
+            _rb.MoveRotation(Quaternion.Euler(
+                _rb.rotation.eulerAngles.x, 
                 smoothAngle, 
-                _selfTransform.eulerAngles.z);
+                _rb.rotation.eulerAngles.z));
 
             if (Mathf.Abs(Mathf.DeltaAngle(currentAngle, targetAngle)) < 1f)
             {
@@ -118,7 +134,7 @@ public class SubmarineMovement : MonoBehaviour
                 yield break;
             }
 
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
     }
     
@@ -143,14 +159,14 @@ public class SubmarineMovement : MonoBehaviour
                 smoothDeaccelerationTime, 
                 maxRotationSpeed);
             
-            _selfTransform.position += _velocity * Time.deltaTime;
+            _rb.MovePosition(_rb.position + _velocity * Time.fixedDeltaTime);
             
-            Vector3 currentLocalEuler = _selfTransform.eulerAngles;
-            float newYAngle = currentLocalEuler.y + (_rotationVelocity * Time.deltaTime);
+            Vector3 currentLocalEuler = _rb.rotation.eulerAngles;
+            float newYAngle = currentLocalEuler.y + (_rotationVelocity * Time.fixedDeltaTime);
+
+            _rb.MoveRotation(Quaternion.Euler(currentLocalEuler.x, newYAngle, currentLocalEuler.z));
             
-            _selfTransform.rotation = Quaternion.Euler(currentLocalEuler.x, newYAngle, currentLocalEuler.z);
-            
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
         _velocity = Vector3.zero;
         _rotationVelocity = 0f;
@@ -181,7 +197,7 @@ public class SubmarineMovement : MonoBehaviour
         else
         {
             _velocity = Vector3.zero;
-            _selfTransform.position = _currentTarget;
+            _rb.position = _currentTarget;
             OnWaypoint();
         }
     }
@@ -228,3 +244,4 @@ public class SubmarineMovement : MonoBehaviour
         _speedMultiplier = multiplier;
     }
 }
+

@@ -10,7 +10,7 @@ public class JellyFishWorldMapEvent : WorldMapUIElement, IWorldMapEvent
     private Transform _selfTransform;
     private Vector3 _patrolTarget;
 
-    public bool IsActive { get; set; }
+    private bool IsActive { get; set; }
 
     private void Awake()
     {

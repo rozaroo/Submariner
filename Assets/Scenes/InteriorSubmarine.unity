@@ -2260,9 +2260,29 @@ PrefabInstance:
       value: WorldMapManager
       objectReference: {fileID: 0}
     - target: {fileID: 2412949673346967039, guid: e3a888563bd8d0c44aab7645e4a292ef, type: 3}
+      propertyPath: mapSpawnAttempts
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412949673346967039, guid: e3a888563bd8d0c44aab7645e4a292ef, type: 3}
       propertyPath: worldContainerGo
       value: 
       objectReference: {fileID: 599892452}
+    - target: {fileID: 2412949673346967039, guid: e3a888563bd8d0c44aab7645e4a292ef, type: 3}
+      propertyPath: desiredEventsAmount
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412949673346967039, guid: e3a888563bd8d0c44aab7645e4a292ef, type: 3}
+      propertyPath: minDistanceBetweenEvents
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412949673346967039, guid: e3a888563bd8d0c44aab7645e4a292ef, type: 3}
+      propertyPath: worldPossibleElements.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412949673346967039, guid: e3a888563bd8d0c44aab7645e4a292ef, type: 3}
+      propertyPath: 'worldPossibleElements.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 64f43a8d6434913458188b7ab20f3ec7, type: 2}
     - target: {fileID: 8479256821056683426, guid: e3a888563bd8d0c44aab7645e4a292ef, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.018

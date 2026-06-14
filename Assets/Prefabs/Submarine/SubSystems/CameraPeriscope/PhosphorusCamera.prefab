@@ -73,7 +73,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 129
+    m_Bits: 640
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -143,12 +143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   periscopeCameraAnchorSo: {fileID: 11400000, guid: 522a189dbd2c157479bb7efa2786b504, type: 2}
   exteriorCamera: {fileID: 5069593907928987219}
-  cameraPropertyData:
-    _VisibleDuration: 1
-    _fadeDuration: 3
   mouseSensitivity: 0.2
   verticalClamp: 70
-  energyStatusEventSo: {fileID: 11400000, guid: 1d3ff72475cd32e4eb5906f12ae805b7, type: 2}
   flashFadeInDuration: 0.05
   whiteScreenDuration: 0.15
   exteriorCameraDuration: 2

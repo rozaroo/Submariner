@@ -8,9 +8,6 @@ public class CameraController : MonoBehaviour, ICameraRotation
     [SerializeField] private float upDownPitchLimit = 70f;
     [SerializeField] private float lookLerpSpeed = 10f;
     
-    [Header("Debug Settings")] 
-    [SerializeField] private bool showGizmos = true;
-    
     [Header("References Settings")] 
     [SerializeField] private string lookActionName = "Look";
     [SerializeField] private Camera playerCamera;

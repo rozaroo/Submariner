@@ -6,7 +6,7 @@ public abstract class WorldMapUIElementSO : WorldMapElementSO
     [SerializeField] protected MapAssetSO mapAsset;
     [SerializeField] protected WorldUIUpdateMode updateMode;
     [SerializeField] protected WorldUISyncMode syncMode;
-    [SerializeField] protected float syncTime = 0.1f;
+    [SerializeField] private float syncTime = 0.1f;
     
     protected MapAssetSO MapAsset => mapAsset;
     protected float SyncTime => syncTime;
