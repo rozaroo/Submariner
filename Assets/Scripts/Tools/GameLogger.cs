@@ -47,7 +47,7 @@ public class GameLogger : MonoBehaviour
         string timestamp = System.DateTime.Now.ToString("HH:mm:ss");
         logs.Add(($"[{timestamp}] {message}", type));
 
-        if (logs.Count > 100) logs.RemoveAt(0); // límite de memoria
+        if (logs.Count > 100) logs.RemoveAt(0); 
         
         _scrollPos.y = Mathf.Infinity;
     }
