@@ -6,8 +6,16 @@
 				<SoundcasterSession Name="VOT" ID="{AE9BEF46-8D41-4162-9744-2C7DD0FD5A3C}">
 					<RTPCValueList ShowAll="true">
 						<RTPCValue>
+							<GameParameterRef Name="Game_MFX_SoundVolume" ID="{C0518958-776B-4216-AADB-10559DC27865}"/>
+							<Value>100</Value>
+						</RTPCValue>
+						<RTPCValue>
 							<GameParameterRef Name="IncrementalTension" ID="{29245FD2-1450-4933-83DE-5C38DA9AAA4D}"/>
 							<Value>1</Value>
+						</RTPCValue>
+						<RTPCValue>
+							<GameParameterRef Name="Game_SFX_SoundVolume" ID="{9A5C659E-3680-4A2E-B9C2-C2637A672BE4}"/>
+							<Value>100</Value>
 						</RTPCValue>
 						<RTPCValue>
 							<GameParameterRef Name="Submarine_Colision_Distance" ID="{C033A24E-9AE2-4C4A-828C-BE8E6DE87FFE}"/>

@@ -3,29 +3,6 @@
 	<AudioObjects>
 		<WorkUnit Name="TestingUnit" ID="{B694ADA0-198E-4026-956F-64414545624A}" PersistMode="Standalone">
 			<ChildrenList>
-				<Sound Name="244394__werra__bangexplosion-metallic" ID="{5DACC95A-C279-451A-A877-28C4D6F7F6EF}" ShortID="138072251">
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="244394__werra__bangexplosion-metallic" ID="{28682521-83DC-49D1-A253-032883AFBB35}">
-							<Language>SFX</Language>
-							<AudioFile>244394__werra__bangexplosion-metallic.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="750154524"/>
-							</MediaIDList>
-						</AudioFileSource>
-					</ChildrenList>
-					<ObjectLists/>
-					<ActiveSourceList>
-						<ActiveSource Name="244394__werra__bangexplosion-metallic" ID="{28682521-83DC-49D1-A253-032883AFBB35}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
 				<Sound Name="491077__delonow__metal-nail-falling" ID="{1183FCAE-7DF1-42F2-B16C-ACDC3B3E00EC}" ShortID="634203562">
 					<ReferenceList>
 						<Reference Name="Conversion">
@@ -72,52 +49,6 @@
 						<ActiveSource Name="491766__soundmarnus__metal-nail-falling-from-different-heights-and-angles" ID="{61BEC0C6-192A-47AF-A009-278CC2C7A4CB}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
-				<Sound Name="556708__nachtmahrtv__metal-hit" ID="{EDE3A19C-1C3A-479D-90D9-F4C14F319454}" ShortID="686503991">
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="556708__nachtmahrtv__metal-hit" ID="{8482C87F-18B6-4240-997A-20409BD5DA8D}">
-							<Language>SFX</Language>
-							<AudioFile>556708__nachtmahrtv__metal-hit.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="912122509"/>
-							</MediaIDList>
-						</AudioFileSource>
-					</ChildrenList>
-					<ObjectLists/>
-					<ActiveSourceList>
-						<ActiveSource Name="556708__nachtmahrtv__metal-hit" ID="{8482C87F-18B6-4240-997A-20409BD5DA8D}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
-				<Sound Name="556714__nachtmahrtv__bending-metal" ID="{3390045B-FE8D-40CB-8E83-414924C1062D}" ShortID="169305416">
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="556714__nachtmahrtv__bending-metal" ID="{F9F1E92D-433A-4998-B826-32BF2407D512}">
-							<Language>SFX</Language>
-							<AudioFile>556714__nachtmahrtv__bending-metal.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="507675057"/>
-							</MediaIDList>
-						</AudioFileSource>
-					</ChildrenList>
-					<ObjectLists/>
-					<ActiveSourceList>
-						<ActiveSource Name="556714__nachtmahrtv__bending-metal" ID="{F9F1E92D-433A-4998-B826-32BF2407D512}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
 				<Sound Name="30932__aust_paul__bullet-ricochet" ID="{2C3FAF18-5836-4388-AA3A-EC775AFF911E}" ShortID="27286615">
 					<ReferenceList>
 						<Reference Name="Conversion">
@@ -139,118 +70,6 @@
 					<ObjectLists/>
 					<ActiveSourceList>
 						<ActiveSource Name="30932__aust_paul__bullet-ricochet" ID="{8374BCC5-BC1C-4CF5-A3F0-6EC7C1ECA87E}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
-				<Sound Name="46934__digifishmusic__dripping" ID="{EBE28564-7B3E-4699-A0EF-23C6D3434871}" ShortID="396524229">
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="46934__digifishmusic__dripping" ID="{81534E7C-D4EF-480B-9A65-C8047DD19511}">
-							<Language>SFX</Language>
-							<AudioFile>46934__digifishmusic__dripping.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="632780041"/>
-							</MediaIDList>
-						</AudioFileSource>
-					</ChildrenList>
-					<ObjectLists/>
-					<ActiveSourceList>
-						<ActiveSource Name="46934__digifishmusic__dripping" ID="{81534E7C-D4EF-480B-9A65-C8047DD19511}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
-				<Sound Name="338969__timkahn__massive-metal-hit" ID="{A23C342C-9DA8-4368-ABAF-9858AA4F315D}" ShortID="533296124">
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="338969__timkahn__massive-metal-hit" ID="{132CC307-6563-4A9F-BDB6-8A416E7AAD8C}">
-							<Language>SFX</Language>
-							<AudioFile>338969__timkahn__massive-metal-hit.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="23372763"/>
-							</MediaIDList>
-						</AudioFileSource>
-					</ChildrenList>
-					<ObjectLists/>
-					<ActiveSourceList>
-						<ActiveSource Name="338969__timkahn__massive-metal-hit" ID="{132CC307-6563-4A9F-BDB6-8A416E7AAD8C}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
-				<Sound Name="653294__osvoldon__big-structure-collision-heard-from-inside" ID="{55508545-7D95-45FA-8E2F-1CFBEB7A2335}" ShortID="284774799">
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="653294__osvoldon__big-structure-collision-heard-from-inside" ID="{45CFAE9F-B334-439B-A4A6-9FBE7F34FD02}">
-							<Language>SFX</Language>
-							<AudioFile>653294__osvoldon__big-structure-collision-heard-from-inside.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="375624474"/>
-							</MediaIDList>
-						</AudioFileSource>
-					</ChildrenList>
-					<ObjectLists/>
-					<ActiveSourceList>
-						<ActiveSource Name="653294__osvoldon__big-structure-collision-heard-from-inside" ID="{45CFAE9F-B334-439B-A4A6-9FBE7F34FD02}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
-				<Sound Name="244983__ani_music__ani-big-pipe-hit" ID="{745E1D05-D281-496C-AAC9-C1086633BC86}" ShortID="625091385">
-					<PropertyList>
-						<Property Name="RenderEffect0" Type="bool">
-							<ValueList>
-								<Value>True</Value>
-							</ValueList>
-						</Property>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
-						</Reference>
-						<Reference Name="Effect0">
-							<Custom CreatedFrom="{99F80B38-1C45-42CE-9BCD-E94F3885DCAA}">
-								<Effect Name="Monsterize (Custom)" ID="{FEF1C148-E3CE-4D4A-BDD9-D3B7EDAD43DD}" ShortID="780411401" PluginName="Wwise Pitch Shifter" CompanyID="0" PluginID="136" PluginType="3">
-									<PropertyList>
-										<Property Name="DelayTime" Type="Real32" Value="85"/>
-										<Property Name="DryLevel" Type="Real32" Value="-20"/>
-										<Property Name="FilterFrequency" Type="Real32" Value="2000"/>
-										<Property Name="Pitch" Type="Real32" Value="-1300"/>
-										<Property Name="WetLevel" Type="Real32" Value="6"/>
-									</PropertyList>
-								</Effect>
-							</Custom>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="244983__ani_music__ani-big-pipe-hit" ID="{5F6332B6-DDE2-4E93-9280-AB0C1C973A64}">
-							<Language>SFX</Language>
-							<AudioFile>244983__ani_music__ani-big-pipe-hit.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="30412895"/>
-							</MediaIDList>
-						</AudioFileSource>
-					</ChildrenList>
-					<ObjectLists/>
-					<ActiveSourceList>
-						<ActiveSource Name="244983__ani_music__ani-big-pipe-hit" ID="{5F6332B6-DDE2-4E93-9280-AB0C1C973A64}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
 				<Sound Name="33637__herbertboland__cinematicboomnorm" ID="{261D5018-3449-44D3-9A74-4871761F9FBC}" ShortID="848722797">
@@ -395,6 +214,29 @@
 						</Sound>
 					</ChildrenList>
 				</Folder>
+				<Sound Name="154792__supermatt1896__titanic-collision" ID="{464B0346-8C73-4DB7-9641-65A7E1FB8079}" ShortID="372162048">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="154792__supermatt1896__titanic-collision" ID="{FBDB4E10-8E70-4206-8EA4-8B6818DED23C}">
+							<Language>SFX</Language>
+							<AudioFile>154792__supermatt1896__titanic-collision.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="5578575"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="154792__supermatt1896__titanic-collision" ID="{FBDB4E10-8E70-4206-8EA4-8B6818DED23C}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

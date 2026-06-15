@@ -46,9 +46,9 @@ public class PlayerCharacter : MonoBehaviour
     public PlayerInput Input { get; private set; }
     public CameraController CamController { get; private set; }
     public InventorySystem InventorySystem { get; private set; }
+    public FootstepSystem FootstepSystem { get; private set; }
     public Vector3 DefaultCameraLocalPosition => _defaultCameraLocalPosition;
     public Quaternion DefaultCameraLocalRotation => _defaultCameraLocalRotation;
-    public FootstepSystem FootstepSystem { get; private set; }
     public CharacterController CharacterController => _controller;
     
     private void OnEnable()
@@ -229,7 +229,6 @@ public class PlayerCharacter : MonoBehaviour
     }
 
     #endregion
-    
 
     #region Testing
 

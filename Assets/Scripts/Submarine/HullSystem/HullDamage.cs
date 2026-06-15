@@ -21,6 +21,15 @@ public class HullDamage : MonoBehaviour
         OnCrackRepaired?.Invoke(this);
         gameObject.SetActive(false);
     }
-    
-    private void OnEnable() => _progress = 0f;
+
+    private void OnEnable()
+    {
+        _progress = 0f;
+        SFXManager.PostEvent("Start_HullBreachSFX", gameObject);
+    }
+
+    private void OnDisable()
+    {
+        SFXManager.PostEvent("Stop_HullBreachSFX", gameObject);
+    }
 }

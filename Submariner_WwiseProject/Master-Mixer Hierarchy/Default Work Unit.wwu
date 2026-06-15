@@ -11,6 +11,36 @@
 					</ReferenceList>
 					<ChildrenList>
 						<Bus Name="General_SFX" ID="{7D58A2F4-D121-43DD-BB96-2F34B0A30465}">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<RTPCList>
+										<RTPC Name="" ID="{353C2186-520F-4047-B603-BDF2388D44A6}" ShortID="530651400">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="Game_SFX_SoundVolume" ID="{9A5C659E-3680-4A2E-B9C2-C2637A672BE4}" WorkUnitID="{27E5A97C-32FF-4996-9BA3-8599AC94CF84}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{36792C4D-DA00-4FA1-8DEA-28D456369364}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="3"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>-200</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>100</XPos>
+														<YPos>0</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
+									</RTPCList>
+								</Property>
+							</PropertyList>
 							<ChildrenList>
 								<Bus Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}">
 									<ReferenceList>
@@ -96,6 +126,36 @@
 							<ObjectLists/>
 						</Bus>
 						<Bus Name="General_MFX" ID="{E27468A2-9D02-41D5-A162-1432A7B66C24}">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<RTPCList>
+										<RTPC Name="" ID="{D90B6B05-60F9-4D40-9369-4DB67A3FD2FD}" ShortID="680320991">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="Game_MFX_SoundVolume" ID="{C0518958-776B-4216-AADB-10559DC27865}" WorkUnitID="{27E5A97C-32FF-4996-9BA3-8599AC94CF84}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{19F5C2CD-3E68-4BB2-BD7D-2A3F06BE098A}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="3"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>-200</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>100</XPos>
+														<YPos>0</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
+									</RTPCList>
+								</Property>
+							</PropertyList>
 							<ChildrenList>
 								<Bus Name="Submarine_MFX" ID="{26BCDD28-5BD2-4640-A80C-657C9E0B2FF3}">
 									<ReferenceList>

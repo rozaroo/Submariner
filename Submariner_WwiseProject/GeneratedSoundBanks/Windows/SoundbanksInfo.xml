@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Language="SFX" Hash="471139988">
+		<SoundBank Id="1355168291" Language="SFX" Hash="1241460624">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
@@ -20,6 +20,10 @@
 				<AuxBus Id="2315337392" Name="Reverb_Muffled_MFX_AUX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_MFX\Reverb_Muffled_MFX_AUX"/>
 				<AuxBus Id="3031736565" Name="Submarine_Reverb_AUX_SFX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Submarine_Reverb_AUX_SFX"/>
 			</IncludedAuxBusses>
+			<GameParameters>
+				<GameParameter Id="1465352627" Name="Game_MFX_SoundVolume" ObjectPath="\Game Parameters\ParametersVOT\Game_MFX_SoundVolume"/>
+				<GameParameter Id="3453168921" Name="Game_SFX_SoundVolume" ObjectPath="\Game Parameters\ParametersVOT\Game_SFX_SoundVolume"/>
+			</GameParameters>
 			<StateGroups>
 				<StateGroup Id="4071417932" Name="Player_State" ObjectPath="\States\Default Work Unit\Player_State" GUID="{E6F0C986-7EA9-445E-87F2-C62236FE5080}">
 					<States>
@@ -30,7 +34,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3401228817" Language="SFX" Hash="1830655215">
+		<SoundBank Id="3401228817" Language="SFX" Hash="1348202290">
 			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
 			<ShortName>GamePlay_SFX</ShortName>
 			<Path>GamePlay_SFX.bnk</Path>
@@ -38,6 +42,7 @@
 				<Event Id="3003027233" Name="Start_BackgroundSubmarineMFX" ObjectPath="\Events\Gameplay_SFX\Start_BackgroundSubmarineMFX" DurationType="Infinite"/>
 				<Event Id="738466431" Name="Start_ButtonPress" ObjectPath="\Events\Gameplay_SFX\Start_ButtonPress" DurationType="OneShot" DurationMin="0.082455" DurationMax="0.115269"/>
 				<Event Id="378872923" Name="Start_Closing_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Closing_Pressure_DoorSFX" DurationType="OneShot" DurationMin="2.07" DurationMax="2.257351"/>
+				<Event Id="2571798077" Name="Start_HullBreachSFX" ObjectPath="\Events\Gameplay_SFX\Start_HullBreachSFX" MaxAttenuation="100." DurationType="Infinite"/>
 				<Event Id="2469108041" Name="Start_LeverPullFinished" ObjectPath="\Events\Gameplay_SFX\Start_LeverPullFinished" DurationType="OneShot" DurationMin="0.398979" DurationMax="0.398979"/>
 				<Event Id="4235702204" Name="Start_Opening_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Opening_Pressure_DoorSFX" DurationType="OneShot" DurationMin="1.35771" DurationMax="1.35771"/>
 				<Event Id="438413481" Name="Start_PhosphorusCameraCooldown" ObjectPath="\Events\Gameplay_SFX\Start_PhosphorusCameraCooldown" DurationType="OneShot" DurationMin="1.902773" DurationMax="1.902773"/>
@@ -45,9 +50,10 @@
 				<Event Id="2940474702" Name="Start_PlayerFootsteps" ObjectPath="\Events\Gameplay_SFX\Start_PlayerFootsteps" DurationType="OneShot" DurationMin="0.502769" DurationMax="1.307199"/>
 				<Event Id="1735885581" Name="Start_SonarPingInner" ObjectPath="\Events\Gameplay_SFX\Start_SonarPingInner" DurationType="OneShot" DurationMin="3.2" DurationMax="3.2"/>
 				<Event Id="997126444" Name="Start_SonarPingOuter" ObjectPath="\Events\Gameplay_SFX\Start_SonarPingOuter" DurationType="OneShot" DurationMin="3.2" DurationMax="3.2"/>
-				<Event Id="3771492726" Name="Start_SubmarineCollision" ObjectPath="\Events\Gameplay_SFX\Start_SubmarineCollision" DurationType="OneShot" DurationMin="6.492021" DurationMax="8.007982"/>
+				<Event Id="3771492726" Name="Start_SubmarineCollision" ObjectPath="\Events\Gameplay_SFX\Start_SubmarineCollision" DurationType="OneShot" DurationMin="7.994576" DurationMax="8.817284"/>
 				<Event Id="1403223316" Name="Start_TensionEvent" ObjectPath="\Events\Gameplay_SFX\Start_TensionEvent" DurationType="Infinite"/>
 				<Event Id="116843463" Name="Stop_BackgroundSubmarineMFX" ObjectPath="\Events\Gameplay_SFX\Stop_BackgroundSubmarineMFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
+				<Event Id="3933279043" Name="Stop_HullBreachSFX" ObjectPath="\Events\Gameplay_SFX\Stop_HullBreachSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="3884825202" Name="Stop_TensionEvent" ObjectPath="\Events\Gameplay_SFX\Stop_TensionEvent" DurationType="Infinite"/>
 			</IncludedEvents>
 			<IncludedAuxBusses>
@@ -124,6 +130,10 @@
 					<ShortName>Flash reversed 001.wav</ShortName>
 					<Path>SFX\Flash reversed 001_4C940592.wem</Path>
 				</File>
+				<File Id="441861788" Language="SFX">
+					<ShortName>415151__burghrecords__stream-running-water-aviemore-scotland.wav</ShortName>
+					<Path>SFX\415151__burghrecords__stream-running-water-aviemore-scotland_33A72624.wem</Path>
+				</File>
 				<File Id="458355858" Language="SFX">
 					<ShortName>696374__sanderboah__walking-on-metal.wav</ShortName>
 					<Path>SFX\696374__sanderboah__walking-on-metal_3E8AF12D.wem</Path>
@@ -155,6 +165,10 @@
 				<File Id="586941861" Language="SFX">
 					<ShortName>Project_1_Tension1.wav</ShortName>
 					<Path>SFX\Project_1_Tension1_D79FB2B7.wem</Path>
+				</File>
+				<File Id="632780041" Language="SFX">
+					<ShortName>46934__digifishmusic__dripping.wav</ShortName>
+					<Path>SFX\46934__digifishmusic__dripping_C54875FB.wem</Path>
 				</File>
 				<File Id="655064136" Language="SFX">
 					<ShortName>Project_1_BassTension1.wav</ShortName>
@@ -208,13 +222,17 @@
 					<ShortName>Flash.wav</ShortName>
 					<Path>SFX\Flash_82F5351A.wem</Path>
 				</File>
+				<File Id="886848604" Language="SFX">
+					<ShortName>12654__wwwbonsonca__drop_slow_long_01.wav</ShortName>
+					<Path>SFX\12654__wwwbonsonca__drop_slow_long_01_EBC8AB04.wem</Path>
+				</File>
 				<File Id="892432398" Language="SFX">
 					<ShortName>Project_1_Tension 4.wav</ShortName>
 					<Path>SFX\Project_1_Tension 4_D79FB2B7.wem</Path>
 				</File>
 				<File Id="912122509" Language="SFX">
 					<ShortName>556708__nachtmahrtv__metal-hit.wav</ShortName>
-					<Path>SFX\556708__nachtmahrtv__metal-hit_10C4C929.wem</Path>
+					<Path>SFX\556708__nachtmahrtv__metal-hit_2E7310B1.wem</Path>
 				</File>
 				<File Id="974555202" Language="SFX">
 					<ShortName>696374__sanderboah__walking-on-metal.wav</ShortName>
@@ -235,7 +253,9 @@
 			</IncludedMemoryFiles>
 			<GameParameters>
 				<GameParameter Id="511617432" Name="Submarine_Colision_Distance" ObjectPath="\Game Parameters\ParametersVOT\Submarine_Colision_Distance"/>
+				<GameParameter Id="1465352627" Name="Game_MFX_SoundVolume" ObjectPath="\Game Parameters\ParametersVOT\Game_MFX_SoundVolume"/>
 				<GameParameter Id="3138205067" Name="IncrementalTension" ObjectPath="\Game Parameters\ParametersVOT\IncrementalTension"/>
+				<GameParameter Id="3453168921" Name="Game_SFX_SoundVolume" ObjectPath="\Game Parameters\ParametersVOT\Game_SFX_SoundVolume"/>
 			</GameParameters>
 			<StateGroups>
 				<StateGroup Id="894977922" Name="Energy_Status" ObjectPath="\States\Default Work Unit\Energy_Status" GUID="{47AFB86B-07E1-4368-AE6B-F248AEA5823B}">

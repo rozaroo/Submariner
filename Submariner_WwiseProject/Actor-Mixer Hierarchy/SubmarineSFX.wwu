@@ -947,6 +947,7 @@
 				</Sound>
 				<Sound Name="SonarPingOuter" ID="{A33B48EA-BB1B-4E80-AF37-B2651D123D4D}" ShortID="287548449">
 					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
 						<Property Name="OverrideEffect" Type="bool" Value="True"/>
 						<Property Name="RenderEffect0" Type="bool">
 							<ValueList>
@@ -981,6 +982,7 @@
 				</Sound>
 				<Sound Name="SonarPingInner" ID="{152E0A4E-6888-476B-8DEF-7321AEEED901}" ShortID="671265797">
 					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
 						<Property Name="Highpass" Type="int16">
 							<ValueList>
 								<Value>11</Value>
@@ -1031,6 +1033,514 @@
 						<ActiveSource Name="Project_1_Sonar" ID="{03FC139E-9D43-46B5-B8CD-59372FBA0398}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<BlendContainer Name="SubmarineCollision" ID="{13674490-2EB3-437B-924B-077639CCF6EF}" ShortID="433380107">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<RandomSequenceContainer Name="ImpactCollision" ID="{74CA7A07-E6BF-4063-B1E2-D9A947974463}" ShortID="285448062">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="244394__werra__bangexplosion-metallic" ID="{5DACC95A-C279-451A-A877-28C4D6F7F6EF}" ShortID="138072251">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="244394__werra__bangexplosion-metallic" ID="{28682521-83DC-49D1-A253-032883AFBB35}">
+											<Language>SFX</Language>
+											<AudioFile>244394__werra__bangexplosion-metallic.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="750154524"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="244394__werra__bangexplosion-metallic" ID="{28682521-83DC-49D1-A253-032883AFBB35}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="653294__osvoldon__big-structure-collision-heard-from-inside" ID="{55508545-7D95-45FA-8E2F-1CFBEB7A2335}" ShortID="284774799">
+									<PropertyList>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>-530</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>5</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="653294__osvoldon__big-structure-collision-heard-from-inside" ID="{45CFAE9F-B334-439B-A4A6-9FBE7F34FD02}">
+											<Language>SFX</Language>
+											<AudioFile>653294__osvoldon__big-structure-collision-heard-from-inside.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="375624474"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="653294__osvoldon__big-structure-collision-heard-from-inside" ID="{45CFAE9F-B334-439B-A4A6-9FBE7F34FD02}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="338969__timkahn__massive-metal-hit" ID="{A23C342C-9DA8-4368-ABAF-9858AA4F315D}" ShortID="533296124">
+									<PropertyList>
+										<Property Name="OverrideEffect" Type="bool" Value="True"/>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>-230</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>1</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="338969__timkahn__massive-metal-hit" ID="{132CC307-6563-4A9F-BDB6-8A416E7AAD8C}">
+											<Language>SFX</Language>
+											<AudioFile>338969__timkahn__massive-metal-hit.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="23372763"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="338969__timkahn__massive-metal-hit" ID="{132CC307-6563-4A9F-BDB6-8A416E7AAD8C}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+							<ObjectLists/>
+						</RandomSequenceContainer>
+						<RandomSequenceContainer Name="ExtraSoundsImpact" ID="{83A2C60A-8305-45C2-B5B8-CE749F010580}" ShortID="7050477">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="556714__nachtmahrtv__bending-metal" ID="{3390045B-FE8D-40CB-8E83-414924C1062D}" ShortID="169305416">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="556714__nachtmahrtv__bending-metal" ID="{F9F1E92D-433A-4998-B826-32BF2407D512}">
+											<Language>SFX</Language>
+											<AudioFile>556714__nachtmahrtv__bending-metal.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="507675057"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="556714__nachtmahrtv__bending-metal" ID="{F9F1E92D-433A-4998-B826-32BF2407D512}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="556708__nachtmahrtv__metal-hit" ID="{EDE3A19C-1C3A-479D-90D9-F4C14F319454}" ShortID="686503991">
+									<PropertyList>
+										<Property Name="OverrideEffect" Type="bool" Value="True"/>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>-380</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="Effect0">
+											<Custom CreatedFrom="{99F80B38-1C45-42CE-9BCD-E94F3885DCAA}">
+												<Effect Name="Monsterize (Custom)" ID="{246BDEF0-198B-4C92-9FAA-DA87C8E63F10}" ShortID="907070685" PluginName="Wwise Pitch Shifter" CompanyID="0" PluginID="136" PluginType="3">
+													<PropertyList>
+														<Property Name="FilterFrequency" Type="Real32" Value="2000"/>
+														<Property Name="Pitch" Type="Real32" Value="-1200"/>
+													</PropertyList>
+												</Effect>
+											</Custom>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="556708__nachtmahrtv__metal-hit" ID="{8482C87F-18B6-4240-997A-20409BD5DA8D}">
+											<PropertyList>
+												<Property Name="LoopBegin" Type="Real64" Value="0.411894538162086"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimBegin" Type="Real64" Value="0.411894538162086"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>556708__nachtmahrtv__metal-hit.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="912122509"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="556708__nachtmahrtv__metal-hit" ID="{8482C87F-18B6-4240-997A-20409BD5DA8D}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="151624__qubodup__clank-car-crash-collision" ID="{4C20BCE1-BA4A-42C0-AF45-A4CC5C716AB4}" ShortID="1002050087">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="151624__qubodup__clank-car-crash-collision" ID="{8425C313-E7D0-4A3F-B2AE-E1853E1402A7}">
+											<Language>SFX</Language>
+											<AudioFile>151624__qubodup__clank-car-crash-collision.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="227317674"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="151624__qubodup__clank-car-crash-collision" ID="{8425C313-E7D0-4A3F-B2AE-E1853E1402A7}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="244983__ani_music__ani-big-pipe-hit" ID="{745E1D05-D281-496C-AAC9-C1086633BC86}" ShortID="625091385">
+									<PropertyList>
+										<Property Name="RenderEffect0" Type="bool">
+											<ValueList>
+												<Value>True</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="Effect0">
+											<Custom CreatedFrom="{99F80B38-1C45-42CE-9BCD-E94F3885DCAA}">
+												<Effect Name="Monsterize (Custom)" ID="{FEF1C148-E3CE-4D4A-BDD9-D3B7EDAD43DD}" ShortID="780411401" PluginName="Wwise Pitch Shifter" CompanyID="0" PluginID="136" PluginType="3">
+													<PropertyList>
+														<Property Name="DelayTime" Type="Real32" Value="85"/>
+														<Property Name="DryLevel" Type="Real32" Value="-20"/>
+														<Property Name="FilterFrequency" Type="Real32" Value="2000"/>
+														<Property Name="Pitch" Type="Real32" Value="-1300"/>
+														<Property Name="WetLevel" Type="Real32" Value="6"/>
+													</PropertyList>
+												</Effect>
+											</Custom>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="244983__ani_music__ani-big-pipe-hit" ID="{5F6332B6-DDE2-4E93-9280-AB0C1C973A64}">
+											<Language>SFX</Language>
+											<AudioFile>244983__ani_music__ani-big-pipe-hit.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="30412895"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="244983__ani_music__ani-big-pipe-hit" ID="{5F6332B6-DDE2-4E93-9280-AB0C1C973A64}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+							<ObjectLists/>
+						</RandomSequenceContainer>
+					</ChildrenList>
+					<ObjectLists/>
+				</BlendContainer>
+				<BlendContainer Name="HullBreach_SFX" ID="{C38FF61D-2BF4-44E0-B9A3-9E386189945F}" ShortID="547295311">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
+						<Property Name="BlendBehavior" Type="int16" Value="1"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Attenuation">
+							<ObjectRef Name="HullBreach_Attenuation" ID="{4B0EF193-54D5-40FF-856E-C2B0F3B0D237}" WorkUnitID="{FA43832F-6DF7-497E-836D-6C0AC9D9DC7E}"/>
+						</Reference>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<RandomSequenceContainer Name="WaterStream_HullBreach_Random" ID="{06898D5B-647E-4C79-92BC-EE93297CF47D}" ShortID="1057012439">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="WaterStream_1" ID="{B8FF05BF-3C3D-46C8-8E0A-0A835AEB52D5}" ShortID="182284194">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="415151__burghrecords__stream-running-water-aviemore-scotland" ID="{4160C067-4020-439D-A70B-144FEC835B03}">
+											<PropertyList>
+												<Property Name="CrossfadeDuration" Type="Real64" Value="1981.36"/>
+												<Property Name="FadeOutDuration" Type="Real64" Value="2.55268545279383"/>
+												<Property Name="LoopBegin" Type="Real64" Value="3.5048"/>
+												<Property Name="LoopEnd" Type="Real64" Value="15.2324181117534"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimBegin" Type="Real64" Value="1.67389210019268"/>
+												<Property Name="TrimEnd" Type="Real64" Value="16.236753371869"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>415151__burghrecords__stream-running-water-aviemore-scotland.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="441861788"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="415151__burghrecords__stream-running-water-aviemore-scotland" ID="{4160C067-4020-439D-A70B-144FEC835B03}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="WaterStream_2" ID="{1D174AE8-A20A-4395-A706-1F1B59709428}" ShortID="537354740">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>-380</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="415151__burghrecords__stream-running-water-aviemore-scotland" ID="{447ACBA6-8697-4690-9593-896052613A4D}">
+											<PropertyList>
+												<Property Name="CrossfadeDuration" Type="Real64" Value="1981.36"/>
+												<Property Name="FadeOutDuration" Type="Real64" Value="2.55268545279383"/>
+												<Property Name="LoopBegin" Type="Real64" Value="3.5048"/>
+												<Property Name="LoopEnd" Type="Real64" Value="15.2324181117534"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimBegin" Type="Real64" Value="1.67389210019268"/>
+												<Property Name="TrimEnd" Type="Real64" Value="16.236753371869"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>415151__burghrecords__stream-running-water-aviemore-scotland.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="441861788"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="415151__burghrecords__stream-running-water-aviemore-scotland" ID="{447ACBA6-8697-4690-9593-896052613A4D}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="WaterStream_3" ID="{B06FD38E-A00E-475E-9F55-6526451DB15A}" ShortID="358487765">
+									<PropertyList>
+										<Property Name="Highpass" Type="int16">
+											<ValueList>
+												<Value>40</Value>
+											</ValueList>
+										</Property>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+										<Property Name="Lowpass" Type="int16">
+											<ValueList>
+												<Value>24</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>580</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="415151__burghrecords__stream-running-water-aviemore-scotland" ID="{30DE656F-CF80-404E-9CFE-F4F7E7A73E33}">
+											<PropertyList>
+												<Property Name="CrossfadeDuration" Type="Real64" Value="1981.36"/>
+												<Property Name="FadeOutDuration" Type="Real64" Value="2.55268545279383"/>
+												<Property Name="LoopBegin" Type="Real64" Value="3.5048"/>
+												<Property Name="LoopEnd" Type="Real64" Value="15.2324181117534"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimBegin" Type="Real64" Value="1.67389210019268"/>
+												<Property Name="TrimEnd" Type="Real64" Value="16.236753371869"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>415151__burghrecords__stream-running-water-aviemore-scotland.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="441861788"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="415151__burghrecords__stream-running-water-aviemore-scotland" ID="{30DE656F-CF80-404E-9CFE-F4F7E7A73E33}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+							<ObjectLists/>
+						</RandomSequenceContainer>
+						<RandomSequenceContainer Name="Hull_Random_Sounds" ID="{FF217E5B-3E6B-493D-87F4-48F06EBF2CFD}" ShortID="6486714">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="46934__digifishmusic__dripping" ID="{EBE28564-7B3E-4699-A0EF-23C6D3434871}" ShortID="396524229">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="46934__digifishmusic__dripping" ID="{81534E7C-D4EF-480B-9A65-C8047DD19511}">
+											<PropertyList>
+												<Property Name="CrossfadeDuration" Type="Real64" Value="515.672"/>
+												<Property Name="LoopBegin" Type="Real64" Value="0.832859829866436"/>
+												<Property Name="LoopEnd" Type="Real64" Value="6.25861612467723"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimEnd" Type="Real64" Value="6.7295074253208"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>46934__digifishmusic__dripping.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="632780041"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="46934__digifishmusic__dripping" ID="{81534E7C-D4EF-480B-9A65-C8047DD19511}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="12654__wwwbonsonca__drop_slow_long_01" ID="{2DFC7BBD-69D8-4E1D-964E-20BDA7C4B46E}" ShortID="97907080">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="12654__wwwbonsonca__drop_slow_long_01" ID="{B633EB2C-A733-4442-A60F-B3B6EEC31877}">
+											<PropertyList>
+												<Property Name="LoopBegin" Type="Real64" Value="1.6178252919665"/>
+												<Property Name="LoopEnd" Type="Real64" Value="25.1062517531097"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimBegin" Type="Real64" Value="1.37814747093442"/>
+												<Property Name="TrimEnd" Type="Real64" Value="26.6042381345602"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>12654__wwwbonsonca__drop_slow_long_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="886848604"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="12654__wwwbonsonca__drop_slow_long_01" ID="{B633EB2C-A733-4442-A60F-B3B6EEC31877}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+							<ObjectLists/>
+						</RandomSequenceContainer>
+					</ChildrenList>
+					<PositioningInfo>
+						<Panner Name="" ID="{3EB8F3C1-6956-4BDA-A2BA-232F3D822C44}"/>
+					</PositioningInfo>
+					<ObjectLists/>
+				</BlendContainer>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

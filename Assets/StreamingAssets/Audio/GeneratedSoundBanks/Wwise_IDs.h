@@ -16,6 +16,7 @@ namespace AK
         static const AkUniqueID START_BACKGROUNDSUBMARINEMFX = 3003027233U;
         static const AkUniqueID START_BUTTONPRESS = 738466431U;
         static const AkUniqueID START_CLOSING_PRESSURE_DOORSFX = 378872923U;
+        static const AkUniqueID START_HULLBREACHSFX = 2571798077U;
         static const AkUniqueID START_LEVERPULLFINISHED = 2469108041U;
         static const AkUniqueID START_OPENING_PRESSURE_DOORSFX = 4235702204U;
         static const AkUniqueID START_PHOSPHORUSCAMERACOOLDOWN = 438413481U;
@@ -26,6 +27,7 @@ namespace AK
         static const AkUniqueID START_SUBMARINECOLLISION = 3771492726U;
         static const AkUniqueID START_TENSIONEVENT = 1403223316U;
         static const AkUniqueID STOP_BACKGROUNDSUBMARINEMFX = 116843463U;
+        static const AkUniqueID STOP_HULLBREACHSFX = 3933279043U;
         static const AkUniqueID STOP_TENSIONEVENT = 3884825202U;
     } // namespace EVENTS
 
@@ -86,6 +88,8 @@ namespace AK
 
     namespace GAME_PARAMETERS
     {
+        static const AkUniqueID GAME_MFX_SOUNDVOLUME = 1465352627U;
+        static const AkUniqueID GAME_SFX_SOUNDVOLUME = 3453168921U;
         static const AkUniqueID INCREMENTALTENSION = 3138205067U;
         static const AkUniqueID SUBMARINE_COLISION_DISTANCE = 511617432U;
     } // namespace GAME_PARAMETERS

@@ -15,6 +15,10 @@ Custom State	ID	Name	State Group	Owner		Notes
 	57613382	Alive	Player_State	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_MFX\Submarine_MFX		
 	550051199	Stunned	Player_State	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_MFX\Submarine_MFX		
 
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	1465352627	Game_MFX_SoundVolume			\ParametersVOT\Game_MFX_SoundVolume	
+	3453168921	Game_SFX_SoundVolume			\ParametersVOT\Game_SFX_SoundVolume	
+
 Audio Bus	ID	Name			Wwise Object Path	Notes
 	54673317	General_MFX			\Default Work Unit\Master Audio Bus\General_MFX	
 	322129659	General_SFX			\Default Work Unit\Master Audio Bus\General_SFX	

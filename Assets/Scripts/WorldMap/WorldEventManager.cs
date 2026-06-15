@@ -23,7 +23,6 @@ public class WorldEventManager : MonoBehaviour
         
         if (property.IsRevealed)
         {
-            Log.Info($"[WorldEventManager] Entered Radius of: {property.WorldElement}");
             if (worldEvent.CheckConditions())
             {
                 worldEvent.Execute();   
@@ -31,7 +30,6 @@ public class WorldEventManager : MonoBehaviour
         }
         else
         {
-            Log.Info($"[WorldEventManager] Left Radius of: {property.WorldElement}");
             worldEvent.EndEvent();
         }
     }

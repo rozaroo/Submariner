@@ -187,6 +187,42 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Start_SubmarineCollision" ID="{8CAF5628-2C09-4C70-9662-98539548BEDC}">
+					<ChildrenList>
+						<Action Name="" ID="{15EC6EFD-FF68-484C-8A64-6EEF57B92F92}" ShortID="773313910">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SubmarineCollision" ID="{13674490-2EB3-437B-924B-077639CCF6EF}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_HullBreachSFX" ID="{B37DB32C-9C91-4A9C-986D-FBD0643ECF21}">
+					<ChildrenList>
+						<Action Name="" ID="{E62E816F-962F-40A4-929D-88F17D4F6E79}" ShortID="995261119">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="HullBreach_SFX" ID="{C38FF61D-2BF4-44E0-B9A3-9E386189945F}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_HullBreachSFX" ID="{3B641C91-10EF-4A21-A4D6-000633B5B489}">
+					<ChildrenList>
+						<Action Name="" ID="{5D600632-A628-4F9A-B6B6-8A70AFF223D0}" ShortID="887313536">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="HullBreach_SFX" ID="{C38FF61D-2BF4-44E0-B9A3-9E386189945F}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

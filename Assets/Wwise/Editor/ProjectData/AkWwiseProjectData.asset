@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: eb88c8468a8b7740b7f87fe70f3aa207
     GuidInternal: 
-    m_lastTime: -8584203617583404624
+    m_lastTime: -8584201277960735337
     List:
     - name: General_MFX
       guid: a26874e2029dd541a1621432a7b66c24
@@ -274,7 +274,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584202608396285089
+    m_lastTime: -8584201300577223693
     List:
     - name: Start_BackgroundSubmarineMFX
       guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
@@ -327,6 +327,23 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 2.257351
       minDuration: 2.07
+    - name: Start_HullBreachSFX
+      guid: 2cb37db3919c9c4a986dfbd0643ecf21
+      id: 2571798077
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_HullBreachSFX
+        ObjectType: 3
+        guid: 2cb37db3919c9c4a986dfbd0643ecf21
+      Path: Events\Gameplay_SFX\Start_HullBreachSFX
+      maxAttenuation: 100
+      maxDuration: -1
+      minDuration: -1
     - name: Start_LeverPullFinished
       guid: 708c8da4d475f64785a10bef769af746
       id: 2469108041
@@ -446,6 +463,23 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 3.2
       minDuration: 3.2
+    - name: Start_SubmarineCollision
+      guid: 2856af8c092c704c966298539548bedc
+      id: 3771492726
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_SubmarineCollision
+        ObjectType: 3
+        guid: 2856af8c092c704c966298539548bedc
+      Path: Events\Gameplay_SFX\Start_SubmarineCollision
+      maxAttenuation: 0
+      maxDuration: 8.817284
+      minDuration: 7.994576
     - name: Start_TensionEvent
       guid: fd0c6db95aa59a4bba27964681c14af4
       id: 1403223316
@@ -477,6 +511,23 @@ MonoBehaviour:
         ObjectType: 3
         guid: 4a677021b45f5f4f8d00fb1db4eff360
       Path: Events\Gameplay_SFX\Stop_BackgroundSubmarineMFX
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Stop_HullBreachSFX
+      guid: 911c643bef10214aa4d6000633b5b489
+      id: 3933279043
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Stop_HullBreachSFX
+        ObjectType: 3
+        guid: 911c643bef10214aa4d6000633b5b489
+      Path: Events\Gameplay_SFX\Stop_HullBreachSFX
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -522,8 +573,36 @@ MonoBehaviour:
     ParentPath: Game Parameters\ParametersVOT
     guid: 7ca9e527ff3296499ba38599ac94cf84
     GuidInternal: 
-    m_lastTime: -8584205803458358998
+    m_lastTime: -8584201277674157356
     List:
+    - name: Game_MFX_SoundVolume
+      guid: 588951c06b771642aadb10559dc27865
+      id: 1465352627
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: ParametersVOT
+        ObjectType: 12
+        guid: 7ca9e527ff3296499ba38599ac94cf84
+      - ElementName: Game_MFX_SoundVolume
+        ObjectType: 13
+        guid: 588951c06b771642aadb10559dc27865
+      Path: Game Parameters\ParametersVOT\Game_MFX_SoundVolume
+    - name: Game_SFX_SoundVolume
+      guid: 9e655c9a80362e4ab9c2c2637a672be4
+      id: 3453168921
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: ParametersVOT
+        ObjectType: 12
+        guid: 7ca9e527ff3296499ba38599ac94cf84
+      - ElementName: Game_SFX_SoundVolume
+        ObjectType: 13
+        guid: 9e655c9a80362e4ab9c2c2637a672be4
+      Path: Game Parameters\ParametersVOT\Game_SFX_SoundVolume
     - name: IncrementalTension
       guid: d25f24295014334983de5c38da9aaa4d
       id: 3138205067
@@ -843,7 +922,7 @@ MonoBehaviour:
     m_lastTime: -8584205803454730240
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 01000000030000000400000005000000060000000700000008000000090000000f0000001000000011000000120000001300000014000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f0000002000000021000000220000002300000024000000290000002a00000043000000d1000000740100007601000026ca070037ca0700
+  ExpandedWaapiItemIds: 01000000030000000400000005000000060000000700000008000000090000000f0000001000000011000000120000001300000014000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000027000000290000002a00000043000000d1000000740100007601000026ca070037ca0700
   AutoSyncSelection: 1
   autoPopulateEnabled: 1
   currentDataSource: 0

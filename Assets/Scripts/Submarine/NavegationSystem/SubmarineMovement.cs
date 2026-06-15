@@ -241,6 +241,7 @@ public class SubmarineMovement : MonoBehaviour
     }
 
     #endregion
+    
     public void SetSpeedMultiplier(float multiplier)
     {
         _speedMultiplier = multiplier;
