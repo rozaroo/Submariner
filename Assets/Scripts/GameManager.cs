@@ -11,11 +11,18 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         GameEventChannel<OnDeath>.OnEventRaised += OnPlayerDeath;
+        GameEventChannel<OnGameWon>.OnEventRaised += OnGameWon;
     }
 
     private void OnDisable()
     {
         GameEventChannel<OnDeath>.OnEventRaised -= OnPlayerDeath;
+        GameEventChannel<OnGameWon>.OnEventRaised -= OnGameWon;
+    }
+
+    private void OnGameWon(OnGameWon gameWon)
+    {
+        
     }
     
     private void CallMapGeneration() //Leave for future use, Random Map Generation.

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class WorldMapUIElement : WorldMapElement, IWorldMapUIElement
 {
     private MapAssetSO _mapAsset;
