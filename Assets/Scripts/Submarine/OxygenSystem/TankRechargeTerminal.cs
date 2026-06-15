@@ -9,7 +9,7 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
 
     public void Interact(PlayerCharacter player)
     {
-        player.InventorySystem.TryGetHeldItem(out OxygenTank oxygenTankItem);
+        player.InventorySystem.TryExtractHeldItem(out OxygenTank oxygenTankItem);
         if (oxygenTankItem != null)
         {
             DockTank(oxygenTankItem);
@@ -24,10 +24,10 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
     {
         if (_dockedTank != null) return;
         
-        tank.Dock();
         _dockedTank = tank;
-        tank.transform.position = dockPoint.position;
-        tank.transform.rotation = dockPoint.rotation;
+        _dockedTank.Dock();
+        _dockedTank.transform.position = dockPoint.position;
+        _dockedTank.transform.rotation = dockPoint.rotation;
         
         _dockedTank.StartRefill(rechargeRatePerSecond);
     }

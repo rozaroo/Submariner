@@ -79,21 +79,36 @@ public class OxygenSystem : MonoBehaviour
         Log.Info("Oxygen Stabilized");
     }
     
+    private bool _isDrainingPaused;
+    
+    public void PauseDrain() => _isDrainingPaused = true;
+    public void ResumeDrain() => _isDrainingPaused = false;
+    
     private IEnumerator DrainCoroutine()
     {
+        float accumulatedChange = 0f;
         while (true)
         {
-            currentOxygen -= Time.deltaTime;
-            GameEventChannel<OnOxygenChanged>.RaiseEvent(new OnOxygenChanged(currentOxygen, maxOxygen));
-            CheckLowOxygenThreshold();
-
-            if (currentOxygen <= 0)
+            if (!_isDrainingPaused)
             {
-                currentOxygen = 0;
-                GameEventChannel<OnOxygenChanged>.RaiseEvent(new OnOxygenChanged(currentOxygen, maxOxygen));
-                _drainCoroutine = null;
-                StartSuffocation();
-                yield break;
+                float drainAmount = Time.deltaTime;
+                currentOxygen -= drainAmount;
+                accumulatedChange += drainAmount;
+
+                if (accumulatedChange >= 0.5f || currentOxygen <= 0)
+                {
+                    GameEventChannel<OnOxygenChanged>.RaiseEvent(new OnOxygenChanged(currentOxygen, maxOxygen));
+                    CheckLowOxygenThreshold();
+                    accumulatedChange = 0f;
+                }
+
+                if (currentOxygen <= 0)
+                {
+                    currentOxygen = 0;
+                    _drainCoroutine = null;
+                    StartSuffocation();
+                    yield break;
+                }
             }
             yield return null;
         }

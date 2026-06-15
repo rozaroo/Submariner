@@ -15,7 +15,7 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
 
     public void Interact(PlayerCharacter player)
     {
-        player.InventorySystem.TryGetHeldItem(out OxygenTank oxygenTankItem);
+        player.InventorySystem.TryExtractHeldItem(out OxygenTank oxygenTankItem);
         if (oxygenTankItem != null)
         {
             DockTank(oxygenTankItem);
@@ -30,11 +30,11 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
     {
         if (_dockedTank != null) return;
         
-        tank.Dock();
         _dockedTank = tank;
+        _dockedTank.Dock();
+        _dockedTank.transform.position = dockPoint.position;
+        _dockedTank.transform.rotation = dockPoint.rotation;
         
-        tank.transform.position = dockPoint.position;
-        tank.transform.rotation = dockPoint.rotation;
         _transferCoroutine = StartCoroutine(TransferCoroutine());
         Log.Info("[OxygenTerminal] Tank Docked.");
     }
@@ -45,6 +45,7 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
         {
             StopCoroutine(_transferCoroutine);
             _transferCoroutine = null;
+            oxygenSystem.ResumeDrain();
         }
         _dockedTank.Interact(player);
         _dockedTank = null;
@@ -54,16 +55,28 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
     private IEnumerator TransferCoroutine()
     {
         yield return null;
-        while (_dockedTank != null && !_dockedTank.isEmpty)
+        oxygenSystem.PauseDrain();
+        float accumulatedDrained = 0f;
+
+        while (_dockedTank != null && !_dockedTank.isEmpty && oxygenSystem.CurrentOxygen < oxygenSystem.MaxOxygen)
         {
             float toDrain = transferRatePerSecond * Time.deltaTime;
             float drained = _dockedTank.Drain(toDrain);
-            oxygenSystem.RestoreOxygen(drained);
+            accumulatedDrained += drained;
             
-            if (oxygenSystem.CurrentOxygen >= oxygenSystem.MaxOxygen)
-                yield break;
+            if (accumulatedDrained >= 0.5f)
+            {
+                oxygenSystem.RestoreOxygen(accumulatedDrained);
+                accumulatedDrained = 0f;
+            }
 
             yield return null;
         }
+
+        if (accumulatedDrained > 0)
+            oxygenSystem.RestoreOxygen(accumulatedDrained);
+
+        oxygenSystem.ResumeDrain();
+        _transferCoroutine = null;
     }
 }

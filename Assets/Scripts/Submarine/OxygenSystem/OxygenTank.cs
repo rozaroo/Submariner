@@ -13,7 +13,7 @@ public class OxygenTank : MonoBehaviour, IInteractable, IPickable
     [SerializeField] private float currentCharge;
     [SerializeField] private Transform chargeBar;
     
-    private Collider _collider;
+    private Collider[] _colliders;
     private Rigidbody _rb;
 
     public GameObject GameObject => gameObject;
@@ -29,7 +29,7 @@ public class OxygenTank : MonoBehaviour, IInteractable, IPickable
     
     private void Awake()
     {
-        _collider = GetComponent<Collider>();
+        _colliders = GetComponentsInChildren<Collider>();
         _rb       = GetComponent<Rigidbody>();
         currentCharge = maxCharge;
 
@@ -49,21 +49,43 @@ public class OxygenTank : MonoBehaviour, IInteractable, IPickable
 
     public void OnPickUp()
     {
+        SetCollidersEnabled(false);
+        _rb.detectCollisions = false;
+        if (!_rb.isKinematic)
+        {
+            _rb.linearVelocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+        }
         _rb.isKinematic  = true;
-        _collider.enabled = false;
     }
 
     public void OnDrop()
     {
         _rb.isKinematic   = false;
-        _collider.enabled = true;
+        _rb.detectCollisions = true;
+        SetCollidersEnabled(true);
     }
     
     public void Dock()
     {
+        SetCollidersEnabled(false);
+        _rb.detectCollisions = false;
+        if (!_rb.isKinematic)
+        {
+            _rb.linearVelocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+        }
+        _rb.isKinematic = true;
         transform.SetParent(null);
-        _rb.isKinematic   = true;
-        _collider.enabled = false;
+    }
+
+    private void SetCollidersEnabled(bool isEnabled)
+    {
+        if (_colliders == null) return;
+        foreach (var col in _colliders)
+        {
+            if (col != null) col.enabled = isEnabled;
+        }
     }
     
     public float Drain(float amount)
@@ -74,14 +96,12 @@ public class OxygenTank : MonoBehaviour, IInteractable, IPickable
         return drained;
     }
     
-    public void StartRefill(float amount)
+    private float _lastBarRatio = -1f;
+
+    public void StartRefill(float rate)
     {
         if (_tankRecharge != null) StopCoroutine(_tankRecharge);
-        
-        float remainingRatio = 1f - (currentCharge / maxCharge);
-        float actualDuration = amount * remainingRatio;
-        
-        _tankRecharge = StartCoroutine(RefillOxygen(actualDuration));
+        _tankRecharge = StartCoroutine(RefillOxygen(rate));
     }
     
     public void StopRefill()
@@ -108,6 +128,8 @@ public class OxygenTank : MonoBehaviour, IInteractable, IPickable
         if (chargeBar == null) return;
 
         float ratio = Mathf.Clamp01(currentCharge / maxCharge);
+        if (Mathf.Abs(ratio - _lastBarRatio) < 0.001f && _lastBarRatio >= 0) return;
+        _lastBarRatio = ratio;
 
         chargeBar.localScale = new Vector3(
             _barOriginalScale.x,

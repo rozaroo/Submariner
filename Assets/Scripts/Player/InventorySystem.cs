@@ -28,12 +28,20 @@ public class InventorySystem : MonoBehaviour
     
     public void DropItem()
     {
+        ClearHeldItem(true);
+    }
+
+    private void ClearHeldItem(bool triggerOnDrop)
+    {
         if (!isHoldingItem) return;
 
         Transform itemTransform = _heldItem.GameObject.transform;
         itemTransform.SetParent(null, true);
         SetWorldScale(itemTransform, _heldItemWorldScale);
-        _heldItem.OnDrop();
+        
+        if (triggerOnDrop) 
+            _heldItem.OnDrop();
+            
         _heldItem = null;
     }
     
@@ -69,6 +77,17 @@ public class InventorySystem : MonoBehaviour
         {
             DropItem();
             return item != null;
+        }
+        return false;
+    }
+
+    public bool TryExtractHeldItem<T>(out T item) where T : class
+    {
+        item = _heldItem as T;
+        if (item != null)
+        {
+            ClearHeldItem(false);
+            return true;
         }
         return false;
     }

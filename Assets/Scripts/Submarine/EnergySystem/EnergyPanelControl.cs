@@ -267,7 +267,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
             return false;
         }
 
-        if (!player.InventorySystem.TryGetHeldItem(out Fuse fuse))
+        if (!player.InventorySystem.TryExtractHeldItem(out Fuse fuse))
         {
             Log.Info("Hold a functional fuse to install it.");
             return false;
