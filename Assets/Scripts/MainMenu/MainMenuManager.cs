@@ -18,8 +18,8 @@ public class MainMenuManager : MonoBehaviour
 
     private void StopMusic()
     {
-  
-        AkSoundEngine.PostEvent("Stop_Music", gameObject);
+        //AkSoundEngine.PostEvent("Stop_BackgroundSubmarineMFX", gameObject);
+        //Not Used RN
     }
 
     public void QuitGame()
