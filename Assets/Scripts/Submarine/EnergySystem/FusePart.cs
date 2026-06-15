@@ -100,6 +100,7 @@ public class FusePart : MonoBehaviour
             return;
         }
 
+        hoverAmperageLabel.transform.position = transform.position + hoverLabelLocalOffset;
         RefreshHoverAmperageLabel();
         FaceHoverLabelToCamera(hoverCamera);
     }
@@ -140,7 +141,6 @@ public class FusePart : MonoBehaviour
             return;
         }
 
-        hoverAmperageLabel.transform.localPosition = hoverLabelLocalOffset;
         hoverAmperageLabel.characterSize = hoverLabelCharacterSize;
         hoverAmperageLabel.color = hoverLabelColor;
         SetupLabelAsVisualOnly(hoverAmperageLabel);

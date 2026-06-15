@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 7514132882783205898}
   - component: {fileID: 2160737550243640899}
   - component: {fileID: 4831706417564255906}
-  - component: {fileID: 6610175873208419957}
   - component: {fileID: 1660390698674463070}
+  - component: {fileID: 1039826497951568573}
   m_Layer: 0
   m_Name: Bottom Part
   m_TagString: Untagged
@@ -28,13 +28,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7966099521213871760}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0, z: 0.9999151, w: 0.0130304005}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 178.507}
 --- !u!33 &2160737550243640899
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7966099521213871760}
-  m_Mesh: {fileID: -8667022646996127794, guid: 3dcc292a7bebdb74f809415ca9cb6f81, type: 3}
+  m_Mesh: {fileID: 5557118700506468726, guid: c85f0981323a9be4b9adbfa566be7f0a, type: 3}
 --- !u!23 &4831706417564255906
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -88,8 +88,30 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &6610175873208419957
-SphereCollider:
+--- !u!114 &1660390698674463070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7966099521213871760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a43632e1e80b4937a390212270b38e9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partType: 2
+  amperage: 10
+  selectedVisual: {fileID: 0}
+  amperageLabel: {fileID: 0}
+  showAmperageOnHover: 1
+  createHoverLabelIfMissing: 1
+  hoverAmperageLabel: {fileID: 0}
+  hoverLabelLocalOffset: {x: 0, y: 0.25, z: 0}
+  hoverLabelCharacterSize: 0.08
+  hoverLabelColor: {r: 1, g: 0.7803587, b: 0, a: 1}
+--- !u!65 &1039826497951568573
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -107,26 +129,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1660390698674463070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7966099521213871760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a43632e1e80b4937a390212270b38e9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  partType: 2
-  amperage: 10
-  amperageLabel: {fileID: 0}
-  showAmperageOnHover: 1
-  createHoverLabelIfMissing: 1
-  hoverAmperageLabel: {fileID: 0}
-  hoverLabelLocalOffset: {x: 0, y: 0.25, z: 0}
-  hoverLabelCharacterSize: 0.08
-  hoverLabelColor: {r: 1, g: 0.7803587, b: 0, a: 1}
+  m_Size: {x: 0.1412254, y: 0.11896768, z: 0.14343813}
+  m_Center: {x: 0.0013906248, y: 0.0026596785, z: 0.0051327646}

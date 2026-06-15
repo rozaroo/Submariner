@@ -152,8 +152,8 @@ MonoBehaviour:
   holdOffset: {x: 0.2, y: -0.2, z: 0.6}
   isBurned: 0
   amperage: 40
-  functionalVisual: {fileID: 0}
-  burnedVisual: {fileID: 0}
+  functionalVisual: {fileID: 8765673011139921366}
+  burnedMesh: {fileID: -3187784610473809064, guid: 0d91f5b306919fb4c98d19a9cfd60359, type: 3}
   amperageLabel: {fileID: 0}
   showAmperageLabel: 1
   createAmperageLabelIfMissing: 1

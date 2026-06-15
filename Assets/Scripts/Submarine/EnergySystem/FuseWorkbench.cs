@@ -49,15 +49,15 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     [SerializeField] private float solderDuration = 1f;
 
     [Header("Top Parts")]
-    [SerializeField] private List<FusePart> topPartPrefabs = new();
+    [SerializeField] private FusePart topPartPrefab;
     [SerializeField] private List<Transform> topPartSpawnPoints = new();
 
     [Header("Core Parts")]
-    [SerializeField] private List<FusePart> corePartPrefabs = new();
+    [SerializeField] private FusePart corePartPrefab;
     [SerializeField] private List<Transform> corePartSpawnPoints = new();
 
     [Header("Bottom Parts")]
-    [SerializeField] private List<FusePart> bottomPartPrefabs = new();
+    [SerializeField] private FusePart bottomPartPrefab;
     [SerializeField] private List<Transform> bottomPartSpawnPoints = new();
 
     private readonly List<FusePart> _spawnedParts = new();
@@ -183,9 +183,9 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
             bottomAmperages = fuseRecipeCatalog.BottomPartAmperages;
         }
 
-        SpawnPartGroup(topPartPrefabs, topPartSpawnPoints, topAmperages);
-        SpawnPartGroup(corePartPrefabs, corePartSpawnPoints, coreAmperages);
-        SpawnPartGroup(bottomPartPrefabs, bottomPartSpawnPoints, bottomAmperages);
+        SpawnPartGroup(topPartPrefab, topPartSpawnPoints, topAmperages);
+        SpawnPartGroup(corePartPrefab, corePartSpawnPoints, coreAmperages);
+        SpawnPartGroup(bottomPartPrefab, bottomPartSpawnPoints, bottomAmperages);
 
         _hasGeneratedParts = true;
     }
@@ -211,17 +211,22 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         solderingIron = Instantiate(
             solderingIronPrefab,
             solderingIronRestPoint.position,
-            solderingIronRestPoint.rotation,
-            transform
+            solderingIronRestPoint.rotation
         );
 
         solderingIron.SnapTo(solderingIronRestPoint);
         solderingIron.CacheInitialPlacement();
     }
 
-    private void SpawnPartGroup(List<FusePart> partPrefabs, List<Transform> spawnPoints, IReadOnlyList<int> catalogAmperages)
+    private void SpawnPartGroup(FusePart partPrefab, List<Transform> spawnPoints, IReadOnlyList<int> catalogAmperages)
     {
-        int amountToSpawn = Mathf.Min(partPrefabs.Count, spawnPoints.Count);
+        if (partPrefab == null)
+        {
+            Log.Warning("[FuseWorkbench] Part prefab is missing");
+            return;
+        }
+
+        int amountToSpawn = spawnPoints.Count;
         if (catalogAmperages != null)
         {
             amountToSpawn = Mathf.Min(amountToSpawn, catalogAmperages.Count);
@@ -229,21 +234,22 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
 
         if (amountToSpawn == 0)
         {
-            Log.Warning("[FuseWorkbench] Part prefabs or spawn points missing");
+            Log.Warning("[FuseWorkbench] Spawn points missing or no amperages provided");
             return;
         }
 
         for (int i = 0; i < amountToSpawn; i++)
         {
-            FusePart partPrefab = partPrefabs[i];
             Transform spawnPoint = spawnPoints[i];
 
-            if (partPrefab == null || spawnPoint == null)
+            if (spawnPoint == null)
             {
                 continue;
             }
 
-            FusePart spawnedPart = Instantiate(partPrefab, spawnPoint.position, spawnPoint.rotation, transform);
+            FusePart spawnedPart = Instantiate(partPrefab, spawnPoint.position, spawnPoint.rotation);
+            spawnedPart.SnapTo(spawnPoint);
+            
             if (catalogAmperages != null)
             {
                 spawnedPart.SetAmperage(catalogAmperages[i]);
