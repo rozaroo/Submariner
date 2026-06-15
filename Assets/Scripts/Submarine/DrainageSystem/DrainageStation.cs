@@ -193,11 +193,13 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 
     private void OnLeverActivationSequence()
     {
+        SFXManager.PostEvent("Start_DrainagePumpSFX", gameObject);
         StartDrainage();
     }
 
     private void OnLeverDeactivationSequence()
     {
+        SFXManager.PostEvent("Stop_DrainagePumpSFX", gameObject);
         StopDrainage();
         mainLever.Restart();
         _minigame.SetupMiniGame();

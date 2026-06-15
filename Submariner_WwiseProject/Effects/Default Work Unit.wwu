@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{F9383C0D-5750-4D13-AE18-834989DB937A}" SchemaVersion="103">
 	<Effects>
-		<WorkUnit Name="Default Work Unit" ID="{F9383C0D-5750-4D13-AE18-834989DB937A}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{F9383C0D-5750-4D13-AE18-834989DB937A}" PersistMode="Standalone">
+			<ChildrenList>
+				<Effect Name="PitchShifter_WaterPump" ID="{3005A3A6-B3E0-4717-B4BD-00A9D785C32C}" PluginName="Wwise Pitch Shifter" CompanyID="0" PluginID="136" PluginType="3">
+					<PropertyList>
+						<Property Name="DryLevel" Type="Real32" Value="-22"/>
+						<Property Name="Pitch" Type="Real32" Value="-1500"/>
+						<Property Name="WetLevel" Type="Real32" Value="4"/>
+					</PropertyList>
+				</Effect>
+			</ChildrenList>
+		</WorkUnit>
 	</Effects>
 </WwiseDocument>

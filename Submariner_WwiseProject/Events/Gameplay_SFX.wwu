@@ -223,6 +223,31 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Start_DrainagePumpSFX" ID="{74FE2AE0-EE91-4813-B114-BA8A7F4943A9}">
+					<ChildrenList>
+						<Action Name="" ID="{7289EA97-18DD-4964-8B98-A326BCB92B35}" ShortID="990810015">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="WaterPump_SFX" ID="{049D424F-4498-490E-A6E9-80D40DEE0E79}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_DrainagePumpSFX" ID="{B6E53A7E-D6A0-4D5B-A7C5-339C0717039F}">
+					<ChildrenList>
+						<Action Name="" ID="{853FD32D-F9AF-4CDB-B4B6-435ACBD27ED9}" ShortID="403344704">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="WaterPump_SFX" ID="{049D424F-4498-490E-A6E9-80D40DEE0E79}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
