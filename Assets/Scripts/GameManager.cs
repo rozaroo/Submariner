@@ -40,5 +40,16 @@ public class GameManager : MonoBehaviour
                 break;
         }
         
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        if (SceneTransitionManager.Instance != null)
+        {
+            SceneTransitionManager.Instance.LoadSceneWithFade("Defeat");
+        }
+        else
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Defeat");
+        }
     }
 }
