@@ -94,6 +94,11 @@ public class PlayerCharacter : MonoBehaviour
     {
         _gameplaySm.Update();
         _movementStrategy?.Move(_movementContext);
+        
+        if (_isHolding)
+        {
+            InventorySystem.UseItemHold();
+        }
     }
 
     public void SetMovementStrategy(IMovementStrategy movementStrategy)
@@ -185,7 +190,9 @@ public class PlayerCharacter : MonoBehaviour
     private void TryUseItem(InputAction.CallbackContext ctx)
     {
         if (ctx.interaction is HoldInteraction)
+        {
             _isHolding = true;
+        }
         else
         {
             _isHolding = false;

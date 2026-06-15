@@ -12,6 +12,7 @@ public class HullDamage : MonoBehaviour
     public void Repair(float amount)
     {
         _progress += amount;
+        Log.Info($"Current Progress: {_progress}");
         if (_progress >= repairDuration)
             Close();
     }
