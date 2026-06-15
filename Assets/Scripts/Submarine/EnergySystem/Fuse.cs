@@ -14,8 +14,7 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
     [SerializeField] private int amperage = 40;
  
     [Header("Visuals")]
-    [SerializeField] private GameObject functionalVisual;
-    [SerializeField] private GameObject burnedVisual;
+    [SerializeField] private Mesh burnedMesh;
     [SerializeField] private TextMesh amperageLabel;
 
     [Header("Amperage Label")]
@@ -28,6 +27,7 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
 
     private Collider _collider;
     private Rigidbody _rb;
+    private MeshFilter _meshFilter;
     private EnergyPanelControl _installedPanel;
 
     public GameObject GameObject => gameObject;
@@ -36,10 +36,14 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
     public bool IsFunctional => !isBurned;
     public int Amperage => amperage;
 
+    private Mesh _originalMesh;
+    private bool _hasStoredOriginals;
+
     private void Awake()
     {
         _collider = GetComponent<Collider>();
         _rb = GetComponent<Rigidbody>();
+        _meshFilter = GetComponent<MeshFilter>();
     }
 
     private void Start()
@@ -100,17 +104,29 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
     {
         _installedPanel = null;
     }
+
+    private void StoreOriginalVisuals()
+    {
+        if (_hasStoredOriginals || _meshFilter == null) return;
+        
+        _originalMesh = _meshFilter.sharedMesh;
+        _hasStoredOriginals = true;
+    }
  
     private void RefreshVisuals()
     {
-        if (functionalVisual != null)
-        {
-            functionalVisual.SetActive(!isBurned);
-        }
+        StoreOriginalVisuals();
 
-        if (burnedVisual != null)
+        if (_meshFilter != null)
         {
-            burnedVisual.SetActive(isBurned);
+            if (isBurned && burnedMesh != null)
+            {
+                _meshFilter.sharedMesh = burnedMesh;
+            }
+            else if (!isBurned && _originalMesh != null)
+            {
+                _meshFilter.sharedMesh = _originalMesh;
+            }
         }
 
         RefreshAmperageLabel();
