@@ -42,7 +42,7 @@ public class SceneTransitionManager : MonoBehaviour
         canvasObj.transform.SetParent(transform);
         Canvas canvas = canvasObj.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 999; // Ensure it renders on top of everything
+        canvas.sortingOrder = 999;
 
         CanvasScaler scaler = canvasObj.AddComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
@@ -50,14 +50,14 @@ public class SceneTransitionManager : MonoBehaviour
         GameObject imageObj = new GameObject("FadeImage");
         imageObj.transform.SetParent(canvasObj.transform, false);
         fadeImage = imageObj.AddComponent<Image>();
-        fadeImage.color = new Color(0, 0, 0, 0); // Start transparent
+        fadeImage.color = new Color(0, 0, 0, 0);
         
         RectTransform rect = fadeImage.rectTransform;
         rect.anchorMin = Vector2.zero;
         rect.anchorMax = Vector2.one;
         rect.sizeDelta = Vector2.zero;
         
-        fadeImage.raycastTarget = true; // Blocks raycasts so buttons can't be clicked
+        fadeImage.raycastTarget = true; 
         fadeImage.gameObject.SetActive(false);
     }
 
@@ -71,9 +71,6 @@ public class SceneTransitionManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Don't fade in if we are just entering the main menu for the very first time
-        // Actually, maybe we want to fade in on the main menu too? 
-        // We'll fade in every time a scene loads. 
         StartCoroutine(FadeIn());
     }
 
@@ -108,14 +105,14 @@ public class SceneTransitionManager : MonoBehaviour
     private IEnumerator FadeIn()
     {
         fadeImage.gameObject.SetActive(true);
-        fadeImage.raycastTarget = true; // Block raycasts during fade
+        fadeImage.raycastTarget = true;
 
         float timer = 0f;
         Color color = fadeImage.color;
         color.a = 1f;
         fadeImage.color = color;
 
-        Time.timeScale = 0f; // Pause game while fading in
+        Time.timeScale = 0f; 
 
         while (timer < fadeInDuration)
         {
@@ -130,6 +127,6 @@ public class SceneTransitionManager : MonoBehaviour
         fadeImage.gameObject.SetActive(false);
         fadeImage.raycastTarget = false;
 
-        Time.timeScale = 1f; // Resume game
+        Time.timeScale = 1f;
     }
 }

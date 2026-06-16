@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66059cad81b3c6a468997553d66f48ef, type: 3}
+  m_Name: Mission_2
+  m_EditorClassIdentifier: 
+  elementName: Mission_2_Icon
+  prefab: {fileID: 6375476034618856122, guid: 6839fdfac8812364396b2bcfa0839b0e, type: 3}
+  SonarDetectionMode: 1
+  requiredSize: 0
+  sizeMultiplier: 1
+  mapAsset: {fileID: 11400000, guid: 1fc61ed2caa945e418c8ff622b2430d4, type: 2}
+  updateMode: 0
+  syncMode: 0
+  syncTime: 0.1
+  missionName: Mission Beacon Extraction_2
+  objectiveDescription: "Retrieve Beacon Data N\xBA2\n"

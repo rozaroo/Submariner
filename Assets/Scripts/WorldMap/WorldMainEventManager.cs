@@ -1,14 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainEventManager : MonoBehaviour
+public class WorldMainEventManager : MonoBehaviour
 {
-    [Header("Main Events (orden de progresión, 4-5 recomendados)")]
-    [SerializeField] private List<MainWorldEvent> mainEvents = new List<MainWorldEvent>();
-
     [Header("Extraction Point")]
-    [SerializeField] private ExtractionPointElement extractionPoint;
     [SerializeField] private MapAssetSO extractionMapAsset;
 
     [Header("Radar Indicator")]
@@ -17,56 +12,90 @@ public class MainEventManager : MonoBehaviour
     [Header("Pacing")]
     [SerializeField] private float delayBetweenEvents = 1.5f;
 
+    private List<MainWorldEvent> _mainEvents = new List<MainWorldEvent>();
+    private ExtractionPointElement _extractionPoint;
     private int _currentIndex;
-
-    private void Awake()
-    {
-        if (extractionPoint != null)
-            extractionPoint.gameObject.SetActive(false);
-    }
+    private bool _initialized;
+    
+    private bool _isWaitingToAdvance;
+    private float _advanceTimer;
 
     private void OnEnable()
     {
+        GameEventChannel<OnMainEventsGenerated>.OnEventRaised += OnMainEventsGenerated;
         GameEventChannel<OnSonarElementsDetection>.OnEventRaised += OnRadarStateChanged;
     }
 
     private void OnDisable()
     {
+        GameEventChannel<OnMainEventsGenerated>.OnEventRaised -= OnMainEventsGenerated;
         GameEventChannel<OnSonarElementsDetection>.OnEventRaised -= OnRadarStateChanged;
     }
 
-    private void Start()
+    private void Update()
     {
-        if (mainEvents.Count > 0)
-            BroadcastCurrentArea();
-        else
-            Log.Warning("[MainEventManager] No hay Main Events configurados.");
+        if (!_initialized) return;
+
+        if (_isWaitingToAdvance)
+        {
+            _advanceTimer -= Time.deltaTime;
+            if (_advanceTimer <= 0f)
+            {
+                _isWaitingToAdvance = false;
+                AdvanceToNextEvent();
+            }
+        }
+    }
+
+    private void OnMainEventsGenerated(OnMainEventsGenerated data)
+    {
+        _mainEvents = data.MainEvents ?? new List<MainWorldEvent>();
+        _extractionPoint = data.ExtractionPoint;
+        _currentIndex = 0;
+        _initialized = false;
+        _isWaitingToAdvance = false;
+
+        if (_mainEvents.Count == 0)
+        {
+            Log.Warning("[MainEventManager] Not generated Main Events.");
+            return;
+        }
+
+        _initialized = true;
+        BroadcastCurrentArea();
+        Log.Info($"[MainEventManager] Initialized with {_mainEvents.Count} Main Events.");
     }
 
     private void OnRadarStateChanged(OnSonarElementsDetection property)
     {
+        if (!_initialized) return;
         if (!property.IsRevealed) return;
         if (property.SonarRegion != SonarDetectionMode.InnerOnly) return;
-        if (_currentIndex >= mainEvents.Count) return;
+        if (_currentIndex >= _mainEvents.Count) return;
+        if (_isWaitingToAdvance) return;
+        
+        if (!ReferenceEquals(property.WorldElement, _mainEvents[_currentIndex])) return;
 
-        if (!ReferenceEquals(property.WorldElement, mainEvents[_currentIndex])) return;
-
-        IMainWorldEvent current = mainEvents[_currentIndex];
+        IMainWorldEvent current = _mainEvents[_currentIndex];
         if (!current.CheckConditions()) return;
 
         current.Execute();
-        StartCoroutine(AdvanceAfterDelay());
+        StartAdvanceDelay();
     }
 
-    private IEnumerator AdvanceAfterDelay()
+    private void StartAdvanceDelay()
     {
         GameEventChannel<OnMainEventAreaChanged>.RaiseEvent(
-            new OnMainEventAreaChanged(Vector3.zero, 0f, false));
+            new OnMainEventAreaChanged(Vector3.zero, 0f, false, string.Empty));
 
-        yield return new WaitForSeconds(delayBetweenEvents);
+        _advanceTimer = delayBetweenEvents;
+        _isWaitingToAdvance = true;
+    }
 
+    private void AdvanceToNextEvent()
+    {
         _currentIndex++;
-        if (_currentIndex >= mainEvents.Count)
+        if (_currentIndex >= _mainEvents.Count)
             UnlockExtractionPoint();
         else
             BroadcastCurrentArea();
@@ -74,56 +103,70 @@ public class MainEventManager : MonoBehaviour
 
     private void BroadcastCurrentArea()
     {
-        IWorldElement worldElement = mainEvents[_currentIndex];
+        if (_currentIndex >= _mainEvents.Count) return;
+
+        MainWorldEvent currentEvent = _mainEvents[_currentIndex];
+        
+        currentEvent.gameObject.SetActive(true);
+        
+        GameEventChannel<OnWorldMapElementGenerated>.RaiseEvent(
+            new OnWorldMapElementGenerated(currentEvent));
+        
         GameEventChannel<OnMainEventAreaChanged>.RaiseEvent(
-            new OnMainEventAreaChanged(worldElement.position, mainEventIndicatorRadius, true));
+            new OnMainEventAreaChanged(currentEvent.position, mainEventIndicatorRadius, true, currentEvent.ObjectiveDescription));
+        
+        Log.Info($"[MainEventManager] Objective: Main Event {_currentIndex + 1}/{_mainEvents.Count}");
     }
 
     private void UnlockExtractionPoint()
     {
-        if (extractionPoint == null)
+        if (_extractionPoint == null)
         {
-            Log.Warning("[MainEventManager] Extraction Point Not Assigned.");
+            Log.Warning("[MainEventManager] Extraction Point not available.");
             return;
         }
 
-        extractionPoint.Setup(SonarDetectionMode.Both, extractionMapAsset, WorldUIUpdateMode.Static, WorldUISyncMode.Linear);
-        extractionPoint.gameObject.SetActive(true);
-        extractionPoint.OnSubmarineReachedExtraction += OnSubmarineReachedExtraction;
+        _extractionPoint.Setup(
+            SonarDetectionMode.Both, extractionMapAsset,
+            WorldUIUpdateMode.Static, WorldUISyncMode.Linear);
 
-        GameEventChannel<OnWorldMapElementGenerated>.RaiseEvent(new OnWorldMapElementGenerated(extractionPoint));
-
+        _extractionPoint.gameObject.SetActive(true);
+        _extractionPoint.OnSubmarineReachedExtraction += OnSubmarineReachedExtraction;
+        
+        GameEventChannel<OnWorldMapElementGenerated>.RaiseEvent(
+            new OnWorldMapElementGenerated(_extractionPoint));
+        
         GameEventChannel<OnMainEventAreaChanged>.RaiseEvent(
-            new OnMainEventAreaChanged(extractionPoint.position, mainEventIndicatorRadius, true));
+            new OnMainEventAreaChanged(_extractionPoint.position, mainEventIndicatorRadius, true, "Evacuation Process."));
 
         GameEventChannel<OnExtractionPointUnlocked>.RaiseEvent(new OnExtractionPointUnlocked());
+        Log.Info("[MainEventManager] Extraction Point Unlocked.");
     }
 
     private void OnSubmarineReachedExtraction()
     {
-        extractionPoint.OnSubmarineReachedExtraction -= OnSubmarineReachedExtraction;
+        _extractionPoint.OnSubmarineReachedExtraction -= OnSubmarineReachedExtraction;
 
         GameEventChannel<OnMainEventAreaChanged>.RaiseEvent(
-            new OnMainEventAreaChanged(Vector3.zero, 0f, false));
+            new OnMainEventAreaChanged(Vector3.zero, 0f, false, string.Empty));
 
         GameEventChannel<OnGameWon>.RaiseEvent(new OnGameWon());
+        Log.Info("[MainEventManager] Game Won");
     }
 
     #region Testing
     [ContextMenu("Force Advance Main Event")]
     private void DebugAdvance()
     {
-        if (_currentIndex < mainEvents.Count)
-        {
-            mainEvents[_currentIndex].Execute();
-            StartCoroutine(AdvanceAfterDelay());
-        }
+        if (!_initialized || _currentIndex >= _mainEvents.Count) return;
+        _mainEvents[_currentIndex].Execute();
+        StartAdvanceDelay();
     }
 
     [ContextMenu("Check State")]
     private void DebugState()
     {
-        Log.Info($"[MainEventManager] Actual Event: {_currentIndex}/{mainEvents.Count}");
+        Log.Info($"[MainEventManager] Current Event: {_currentIndex}/{_mainEvents.Count} | Initialized: {_initialized} | Waiting: {_isWaitingToAdvance}");
     }
     #endregion
 }

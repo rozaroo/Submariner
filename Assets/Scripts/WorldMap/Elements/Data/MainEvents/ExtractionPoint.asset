@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3be3d4f76e0bc64eaf0e59eb3b52b78, type: 3}
+  m_Name: ExtractionPoint
+  m_EditorClassIdentifier: 
+  elementName: Checkpoint_Element
+  prefab: {fileID: 6375476034618856122, guid: 6839fdfac8812364396b2bcfa0839b0e, type: 3}
+  SonarDetectionMode: 1
+  requiredSize: 5
+  sizeMultiplier: 1
+  mapAsset: {fileID: 11400000, guid: 1fc61ed2caa945e418c8ff622b2430d4, type: 2}
+  updateMode: 0
+  syncMode: 0
+  syncTime: 0.1

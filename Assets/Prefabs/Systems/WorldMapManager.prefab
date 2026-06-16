@@ -46,12 +46,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldContainerGo: {fileID: 0}
   mapRuntimeData: {fileID: 11400000, guid: f993c08ecc9c4a340b86e7895003b85a, type: 2}
-  desiredEventsAmount: 3
-  mapSpawnAttempts: 3
-  minDistanceBetweenEvents: 10
+  desiredEventsAmount: 30
+  mapSpawnAttempts: 15
+  minDistanceBetweenEvents: 5
   submarineSo: {fileID: 11400000, guid: a5da4ebb564750346851cccd161068d3, type: 2}
+  submarineExtraAttempts: 50
   worldPossibleElements:
   - {fileID: 11400000, guid: 5e93bf089f30adf45b090ba3964e60c6, type: 2}
-  onWorldMapGenerated: {fileID: 11400000, guid: e2a69c9673a356a448d648541516a618, type: 2}
-  onWorldSubmarineElementGenerated: {fileID: 11400000, guid: 07ac95b2616c88b4bae6167e5e7cbff9, type: 2}
-  onWorldElementGenerated: {fileID: 11400000, guid: 164a221a1f6083648a0be64ed4bba397, type: 2}
+  mainEventSOs: []
+  mainEventExclusionRadius: 15
+  extractionPointSo: {fileID: 11400000, guid: 51399a4b35e9f234e86988a008386596, type: 2}

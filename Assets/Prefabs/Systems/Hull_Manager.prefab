@@ -58,8 +58,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   gracePeriod: 5
-  minSpawnInterval: 10
-  maxSpawnInterval: 20
+  minSpawnInterval: 20
+  maxSpawnInterval: 30
 --- !u!114 &4284337136202105156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,6 +73,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterMesh: {fileID: 0}
-  maxRiseSpeed: 0.5
+  maxRiseSpeed: 0.2
   startHeight: -45.81
   maxHeight: -43

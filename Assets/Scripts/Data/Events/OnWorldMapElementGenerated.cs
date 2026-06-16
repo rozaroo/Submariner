@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public struct OnWorldMapElementGenerated : IGameEvent
 {
     public IWorldMapUIElement _worldElementGenerated;

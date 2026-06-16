@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1403497683262504225}
   - component: {fileID: 7424967712452978505}
+  - component: {fileID: 7084582019388690429}
   m_Layer: 0
   m_Name: WorldEventManager
   m_TagString: Untagged
@@ -44,5 +45,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad458a0ebf01a146beadc3d55b6ee5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onOuterRadarChanged: {fileID: 11400000, guid: 61b22e0d7be78c742a5ebc0254a26204, type: 2}
-  onInnerRadarChanged: {fileID: 11400000, guid: ec7695e88b7faa540bf9e9d3cc8ab22d, type: 2}
+--- !u!114 &7084582019388690429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4429422688495718339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4be329cb5217384ea598b85982f8caa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  extractionMapAsset: {fileID: 11400000, guid: 3d0b7b3e525f28249b1a67a159564909, type: 2}
+  mainEventIndicatorRadius: 15
+  delayBetweenEvents: 1.5

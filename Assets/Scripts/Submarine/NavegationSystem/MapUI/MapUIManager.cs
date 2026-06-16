@@ -171,6 +171,7 @@ public class MapUIManager : MonoBehaviour
             }
         }
         _worldElementIconDictionary.Clear();
+        _dynamicIconDictionary.Clear(); 
     }
     
     private void OnElementDestroyed(IWorldElement entity)
