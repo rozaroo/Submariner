@@ -16,9 +16,13 @@ public class PhosphorusCamera : MonoBehaviour
     [SerializeField] private float exteriorCameraDuration = 2.0f;
     [SerializeField] private float finalFadeOutDuration = 0.75f;
 
+    [Header("Energy Consumption")]
+    [SerializeField] private float energyConsumption = 5f;
+
     private EnergyStatus _energyStatus = EnergyStatus.Full;
     private bool _isProcessingPhoto;
     private bool _isPossessingCamera;
+    private bool _hasRegisteredEnergyConsumption;
     private float _yaw;
     private float _pitch;
     private Coroutine _photoSequenceRoutine;
@@ -57,8 +61,16 @@ public class PhosphorusCamera : MonoBehaviour
         Log.Info($"{newStatus} - Phosphorus Camera Status");
         if (_energyStatus == EnergyStatus.Empty)
         {
-            ForceDisable();
-            Log.Info("Camera Disabled - No Energy");
+            if (_photoSequenceRoutine != null) StopCoroutine(_photoSequenceRoutine);
+            StopEnergyConsumption();
+            _isProcessingPhoto = false;
+
+            if (_isPossessingCamera && periscopeCameraAnchorSo.flashComponent != null)
+            {
+                periscopeCameraAnchorSo.flashComponent.SetOverlayColor(Color.black, 1f);
+            }
+            
+            Log.Info("Camera Blackout - No Energy");
         }
     }
 
@@ -79,6 +91,8 @@ public class PhosphorusCamera : MonoBehaviour
     private IEnumerator PhotoSequenceRoutine()
     {
         _isProcessingPhoto = true;
+        StartEnergyConsumption();
+        
         PeriscopeFlash3D flash = periscopeCameraAnchorSo.flashComponent;
         
         if (flash != null) 
@@ -119,6 +133,7 @@ public class PhosphorusCamera : MonoBehaviour
         }
         if (flash != null) flash.SetOverlayColor(Color.black, 1f);
         
+        StopEnergyConsumption();
         _isProcessingPhoto = false;
     }   
 
@@ -156,10 +171,35 @@ public class PhosphorusCamera : MonoBehaviour
     public void ForceDisable()
     {
         if (_photoSequenceRoutine != null) StopCoroutine(_photoSequenceRoutine);
+        StopEnergyConsumption();
         _isProcessingPhoto = false;
         DisableCamera();
     }
 
     public void BeginPeriscopeControl() => _isPossessingCamera = true;
     public void EndPeriscopeControl() => _isPossessingCamera = false;
+
+    private void StartEnergyConsumption()
+    {
+        if (_hasRegisteredEnergyConsumption)
+        {
+            return;
+        }
+
+        _hasRegisteredEnergyConsumption = true;
+        GameEventChannel<OnEnergyConsumption>.RaiseEvent(new OnEnergyConsumption(energyConsumption, true));
+        Log.Info($"[PhosphorusCamera] Energy consumption registered: {energyConsumption}");
+    }
+
+    private void StopEnergyConsumption()
+    {
+        if (!_hasRegisteredEnergyConsumption)
+        {
+            return;
+        }
+
+        _hasRegisteredEnergyConsumption = false;
+        GameEventChannel<OnEnergyConsumption>.RaiseEvent(new OnEnergyConsumption(energyConsumption, false));
+        Log.Info($"[PhosphorusCamera] Energy consumption relieved: {energyConsumption}");
+    }
 }

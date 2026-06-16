@@ -9,9 +9,11 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
 
     [Header("Settings")]
     [SerializeField] private float transferRatePerSecond = 10f;
+    [SerializeField] private float energyConsumption = 5f;
 
     private OxygenTank _dockedTank;
     private Coroutine _transferCoroutine;
+    private bool _hasRegisteredEnergyConsumption;
 
     public void Interact(PlayerCharacter player)
     {
@@ -23,7 +25,9 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
         }
 
         if (_dockedTank != null)
+        {
             UndockTank(player);
+        }
     }
 
     private void DockTank(OxygenTank tank)
@@ -35,6 +39,7 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
         _dockedTank.transform.position = dockPoint.position;
         _dockedTank.transform.rotation = dockPoint.rotation;
         
+        if (_transferCoroutine != null) StopCoroutine(_transferCoroutine);
         _transferCoroutine = StartCoroutine(TransferCoroutine());
         Log.Info("[OxygenTerminal] Tank Docked.");
     }
@@ -47,6 +52,8 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
             _transferCoroutine = null;
             oxygenSystem.ResumeDrain();
         }
+        StopEnergyConsumption();
+
         _dockedTank.Interact(player);
         _dockedTank = null;
         Log.Info("[OxygenTerminal] Tank Undocked.");
@@ -55,12 +62,17 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
     private IEnumerator TransferCoroutine()
     {
         yield return null;
-        oxygenSystem.PauseDrain();
         float accumulatedDrained = 0f;
 
-        while (_dockedTank != null && !_dockedTank.isEmpty && oxygenSystem.CurrentOxygen < oxygenSystem.MaxOxygen)
+        while (_dockedTank != null && !_dockedTank.isEmpty)
         {
-            float toDrain = transferRatePerSecond * Time.deltaTime;
+            oxygenSystem.PauseDrain();
+            StartEnergyConsumption();
+
+            float toDrain = oxygenSystem.CurrentOxygen < oxygenSystem.MaxOxygen 
+                ? transferRatePerSecond * Time.deltaTime 
+                : Time.deltaTime; // Maintenance rate to match system drain
+
             float drained = _dockedTank.Drain(toDrain);
             accumulatedDrained += drained;
             
@@ -73,10 +85,37 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
             yield return null;
         }
 
+        StopEnergyConsumption();
         if (accumulatedDrained > 0)
+        {
             oxygenSystem.RestoreOxygen(accumulatedDrained);
+        }
 
         oxygenSystem.ResumeDrain();
         _transferCoroutine = null;
+    }
+
+    private void StartEnergyConsumption()
+    {
+        if (_hasRegisteredEnergyConsumption)
+        {
+            return;
+        }
+
+        _hasRegisteredEnergyConsumption = true;
+        GameEventChannel<OnEnergyConsumption>.RaiseEvent(new OnEnergyConsumption(energyConsumption, true));
+        Log.Info($"[OxygenTerminal] Energy consumption registered: {energyConsumption}");
+    }
+
+    private void StopEnergyConsumption()
+    {
+        if (!_hasRegisteredEnergyConsumption)
+        {
+            return;
+        }
+
+        _hasRegisteredEnergyConsumption = false;
+        GameEventChannel<OnEnergyConsumption>.RaiseEvent(new OnEnergyConsumption(energyConsumption, false));
+        Log.Info($"[OxygenTerminal] Energy consumption relieved: {energyConsumption}");
     }
 }

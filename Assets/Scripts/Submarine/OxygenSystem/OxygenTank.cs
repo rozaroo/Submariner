@@ -95,6 +95,12 @@ public class OxygenTank : MonoBehaviour, IInteractable, IPickable
         RefreshBar();
         return drained;
     }
+
+    public void Refill(float amount)
+    {
+        currentCharge = Mathf.MoveTowards(currentCharge, maxCharge, amount);
+        RefreshBar();
+    }
     
     private float _lastBarRatio = -1f;
 
