@@ -133,7 +133,12 @@ public class PlayerCharacter : MonoBehaviour
 
     public void OnUnPossessionState(IPossessable station)
     {
-        _gameplaySm.ChangeState(new PlayerGameplayUnPossessionState(_gameplaySm, this, station));
+        string prevMap = "Player";
+        if (_gameplaySm.CurrentState is PlayerGameplayPossessionState possessionState)
+        {
+            prevMap = possessionState.PreviousMapName;
+        }
+        _gameplaySm.ChangeState(new PlayerGameplayUnPossessionState(_gameplaySm, this, station, prevMap));
     }
 
     #endregion

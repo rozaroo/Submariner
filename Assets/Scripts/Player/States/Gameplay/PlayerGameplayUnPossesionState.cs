@@ -4,13 +4,15 @@ public class PlayerGameplayUnPossessionState : PlayerGameplayState
 {
     private readonly PlayerCharacter _player;
     private readonly IPossessable _station;
+    private readonly string _mapToReturn;
 
     private CameraTransition _transition;
 
-    public PlayerGameplayUnPossessionState(StateMachine sm, PlayerCharacter player, IPossessable station) : base(sm)
+    public PlayerGameplayUnPossessionState(StateMachine sm, PlayerCharacter player, IPossessable station, string mapToReturn) : base(sm)
     {
         _player = player;
         _station = station;
+        _mapToReturn = mapToReturn;
     }
 
     public override void OnEnter()
@@ -32,6 +34,8 @@ public class PlayerGameplayUnPossessionState : PlayerGameplayState
     
     private void OnTransitionFinished()
     {
+        _player.SetMouseConfiguration(CursorLockMode.Locked, false);
+        _player.Input.SwitchCurrentActionMap(_mapToReturn);
         Sm.ChangeState(new PlayerGameplayFreeState(Sm, _player));
     }
     

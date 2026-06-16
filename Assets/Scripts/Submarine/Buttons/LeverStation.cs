@@ -18,7 +18,8 @@ public class LeverStation : MonoBehaviour, ILeverControls
 
     private void Awake()
     {
-        _initialAngle = transform.localRotation.eulerAngles.y;
+        _initialAngle = transform.localRotation.eulerAngles.z;
+        _currentAngle = _initialAngle;
     }
     
     public void Lock() => isLocked = true;

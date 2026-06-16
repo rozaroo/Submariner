@@ -271,6 +271,15 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     private void OnEnergyStatusChanged(OnEnergyStatusChange status)
     {
         _energyStatus = status.energyStatus;
+        
+        if (_energyStatus == EnergyStatus.Empty && _isDrainageActive)
+        {
+            if (mainLever != null)
+            {
+                mainLever.SetActive(false);
+            }
+        }
+        
         SetDrainageStatus();
     }
     

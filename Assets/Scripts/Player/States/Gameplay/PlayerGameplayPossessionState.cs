@@ -8,6 +8,7 @@ public class PlayerGameplayPossessionState : PlayerGameplayState
     private CursorLockMode _desiredLockMode;
     private bool _showMouse;
 
+    public string PreviousMapName => _previousMapName;
 
     public PlayerGameplayPossessionState(StateMachine sm, PlayerCharacter context, 
         IPossessable station, string previousMapName, CursorLockMode desiredCursorLockMode, bool showMouse) : base(sm)
@@ -40,8 +41,6 @@ public class PlayerGameplayPossessionState : PlayerGameplayState
     public override void OnExit()
     {
         _station.UnPossess();
-        _context.SetMouseConfiguration(CursorLockMode.Locked, false);
-        _context.Input.SwitchCurrentActionMap(_previousMapName);
     }
     
     private CameraPose BuildStationPose()

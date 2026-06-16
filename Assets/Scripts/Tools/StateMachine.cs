@@ -1,6 +1,8 @@
 public class StateMachine
 {
     private IState _currentState;
+
+    public IState CurrentState => _currentState;
     
     public void SetInitialState(IState state)
     {
