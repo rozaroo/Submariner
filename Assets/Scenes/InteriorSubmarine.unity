@@ -351,6 +351,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &678523294 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3671970748856456214, guid: 06ee82ad091093e4b899d9beb676ec65, type: 3}
+  m_PrefabInstance: {fileID: 2512268466962752663}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &697178015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1733,6 +1744,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6831420252714330620, guid: 06ee82ad091093e4b899d9beb676ec65, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 7529263164396498859, guid: 06ee82ad091093e4b899d9beb676ec65, type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
@@ -1769,8 +1784,12 @@ PrefabInstance:
       propertyPath: periscopeCameraAnchorSo
       value: 
       objectReference: {fileID: 11400000, guid: 522a189dbd2c157479bb7efa2786b504, type: 2}
+    - target: {fileID: 8271331240930864477, guid: 06ee82ad091093e4b899d9beb676ec65, type: 3}
+      propertyPath: objectiveText
+      value: 
+      objectReference: {fileID: 678523294}
     m_RemovedComponents:
-    - {fileID: 6928886652304957680, guid: 06ee82ad091093e4b899d9beb676ec65, type: 3}
+    - {fileID: 0}
     m_RemovedGameObjects:
     - {fileID: 7732483817586982353, guid: 06ee82ad091093e4b899d9beb676ec65, type: 3}
     m_AddedGameObjects: []

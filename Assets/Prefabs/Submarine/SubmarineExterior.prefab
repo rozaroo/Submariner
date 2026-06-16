@@ -780,10 +780,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothTime: 0.9
   rotationSmoothTime: 0.15
-  maxMovementSpeed: 70
-  maxRotationSpeed: 100
+  maxMovementSpeed: 20
+  maxRotationSpeed: 30
   distanceOffset: 0.1
   smoothDeaccelerationTime: 1
+  _bounceFactor: 0.4
 --- !u!114 &7807609392984242170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,6 +812,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93c583f1aa1420b42b3a21da2b1dae16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collisionCooldown: 1
 --- !u!65 &9087955608048518415
 BoxCollider:
   m_ObjectHideFlags: 0

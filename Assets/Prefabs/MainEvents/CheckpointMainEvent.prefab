@@ -131,5 +131,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5bdc2347b2f9e439e59d129e0e81ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  completeSfxEvent: Start_MainEventTrigger
+  completeSfxEvent: Start_OnMissionCompleted
   destroyOnComplete: 1

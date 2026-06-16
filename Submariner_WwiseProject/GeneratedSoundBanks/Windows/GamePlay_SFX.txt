@@ -9,6 +9,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	1403223316	Start_TensionEvent			\Gameplay_SFX\Start_TensionEvent	
 	1735885581	Start_SonarPingInner			\Gameplay_SFX\Start_SonarPingInner	
 	1982947219	Stop_BlowtorchSFX			\Gameplay_SFX\Stop_BlowtorchSFX	
+	2060351696	Start_OnMissionCompleted			\Gameplay_SFX\Start_OnMissionCompleted	
 	2469108041	Start_LeverPullFinished			\Gameplay_SFX\Start_LeverPullFinished	
 	2571798077	Start_HullBreachSFX			\Gameplay_SFX\Start_HullBreachSFX	
 	2940474702	Start_PlayerFootsteps			\Gameplay_SFX\Start_PlayerFootsteps	
@@ -107,6 +108,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	657499168	Project_1_Tension3	F:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\Project_1_Tension3_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_Tension3		564608
 	674079710	CameraIntro	F:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\CameraIntro_B03F89E8.wem		\Actor-Mixer Hierarchy\SubmarineSFX\PhosphorusCamera\PhosporusCamera_Functional\CameraIntro		146924
 	678727613	Project_1_BackgroundWhiteNoise	F:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\Project_1_BackgroundWhiteNoise_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_BackgroundWhiteNoise		564608
+	694013265	OnMissionCompleted	F:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\387232__steaq__badge-coin-win_B402D4D8.wem		\Actor-Mixer Hierarchy\SubmarineSFX\OnMissionCompleted		540672
 	750154524	244394__werra__bangexplosion-metallic	F:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\244394__werra__bangexplosion-metallic_10C4C929.wem		\Actor-Mixer Hierarchy\SubmarineSFX\SubmarineCollision\ImpactCollision\244394__werra__bangexplosion-metallic		1412672
 	783648702	HighWaterLevelWalk_4	F:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\490951__nox_sound__footsteps_walk_8CACD102.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Water_Steps_Level\HighWaterLevel\HighWaterLevelWalk_4		106248
 	794426764	PressureDoorOpen_01	F:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\425090__neospica__pressurized-door-opening_2EA370B6.wem		\Actor-Mixer Hierarchy\SubmarineSFX\PressureDoorOpenRandom\PressureDoorOpen_01		239564

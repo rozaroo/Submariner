@@ -273,6 +273,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Start_OnMissionCompleted" ID="{779DFC19-9F3E-4286-BDC1-99EF277E567B}">
+					<ChildrenList>
+						<Action Name="" ID="{9C92C644-FBD1-47E1-B916-73C6876C33FA}" ShortID="440552026">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="OnMissionCompleted" ID="{DB97C1AA-321C-42E5-919F-73B72C413C4E}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

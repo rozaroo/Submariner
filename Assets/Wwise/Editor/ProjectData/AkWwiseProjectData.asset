@@ -274,7 +274,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584199926713609271
+    m_lastTime: -8584199796803696406
     List:
     - name: Start_BackgroundSubmarineMFX
       guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
@@ -395,6 +395,23 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.398979
       minDuration: 0.398979
+    - name: Start_OnMissionCompleted
+      guid: 19fc9d773e9f8642bdc199ef277e567b
+      id: 2060351696
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_OnMissionCompleted
+        ObjectType: 3
+        guid: 19fc9d773e9f8642bdc199ef277e567b
+      Path: Events\Gameplay_SFX\Start_OnMissionCompleted
+      maxAttenuation: 0
+      maxDuration: 3.064671
+      minDuration: 3.064671
     - name: Start_Opening_Pressure_DoorSFX
       guid: 1cec1fc9c843b94eb94c33b41770a6d6
       id: 4235702204
@@ -990,7 +1007,7 @@ MonoBehaviour:
     m_lastTime: -8584200096133727135
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 
+  ExpandedWaapiItemIds: 0600000008000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

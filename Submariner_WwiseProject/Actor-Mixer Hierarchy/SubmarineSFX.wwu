@@ -1737,6 +1737,33 @@
 						<ActiveSource Name="593755__mighael__blowtorch" ID="{09A7F83E-DBF0-469F-912F-4A0DF53C68FD}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<Sound Name="OnMissionCompleted" ID="{DB97C1AA-321C-42E5-919F-73B72C413C4E}" ShortID="921244338">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Player_SFX" ID="{DED04D6C-EE6A-4C48-A604-08B46AB54B3D}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="387232__steaq__badge-coin-win" ID="{AC0B1234-DFCA-4A0B-9EC8-0B0384B3269A}">
+							<PropertyList>
+								<Property Name="FadeInDuration" Type="Real64" Value="0.354297248764631"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+							</PropertyList>
+							<Language>SFX</Language>
+							<AudioFile>387232__steaq__badge-coin-win.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="694013265"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="387232__steaq__badge-coin-win" ID="{AC0B1234-DFCA-4A0B-9EC8-0B0384B3269A}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

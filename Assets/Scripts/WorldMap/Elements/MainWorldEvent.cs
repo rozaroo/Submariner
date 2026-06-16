@@ -3,7 +3,7 @@ using UnityEngine;
 public class MainWorldEvent : WorldMapUIElement, IMainWorldEvent
 {
     [Header("Feedback")]
-    [SerializeField] private string completeSfxEvent = "Start_MainEventTrigger";
+    [SerializeField] private string completeSfxEvent = "Start_OnMissionCompleted";
     [SerializeField] private bool destroyOnComplete = false;
     
     private string _eventName;
@@ -27,8 +27,8 @@ public class MainWorldEvent : WorldMapUIElement, IMainWorldEvent
 
         Log.Info($"[MainWorldEvent] '{_eventName}' activated.");
 
-        /*if (!string.IsNullOrEmpty(completeSfxEvent))
-            SFXManager.PostEvent(completeSfxEvent, gameObject);*/
+        if (!string.IsNullOrEmpty(completeSfxEvent))
+            SFXManager.PostEvent(completeSfxEvent, gameObject);
 
         ForceReleaseFromUI();
         
