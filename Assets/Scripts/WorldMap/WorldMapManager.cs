@@ -228,7 +228,26 @@ public class WorldMapManager : MonoBehaviour
     private WorldMapElementSO SelectRandomElement()
     {
         if (worldPossibleElements.Count == 0) return null;
-        return worldPossibleElements[Random.Range(0, worldPossibleElements.Count)];
+
+        float totalWeight = 0f;
+        foreach (var so in worldPossibleElements)
+        {
+            if (so != null) totalWeight += so.SpawnWeight;
+        }
+
+        if (totalWeight <= 0f) return null;
+
+        float roll = Random.Range(0f, totalWeight);
+        float cumulative = 0f;
+
+        foreach (var so in worldPossibleElements)
+        {
+            if (so == null) continue;
+            cumulative += so.SpawnWeight;
+            if (roll < cumulative) return so;
+        }
+
+        return worldPossibleElements[^1]; //Last element if everything failed, TODO: maybe make a TemplateWorldElement for debugging?
     }
 
     private GameObject GenerateWorldElementGo(WorldMapElementSO so)

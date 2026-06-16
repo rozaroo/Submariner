@@ -17,8 +17,11 @@ public abstract class WorldMapElementSO : ScriptableObject
     [SerializeField] private float requiredSize;
     [SerializeField] private float sizeMultiplier = 1f;
     
-    public float RequiredSize => requiredSize;
+    [Header("Spawn Weight")]
+    [SerializeField] private float spawnWeight = 1f;
     
+    public float SpawnWeight => spawnWeight;
+    public float RequiredSize => requiredSize;
     public float LastRequiredSize { get; private set; }
 
     protected SonarDetectionMode DetectionMode => SonarDetectionMode;

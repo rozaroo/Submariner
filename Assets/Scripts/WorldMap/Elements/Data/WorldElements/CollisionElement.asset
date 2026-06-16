@@ -17,5 +17,6 @@ MonoBehaviour:
   SonarDetectionMode: 3
   requiredSize: 0.8660254
   sizeMultiplier: 1
-  baseScale: {x: 1, y: 1, z: 1}
+  spawnWeight: 2
+  baseScale: {x: 1, y: 20, z: 1}
   scaleRange: {x: 20, y: 30}

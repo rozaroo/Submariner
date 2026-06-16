@@ -17,6 +17,7 @@ MonoBehaviour:
   SonarDetectionMode: 3
   requiredSize: 10
   sizeMultiplier: 1
+  spawnWeight: 0.3
   mapAsset: {fileID: 11400000, guid: 625f41b7342b984468f93681823168fc, type: 2}
   updateMode: 1
   syncMode: 1
