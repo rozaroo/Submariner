@@ -141,7 +141,16 @@ PlayerSettings:
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
   bundleVersion: 0.1.0
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 11400000, guid: f993c08ecc9c4a340b86e7895003b85a, type: 2}
+  - {fileID: 11400000, guid: 05d953532f8b4684386330696f148efa, type: 2}
+  - {fileID: 11400000, guid: ae61cd990bf393344bdbbd2beea3264a, type: 2}
+  - {fileID: 11400000, guid: fbb3f93380da1b845934a96353c0c5a7, type: 2}
+  - {fileID: 11400000, guid: 5ed4a00a0a293574f813a544bc29b8a9, type: 2}
+  - {fileID: 11400000, guid: b1f15e0cd0d02a945840787ddf763bfa, type: 2}
+  - {fileID: 11400000, guid: 5e93bf089f30adf45b090ba3964e60c6, type: 2}
+  - {fileID: 11400000, guid: a5da4ebb564750346851cccd161068d3, type: 2}
+  - {fileID: 11400000, guid: 51399a4b35e9f234e86988a008386596, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -844,7 +853,7 @@ PlayerSettings:
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
-    Standalone: 1
+    Standalone: 0
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   il2cppStacktraceInformation: {}

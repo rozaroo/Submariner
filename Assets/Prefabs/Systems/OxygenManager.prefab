@@ -15,9 +15,9 @@ GameObject:
   m_Layer: 0
   m_Name: OxygenManager
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8374195753356596361
 Transform:
@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c53a7b20c268f74684f5906e670e955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onHullStatusChanged: {fileID: 11400000, guid: 57df504b4607b5347a6e29e893996736, type: 2}
   targetCamera: {fileID: 0}
   shakeEnabled: 1
   shakeDuration: 0.3
@@ -67,10 +66,6 @@ MonoBehaviour:
   currentOxygen: 60
   suffocationDuration: 60
   suffocationTimeRemaining: 0
-  onDeath: {fileID: 11400000, guid: 2cfc5ac3502b1e441aff5d6459137d45, type: 2}
-  onLowOxygen: {fileID: 11400000, guid: f91072f76c84d5a4e9b992d7e4642aee, type: 2}
-  onSuffocationProgress: {fileID: 11400000, guid: 5d1169d521586294bba46c03ccc3c2f4, type: 2}
-  onOxygenChanged: {fileID: 11400000, guid: 6067dc80e58be5e4593ee05004842ef3, type: 2}
 --- !u!114 &3636989460143065708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,4 +84,3 @@ MonoBehaviour:
   pulseAmplitude: 0.04
   pulseSpeed: 2.5
   recoverySpeed: 0.3
-  onSuffocationProgress: {fileID: 11400000, guid: 5d1169d521586294bba46c03ccc3c2f4, type: 2}

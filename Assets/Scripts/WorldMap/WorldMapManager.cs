@@ -34,16 +34,23 @@ public class WorldMapManager : MonoBehaviour
 
     private void Start()
     {
-        CreateSubmarine();
-        GenerateMainEvents();
-        GenerateExtractionPoint(); 
-        GenerateRandomFill();
+        try
+        {
+            CreateSubmarine();
+            GenerateMainEvents();
+            GenerateExtractionPoint(); 
+            GenerateRandomFill();
+            GameEventChannel<OnMainEventsGenerated>.RaiseEvent(
+                new OnMainEventsGenerated(_generatedMainEvents, _generatedExtractionPoint));
         
-        GameEventChannel<OnMainEventsGenerated>.RaiseEvent(
-            new OnMainEventsGenerated(_generatedMainEvents, _generatedExtractionPoint));
+            GameEventChannel<OnWorldMapGeneratedProperty>.RaiseEvent(
+                new OnWorldMapGeneratedProperty(ValidateListForUI(_mapElements)));
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[WorldMapManager] CRASH: {e.Message}\n{e.StackTrace}");
+        }
         
-        GameEventChannel<OnWorldMapGeneratedProperty>.RaiseEvent(
-            new OnWorldMapGeneratedProperty(ValidateListForUI(_mapElements)));
     }
 
     #region Submarine
@@ -55,9 +62,24 @@ public class WorldMapManager : MonoBehaviour
             Log.Error("[WorldMapManager] Submarine SO not assigned.");
             return;
         }
+        if (worldContainerGo == null)
+        {
+            Log.Error("[WorldMapManager] worldContainerGo is NULL. Check scene references.");
+            return;
+        }
+        if (mapRuntimeData == null)
+        {
+            Log.Error("[WorldMapManager] mapRuntimeData is NULL. Check if SO is included in build.");
+            return;
+        }
 
         _submarineGo = GenerateWorldElementGo(submarineSo);
-        if (_submarineGo == null) return;
+
+        if (_submarineGo == null)
+        {
+            Log.Error("[WorldMapManager] submarineSo.CreateElement() returned null. The prefab may be missing from the build.");
+            return;
+        }
 
         _submarineGo.transform.SetParent(worldContainerGo.transform, false);
         
@@ -212,7 +234,15 @@ public class WorldMapManager : MonoBehaviour
     private GameObject GenerateWorldElementGo(WorldMapElementSO so)
     {
         if (so == null) return null;
-        return so.CreateElement();
+        try
+        {
+            return so.CreateElement();
+        }
+        catch (System.Exception e)
+        {
+            Log.Error($"[WorldMapManager] CreateElement() failed on SO '{so.name}': {e.Message}");
+            return null;
+        }
     }
 
     #endregion
@@ -266,6 +296,16 @@ public class WorldMapManager : MonoBehaviour
 
     private Vector3 GenerateRandomPosition()
     {
+        if (mapRuntimeData == null)
+        {
+            Debug.LogError("[WorldMapManager] mapRuntimeData is NULL");
+            return Vector3.zero;
+        }
+        if (worldContainerGo == null)
+        {
+            Debug.LogError("[WorldMapManager] worldContainerGo is NULL");
+            return Vector3.zero;
+        }
         float half = mapRuntimeData.worldMapSize / 2f;
         return worldContainerGo.transform.position + new Vector3(
             Random.Range(-half, half), 0f, Random.Range(-half, half));

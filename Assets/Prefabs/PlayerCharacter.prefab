@@ -61,6 +61,14 @@ MonoBehaviour:
   interactableLayer:
     serializedVersion: 2
     m_Bits: 8
+  minImpactSpeed: 1
+  maxExpectedImpactSpeed: 15
+  minForce: 2
+  maxForce: 10
+  minDrag: 0.5
+  maxDrag: 2
+  minAccelTime: 0.5
+  maxAccelTime: 1.5
 --- !u!114 &2988871602860453287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,7 +84,6 @@ MonoBehaviour:
   lookSensitivity: 20
   upDownPitchLimit: 70
   lookLerpSpeed: 40
-  showGizmos: 1
   lookActionName: Look
   playerCamera: {fileID: 3246600704839594514}
 --- !u!114 &471372131358332951
@@ -262,7 +269,7 @@ GameObject:
   - component: {fileID: 8164654673162403251}
   m_Layer: 31
   m_Name: Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -13,7 +13,7 @@ GameObject:
   m_Layer: 0
   m_Name: SonarManager
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -44,5 +44,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4cdee08a850fd41a7fce60b42bd4f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onWorldMapGenerated: {fileID: 11400000, guid: e2a69c9673a356a448d648541516a618, type: 2}
-  onWorldSubmarineGenerated: {fileID: 11400000, guid: 07ac95b2616c88b4bae6167e5e7cbff9, type: 2}

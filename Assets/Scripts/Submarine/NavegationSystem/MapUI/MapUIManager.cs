@@ -297,7 +297,7 @@ public class MapUIManager : MonoBehaviour
             {
                 if (_worldElementIconDictionary.TryGetValue(uiElement, out MapIcon icon))
                 {
-                    if (Time.time > _lastOuterPingTime + pingAudioCooldown)
+                    if (Time.time > _lastInnerPingTime + pingAudioCooldown)
                     {
                         SFXManager.PostEvent("Start_SonarPingInner", gameObject);
                         _lastInnerPingTime = Time.time;
