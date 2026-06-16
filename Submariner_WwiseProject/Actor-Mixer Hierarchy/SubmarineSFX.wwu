@@ -568,8 +568,8 @@
 																<Flags>5</Flags>
 															</Point>
 															<Point>
-																<XPos>97.08285</XPos>
-																<YPos>99.70663</YPos>
+																<XPos>89.73162</XPos>
+																<YPos>64.31337</YPos>
 																<Flags>0</Flags>
 															</Point>
 															<Point>
@@ -1006,6 +1006,9 @@
 						</Property>
 					</PropertyList>
 					<ReferenceList>
+						<Reference Name="Attenuation">
+							<ObjectRef Name="SonarAttenuation" ID="{7DE48A21-BE76-4084-BB9F-A9071D1A2580}" WorkUnitID="{FA43832F-6DF7-497E-836D-6C0AC9D9DC7E}"/>
+						</Reference>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
 						</Reference>
@@ -1700,6 +1703,40 @@
 					</ChildrenList>
 					<ObjectLists/>
 				</BlendContainer>
+				<Sound Name="BlowTorchSFX" ID="{1C669A42-DE2D-4FF1-BE31-F5EA3C736300}" ShortID="270358980">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="593755__mighael__blowtorch" ID="{09A7F83E-DBF0-469F-912F-4A0DF53C68FD}">
+							<PropertyList>
+								<Property Name="CrossfadeDuration" Type="Real64" Value="1763.616"/>
+								<Property Name="LoopBegin" Type="Real64" Value="1.73303271597656"/>
+								<Property Name="LoopEnd" Type="Real64" Value="5.75976252736162"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+								<Property Name="TrimBegin" Type="Real64" Value="0.254857752349495"/>
+								<Property Name="TrimEnd" Type="Real64" Value="7.44184636860527"/>
+							</PropertyList>
+							<Language>SFX</Language>
+							<AudioFile>593755__mighael__blowtorch.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="24752111"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="593755__mighael__blowtorch" ID="{09A7F83E-DBF0-469F-912F-4A0DF53C68FD}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

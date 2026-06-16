@@ -34,12 +34,13 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3401228817" Language="SFX" Hash="2938753154">
+		<SoundBank Id="3401228817" Language="SFX" Hash="1762152882">
 			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
 			<ShortName>GamePlay_SFX</ShortName>
 			<Path>GamePlay_SFX.bnk</Path>
 			<IncludedEvents>
 				<Event Id="3003027233" Name="Start_BackgroundSubmarineMFX" ObjectPath="\Events\Gameplay_SFX\Start_BackgroundSubmarineMFX" DurationType="Infinite"/>
+				<Event Id="1116808773" Name="Start_BlowtorchSFX" ObjectPath="\Events\Gameplay_SFX\Start_BlowtorchSFX" DurationType="Infinite"/>
 				<Event Id="738466431" Name="Start_ButtonPress" ObjectPath="\Events\Gameplay_SFX\Start_ButtonPress" DurationType="OneShot" DurationMin="0.082455" DurationMax="0.115269"/>
 				<Event Id="378872923" Name="Start_Closing_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Closing_Pressure_DoorSFX" DurationType="OneShot" DurationMin="2.07" DurationMax="2.257351"/>
 				<Event Id="4238673748" Name="Start_DrainagePumpSFX" ObjectPath="\Events\Gameplay_SFX\Start_DrainagePumpSFX" MaxAttenuation="100." DurationType="Infinite"/>
@@ -49,11 +50,12 @@
 				<Event Id="438413481" Name="Start_PhosphorusCameraCooldown" ObjectPath="\Events\Gameplay_SFX\Start_PhosphorusCameraCooldown" DurationType="OneShot" DurationMin="1.902773" DurationMax="1.902773"/>
 				<Event Id="3214537693" Name="Start_PhosphorusCameraFlash_Event" ObjectPath="\Events\Gameplay_SFX\Start_PhosphorusCameraFlash_Event" DurationType="OneShot" DurationMin="1.902773" DurationMax="2.752797"/>
 				<Event Id="2940474702" Name="Start_PlayerFootsteps" ObjectPath="\Events\Gameplay_SFX\Start_PlayerFootsteps" DurationType="OneShot" DurationMin="0.502769" DurationMax="1.307199"/>
-				<Event Id="1735885581" Name="Start_SonarPingInner" ObjectPath="\Events\Gameplay_SFX\Start_SonarPingInner" DurationType="OneShot" DurationMin="3.2" DurationMax="3.2"/>
+				<Event Id="1735885581" Name="Start_SonarPingInner" ObjectPath="\Events\Gameplay_SFX\Start_SonarPingInner" MaxAttenuation="100." DurationType="OneShot" DurationMin="3.2" DurationMax="3.2"/>
 				<Event Id="997126444" Name="Start_SonarPingOuter" ObjectPath="\Events\Gameplay_SFX\Start_SonarPingOuter" DurationType="OneShot" DurationMin="3.2" DurationMax="3.2"/>
 				<Event Id="3771492726" Name="Start_SubmarineCollision" ObjectPath="\Events\Gameplay_SFX\Start_SubmarineCollision" DurationType="OneShot" DurationMin="7.994576" DurationMax="8.817284"/>
 				<Event Id="1403223316" Name="Start_TensionEvent" ObjectPath="\Events\Gameplay_SFX\Start_TensionEvent" DurationType="Infinite"/>
 				<Event Id="116843463" Name="Stop_BackgroundSubmarineMFX" ObjectPath="\Events\Gameplay_SFX\Stop_BackgroundSubmarineMFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
+				<Event Id="1982947219" Name="Stop_BlowtorchSFX" ObjectPath="\Events\Gameplay_SFX\Stop_BlowtorchSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="860956674" Name="Stop_DrainagePumpSFX" ObjectPath="\Events\Gameplay_SFX\Stop_DrainagePumpSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="3933279043" Name="Stop_HullBreachSFX" ObjectPath="\Events\Gameplay_SFX\Stop_HullBreachSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="3884825202" Name="Stop_TensionEvent" ObjectPath="\Events\Gameplay_SFX\Stop_TensionEvent" DurationType="Infinite"/>
@@ -67,6 +69,10 @@
 				<File Id="23372763" Language="SFX">
 					<ShortName>338969__timkahn__massive-metal-hit.wav</ShortName>
 					<Path>SFX\338969__timkahn__massive-metal-hit_10C4C929.wem</Path>
+				</File>
+				<File Id="24752111" Language="SFX">
+					<ShortName>593755__mighael__blowtorch.wav</ShortName>
+					<Path>SFX\593755__mighael__blowtorch_3D3E1A9B.wem</Path>
 				</File>
 				<File Id="30412895" Language="SFX">
 					<ShortName>244983__ani_music__ani-big-pipe-hit.wav</ShortName>

@@ -274,7 +274,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584200539233946769
+    m_lastTime: -8584200060337289549
     List:
     - name: Start_BackgroundSubmarineMFX
       guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
@@ -290,6 +290,23 @@ MonoBehaviour:
         ObjectType: 3
         guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
       Path: Events\Gameplay_SFX\Start_BackgroundSubmarineMFX
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Start_BlowtorchSFX
+      guid: e377d1fd4852b641b3966e6f1f4c747e
+      id: 1116808773
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_BlowtorchSFX
+        ObjectType: 3
+        guid: e377d1fd4852b641b3966e6f1f4c747e
+      Path: Events\Gameplay_SFX\Start_BlowtorchSFX
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -460,7 +477,7 @@ MonoBehaviour:
         ObjectType: 3
         guid: 1229c9717802a54a8d32dbeb8e91b82d
       Path: Events\Gameplay_SFX\Start_SonarPingInner
-      maxAttenuation: 0
+      maxAttenuation: 100
       maxDuration: 3.2
       minDuration: 3.2
     - name: Start_SonarPingOuter
@@ -528,6 +545,23 @@ MonoBehaviour:
         ObjectType: 3
         guid: 4a677021b45f5f4f8d00fb1db4eff360
       Path: Events\Gameplay_SFX\Stop_BackgroundSubmarineMFX
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Stop_BlowtorchSFX
+      guid: 5c2bd84caa088342866b063a58e54e77
+      id: 1982947219
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Stop_BlowtorchSFX
+        ObjectType: 3
+        guid: 5c2bd84caa088342866b063a58e54e77
+      Path: Events\Gameplay_SFX\Stop_BlowtorchSFX
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0

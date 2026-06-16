@@ -5,8 +5,10 @@ Event	ID	Name			Wwise Object Path	Notes
 	738466431	Start_ButtonPress			\Gameplay_SFX\Start_ButtonPress	
 	860956674	Stop_DrainagePumpSFX			\Gameplay_SFX\Stop_DrainagePumpSFX	
 	997126444	Start_SonarPingOuter			\Gameplay_SFX\Start_SonarPingOuter	
+	1116808773	Start_BlowtorchSFX			\Gameplay_SFX\Start_BlowtorchSFX	
 	1403223316	Start_TensionEvent			\Gameplay_SFX\Start_TensionEvent	
 	1735885581	Start_SonarPingInner			\Gameplay_SFX\Start_SonarPingInner	
+	1982947219	Stop_BlowtorchSFX			\Gameplay_SFX\Stop_BlowtorchSFX	
 	2469108041	Start_LeverPullFinished			\Gameplay_SFX\Start_LeverPullFinished	
 	2571798077	Start_HullBreachSFX			\Gameplay_SFX\Start_HullBreachSFX	
 	2940474702	Start_PlayerFootsteps			\Gameplay_SFX\Start_PlayerFootsteps	
@@ -72,6 +74,7 @@ Effect plug-ins	ID	Name	Type				Notes
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	23372763	338969__timkahn__massive-metal-hit	F:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\338969__timkahn__massive-metal-hit_10C4C929.wem		\Actor-Mixer Hierarchy\SubmarineSFX\SubmarineCollision\ImpactCollision\338969__timkahn__massive-metal-hit		1344064
+	24752111	BlowTorchSFX	F:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\593755__mighael__blowtorch_3D3E1A9B.wem		\Actor-Mixer Hierarchy\SubmarineSFX\BlowTorchSFX		1267912
 	30412895	244983__ani_music__ani-big-pipe-hit	F:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\244983__ani_music__ani-big-pipe-hit_10C4C929.wem		\Actor-Mixer Hierarchy\SubmarineSFX\SubmarineCollision\ExtraSoundsImpact\244983__ani_music__ani-big-pipe-hit		176464
 	103211724	LowWaterLevelWalk_3	F:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\490951__nox_sound__footsteps_walk_191AADB4.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Water_Steps_Level\LowWaterLevel\LowWaterLevelWalk_3		57984
 	130164563	WaterPump_Stream	F:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\reaper_stems_105293__anton__water_pump_sewer_water_stream_D79FB2B7.wem		\Actor-Mixer Hierarchy\SubmarineSFX\WaterPump_SFX\WaterPump_Stream		1324828

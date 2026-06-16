@@ -14,6 +14,7 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID START_BACKGROUNDSUBMARINEMFX = 3003027233U;
+        static const AkUniqueID START_BLOWTORCHSFX = 1116808773U;
         static const AkUniqueID START_BUTTONPRESS = 738466431U;
         static const AkUniqueID START_CLOSING_PRESSURE_DOORSFX = 378872923U;
         static const AkUniqueID START_DRAINAGEPUMPSFX = 4238673748U;
@@ -28,6 +29,7 @@ namespace AK
         static const AkUniqueID START_SUBMARINECOLLISION = 3771492726U;
         static const AkUniqueID START_TENSIONEVENT = 1403223316U;
         static const AkUniqueID STOP_BACKGROUNDSUBMARINEMFX = 116843463U;
+        static const AkUniqueID STOP_BLOWTORCHSFX = 1982947219U;
         static const AkUniqueID STOP_DRAINAGEPUMPSFX = 860956674U;
         static const AkUniqueID STOP_HULLBREACHSFX = 3933279043U;
         static const AkUniqueID STOP_TENSIONEVENT = 3884825202U;

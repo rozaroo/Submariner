@@ -248,6 +248,31 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Start_BlowtorchSFX" ID="{FDD177E3-5248-41B6-B396-6E6F1F4C747E}">
+					<ChildrenList>
+						<Action Name="" ID="{AABCA83A-77FE-4985-AFD4-39F5C18D8D8A}" ShortID="37259634">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BlowTorchSFX" ID="{1C669A42-DE2D-4FF1-BE31-F5EA3C736300}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_BlowtorchSFX" ID="{4CD82B5C-08AA-4283-866B-063A58E54E77}">
+					<ChildrenList>
+						<Action Name="" ID="{1756FE48-C735-4EED-8919-0A41EBE2BBAD}" ShortID="250987514">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BlowTorchSFX" ID="{1C669A42-DE2D-4FF1-BE31-F5EA3C736300}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

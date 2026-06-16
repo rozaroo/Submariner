@@ -9,12 +9,18 @@ public class HullDamage : MonoBehaviour
     public event Action<HullDamage> OnCrackRepaired;
     private float _progress;
     
-    public void Repair(float amount)
+    public void Repair(float amount, Blowtorch activeTorch)
     {
         _progress += amount;
-        Log.Info($"Current Progress: {_progress}");
+        
         if (_progress >= repairDuration)
+        {
+            if (activeTorch != null)
+            {
+                activeTorch.StopWeldingAudio();
+            }
             Close();
+        }
     }
 
     private void Close()

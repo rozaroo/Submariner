@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
@@ -12,9 +11,16 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     [SerializeField] private float repairRange = 2.5f;
     [SerializeField] private LayerMask crackLayer;
     
+    [Header("Audio (Wwise)")]
+    [SerializeField] private string blowtorchStartEvent = "Start_BlowtorchSFX";
+    [SerializeField] private string blowtorchStopEvent = "Stop_BlowtorchSFX";
+    
+    private bool _isWelding;
+    
     private Camera _camera;
     private Collider _collider;
     private Rigidbody _rb;
+    
     public GameObject GameObject => gameObject;
     public Vector3 HoldPositionOffset => holdOffset;
 
@@ -38,6 +44,7 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     
     public void OnDrop()
     {
+        StopWeldingAudio();
         _rb.isKinematic = false;
         _collider.enabled = true;
     }
@@ -50,15 +57,35 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     public void UseItemHold()
     {
         Ray ray = new Ray(_camera.transform.position, _camera.transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, repairRange, crackLayer))
+        
+        if (Physics.Raycast(ray, out RaycastHit hit, repairRange, crackLayer) && hit.collider.TryGetComponent(out HullDamage crack))
         {
-            if (hit.collider.TryGetComponent(out HullDamage crack))
-                crack.Repair(Time.deltaTime);
+            if (!_isWelding)
+            {
+                SFXManager.PostEvent(blowtorchStartEvent, gameObject);
+                _isWelding = true;
+            }
+            
+            crack.Repair(Time.deltaTime, this);
+        }
+        else
+        {
+            StopWeldingAudio();
         }
     }
 
     public void UseItemReleased()
     {
-        //Maybe play animation/sound?
+        StopWeldingAudio();
     }
+    
+    public void StopWeldingAudio()
+    {
+        if (_isWelding)
+        {
+            SFXManager.PostEvent(blowtorchStopEvent, gameObject);
+            _isWelding = false;
+        }
+    }
+
 }
