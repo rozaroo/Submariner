@@ -289,9 +289,16 @@ public class WorldMapManager : MonoBehaviour
     private void ApplyPosition(GameObject go, Vector3 position)
     {
         if (go.TryGetComponent(out Rigidbody rb))
+        {
+            var previousInterpolation = rb.interpolation;
+            rb.interpolation = RigidbodyInterpolation.None;
             rb.position = position;
+            rb.interpolation = previousInterpolation;
+        }
         else
+        {
             go.transform.position = position;
+        }
     }
 
     private Vector3 GenerateRandomPosition()

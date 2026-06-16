@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldContainerGo: {fileID: 0}
   mapRuntimeData: {fileID: 11400000, guid: f993c08ecc9c4a340b86e7895003b85a, type: 2}
-  desiredEventsAmount: 30
+  desiredEventsAmount: 50
   mapSpawnAttempts: 15
   minDistanceBetweenEvents: 5
   submarineSo: {fileID: 11400000, guid: a5da4ebb564750346851cccd161068d3, type: 2}
