@@ -23,6 +23,8 @@ public class GameLogger : MonoBehaviour
         }
         else Destroy(gameObject);
         
+        _visible = false;
+    
         Application.logMessageReceived += OnUnityLog;
     }
     

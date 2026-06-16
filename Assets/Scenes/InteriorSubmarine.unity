@@ -17,7 +17,7 @@ RenderSettings:
   m_Fog: 1
   m_FogColor: {r: 0, g: 0, b: 0, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.08
+  m_FogDensity: 0.05
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
@@ -3625,6 +3625,10 @@ PrefabInstance:
       propertyPath: worldContainerGo
       value: 
       objectReference: {fileID: 599892452}
+    - target: {fileID: 2412949673346967039, guid: e3a888563bd8d0c44aab7645e4a292ef, type: 3}
+      propertyPath: desiredEventsAmount
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 8479256821056683426, guid: e3a888563bd8d0c44aab7645e4a292ef, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.018

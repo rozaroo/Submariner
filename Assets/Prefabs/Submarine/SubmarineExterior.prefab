@@ -780,7 +780,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothTime: 0.9
   rotationSmoothTime: 0.15
-  maxMovementSpeed: 20
+  maxMovementSpeed: 10
   maxRotationSpeed: 30
   distanceOffset: 0.1
   smoothDeaccelerationTime: 1
