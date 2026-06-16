@@ -11,6 +11,11 @@ public class WorldMapElement : MonoBehaviour, IWorldElement, ISetup
     public event Action<IWorldElement> OnElementDestroyed;
 
     private void OnDestroy() => OnElementDestroyed?.Invoke(this);
+    
+    protected void ForceReleaseFromUI()
+    {
+        OnElementDestroyed?.Invoke(this);
+    }
 
     public void Setup()
     {

@@ -84,6 +84,8 @@ public class LightManager : MonoBehaviour
 
         if (!_hullDamageActive)
         {
+            StopAllCoroutines(); 
+            
             RestoreLights();
             return;
         }

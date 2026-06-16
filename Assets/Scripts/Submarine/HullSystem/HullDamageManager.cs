@@ -118,6 +118,11 @@ public class HullDamageManager : MonoBehaviour
     {
         ActiveCrackCount = Mathf.Max(0, ActiveCrackCount - 1);
         GameEventChannel<OnHullPropertyChange>.RaiseEvent(new OnHullPropertyChange(spawnZones.Length, ActiveCrackCount));
+        
+        if (ActiveCrackCount == 0)
+        {
+            StopSpawningBehaviour();
+        }
     }
     
 }

@@ -31,6 +31,8 @@ public class MainWorldEvent : WorldMapUIElement, IMainWorldEvent
         /*if (!string.IsNullOrEmpty(completeSfxEvent))
             SFXManager.PostEvent(completeSfxEvent, gameObject);*/
 
+        ForceReleaseFromUI();
+
         if (visualMarker != null)
             visualMarker.SetActive(false);
 
