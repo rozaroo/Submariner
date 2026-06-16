@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fedae8dfc2207234bbd9aa71a004296f, type: 3}
   m_Name: EventPointIcon
   m_EditorClassIdentifier: 
+  assetName: EventPoint_Icon
   startsVisible: 0
   sprite: {fileID: 21300000, guid: 1eabed13bba90f34db550167fe191282, type: 3}
   material: {fileID: 0}

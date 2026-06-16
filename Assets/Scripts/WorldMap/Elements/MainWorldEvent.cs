@@ -3,7 +3,6 @@ using UnityEngine;
 public class MainWorldEvent : WorldMapUIElement, IMainWorldEvent
 {
     [Header("Feedback")]
-    [SerializeField] private GameObject visualMarker;
     [SerializeField] private string completeSfxEvent = "Start_MainEventTrigger";
     [SerializeField] private bool destroyOnComplete = false;
     
@@ -32,16 +31,14 @@ public class MainWorldEvent : WorldMapUIElement, IMainWorldEvent
             SFXManager.PostEvent(completeSfxEvent, gameObject);*/
 
         ForceReleaseFromUI();
-
-        if (visualMarker != null)
-            visualMarker.SetActive(false);
+        
+        if (TryGetComponent(out Collider col))
+        {
+            col.enabled = false;
+        }
 
         if (destroyOnComplete)
         {
-            if (TryGetComponent(out Collider col))
-            {
-                col.enabled = false;
-            }
             enabled = false; 
         }
     }

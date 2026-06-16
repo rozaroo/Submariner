@@ -10,12 +10,16 @@ public class SonarManager : MonoBehaviour
     {
         GameEventChannel<OnWorldMapGeneratedProperty>.OnEventRaised += OnMapGenerated;
         GameEventChannel<OnWorldSubmarineGenerated>.OnEventRaised += OnSubmarineGenerated;
+        
+        GameEventChannel<OnWorldMapElementGenerated>.OnEventRaised += OnWorldElementGenerated;
     }
     
     private void OnDisable()
     {
         GameEventChannel<OnWorldMapGeneratedProperty>.OnEventRaised -= OnMapGenerated;
         GameEventChannel<OnWorldSubmarineGenerated>.OnEventRaised -= OnSubmarineGenerated;
+        
+        GameEventChannel<OnWorldMapElementGenerated>.OnEventRaised -= OnWorldElementGenerated;
     }
 
     private void OnMapGenerated(OnWorldMapGeneratedProperty data)
@@ -28,6 +32,19 @@ public class SonarManager : MonoBehaviour
         TryInitializeSonar();
     }
     
+    private void OnWorldElementGenerated(OnWorldMapElementGenerated data)
+    {
+        if (!_worldEntities.Contains(data._worldElementGenerated))
+        {
+            _worldEntities.Add(data._worldElementGenerated);
+            
+            if (_submarineSonar != null)
+            {
+                TryInitializeSonar();
+            }
+        }
+    }
+
     private void OnSubmarineGenerated(OnWorldSubmarineGenerated submarineElement)
     {
         var submarineMono = submarineElement._submarineElement as MonoBehaviour;

@@ -5,8 +5,8 @@ using UnityEngine;
 public class ExtractionPointElement : WorldMapUIElement
 {
     public event Action OnSubmarineReachedExtraction;
-
-    private void OnCollisionEnter(Collision other)
+    
+    private void OnTriggerEnter(Collider other)
     {
         OnSubmarineReachedExtraction?.Invoke();
     }
