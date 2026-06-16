@@ -395,6 +395,10 @@ PrefabInstance:
       propertyPath: waterMesh
       value: 
       objectReference: {fileID: 5029737287642884526}
+    - target: {fileID: 4284337136202105156, guid: 6d7f57eddb5aeb2418a8e16b435e5b8a, type: 3}
+      propertyPath: maxRiseSpeed
+      value: 0.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
