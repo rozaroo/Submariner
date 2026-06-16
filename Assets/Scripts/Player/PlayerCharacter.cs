@@ -27,6 +27,7 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private float minAccelTime = 0.5f;
     [SerializeField] private float maxAccelTime = 1.5f;
 
+    private bool _canMove = true;
     private bool _isHolding;
     private CharacterController _controller;
 
@@ -53,11 +54,13 @@ public class PlayerCharacter : MonoBehaviour
     
     private void OnEnable()
     {
+        GameEventChannel<OnPlayerInputStateChanged>.OnEventRaised += HandleInputState;
         GameEventChannel<OnSubmarineImpact>.OnEventRaised += OnSubmarineImpact;
     }
 
     private void OnDisable()
     {
+        GameEventChannel<OnPlayerInputStateChanged>.OnEventRaised -= HandleInputState;
         GameEventChannel<OnSubmarineImpact>.OnEventRaised -= OnSubmarineImpact;
     }
     
@@ -89,9 +92,20 @@ public class PlayerCharacter : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
     }
+    
+    private void HandleInputState(OnPlayerInputStateChanged state)
+    {
+        _canMove = state.IsInputEnabled;
+        
+        if (!_canMove && TryGetComponent(out Rigidbody rb))
+        {
+            rb.linearVelocity = Vector3.zero;
+        }
+    }
 
     private void Update()
     {
+        if (!_canMove) return;
         _gameplaySm.Update();
         _movementStrategy?.Move(_movementContext);
         

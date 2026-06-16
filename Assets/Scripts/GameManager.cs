@@ -22,16 +22,31 @@ public class GameManager : MonoBehaviour
 
     private void OnGameWon(OnGameWon gameWon)
     {
+        Log.Info("[GameManager] Reached Victory. Successful Evacuation.");
         
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        
+        GameEventChannel<OnPlayerInputStateChanged>.RaiseEvent(new OnPlayerInputStateChanged(false));
+        
+        if (SceneTransitionManager.Instance != null)
+        {
+            SceneTransitionManager.Instance.LoadSceneWithFade("Win");
+        }
+        else
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Win");
+        }
     }
     
-    private void CallMapGeneration() //Leave for future use, Random Map Generation.
+    private void CallMapGeneration()
     {
         
     }
 
     private void OnPlayerDeath(OnDeath ev)
     {
+        Log.Info($"[GameManager] Jugador muerto por: {ev.TypeOfDeath}");
         switch (ev.TypeOfDeath)
         {
             case DeathType.OxygenDepravation:
@@ -42,6 +57,8 @@ public class GameManager : MonoBehaviour
         
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        
+        GameEventChannel<OnPlayerInputStateChanged>.RaiseEvent(new OnPlayerInputStateChanged(false));
 
         if (SceneTransitionManager.Instance != null)
         {

@@ -17,16 +17,21 @@ public class LightManager : MonoBehaviour
     [SerializeField] private float flickerMaxIntensity = 1.5f;
     [SerializeField] private float flickerDuration = 3f;
     [SerializeField] private float alertCycleDuration = 1f;
+    
+    [Header("Colores Temáticos")]
+    [SerializeField] private Color hullDamageColor = Color.red;
+    [SerializeField] private Color lowOxygenColor = new Color(0f, 0.5f, 1f);
 
     private Color _originalColor;
     private float[] _originalIntensities;
     private bool _originalSaved;
-
+    
     private bool _hullDamageActive;
     private float _lastActiveCrackCount;
-
+    private bool _lowOxygenActive;
+    
     private Coroutine _alertCoroutine;
-
+    
     private void Awake()
     {
         if (Instance == null)
@@ -42,11 +47,13 @@ public class LightManager : MonoBehaviour
     private void OnEnable()
     {
         GameEventChannel<OnHullPropertyChange>.OnEventRaised += OnHullStatusChanged;
+        GameEventChannel<OnLowOxygen>.OnEventRaised += OnLowOxygenStatusChanged; // Nueva suscripción
     }
 
     private void OnDisable()
     {
         GameEventChannel<OnHullPropertyChange>.OnEventRaised -= OnHullStatusChanged;
+        GameEventChannel<OnLowOxygen>.OnEventRaised -= OnLowOxygenStatusChanged; // Limpieza de suscripción
     }
 
     #region Alert Logic (Original LightManager)
@@ -60,11 +67,26 @@ public class LightManager : MonoBehaviour
         if (increased) SaveOriginalIfNeeded();
         UpdateAlertState();
     }
+    
+    private void OnLowOxygenStatusChanged(OnLowOxygen onLowOxygen)
+    {
+        bool wasActive = _lowOxygenActive;
+        _lowOxygenActive = onLowOxygen.IsLow; 
+
+        if (_lowOxygenActive && !wasActive) SaveOriginalIfNeeded();
+        UpdateAlertState();
+    }
 
     private void SaveOriginalIfNeeded()
     {
         if (_originalSaved || lights == null || lights.Length == 0) return;
-        _originalColor = lights[0].color;
+        
+        Light firstValidLight = System.Array.Find(lights, l => l != null);
+        if (firstValidLight != null)
+        {
+            _originalColor = firstValidLight.color;
+        }
+
         _originalIntensities = new float[lights.Length];
         for (int i = 0; i < lights.Length; i++)
         {
@@ -81,23 +103,24 @@ public class LightManager : MonoBehaviour
             StopCoroutine(_alertCoroutine);
             _alertCoroutine = null;
         }
-
-        if (!_hullDamageActive)
+        
+        if (!_hullDamageActive && !_lowOxygenActive)
         {
             StopAllCoroutines(); 
-            
             RestoreLights();
             return;
         }
 
         _alertCoroutine = StartCoroutine(AlertRoutine());
     }
-
+    
     private IEnumerator AlertRoutine()
     {
-        while (_hullDamageActive)
+        while (_hullDamageActive || _lowOxygenActive)
         {
-            yield return StartCoroutine(AlertFlickerRoutine(Color.red, flickerDuration));
+            Color currentColorAlert = _hullDamageActive ? hullDamageColor : lowOxygenColor;
+            
+            yield return StartCoroutine(AlertFlickerRoutine(currentColorAlert, flickerDuration));
         }
     }
 
