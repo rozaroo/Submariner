@@ -104,6 +104,16 @@ public class WorldMainEventManager : MonoBehaviour
     private void BroadcastCurrentArea()
     {
         if (_currentIndex >= _mainEvents.Count) return;
+        
+        //Safety Check
+        for (int i = 0; i < _currentIndex; i++) 
+        {
+            if (_mainEvents[i] != null && _mainEvents[i].gameObject.activeSelf)
+            {
+                Log.Warning($"[MainEventManager] Main Event {i} was still active. Forcing deactivation.");
+                _mainEvents[i].gameObject.SetActive(false);
+            }
+        }
 
         MainWorldEvent currentEvent = _mainEvents[_currentIndex];
         

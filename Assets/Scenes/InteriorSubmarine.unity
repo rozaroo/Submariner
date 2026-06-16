@@ -3625,6 +3625,10 @@ PrefabInstance:
       propertyPath: worldContainerGo
       value: 
       objectReference: {fileID: 599892452}
+    - target: {fileID: 2412949673346967039, guid: e3a888563bd8d0c44aab7645e4a292ef, type: 3}
+      propertyPath: desiredEventsAmount
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 8479256821056683426, guid: e3a888563bd8d0c44aab7645e4a292ef, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.018

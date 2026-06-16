@@ -233,6 +233,10 @@ public class PlayerCharacter : MonoBehaviour
     private void OnSubmarineImpact(OnSubmarineImpact data)
     {
         if (data.ImpactSpeed < minImpactSpeed) return;
+        
+        if (_gameplaySm.CurrentState is PlayerGameplayPossessionState ||
+            _gameplaySm.CurrentState is PlayerGameplayUnPossessionState)
+            return;
 
         SetGameplayStateFromImpact(data.Normal, data.ImpactSpeed);
     }

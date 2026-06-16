@@ -61,7 +61,7 @@ MonoBehaviour:
   interactableLayer:
     serializedVersion: 2
     m_Bits: 8
-  minImpactSpeed: 1
+  minImpactSpeed: 0.1
   maxExpectedImpactSpeed: 15
   minForce: 2
   maxForce: 10
