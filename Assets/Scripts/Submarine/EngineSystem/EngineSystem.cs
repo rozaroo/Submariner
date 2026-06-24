@@ -27,6 +27,7 @@ public class EngineSystem : MonoBehaviour
 
     private void Start()
     {
+        submarineMovement = FindFirstObjectByType<SubmarineMovement>();
         if (navigationLever != null)
         {
             navigationLever.onActivation += TryStartEngine;
@@ -124,5 +125,13 @@ public class EngineSystem : MonoBehaviour
     public bool IsRunning()
     {
         return _currentState == EngineState.Operative || _currentState == EngineState.Degraded;
+    }
+    public void RestartEngine()
+    {
+        if (_currentState != EngineState.Broken) return;
+        currentTemperature = 0f;
+        _currentState = EngineState.Off;
+        if (navigationLever != null) navigationLever.SetActive(false);
+        Log.Info("Engine Restarted");
     }
 }

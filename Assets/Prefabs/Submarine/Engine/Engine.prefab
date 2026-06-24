@@ -259,6 +259,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3669376185116699297}
+  - component: {fileID: 2099989702533056502}
+  - component: {fileID: -3118094366103528463}
   m_Layer: 0
   m_Name: Engine
   m_TagString: Untagged
@@ -282,6 +284,45 @@ Transform:
   - {fileID: 5311190459383126679}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2099989702533056502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8444304811405837800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e5740c1a4493df4d97e92f5d6ac05c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  submarineMovement: {fileID: 0}
+  startupTime: 3
+  navigationLever: {fileID: 0}
+  currentTemperature: 0
+  criticalTemperature: 85
+  maxTemperature: 100
+  temperatureIncreaseAmount: 1
+  temperatureIncreaseInterval: 5
+  coolingAmount: 2
+--- !u!114 &-3118094366103528463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8444304811405837800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd784fc1e079a18459f423cdbd32aa6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  engineSystem: {fileID: 0}
+  coolingInterval: 10
+  maxUsageTime: 30
+  cooldownTime: 20
+  energyConsumption: 8
+  coolingLever: {fileID: 0}
 --- !u!1 &8925064407532540785
 GameObject:
   m_ObjectHideFlags: 0
