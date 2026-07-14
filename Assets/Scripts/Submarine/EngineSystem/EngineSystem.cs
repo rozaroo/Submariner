@@ -20,8 +20,6 @@ public class EngineSystem : MonoBehaviour
     
     private EngineState _currentState = EngineState.Off;
     private Coroutine _temperatureCoroutine;
-    
-    public EngineState CurrentState => _currentState;
 
     #region UnityFunctions
 
