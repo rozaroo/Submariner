@@ -16,8 +16,11 @@ public class CoolingSystem : MonoBehaviour
 
     private void Start()
     {
-        coolingLeverPull.onActivation += StartCooling;
-        coolingLeverPull.onDeactivation += StopCooling;
+        if (coolingLeverPull != null)
+        {
+            coolingLeverPull.onActivation += StartCooling;
+            coolingLeverPull.onDeactivation += StopCooling;
+        }
     }
     private void OnDestroy()
     {
