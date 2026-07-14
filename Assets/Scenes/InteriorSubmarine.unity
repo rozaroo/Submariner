@@ -479,17 +479,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &526257908 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1820825268850281773, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
-  m_PrefabInstance: {fileID: 4366306935647553036}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32e081ffd2e1f3a4ab311631a63ee4d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &567009026 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1836391093531926068, guid: 7c31b635650863b48a93fec2e48b624d, type: 3}
@@ -1677,17 +1666,6 @@ RectTransform:
   m_AnchoredPosition: {x: 960, y: 540}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1680372833 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4564184394313728055, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
-  m_PrefabInstance: {fileID: 4366306935647553036}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32e081ffd2e1f3a4ab311631a63ee4d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2002260222
 GameObject:
   m_ObjectHideFlags: 0
@@ -3043,7 +3021,7 @@ PrefabInstance:
     - target: {fileID: 2762291161762995684, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       propertyPath: navigationLeverPull
       value: 
-      objectReference: {fileID: 526257908}
+      objectReference: {fileID: 4366306935647553038}
     - target: {fileID: 3017386048495451148, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       propertyPath: m_VertexColorAlwaysGammaSpace
       value: 1
@@ -3064,6 +3042,10 @@ PrefabInstance:
       propertyPath: m_RaycastTarget
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6908263171030560101, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
+      propertyPath: m_Name
+      value: CoolerLever
+      objectReference: {fileID: 0}
     - target: {fileID: 7344170967847046625, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       propertyPath: m_Name
       value: SubmarineInteriorV3
@@ -3071,7 +3053,7 @@ PrefabInstance:
     - target: {fileID: 8055608357796643299, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       propertyPath: coolingLeverPull
       value: 
-      objectReference: {fileID: 1680372833}
+      objectReference: {fileID: 4366306935647553037}
     - target: {fileID: 8066910223130465333, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       propertyPath: triggerObject
       value: 
@@ -3116,6 +3098,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8776662082274943103, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
+      propertyPath: m_Name
+      value: EngineLever
+      objectReference: {fileID: 0}
     - target: {fileID: 9028257539134788956, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       propertyPath: m_Name
       value: NavegationPipeIntegrity.001
@@ -3126,6 +3112,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
+--- !u!114 &4366306935647553037 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2455931271668906317, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
+  m_PrefabInstance: {fileID: 4366306935647553036}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32e081ffd2e1f3a4ab311631a63ee4d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4366306935647553038 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 290160104337765463, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
+  m_PrefabInstance: {fileID: 4366306935647553036}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32e081ffd2e1f3a4ab311631a63ee4d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4381283687112453567
 Transform:
   m_ObjectHideFlags: 0
