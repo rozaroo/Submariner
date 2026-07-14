@@ -5,7 +5,7 @@ using Vector2 = UnityEngine.Vector2;
 public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 {
     [Header("References")]
-    [SerializeField] private LeverStation mainLever;
+    [SerializeField] private LeverPullStation mainLeverPull;
     
     [Header("Possession Config")]
     [SerializeField] private Transform cameraAnchor;
@@ -65,10 +65,10 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
             Log.Warning("[DrainageStation] Minigame Not Set");
         }
 
-        if (mainLever != null)
+        if (mainLeverPull != null)
         {
-            mainLever.onActivation += OnLeverActivationSequence;
-            mainLever.onDeactivation += OnLeverDeactivationSequence;
+            mainLeverPull.onActivation += OnLeverActivationSequence;
+            mainLeverPull.onDeactivation += OnLeverDeactivationSequence;
         }
         else
         {
@@ -85,10 +85,10 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
             _minigame.FinishedMiniGame -= OnUnlockLever;
         }
         
-        if (mainLever != null)
+        if (mainLeverPull != null)
         {
-            mainLever.onActivation -= OnLeverActivationSequence;
-            mainLever.onDeactivation -= OnLeverDeactivationSequence;
+            mainLeverPull.onActivation -= OnLeverActivationSequence;
+            mainLeverPull.onDeactivation -= OnLeverDeactivationSequence;
         }
     }
 
@@ -188,7 +188,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 
     private void OnUnlockLever()
     {
-        mainLever.Unlock();
+        mainLeverPull.Unlock();
     }
 
     private void OnLeverActivationSequence()
@@ -201,7 +201,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     {
         SFXManager.PostEvent("Stop_DrainagePumpSFX", gameObject);
         StopDrainage();
-        mainLever.Restart();
+        mainLeverPull.Restart();
         _minigame.SetupMiniGame();
     }
 
@@ -274,9 +274,9 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         
         if (_energyStatus == EnergyStatus.Empty && _isDrainageActive)
         {
-            if (mainLever != null)
+            if (mainLeverPull != null)
             {
-                mainLever.SetActive(false);
+                mainLeverPull.SetActive(false);
             }
         }
         

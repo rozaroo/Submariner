@@ -12,19 +12,19 @@ public class CoolingSystem : MonoBehaviour
 
     private CoolingState _state;
     private Coroutine _coolingRoutine;
-    [SerializeField] private LeverStation coolingLever;
+    [SerializeField] private LeverPullStation coolingLeverPull;
 
     private void Start()
     {
-        coolingLever.onActivation += StartCooling;
-        coolingLever.onDeactivation += StopCooling;
+        coolingLeverPull.onActivation += StartCooling;
+        coolingLeverPull.onDeactivation += StopCooling;
     }
     private void OnDestroy()
     {
-        if (coolingLever != null)
+        if (coolingLeverPull != null)
         {
-            coolingLever.onActivation -= StartCooling;
-            coolingLever.onDeactivation -= StopCooling;
+            coolingLeverPull.onActivation -= StartCooling;
+            coolingLeverPull.onDeactivation -= StopCooling;
         }
     }
 

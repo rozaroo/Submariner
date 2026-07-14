@@ -24,7 +24,7 @@ public class ButtonStation : MonoBehaviour, IButtonControls
         _renderer = GetComponent<Renderer>();
         if (_renderer == null)
         {
-            Debug.LogError("Renderer component not found on ButtonStation.");
+            Log.Error("Renderer component not found on ButtonStation.");
         }
         Lock();
     }

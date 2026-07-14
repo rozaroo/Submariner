@@ -1,18 +1,12 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class EngineSystem : MonoBehaviour
-{
-    [Header("References")]
-    [SerializeField] private SubmarineMovement submarineMovement;
-
-    [Header("Startup")]
+{ 
+    [Header("Startup")] 
     [SerializeField] private float startupTime = 3f;
-
-    private EngineState _currentState = EngineState.Off;
-
-    public EngineState CurrentState => _currentState;
-    [SerializeField] private LeverStation navigationLever;
+    [SerializeField] private LeverPullStation navigationLeverPull;
 
     [Header("Temperature")]
     [SerializeField] private float currentTemperature = 0f;
@@ -20,31 +14,37 @@ public class EngineSystem : MonoBehaviour
     [SerializeField] private float maxTemperature = 100f;
     [SerializeField] private float temperatureIncreaseAmount = 1f;
     [SerializeField] private float temperatureIncreaseInterval = 5f;
-    private Coroutine _temperatureCoroutine;
 
     [Header("Cooling")]
     [SerializeField] private float coolingAmount = 2f;
+    
+    private EngineState _currentState = EngineState.Off;
+    private Coroutine _temperatureCoroutine;
+    
+    public EngineState CurrentState => _currentState;
+
+    #region UnityFunctions
 
     private void Start()
     {
-        submarineMovement = FindFirstObjectByType<SubmarineMovement>();
-        if (navigationLever != null)
+        if (navigationLeverPull != null)
         {
-            navigationLever.onActivation += TryStartEngine;
-            navigationLever.onDeactivation += StopEngine;
+            navigationLeverPull.onActivation += TryStartEngine;
+            navigationLeverPull.onDeactivation += StopEngine;
         }
     }
 
     private void OnDestroy()
     {
-        if (navigationLever != null)
+        if (navigationLeverPull != null)
         {
-            navigationLever.onActivation -= TryStartEngine;
-            navigationLever.onDeactivation -= StopEngine;
+            navigationLeverPull.onActivation -= TryStartEngine;
+            navigationLeverPull.onDeactivation -= StopEngine;
         }
     }
+    #endregion
 
-    public void TryStartEngine()
+    private void TryStartEngine()
     {
         if (_currentState != EngineState.Off) return;
         StartCoroutine(StartEngineRoutine());
@@ -57,10 +57,12 @@ public class EngineSystem : MonoBehaviour
         yield return new WaitForSeconds(startupTime);
 
         _currentState = EngineState.Operative;
+        Log.Info("Engine Started");
         _temperatureCoroutine = StartCoroutine(TemperatureRoutine());
-        submarineMovement.SetSpeedMultiplier(1f);
-        submarineMovement.StartMovingTowards();
+        
+        GameEventChannel<OnEngineStateChanged>.RaiseEvent(new OnEngineStateChanged { State = EngineState.Operative, SpeedMultiplier = 1f });
     }
+
     private IEnumerator TemperatureRoutine()
     {
         while (_currentState == EngineState.Operative || _currentState == EngineState.Degraded)
@@ -80,18 +82,21 @@ public class EngineSystem : MonoBehaviour
         }
         if (currentTemperature >= criticalTemperature) EnterDegradedState();
     }
+
     private void EnterDegradedState()
     {
         if (_currentState == EngineState.Degraded) return;
         _currentState = EngineState.Degraded;
-        submarineMovement.SetSpeedMultiplier(0.6f);
+        
+        GameEventChannel<OnEngineStateChanged>.RaiseEvent(new OnEngineStateChanged { State = EngineState.Degraded, SpeedMultiplier = 0.6f });
         Log.Info("Engine Degraded");
     }
+
     private void BreakEngine()
     {
         _currentState = EngineState.Broken;
-        submarineMovement.SetSpeedMultiplier(0f);
-        submarineMovement.StopMovingTowards();
+        
+        GameEventChannel<OnEngineStateChanged>.RaiseEvent(new OnEngineStateChanged { State = EngineState.Broken, SpeedMultiplier = 0f });
 
         if (_temperatureCoroutine != null)
         {
@@ -100,38 +105,37 @@ public class EngineSystem : MonoBehaviour
         }
         Log.Info("Engine Broken");
     }
-    public void StopEngine()
+
+    private void StopEngine()
     {
         _currentState = EngineState.Off;
+        
+        GameEventChannel<OnEngineStateChanged>.RaiseEvent(new OnEngineStateChanged { State = EngineState.Off, SpeedMultiplier = 0f });
 
-        submarineMovement.SetSpeedMultiplier(0f);
-        submarineMovement.StopMovingTowards();
         if (_temperatureCoroutine != null)
         {
             StopCoroutine(_temperatureCoroutine);
             _temperatureCoroutine = null;
         }
     }
+
     public void CoolEngine()
     {
         if (_currentState == EngineState.Off || _currentState == EngineState.Broken) return;
         currentTemperature -= coolingAmount;
         currentTemperature = Mathf.Max(0f, currentTemperature);
     }
-    public bool CanBeCooled()
-    {
-        return _currentState != EngineState.Off && _currentState != EngineState.Broken;
-    }
-    public bool IsRunning()
-    {
-        return _currentState == EngineState.Operative || _currentState == EngineState.Degraded;
-    }
+
+    public bool CanBeCooled() => _currentState != EngineState.Off && _currentState != EngineState.Broken; //Not Used, but just in case.
+    
+    public bool IsRunning() => _currentState == EngineState.Operative || _currentState == EngineState.Degraded;
+
     public void RestartEngine()
     {
         if (_currentState != EngineState.Broken) return;
         currentTemperature = 0f;
         _currentState = EngineState.Off;
-        if (navigationLever != null) navigationLever.SetActive(false);
+        if (navigationLeverPull != null) navigationLeverPull.SetActive(false);
         Log.Info("Engine Restarted");
     }
 }

@@ -24,19 +24,23 @@ public class SubmarineMovement : MonoBehaviour
     private Vector3 _currentTarget;
     private Vector3 _velocity = Vector3.zero;
     private Coroutine _movementCoroutine;
+    
     private float _rotationVelocity = 0f;
     private float _speedMultiplier = 1f;
+    private EngineState _currentEngineState = EngineState.Off;
     
     private void OnEnable()
     {
         GameEventChannel<OnSubmarineRouteChanged>.OnEventRaised += GetNewWaypointList;
         GameEventChannel<OnSubmarineCollision>.OnEventRaised += OnSubmarineCollision;
+        GameEventChannel<OnEngineStateChanged>.OnEventRaised += HandleEngineStateChanged;
     }
 
     private void OnDisable()
     {
         GameEventChannel<OnSubmarineRouteChanged>.OnEventRaised -= GetNewWaypointList;
         GameEventChannel<OnSubmarineCollision>.OnEventRaised -= OnSubmarineCollision;
+        GameEventChannel<OnEngineStateChanged>.OnEventRaised -= HandleEngineStateChanged;
     }
 
     private void Start()
@@ -45,6 +49,33 @@ public class SubmarineMovement : MonoBehaviour
         _currentWaypoints = new List<Vector3>();
         _newWaypoints = new List<Vector3>();
     }
+
+    #region EngineControlCheck
+
+    private void HandleEngineStateChanged(OnEngineStateChanged data)
+    {
+        _currentEngineState = data.State;
+        _speedMultiplier = data.SpeedMultiplier;
+
+        if (IsEngineRunning())
+        {
+            if (_newWaypoints != null && _newWaypoints.Count > 0 && !_hasTarget)
+            {
+                UpdateToNewWaypointList();
+            }
+        }
+        else
+        {
+            StopMovingTowards();
+        }
+    }
+    
+    private bool IsEngineRunning()
+    {
+        return _currentEngineState == EngineState.Operative || _currentEngineState == EngineState.Degraded;
+    }
+
+    #endregion
 
     private void OnSubmarineCollision(OnSubmarineCollision collision)
     {
@@ -76,7 +107,7 @@ public class SubmarineMovement : MonoBehaviour
         if (_hasTarget) _movementCoroutine = StartCoroutine(MoveSmoothTowards());
     }
 
-    public void StopMovingTowards()
+    private void StopMovingTowards()
     {
         if (_movementCoroutine != null)
             StopCoroutine(_movementCoroutine);
@@ -241,10 +272,5 @@ public class SubmarineMovement : MonoBehaviour
     }
 
     #endregion
-    
-    public void SetSpeedMultiplier(float multiplier)
-    {
-        _speedMultiplier = multiplier;
-    }
 }
 

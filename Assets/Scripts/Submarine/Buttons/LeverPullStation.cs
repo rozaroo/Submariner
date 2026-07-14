@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
-public class LeverStation : MonoBehaviour, ILeverControls
+public class LeverPullStation : MonoBehaviour, ILeverControls
 {
     [Header("Lever Settings")]
     [SerializeField] private float pullSpeed = 0.5f;
