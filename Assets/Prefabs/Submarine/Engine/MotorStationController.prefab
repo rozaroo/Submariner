@@ -98,7 +98,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2732998406903858238, guid: 08fedbfcde6c2be48861caf667ad7450, type: 3}
       propertyPath: m_Name
-      value: BaseLever_2
+      value: BaseLever_1
       objectReference: {fileID: 0}
     - target: {fileID: 2732998406903858238, guid: 08fedbfcde6c2be48861caf667ad7450, type: 3}
       propertyPath: m_Layer
@@ -157,6 +157,10 @@ PrefabInstance:
       value: -35.099
       objectReference: {fileID: 0}
     - target: {fileID: 7309062433969001335, guid: 08fedbfcde6c2be48861caf667ad7450, type: 3}
+      propertyPath: m_Name
+      value: MotorLever
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309062433969001335, guid: 08fedbfcde6c2be48861caf667ad7450, type: 3}
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
@@ -200,7 +204,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2732998406903858238, guid: 08fedbfcde6c2be48861caf667ad7450, type: 3}
       propertyPath: m_Name
-      value: BaseLever_1
+      value: BaseLever_2
       objectReference: {fileID: 0}
     - target: {fileID: 2732998406903858238, guid: 08fedbfcde6c2be48861caf667ad7450, type: 3}
       propertyPath: m_Layer
@@ -257,6 +261,10 @@ PrefabInstance:
     - target: {fileID: 3730403764731254307, guid: 08fedbfcde6c2be48861caf667ad7450, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -35.099
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309062433969001335, guid: 08fedbfcde6c2be48861caf667ad7450, type: 3}
+      propertyPath: m_Name
+      value: CoolerLever
       objectReference: {fileID: 0}
     - target: {fileID: 7309062433969001335, guid: 08fedbfcde6c2be48861caf667ad7450, type: 3}
       propertyPath: m_Layer

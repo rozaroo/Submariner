@@ -66,6 +66,7 @@ public class SubmarineMovement : MonoBehaviour
         }
         else
         {
+            _hasTarget = false;
             StopMovingTowards();
         }
     }
@@ -257,10 +258,18 @@ public class SubmarineMovement : MonoBehaviour
         {
             _currentWaypoints = _newWaypoints;
             
-            if (!_hasTarget || Vector3.Distance(_currentWaypoints[0], _currentTarget) > 0.05f)
+            if (IsEngineRunning())
             {
-                _currentIndex = 0;
-                StartMovingTowards();
+                if (!_hasTarget || Vector3.Distance(_currentWaypoints[0], _currentTarget) > 0.05f)
+                {
+                    _currentIndex = 0;
+                    StartMovingTowards();
+                }
+            }
+            else
+            {
+                _hasTarget = false;
+                StopMovingTowards();
             }
         }
         else
