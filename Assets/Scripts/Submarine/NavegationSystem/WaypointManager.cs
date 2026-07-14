@@ -126,6 +126,7 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
         }
         _waypoints.Clear();
         RefreshIndices();
+        Log.Info("[Waypoint Manager] Route Cleaned  ");
     }
 
     #endregion
