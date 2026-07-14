@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class FloodSystem : MonoBehaviour
@@ -16,12 +17,6 @@ public class FloodSystem : MonoBehaviour
     private float _currentHeight;
     private bool _sunkLogged;
     private bool _isFlooding;
-
-    private void Awake()
-    {
-        GameEventChannel<OnHullPropertyChange>.OnEventRaised += OnHullStatusChanged;
-        GameEventChannel<OnDrainagePropertyChange>.OnEventRaised += OnDrainageStatusReceived;
-    }
     
     private void Start()
     {
@@ -29,12 +24,18 @@ public class FloodSystem : MonoBehaviour
         SetWaterHeight(_currentHeight);
     }
 
-    private void OnDestroy()
+    private void OnEnable()
+    {
+        GameEventChannel<OnHullPropertyChange>.OnEventRaised += OnHullStatusChanged;
+        GameEventChannel<OnDrainagePropertyChange>.OnEventRaised += OnDrainageStatusReceived;
+    }
+
+    private void OnDisable()
     {
         GameEventChannel<OnHullPropertyChange>.OnEventRaised -= OnHullStatusChanged;
         GameEventChannel<OnDrainagePropertyChange>.OnEventRaised -= OnDrainageStatusReceived;
     }
-    
+
     private void Update()
     {
         if (_currentHeight <= startHeight && EffectiveFloodingSpeed <= 0)
