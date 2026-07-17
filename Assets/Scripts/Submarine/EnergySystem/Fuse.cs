@@ -135,23 +135,14 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
     private void RefreshAmperageLabel()
     {
         EnsureAmperageLabel();
-
-        if (amperageLabel != null)
-        {
-            amperageLabel.gameObject.SetActive(showAmperageLabel);
-            amperageLabel.text = $"{amperage}A";
-        }
+        if (amperageLabel != null) amperageLabel.text = $"{amperage}A";
     }
 
     private void EnsureAmperageLabel()
     {
         if (!showAmperageLabel)
         {
-            if (amperageLabel != null)
-            {
-                amperageLabel.gameObject.SetActive(false);
-            }
-
+            if (amperageLabel != null) amperageLabel.gameObject.SetActive(false);
             return;
         }
 
@@ -162,18 +153,17 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
             amperageLabel = labelObject.AddComponent<TextMesh>();
             amperageLabel.anchor = TextAnchor.MiddleCenter;
             amperageLabel.alignment = TextAlignment.Center;
+            
         }
-
-        if (amperageLabel == null)
-        {
-            return;
-        }
-
+        if (amperageLabel == null) return;
         amperageLabel.transform.localPosition = amperageLabelLocalOffset;
         amperageLabel.transform.localRotation = Quaternion.Euler(amperageLabelLocalRotation);
         amperageLabel.characterSize = amperageLabelCharacterSize;
         amperageLabel.color = amperageLabelColor;
         SetupLabelAsVisualOnly(amperageLabel);
+        // Estado inicial
+        amperageLabel.gameObject.SetActive(false);
+
     }
 
     private void SetupLabelAsVisualOnly(TextMesh label)

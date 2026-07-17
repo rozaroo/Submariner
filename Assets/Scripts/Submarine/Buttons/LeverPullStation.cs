@@ -27,6 +27,7 @@ public class LeverPullStation : MonoBehaviour, ILeverControls
     
     public void SetActive(bool active)
     {
+        Log.Info($"Lever {(active ? "Activated" : "Deactivated")} - {gameObject.name}");
         if (active)
         {
             isActive = true;
@@ -51,10 +52,12 @@ public class LeverPullStation : MonoBehaviour, ILeverControls
 
         if (_currentAngle >= maxAngleActivation && !isActive)
         {
+            Log.Info("Lever reached activation angle.");
             SetActive(true);
         }
         else if (_currentAngle <= _initialAngle && isActive)
         {
+            Log.Info("Lever returned to initial position.");
             SetActive(false);
         }
     }

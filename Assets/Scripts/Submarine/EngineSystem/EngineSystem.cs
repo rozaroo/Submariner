@@ -44,14 +44,19 @@ public class EngineSystem : MonoBehaviour
 
     private void TryStartEngine()
     {
-        if (_currentState != EngineState.Off) return;
+        Log.Info($"TryStartEngine | Current State: {_currentState}");
+        if (_currentState != EngineState.Off)
+        {
+            Log.Info("Engine can't start because it isn't Off.");
+            return;
+        }
         StartCoroutine(StartEngineRoutine());
     }
 
     private IEnumerator StartEngineRoutine()
     {
         _currentState = EngineState.Starting;
-
+        Log.Info($"Engine Starting... Waiting {startupTime} seconds.");
         yield return new WaitForSeconds(startupTime);
 
         _currentState = EngineState.Operative;
@@ -67,18 +72,25 @@ public class EngineSystem : MonoBehaviour
         {
             yield return new WaitForSeconds(temperatureIncreaseInterval);
             currentTemperature += temperatureIncreaseAmount;
+            Log.Info($"Engine Temperature: {currentTemperature}%");
             CheckTemperature();
         }
     }
 
     private void CheckTemperature()
     {
+        Log.Info($"Checking Temperature: {currentTemperature}");
         if (currentTemperature >= maxTemperature)
         {
+            Log.Info("Maximum temperature reached.");
             BreakEngine();
             return;
         }
-        if (currentTemperature >= criticalTemperature) EnterDegradedState();
+        if (currentTemperature >= criticalTemperature)
+        {
+            Log.Info("Critical temperature reached.");
+            EnterDegradedState();
+        }
     }
 
     private void EnterDegradedState()
@@ -115,13 +127,19 @@ public class EngineSystem : MonoBehaviour
             StopCoroutine(_temperatureCoroutine);
             _temperatureCoroutine = null;
         }
+        Log.Info("Engine Stopped");
     }
 
     public void CoolEngine()
     {
-        if (_currentState == EngineState.Off || _currentState == EngineState.Broken) return;
+        if (_currentState == EngineState.Off || _currentState == EngineState.Broken)
+        {
+            Log.Info("Cooling ignored. Engine not running.");
+            return;
+        }
         currentTemperature -= coolingAmount;
         currentTemperature = Mathf.Max(0f, currentTemperature);
+        Log.Info($"Cooling Engine... Temperature: {currentTemperature}%");
     }
 
     public bool CanBeCooled() => _currentState != EngineState.Off && _currentState != EngineState.Broken; //Not Used, but just in case.

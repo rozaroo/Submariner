@@ -15,6 +15,7 @@ public class LeverInteractionAdapter : MonoBehaviour, IInteractable
 
     public void Interact(PlayerCharacter player)
     {
+        Log.Info($"Lever Interaction -> {gameObject.name}");
         if (_leverControls == null || _leverControls.isLocked) return;
         _leverControls.SetActive(!_leverControls.isActive);
     }
