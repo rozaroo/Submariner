@@ -3350,6 +3350,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7012791289088723381, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
+      propertyPath: energySystem
+      value: 
+      objectReference: {fileID: 9103936172747411834}
     - target: {fileID: 7344170967847046625, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       propertyPath: m_Name
       value: SubmarineInteriorV3
