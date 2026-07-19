@@ -11,7 +11,19 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
     private OxygenTank _dockedTank;
     private Coroutine _rechargeCoroutine;
     private bool _hasRegisteredEnergyConsumption;
+    private bool _isRechargePaused;
 
+    void Start() 
+    {
+        energySystem.FuseBurned += PauseRecharge;
+        energySystem.FuseRestored += ResumeRecharge;
+    }
+    void OnDestroy() 
+    {
+        energySystem.FuseBurned -= PauseRecharge;
+        energySystem.FuseRestored -= ResumeRecharge;
+    }
+  
     public void Interact(PlayerCharacter player)
     {
         player.InventorySystem.TryExtractHeldItem(out OxygenTank oxygenTankItem);
@@ -57,27 +69,25 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
     {
         while (_dockedTank != null)
         {
+            if (_isRechargePaused) 
+            {
+                StopEnergyConsumption();
+                yield return null;
+                continue;
+            }
             if (!_dockedTank.isFull)
             {
                 StartEnergyConsumption();
                 _dockedTank.Refill(rechargeRatePerSecond * Time.deltaTime);
             }
-            else
-            {
-                StopEnergyConsumption();
-            }
+            else StopEnergyConsumption();
             yield return null;
         }
-        StopEnergyConsumption();
     }
 
     private void StartEnergyConsumption()
     {
-        if (_hasRegisteredEnergyConsumption)
-        {
-            return;
-        }
-
+        if (_hasRegisteredEnergyConsumption) return;
         _hasRegisteredEnergyConsumption = true;
         GameEventChannel<OnEnergyConsumption>.RaiseEvent(new OnEnergyConsumption(energyConsumption, true));
         Log.Info($"[TankRechargeTerminal] Energy consumption registered: {energyConsumption}");
@@ -93,5 +103,13 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
         _hasRegisteredEnergyConsumption = false;
         GameEventChannel<OnEnergyConsumption>.RaiseEvent(new OnEnergyConsumption(energyConsumption, false));
         Log.Info($"[TankRechargeTerminal] Energy consumption relieved: {energyConsumption}");
+    }
+    public void PauseRecharge() 
+    {
+        _isRechargePaused = true;
+    }
+    public void ResumeRecharge() 
+    {
+        _isRechargePaused = false;
     }
 }
