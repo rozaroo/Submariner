@@ -7,7 +7,7 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
     [SerializeField] private float rechargeRatePerSecond = 20f;
     [SerializeField] private float energyConsumption = 5f;
     [SerializeField] private Transform dockPoint;
-    
+    [SerializeField] private EnergySystem energySystem;
     private OxygenTank _dockedTank;
     private Coroutine _rechargeCoroutine;
     private bool _hasRegisteredEnergyConsumption;
@@ -15,11 +15,13 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
 
     void Start() 
     {
+        if (energySystem == null) return;
         energySystem.FuseBurned += PauseRecharge;
         energySystem.FuseRestored += ResumeRecharge;
     }
     void OnDestroy() 
     {
+        if (energySystem == null) return;
         energySystem.FuseBurned -= PauseRecharge;
         energySystem.FuseRestored -= ResumeRecharge;
     }
