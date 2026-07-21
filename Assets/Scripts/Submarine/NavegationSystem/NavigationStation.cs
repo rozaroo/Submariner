@@ -20,6 +20,8 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
     [Header("Input Settings")]
     [SerializeField] private string exitActionName;
     
+    public Camera ActiveCamera => _currentPlayer != null ? _currentPlayer.CamController.MainCamera : null;
+    
     private PlayerCharacter _currentPlayer;
     
     public string MapName => stationMapName;

@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-public class WaypointManager : MonoBehaviour, IPointerClickHandler
+using UnityEngine.InputSystem;
+
+public class WaypointManager : MonoBehaviour
 {
     [Header("Properties")] 
     [SerializeField] private MapAssetSO waypointPointConfig;
@@ -13,7 +15,14 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
 
     [Header("Anchors")]
     [SerializeField] private RectTransform mapRect;
-    [SerializeField] private RectTransformAnchorSO submarineRectAnchor; 
+    [SerializeField] private RectTransformAnchorSO submarineRectAnchor;
+    
+    [Header("Interaction")]
+    [SerializeField] private NavigationStation navigationStation;
+    
+    [Header("Interaction Settings")]
+    [Tooltip("Radius of Pixels to interact with.")]
+    [SerializeField] private float removalRadius = 30f;
     
     private readonly List<WaypointData> _waypoints = new();
     private RectTransform _mapRect;
@@ -32,32 +41,53 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
 
     #region Pointer Events Handlers
 
-    public void OnPointerClick(PointerEventData eventData)
+    private void Update()
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
-            HandleLeftClick(eventData);
+        if (Mouse.current == null) return;
+        
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            HandleMapClick(true);
+        }
+        else if (Mouse.current.rightButton.wasPressedThisFrame)
+        {
+            HandleMapClick(false);
+        }
     }
 
-    private void HandleLeftClick(PointerEventData eventData)
+    private void HandleMapClick(bool isLeftClick)
     {
-        if (submarineRectAnchor == null || submarineRectAnchor.Value == null || mapRect == null)
+        if (submarineRectAnchor == null || submarineRectAnchor.Value == null || mapRect == null) return;
+
+        if (navigationStation == null || navigationStation.ActiveCamera == null) return;
+
+        Camera playerCamera = navigationStation.ActiveCamera;
+
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        Vector2 viewportPos = new Vector2(mousePos.x / Screen.width, mousePos.y / Screen.height);
+        Ray ray = playerCamera.ViewportPointToRay(viewportPos);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 50f))
         {
-            Log.Info("[Waypoint Manager]- No Map Rect or Submarine Anchor Assigned/Active");
-            return;
+            if (hit.collider.gameObject == navigationStation.gameObject)
+            {
+                Vector3 localPoint3D = mapRect.InverseTransformPoint(hit.point);
+                Vector2 localPoint2D = new Vector2(localPoint3D.x, localPoint3D.y);
+
+                if (isLeftClick)
+                {
+                    var mapIcon = CreateMapIcon(localPoint2D);
+                    var iconLineBehaviour = mapIcon.gameObject.GetComponent<LineBehaviour>();
+
+                    SetWaypoint(mapIcon, iconLineBehaviour);
+                    RefreshIndices();
+                }
+                else
+                {
+                    TryRemoveWaypointAt(localPoint2D);
+                }
+            }
         }
-        
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            mapRect,
-            eventData.position,
-            eventData.pressEventCamera,
-            out Vector2 localPoint
-        );
-        
-        var mapIcon = CreateMapIcon(localPoint);
-        var iconLineBehaviour = mapIcon.gameObject.GetComponent<LineBehaviour>();
-        
-        SetWaypoint(mapIcon, iconLineBehaviour);
-        RefreshIndices();
     }
 
     #endregion
@@ -92,10 +122,21 @@ public class WaypointManager : MonoBehaviour, IPointerClickHandler
             data.Behaviour.LineComp = lineBehaviour;
             lineBehaviour.SetContainer(lineContainer);
         }
-
-        void OnRightClick() => RemovedWaypointByPlayer(data);
-        data.Behaviour.SetAction(OnRightClick);
         _waypoints.Add(data);
+    }
+    
+    private void TryRemoveWaypointAt(Vector2 clickLocalPosition)
+    {
+        for (int i = _waypoints.Count - 1; i >= 0; i--)
+        {
+            float distance = Vector2.Distance(clickLocalPosition, _waypoints[i].Rect.anchoredPosition);
+            
+            if (distance <= removalRadius)
+            {
+                RemovedWaypointByPlayer(_waypoints[i]);
+                return;
+            }
+        }
     }
     
     private void RemovedWaypointByPlayer(WaypointData data)
