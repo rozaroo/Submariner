@@ -143,17 +143,18 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     private void OnClickStarted(InputAction.CallbackContext context)
     {
         if (Mouse.current == null) return;
-
+        
         Vector2 mousePos = Mouse.current.position.ReadValue();
-        Ray ray = _playerCamera.ScreenPointToRay(mousePos);
+        Vector2 viewportPos = new Vector2(mousePos.x / Screen.width, mousePos.y / Screen.height);
+        Ray ray = _playerCamera.ViewportPointToRay(viewportPos);
 
         if (!Physics.Raycast(ray, out RaycastHit hit, 5f)) return;
-        
+    
         if (hit.collider.TryGetComponent(out IButtonControls buttonControl))
         {
             buttonControl.OnActionDown();
         }
-        
+    
         if (hit.collider.TryGetComponent(out ILeverControls leverControl))
         {
             _currentDraggedControls = leverControl;

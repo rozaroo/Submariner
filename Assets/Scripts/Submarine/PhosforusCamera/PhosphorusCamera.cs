@@ -21,11 +21,6 @@ public class PhosphorusCamera : MonoBehaviour
     private float _currentVelocityX;
     private float _currentVelocityY;
     
-    [Header("Zoom Settings")]
-    [SerializeField] private float zoomedFOV = 30f;
-    [SerializeField] private float zoomTransitionDuration = 0.3f;
-    private float _defaultFOV;
-    
     [Header("Sequence Timings")]
     [SerializeField] private float flashFadeInDuration = 0.05f;
     [SerializeField] private float whiteScreenDuration = 0.15f;
@@ -53,7 +48,6 @@ public class PhosphorusCamera : MonoBehaviour
         if (exteriorCamera != null) 
         {
             exteriorCamera.enabled = false;
-            _defaultFOV = exteriorCamera.fieldOfView;
         }
         else Log.Warning("[PhosphorusCamera]: No Exterior Camera");
         
@@ -73,7 +67,7 @@ public class PhosphorusCamera : MonoBehaviour
     
     private void OnDisable() => GameEventChannel<OnEnergyStatusChange>.OnEventRaised -= UpdateEnergyStatus;
 
-private void HandleEdgeRotation()
+    private void HandleEdgeRotation()
     {
         if (Mouse.current == null) return;
         
@@ -145,14 +139,6 @@ private void HandleEdgeRotation()
     private IEnumerator PhotoSequenceRoutine()
     {
         _isProcessingPhoto = true;
-        
-        float zoomTimer = 0f;
-        while (zoomTimer < zoomTransitionDuration)
-        {
-            zoomTimer += Time.deltaTime;
-            exteriorCamera.fieldOfView = Mathf.Lerp(_defaultFOV, zoomedFOV, zoomTimer / zoomTransitionDuration);
-            yield return null;
-        }
 
         StartEnergyConsumption();
         PeriscopeFlash3D flash = periscopeCameraAnchorSo.flashComponent;
@@ -184,7 +170,6 @@ private void HandleEdgeRotation()
         }
         if (flash != null) flash.SetOverlayColor(Color.black, 1f);
         
-        exteriorCamera.fieldOfView = _defaultFOV;
         StopEnergyConsumption();
         _isProcessingPhoto = false;
     }
@@ -218,7 +203,6 @@ private void HandleEdgeRotation()
         if (_photoSequenceRoutine != null) StopCoroutine(_photoSequenceRoutine);
         StopEnergyConsumption();
         _isProcessingPhoto = false;
-        if (exteriorCamera != null) exteriorCamera.fieldOfView = _defaultFOV; 
         
         if (exteriorCamera != null) 
         {
