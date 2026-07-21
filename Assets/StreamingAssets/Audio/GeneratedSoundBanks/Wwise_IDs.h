@@ -20,6 +20,7 @@ namespace AK
         static const AkUniqueID START_DRAINAGEPUMPSFX = 4238673748U;
         static const AkUniqueID START_HULLBREACHSFX = 2571798077U;
         static const AkUniqueID START_LEVERPULLFINISHED = 2469108041U;
+        static const AkUniqueID START_MOTOR_ENGINE = 149397142U;
         static const AkUniqueID START_ONMISSIONCOMPLETED = 2060351696U;
         static const AkUniqueID START_OPENING_PRESSURE_DOORSFX = 4235702204U;
         static const AkUniqueID START_PHOSPHORUSCAMERACOOLDOWN = 438413481U;
@@ -33,6 +34,7 @@ namespace AK
         static const AkUniqueID STOP_BLOWTORCHSFX = 1982947219U;
         static const AkUniqueID STOP_DRAINAGEPUMPSFX = 860956674U;
         static const AkUniqueID STOP_HULLBREACHSFX = 3933279043U;
+        static const AkUniqueID STOP_MOTOR_ENGINE = 344065456U;
         static const AkUniqueID STOP_TENSIONEVENT = 3884825202U;
     } // namespace EVENTS
 

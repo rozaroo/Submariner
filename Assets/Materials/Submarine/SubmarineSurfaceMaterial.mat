@@ -51,9 +51,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Desaturation: 0
-    - _Metallic: 0
-    - _PixelatingFactor: 0.5
+    - _Desaturation: 1
+    - _Metallic: 0.25
+    - _PixelatingFactor: 1
     - _TextureScale: 1
     - _TextureToColor: 0
     m_Colors:

@@ -19,6 +19,7 @@ public class EngineSystem : MonoBehaviour
     [SerializeField] private float coolingAmount = 2f;
     
     private EngineState _currentState = EngineState.Off;
+    private Coroutine _engineStartingCoroutine;
     private Coroutine _temperatureCoroutine;
 
     #region UnityFunctions
@@ -50,7 +51,7 @@ public class EngineSystem : MonoBehaviour
             Log.Info("Engine can't start because it isn't Off.");
             return;
         }
-        StartCoroutine(StartEngineRoutine());
+        _engineStartingCoroutine = StartCoroutine(StartEngineRoutine());
     }
 
     private IEnumerator StartEngineRoutine()
@@ -61,6 +62,7 @@ public class EngineSystem : MonoBehaviour
 
         _currentState = EngineState.Operative;
         Log.Info("Engine Started");
+        SFXManager.PostEvent("Start_Motor_Engine", gameObject);
         _temperatureCoroutine = StartCoroutine(TemperatureRoutine());
         
         GameEventChannel<OnEngineStateChanged>.RaiseEvent(new OnEngineStateChanged { State = EngineState.Operative, SpeedMultiplier = 1f });
@@ -127,6 +129,13 @@ public class EngineSystem : MonoBehaviour
             StopCoroutine(_temperatureCoroutine);
             _temperatureCoroutine = null;
         }
+        if (_engineStartingCoroutine != null)
+        {
+            StopCoroutine(_engineStartingCoroutine);
+            _engineStartingCoroutine = null;
+        }
+        
+        SFXManager.PostEvent("Stop_Motor_Engine", gameObject);
         Log.Info("Engine Stopped");
     }
 

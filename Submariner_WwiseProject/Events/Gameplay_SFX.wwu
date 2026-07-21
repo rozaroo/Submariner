@@ -284,6 +284,32 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Start_Motor_Engine" ID="{A340FB86-892E-476D-8254-353E0B41EA6E}">
+					<ChildrenList>
+						<Action Name="" ID="{DA7369BC-F3C4-489A-9118-8F9548870E6B}" ShortID="778664275">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Motor_Engine" ID="{97ECF01A-642E-44A5-9E3B-13ADF21030A6}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_Motor_Engine" ID="{25F1A4F7-5FD4-468C-ABF9-1696E0B6C194}">
+					<ChildrenList>
+						<Action Name="" ID="{12D65F28-97F8-4ED7-9473-52A23DB935E8}" ShortID="39130367">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Motor_Engine" ID="{97ECF01A-642E-44A5-9E3B-13ADF21030A6}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

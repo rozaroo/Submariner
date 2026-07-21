@@ -261,7 +261,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 21ceb8a29a2d9141bf9458ff73f9eb44
     GuidInternal: 
-    m_lastTime: -8584171482194347096
+    m_lastTime: -8584169577798268182
     List: []
   - PhysicalPath: Events\Gameplay_SFX.wwu
     PathAndIcons:
@@ -274,7 +274,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584171481382352482
+    m_lastTime: -8584169577727111909
     List:
     - name: Start_BackgroundSubmarineMFX
       guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
@@ -395,6 +395,23 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.398979
       minDuration: 0.398979
+    - name: Start_Motor_Engine
+      guid: 86fb40a32e896d478254353e0b41ea6e
+      id: 149397142
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_Motor_Engine
+        ObjectType: 3
+        guid: 86fb40a32e896d478254353e0b41ea6e
+      Path: Events\Gameplay_SFX\Start_Motor_Engine
+      maxAttenuation: 10
+      maxDuration: -1
+      minDuration: -1
     - name: Start_OnMissionCompleted
       guid: 19fc9d773e9f8642bdc199ef277e567b
       id: 2060351696
@@ -613,6 +630,23 @@ MonoBehaviour:
         ObjectType: 3
         guid: 911c643bef10214aa4d6000633b5b489
       Path: Events\Gameplay_SFX\Stop_HullBreachSFX
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Stop_Motor_Engine
+      guid: f7a4f125d45f8c46abf91696e0b6c194
+      id: 344065456
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Stop_Motor_Engine
+        ObjectType: 3
+        guid: f7a4f125d45f8c46abf91696e0b6c194
+      Path: Events\Gameplay_SFX\Stop_Motor_Engine
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0

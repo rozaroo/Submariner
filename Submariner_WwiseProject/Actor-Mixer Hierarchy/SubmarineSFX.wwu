@@ -1764,6 +1764,51 @@
 						<ActiveSource Name="387232__steaq__badge-coin-win" ID="{AC0B1234-DFCA-4A0B-9EC8-0B0384B3269A}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<Sound Name="Motor_Engine" ID="{97ECF01A-642E-44A5-9E3B-13ADF21030A6}" ShortID="1000258430">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="2"/>
+						<Property Name="Highpass" Type="int16">
+							<ValueList>
+								<Value>20</Value>
+							</ValueList>
+						</Property>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Attenuation">
+							<ObjectRef Name="Engine_Attenuation" ID="{A6C01932-ED43-4395-9248-C4F5BBD72692}" WorkUnitID="{FA43832F-6DF7-497E-836D-6C0AC9D9DC7E}"/>
+						</Reference>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="General_SFX" ID="{7D58A2F4-D121-43DD-BB96-2F34B0A30465}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="16937__sculptor__watersubmarine render 001" ID="{3A9A8B1E-525D-459D-9505-3B1FC615227E}">
+							<PropertyList>
+								<Property Name="CrossfadeDuration" Type="Real64" Value="1178.947"/>
+								<Property Name="FadeInDuration" Type="Real64" Value="1.43352601156069"/>
+								<Property Name="FadeOutDuration" Type="Real64" Value="1.31791907514451"/>
+								<Property Name="LoopBegin" Type="Real64" Value="4.16184971098266"/>
+								<Property Name="LoopEnd" Type="Real64" Value="8.04624277456647"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+								<Property Name="TrimBegin" Type="Real64" Value="0.601156069364162"/>
+								<Property Name="TrimEnd" Type="Real64" Value="13.4566473988439"/>
+							</PropertyList>
+							<Language>SFX</Language>
+							<AudioFile>16937__sculptor__watersubmarine render 001.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="845855491"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="16937__sculptor__watersubmarine render 001" ID="{3A9A8B1E-525D-459D-9505-3B1FC615227E}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>
