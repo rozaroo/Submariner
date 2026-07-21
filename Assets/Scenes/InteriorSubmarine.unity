@@ -674,17 +674,6 @@ MonoBehaviour:
   telemetryContainer: {fileID: 1275235058}
   yawText: {fileID: 762034518}
   pitchText: {fileID: 326423406}
---- !u!114 &298781801 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1575901369941245466, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
-  m_PrefabInstance: {fileID: 4366306935647553036}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32e081ffd2e1f3a4ab311631a63ee4d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &326423404
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,57 +876,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cad6ad0308e0a804fb35408e1ca7b387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &363457260
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 363457261}
-  - component: {fileID: 363457262}
-  m_Layer: 0
-  m_Name: LightManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &363457261
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 363457260}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4366306935647553037}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &363457262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 363457260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fe88ab5ba9755e4883b06d840c1e657, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxIntensity: 2
-  minIntensity: 0.2
-  enableFlicker: 1
-  flickerThreshold: 20
-  flickerChance: 0.05
-  minFlickerTime: 0.05
-  maxFlickerTime: 0.15
 --- !u!1 &427598790
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,17 +1036,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 486418031}
   m_CullTransparentMesh: 1
---- !u!114 &542940510 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6890409546812309691, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
-  m_PrefabInstance: {fileID: 4366306935647553036}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d734f2779981a4741b048596aeb153c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &567009026 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1836391093531926068, guid: 7c31b635650863b48a93fec2e48b624d, type: 3}
@@ -4843,38 +4770,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1037747298202670469, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
-      propertyPath: cursorLockMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1037747298202670469, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
-      propertyPath: showMouseCursor
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1711898420414773364, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       propertyPath: oxygenSystem
       value: 
       objectReference: {fileID: 763829602}
-    - target: {fileID: 1913932568084268648, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
-      propertyPath: navigationStation
-      value: 
-      objectReference: {fileID: 542940510}
     - target: {fileID: 3201293426597280410, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       propertyPath: triggerObject
       value: 
       objectReference: {fileID: 1193563737}
-    - target: {fileID: 6307900406651115745, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
-      propertyPath: m_Size.x
-      value: 0.077244
-      objectReference: {fileID: 0}
-    - target: {fileID: 6307900406651115745, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6451269173668165796, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
-      propertyPath: m_Name
-      value: MapNavigationStation
-      objectReference: {fileID: 0}
     - target: {fileID: 7012791289088723381, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       propertyPath: energySystem
       value: 
@@ -4883,10 +4786,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SubmarineInteriorV3
       objectReference: {fileID: 0}
-    - target: {fileID: 7714481150547361811, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
-      propertyPath: mainLeverPull
-      value: 
-      objectReference: {fileID: 298781801}
     - target: {fileID: 8066910223130465333, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       propertyPath: triggerObject
       value: 
@@ -4931,27 +4830,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8185796546863339003, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
-      propertyPath: m_Size.x
-      value: 0.077244
-      objectReference: {fileID: 0}
-    - target: {fileID: 8185796546863339003, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1543370693765623526, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 363457261}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
---- !u!4 &4366306935647553037 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1543370693765623526, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
-  m_PrefabInstance: {fileID: 4366306935647553036}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4381283687112453567
 Transform:
   m_ObjectHideFlags: 0
