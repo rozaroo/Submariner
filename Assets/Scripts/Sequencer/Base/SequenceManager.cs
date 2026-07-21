@@ -44,13 +44,13 @@ public abstract class SequenceManager<T> : MonoBehaviour where T : SequenceConte
         
         if (index >= sequences.sequenceSteps.Count)
         {
-            Logger.Log($"Finished Sequence on: {index}");
+            Log.Info($"Finished Sequence on: {index}");
         
             return;
         }
         
         SequenceStep currentStep = sequences.sequenceSteps[index];
-        Logger.Log($"Executing Sequence: {currentStep}");
+        Log.Info($"Executing Sequence: {currentStep}");
     
         if (currentStep.waitUntilFinished)
         {
@@ -78,7 +78,7 @@ public abstract class SequenceManager<T> : MonoBehaviour where T : SequenceConte
     {
         if (_context == null || _context.IsCancelled) return;
 
-        Logger.Log("[SequenceManager] Sequence Aborted.");
+        Log.Info("[SequenceManager] Sequence Aborted.");
         
         if (sequences != null && _currentStepIndex < sequences.sequenceSteps.Count)
         {
@@ -110,14 +110,14 @@ public abstract class SequenceManager<T> : MonoBehaviour where T : SequenceConte
         }
         OnValidate();
         EditorUtility.SetDirty(this);
-        Logger.Log($"[SequenceManager] Added {entities.Length} objects automatically.");
+        Log.Info($"[SequenceManager] Added {entities.Length} objects automatically.");
     }
     
     protected void ClearBlackboard()
     {
         sceneBlackboard.Clear();
         EditorUtility.SetDirty(this);
-        Logger.Log("[SequenceManager] Removed All Entities.");
+        Log.Info("[SequenceManager] Removed All Entities.");
     }
     
     
@@ -133,7 +133,7 @@ public abstract class SequenceManager<T> : MonoBehaviour where T : SequenceConte
             
             if (!idChecker.Add(item.Id))
             {
-                Logger.LogWarning($"[SequenceManager] Duplicate on Blackboard: '{item.Id}'. Overwriting first added.");
+                Log.Info($"[SequenceManager] Duplicate on Blackboard: '{item.Id}'. Overwriting first added.");
             }
         }
     }

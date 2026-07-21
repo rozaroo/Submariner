@@ -41,13 +41,13 @@ public sealed class Command
 
         if (handler == null)
         {
-            Logger.Log($"[Command:{_name}] Invoked while unbound.");
+            Log.Info($"[Command:{_name}] Invoked while unbound.");
             return false;
         }
 
         if (!IsOwnerAlive())
         {
-            Logger.Log($"[Command:{_name}] Owner destroyed — auto-unbinding.");
+            Log.Info($"[Command:{_name}] Owner destroyed — auto-unbinding.");
             _handler = null;
             _owner = null;
             return false;
@@ -106,13 +106,13 @@ public sealed class Command<T>
 
         if (handler == null)
         {
-            Logger.Log($"[Command:{_name}] Invoked while unbound.");
+            Log.Info($"[Command:{_name}] Invoked while unbound.");
             return false;
         }
 
         if (!IsOwnerAlive())
         {
-            Logger.Log($"[Command:{_name}] Owner destroyed — auto-unbinding.");
+            Log.Info($"[Command:{_name}] Owner destroyed — auto-unbinding.");
             _handler = null;
             _owner = null;
             return false;
@@ -171,13 +171,13 @@ public sealed class Query<TResult>
 
         if (handler == null)
         {
-            Logger.Log($"[Query:{_name}] Invoked while unbound.");
+            Log.Info($"[Query:{_name}] Invoked while unbound.");
             return false;
         }
 
         if (!IsOwnerAlive())
         {
-            Logger.Log($"[Query:{_name}] Owner destroyed — auto-unbinding.");
+            Log.Info($"[Query:{_name}] Owner destroyed — auto-unbinding.");
             _handler = null;
             _owner = null;
             return false;
@@ -236,13 +236,13 @@ public sealed class Query<TArg, TResult>
 
         if (handler == null)
         {
-            Logger.Log($"[Query:{_name}] Invoked while unbound.");
+            Log.Info($"[Query:{_name}] Invoked while unbound.");
             return false;
         }
 
         if (!IsOwnerAlive())
         {
-            Logger.Log($"[Query:{_name}] Owner destroyed — auto-unbinding.");
+            Log.Info($"[Query:{_name}] Owner destroyed — auto-unbinding.");
             _handler = null;
             _owner = null;
             return false;
