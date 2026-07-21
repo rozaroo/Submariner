@@ -40,7 +40,7 @@ public abstract class SequenceContext
         if (_sceneBlackboard.TryGetValue(id, out var obj))
             return obj;
         
-        Logger.LogWarning($"[Sequence Context] ID Object not Found.");
+        Log.Error($"[Sequence Context] ID Object not Found.");
         return null;
     }
 

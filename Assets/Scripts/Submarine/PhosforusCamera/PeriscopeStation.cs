@@ -52,7 +52,6 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     
     #region PosessionLogic
     
-    
     public void Possess(PlayerCharacter player)
     {
         _currentPlayer = player;
@@ -60,15 +59,13 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
         
         InputAction clickAction = _currentPlayer.Input.actions[takePhotoActionName];
         clickAction.started += OnPhotoClickStarted;
-            
+        
         InputAction cancelAction = _currentPlayer.Input.actions[exitActionName];
         cancelAction.started += OnExitStarted;
-            
-        InputAction lookAction = _currentPlayer.Input.actions[lookActionName];
-        lookAction.performed += OnLookPerformed;
         
         enabled = true;
         GameEventChannel<OnPeriscopePossess>.RaiseEvent(new OnPeriscopePossess());
+        
         _periscopeCameraAnchorSo.phosphorusCameraComponent.BeginPeriscopeControl();
         _periscopeCameraAnchorSo.phosphorusCameraComponent.EnableCamera();
     }
@@ -81,12 +78,9 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
         InputAction cancelAction = _currentPlayer.Input.actions[exitActionName];
         cancelAction.started -= OnExitStarted;
         
-        InputAction lookAction = _currentPlayer.Input.actions[lookActionName];
-        lookAction.performed -= OnLookPerformed;
-        
         _periscopeCameraAnchorSo.phosphorusCameraComponent.EndPeriscopeControl();
         _periscopeCameraAnchorSo.phosphorusCameraComponent.ForceDisable();
-        
+            
         GameEventChannel<OnPeriscopeUnPossess>.RaiseEvent(new OnPeriscopeUnPossess());
         _currentPlayer = null;
         enabled = false;
@@ -98,13 +92,14 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
 
     private void OnPhotoClickStarted(InputAction.CallbackContext context)
     {
-        if (_periscopeCameraAnchorSo.phosphorusCameraComponent  == null) return;
+        if (_periscopeCameraAnchorSo.phosphorusCameraComponent == null) return;
         
         if (!_periscopeCameraAnchorSo.phosphorusCameraComponent.CanTakePhoto())
         {
             SFXManager.PostEvent("Start_PhosphorusCameraCooldown", gameObject);
             return;
         }
+        
         Log.Info("[PeriscopeStation] Taking Photo");
         _periscopeCameraAnchorSo.phosphorusCameraComponent.TryTakePhoto();
     }
@@ -112,13 +107,6 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     private void OnExitStarted(InputAction.CallbackContext context)
     {
         _currentPlayer.OnUnPossessionState(this);
-    }
-    
-    private void OnLookPerformed(InputAction.CallbackContext context)
-    {
-        Vector2 delta = context.ReadValue<Vector2>();
-
-        _periscopeCameraAnchorSo.phosphorusCameraComponent.Rotate(delta);
     }
     
     #endregion
