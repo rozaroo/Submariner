@@ -137,7 +137,8 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         }
 
         Vector2 mousePosition = Mouse.current.position.ReadValue();
-        Ray ray = _playerCamera.ScreenPointToRay(mousePosition);
+        Vector2 viewportPos = new Vector2(mousePosition.x / Screen.width, mousePosition.y / Screen.height);
+        Ray ray = _playerCamera.ViewportPointToRay(viewportPos);
 
         if (!Physics.Raycast(ray, out RaycastHit hit, raycastDistance))
         {
@@ -361,7 +362,8 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         }
 
         Vector2 mousePosition = Mouse.current.position.ReadValue();
-        Ray ray = _playerCamera.ScreenPointToRay(mousePosition);
+        Vector2 viewportPos = new Vector2(mousePosition.x / Screen.width, mousePosition.y / Screen.height);
+        Ray ray = _playerCamera.ViewportPointToRay(viewportPos);
 
         if (!Physics.Raycast(ray, out RaycastHit hit, raycastDistance))
         {
@@ -407,7 +409,9 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         }
 
         Vector2 mousePosition = Mouse.current.position.ReadValue();
-        Ray ray = _playerCamera.ScreenPointToRay(mousePosition);
+        Vector2 viewportPos = new Vector2(mousePosition.x / Screen.width, mousePosition.y / Screen.height);
+        Ray ray = _playerCamera.ViewportPointToRay(viewportPos);
+        
         Plane workPlane = new Plane(planeAnchor.up, planeAnchor.position);
 
         if (!workPlane.Raycast(ray, out float distance))
