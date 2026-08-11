@@ -67,7 +67,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 7167144ad031b70458cc51fa768eeed2, type: 2}
+  - {fileID: 2100000, guid: 5a9c6a18e9dcdec478b03a9c61b3e84f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,8 +109,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.1715451, y: 0.17154507, z: 0.8874062}
-  m_Center: {x: -0.0000030994415, y: -0.0000010728836, z: 0.00000016391274}
+  m_Size: {x: 0.14935842, y: 0.82597, z: 0.14935842}
+  m_Center: {x: -0.00000021234155, y: 0, z: 0}
 --- !u!54 &4160107316288678260
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -152,7 +153,6 @@ MonoBehaviour:
   holdOffset: {x: 0.2, y: -0.2, z: 0.6}
   isBurned: 0
   amperage: 40
-  functionalVisual: {fileID: 8765673011139921366, guid: 36c8cdd571191374cb617ce88e2465a1, type: 3}
   burnedMesh: {fileID: -3187784610473809064, guid: 0d91f5b306919fb4c98d19a9cfd60359, type: 3}
   amperageLabel: {fileID: 0}
   showAmperageLabel: 1

@@ -153,7 +153,6 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
             amperageLabel = labelObject.AddComponent<TextMesh>();
             amperageLabel.anchor = TextAnchor.MiddleCenter;
             amperageLabel.alignment = TextAlignment.Center;
-            
         }
         if (amperageLabel == null) return;
         amperageLabel.transform.localPosition = amperageLabelLocalOffset;
