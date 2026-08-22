@@ -27,21 +27,16 @@ public class PlayerGameplayPossessionState : PlayerGameplayState
         
         CameraPose playerPose = _context.SavedCameraPose;
         CameraPose stationPose = BuildStationPose();
-        _context.CamController.SetCameraStrategy(
-            new CameraTransition(playerPose, stationPose, _station.TransitionDuration));
+        _context.CamController.SetCameraStrategy(new CameraTransition(playerPose, stationPose, _station.TransitionDuration));
         
         _context.DisableGameplayInputs();
         _context.SetMouseConfiguration(_desiredLockMode, _showMouse);
         _context.Input.SwitchCurrentActionMap(_station.MapName);
-        _station.Possess(_context);
     }
 
     public override void Update() { }
 
-    public override void OnExit()
-    {
-        _station.UnPossess();
-    }
+    public override void OnExit() { }
     
     private CameraPose BuildStationPose()
     {

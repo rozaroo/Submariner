@@ -231,17 +231,6 @@
                 },
                 {
                     "name": "",
-                    "id": "bfd64247-3d6a-47db-b711-15951df2c06c",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ExitStation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "3b6978c7-ce6a-4997-b88a-8d15a2039c36",
                     "path": "<Mouse>/delta",
                     "interactions": "",

@@ -14,46 +14,29 @@ public class CoolingSystem : MonoBehaviour
     private Coroutine _coolingRoutine;
     [SerializeField] private LeverPullStation coolingLeverPull;
 
-    private void Start()
-    {
-        if (coolingLeverPull != null)
-        {
-            coolingLeverPull.onActivation += StartCooling;
-            coolingLeverPull.onDeactivation += StopCooling;
-        }
-    }
-    private void OnDestroy()
-    {
-        if (coolingLeverPull != null)
-        {
-            coolingLeverPull.onActivation -= StartCooling;
-            coolingLeverPull.onDeactivation -= StopCooling;
-        }
-    }
-
     public void StartCooling()
     {
-        Log.Info("Cooling Lever Activated.");
+        Debug.Log("Cooling Lever Activated.");
         if (_state != CoolingState.Off)
         {
-            Log.Info("Cooling already active.");
+            Debug.Log("Cooling already active.");
             return;
         }
 
         if (!engineSystem.IsRunning())
         {
-            Log.Info("Cooling blocked. Engine not running.");
+            Debug.Log("Cooling blocked. Engine not running.");
             return;
         }
         _state = CoolingState.Active;
         AddEnergyConsumption();
         _coolingRoutine = StartCoroutine(CoolingRoutine());
-        Log.Info("Cooling Started.");
+        Debug.Log("Cooling Started.");
     }
 
     public void StopCooling()
     {
-        Log.Info("Cooling Stopped.");
+        Debug.Log("Cooling Stopped.");
         if (_state != CoolingState.Active) return;
 
         if (_coolingRoutine != null)
@@ -75,18 +58,18 @@ public class CoolingSystem : MonoBehaviour
                 StopCooling();
                 yield break;
             }
-            Log.Info($"Cooling Tick | Elapsed: {elapsedTime}/{maxUsageTime}");
+            Debug.Log($"Cooling Tick | Elapsed: {elapsedTime}/{maxUsageTime}");
             yield return new WaitForSeconds(coolingInterval);
             engineSystem.CoolEngine();
             elapsedTime += coolingInterval;
         }
-        Log.Info("Cooling applied.");
+        Debug.Log("Cooling applied.");
         EnterCooldown();
     }
 
     private void EnterCooldown()
     {
-        Log.Info($"Cooling entered cooldown ({cooldownTime}s)");
+        Debug.Log($"Cooling entered cooldown ({cooldownTime}s)");
         RemoveEnergyConsumption();
         _state = CoolingState.Cooldown;
         if (_coolingRoutine != null)
@@ -99,10 +82,10 @@ public class CoolingSystem : MonoBehaviour
 
     private IEnumerator CooldownRoutine()
     {
-        Log.Info("Cooling System Cooldown");
+        Debug.Log("Cooling System Cooldown");
         yield return new WaitForSeconds(cooldownTime);
         _state = CoolingState.Off;
-        Log.Info("Cooling cooldown finished.");
+        Debug.Log("Cooling cooldown finished.");
     }
     private void AddEnergyConsumption()
     {

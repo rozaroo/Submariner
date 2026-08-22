@@ -1,9 +1,8 @@
-﻿using System;
-
+﻿using UnityEngine.Events;
 public interface ILeverControls : IControls
 {
     public bool isActive { get; set; }
-    public Action onDeactivation { get; set; }
+    UnityEvent onDeactivation { get; }
     public void OnActionDrag(float delta);
 }
 

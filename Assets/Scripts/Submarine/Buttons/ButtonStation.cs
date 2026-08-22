@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(BoxCollider))]
 public class ButtonStation : MonoBehaviour, IButtonControls
@@ -15,7 +16,10 @@ public class ButtonStation : MonoBehaviour, IButtonControls
     
     public bool isLocked { get; set; }
     public bool isPressed { get; set; }
-    public Action onActivation { get; set; }
+    [SerializeField] private UnityEvent onActivationEvent;
+
+    public UnityEvent onActivation => onActivationEvent;
+    public event Action ButtonPressed;
     private Renderer _renderer;
     private Coroutine _colorCoroutine;
 
@@ -54,7 +58,8 @@ public class ButtonStation : MonoBehaviour, IButtonControls
             isPressed = true;
             SFXManager.PostEvent("Start_ButtonPress", gameObject);
             ChangeColor(pressedColor);
-            onActivation?.Invoke();
+            onActivationEvent?.Invoke();
+            ButtonPressed?.Invoke();
         }
     }
 

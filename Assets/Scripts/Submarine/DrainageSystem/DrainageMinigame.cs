@@ -21,23 +21,13 @@ public class DrainageMinigame : MonoBehaviour
     private void OnEnable()
     {
         foreach (var button in buttons)
-        {
-            if (button != null)
-            {
-                button.onActivation += OnAnyButtonHit;
-            }
-        }
+            if (button != null) button.ButtonPressed += OnAnyButtonHit;
     }
 
     private void OnDisable()
     {
         foreach (var button in buttons)
-        {
-            if (button != null)
-            {
-                button.onActivation -= OnAnyButtonHit;
-            }
-        }
+            if (button != null) button.ButtonPressed -= OnAnyButtonHit;
     }
     
     public void SetupMiniGame()

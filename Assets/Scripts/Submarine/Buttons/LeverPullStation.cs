@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(BoxCollider))]
 public class LeverPullStation : MonoBehaviour, ILeverControls
@@ -13,39 +14,61 @@ public class LeverPullStation : MonoBehaviour, ILeverControls
     
     public bool isActive { get; set; }
     public bool isLocked { get; set; }
-    public Action onActivation { get; set; }
-    public Action onDeactivation { get; set; }
+    public bool IsUnlocked => !isLocked;
+    [SerializeField] private UnityEvent onActivationEvent;
+    [SerializeField] private UnityEvent onDeactivationEvent;
+    public UnityEvent onActivation => onActivationEvent;
+    public UnityEvent onDeactivation => onDeactivationEvent;
 
     private void Awake()
     {
         _initialAngle = transform.localRotation.eulerAngles.z;
         _currentAngle = _initialAngle;
     }
-    
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            Debug.Log("[DEBUG] F1 -> Activating Lever");
+            SetActive(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            Debug.Log("[DEBUG] F2 -> Deactivating Lever");
+            SetActive(false);
+        }
+    }
     public void Lock() => isLocked = true;
     public void Unlock() => isLocked = false;
-    
+
     public void SetActive(bool active)
     {
-        Log.Info($"Lever {(active ? "Activated" : "Deactivated")} - {gameObject.name}");
+        Log.Info($"[LEVER] SetActive({active})");
+        //Log.Info($"Lever {(active ? "Activated" : "Deactivated")} - {gameObject.name}");
         if (active)
         {
             isActive = true;
-            onActivation?.Invoke();
+            onActivationEvent?.Invoke();
             SFXManager.PostEvent("Start_LeverPullFinished", gameObject);
             SetLeverRotation(maxAngleActivation);
         }
         else
         {
             isActive = false;
-            onDeactivation?.Invoke();
+            onDeactivationEvent?.Invoke();
             SetLeverRotation(_initialAngle);
         }
     }
 
     public void OnActionDrag(float delta)
     {
-        if (isLocked) return;
+        if (isLocked)
+        {
+            Log.Info("Lever is locked.");
+            return;
+        }
+        if (Mathf.Abs(delta) < 0.001f) return;
         _currentAngle -= delta * pullSpeed;
         _currentAngle = Mathf.Clamp(_currentAngle, _initialAngle, maxAngleActivation);
         transform.localRotation = Quaternion.Euler(0f, 0f, _currentAngle);

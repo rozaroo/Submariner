@@ -2,21 +2,16 @@ using UnityEngine;
 
 public class LeverInteractionAdapter : MonoBehaviour, IInteractable
 {
-    private ILeverControls _leverControls;
+    private LeverInteractionStation _interactionStation;
 
     private void Awake()
     {
-        _leverControls = GetComponent<ILeverControls>();
-        if (_leverControls == null)
-        {
-            Log.Error($"{nameof(LeverInteractionAdapter)} requires ILeverControls Component available in {gameObject.name}.");
-        }
+        _interactionStation = GetComponent<LeverInteractionStation>();
+        if (_interactionStation == null) Log.Error($"{name}: Missing LeverInteractionStation.");
     }
 
     public void Interact(PlayerCharacter player)
     {
-        Log.Info($"Lever Interaction -> {gameObject.name}");
-        if (_leverControls == null || _leverControls.isLocked) return;
-        _leverControls.SetActive(!_leverControls.isActive);
+        _interactionStation.Possess(player);
     }
 }

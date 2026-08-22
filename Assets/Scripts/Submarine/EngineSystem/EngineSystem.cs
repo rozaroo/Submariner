@@ -22,33 +22,12 @@ public class EngineSystem : MonoBehaviour
     private Coroutine _engineStartingCoroutine;
     private Coroutine _temperatureCoroutine;
 
-    #region UnityFunctions
-
-    private void Start()
+    public void TryStartEngine()
     {
-        if (navigationLeverPull != null)
-        {
-            navigationLeverPull.onActivation += TryStartEngine;
-            navigationLeverPull.onDeactivation += StopEngine;
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (navigationLeverPull != null)
-        {
-            navigationLeverPull.onActivation -= TryStartEngine;
-            navigationLeverPull.onDeactivation -= StopEngine;
-        }
-    }
-    #endregion
-
-    private void TryStartEngine()
-    {
-        Log.Info($"[ENGINE] Start requested | Current State: {_currentState}");
+        Debug.Log($"[ENGINE] Start requested | Current State: {_currentState}");
         if (_currentState != EngineState.Off)
         {
-            Log.Info("[ENGINE] Start denied. Engine is not in OFF state.");
+            Debug.Log("[ENGINE] Start denied. Engine is not in OFF state.");
             return;
         }
         _engineStartingCoroutine = StartCoroutine(StartEngineRoutine());
@@ -57,11 +36,11 @@ public class EngineSystem : MonoBehaviour
     private IEnumerator StartEngineRoutine()
     {
         _currentState = EngineState.Starting;
-        Log.Info($"[ENGINE] Status changed -> STARTING ({startupTime}s startup)");
+        Debug.Log($"[ENGINE] Status changed -> STARTING ({startupTime}s startup)");
         yield return new WaitForSeconds(startupTime);
 
         _currentState = EngineState.Operative;  
-       Log.Info("[ENGINE] Status changed -> OPERATIVE"); SFXManager.PostEvent("Start_Motor_Engine", gameObject);
+        Debug.Log("[ENGINE] Status changed -> OPERATIVE"); SFXManager.PostEvent("Start_Motor_Engine", gameObject);
         _temperatureCoroutine = StartCoroutine(TemperatureRoutine());
         
         GameEventChannel<OnEngineStateChanged>.RaiseEvent(new OnEngineStateChanged { State = EngineState.Operative, SpeedMultiplier = 1f });
@@ -73,23 +52,23 @@ public class EngineSystem : MonoBehaviour
         {
             yield return new WaitForSeconds(temperatureIncreaseInterval);
             currentTemperature += temperatureIncreaseAmount;
-            Log.Info($"Engine Temperature: {currentTemperature}%");
+            Debug.Log($"Engine Temperature: {currentTemperature}%");
             CheckTemperature();
         }
     }
 
     private void CheckTemperature()
     {
-        Log.Info($"[ENGINE] Temperature: {currentTemperature}%");
+        Debug.Log($"[ENGINE] Temperature: {currentTemperature}%");
         if (currentTemperature >= maxTemperature)
         {
-            Log.Info("[ENGINE] Maximum temperature reached.");
+            Debug.Log("[ENGINE] Maximum temperature reached.");
             BreakEngine();
             return;
         }
         if (currentTemperature >= criticalTemperature)
         {
-            Log.Info("[ENGINE] Critical temperature reached.");
+            Debug.Log("[ENGINE] Critical temperature reached.");
             EnterDegradedState();
         }
     }
@@ -100,7 +79,7 @@ public class EngineSystem : MonoBehaviour
         _currentState = EngineState.Degraded;
         
         GameEventChannel<OnEngineStateChanged>.RaiseEvent(new OnEngineStateChanged { State = EngineState.Degraded, SpeedMultiplier = 0.6f });
-        Log.Info("[ENGINE] Status changed -> DEGRADED");
+        Debug.Log("[ENGINE] Status changed -> DEGRADED");
     }
 
     private void BreakEngine()
@@ -114,10 +93,10 @@ public class EngineSystem : MonoBehaviour
             StopCoroutine(_temperatureCoroutine);
             _temperatureCoroutine = null;
         }
-        Log.Info("[ENGINE] Status changed -> BROKEN");
+        Debug.Log("[ENGINE] Status changed -> BROKEN");
     }
 
-    private void StopEngine()
+    public void StopEngine()
     {
         _currentState = EngineState.Off;
         
@@ -135,19 +114,19 @@ public class EngineSystem : MonoBehaviour
         }
         
         SFXManager.PostEvent("Stop_Motor_Engine", gameObject);
-        Log.Info("[ENGINE] Status changed -> OFF");
+        Debug.Log("[ENGINE] Status changed -> OFF");
     }
 
     public void CoolEngine()
     {
         if (_currentState == EngineState.Off || _currentState == EngineState.Broken)
         {
-            Log.Info("[ENGINE] Cooling ignored. Engine is OFF or BROKEN.");
+            Debug.Log("[ENGINE] Cooling ignored. Engine is OFF or BROKEN.");
             return;
         }
         currentTemperature -= coolingAmount;
         currentTemperature = Mathf.Max(0f, currentTemperature);
-        Log.Info($"[ENGINE] Cooling active. Temperature: {currentTemperature}%");
+        Debug.Log($"[ENGINE] Cooling active. Temperature: {currentTemperature}%");
     }
 
     public bool CanBeCooled() => _currentState != EngineState.Off && _currentState != EngineState.Broken; //Not Used, but just in case.
@@ -158,16 +137,16 @@ public class EngineSystem : MonoBehaviour
     {
         if (_currentState != EngineState.Broken) 
         {
-            Log.Info("[ENGINE] Restart ignored. Engine is not broken.");
+            Debug.Log("[ENGINE] Restart ignored. Engine is not broken.");
             return;
         }
-        Log.Info("[ENGINE] Restart button pressed.");
-        Log.Info("[ENGINE] Repairing engine...");
+        Debug.Log("[ENGINE] Restart button pressed.");
+        Debug.Log("[ENGINE] Repairing engine...");
         currentTemperature = 0f;
         _currentState = EngineState.Off;
-        Log.Info("[ENGINE] Temperature reset to 0%");
-        Log.Info("[ENGINE] Status changed -> OFF");
-        Log.Info("[ENGINE] Engine repaired. Pull the navigation lever to start it again.");
+        Debug.Log("[ENGINE] Temperature reset to 0%");
+        Debug.Log("[ENGINE] Status changed -> OFF");
+        Debug.Log("[ENGINE] Engine repaired. Pull the navigation lever to start it again.");
         if (_temperatureCoroutine != null) 
         {
             StopCoroutine(_temperatureCoroutine);
@@ -181,6 +160,6 @@ public class EngineSystem : MonoBehaviour
         if (navigationLeverPull != null) navigationLeverPull.SetActive(false);
         GameEventChannel<OnEngineStateChanged>.RaiseEvent(new OnEngineStateChanged { State = EngineState.Off, SpeedMultiplier = 0f});
         SFXManager.PostEvent("Stop_Motor_Engine", gameObject);
-        Log.Info("[ENGINE] Repair complete. Pull the navigation lever to start the engine.");
+        Debug.Log("[ENGINE] Repair complete. Pull the navigation lever to start the engine.");
     }
 }
