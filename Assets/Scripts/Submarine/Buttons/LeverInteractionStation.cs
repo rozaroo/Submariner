@@ -6,19 +6,8 @@ public class LeverInteractionStation : MonoBehaviour, IPossessable
     [SerializeField]
     private MonoBehaviour controlledLever;
 
-    [Header("Possession Config")]
-    [SerializeField] private Transform cameraAnchor;
-    [SerializeField] private Transform directionAnchor;
-    [SerializeField] private float transitionDuration = 0.1f;
-    [SerializeField] private CursorLockMode cursorLockMode = CursorLockMode.Locked;
-    [SerializeField] private bool showMouseCursor = false;
-
     public string MapName => stationMapName;
-    public Transform CameraAnchor => cameraAnchor;
-    public Transform DirectionAnchor => directionAnchor;
-    public float TransitionDuration => transitionDuration;
-    public CursorLockMode CursorLockMode => cursorLockMode;
-    public bool IsMouseVisible => showMouseCursor;
+    
 
     [Header("Action Maps")]
     [SerializeField] private string playerMapName = "Player";
@@ -27,9 +16,6 @@ public class LeverInteractionStation : MonoBehaviour, IPossessable
     [Header("Input Actions")]
     [SerializeField] private string lookActionName = "Look";
     [SerializeField] private string exitActionName = "ExitStation";
-    [SerializeField] private string clickActionName = "ClickInteraction";
-
-    private bool _isDragging;
 
     private PlayerCharacter _currentPlayer;
 
@@ -48,40 +34,27 @@ public class LeverInteractionStation : MonoBehaviour, IPossessable
     {
         if (_currentPlayer != null) return;
         Log.Info("Lever Possessed");
-        cameraAnchor.gameObject.SetActive(true);
         _currentPlayer = player;
         _currentPlayer.OnPossessionState(this);
         var currentMap = _currentPlayer.Input.currentActionMap;
         InputAction lookAction = currentMap.FindAction(lookActionName, true);
         InputAction exitAction = currentMap.FindAction(exitActionName, true);
-        InputAction clickAction = currentMap.FindAction(clickActionName, true);
         lookAction.performed += OnLookPerformed;
         exitAction.started += OnExitPerformed;
-        clickAction.started += OnClickStarted;
-        clickAction.canceled += OnClickCanceled;
         enabled = true;
     }
 
     public void UnPossess()
     {
         if (_currentPlayer == null) return;
-        cameraAnchor.gameObject.SetActive(false);
         var currentMap = _currentPlayer.Input.currentActionMap;
-
         InputAction lookAction = currentMap.FindAction(lookActionName, true);
         InputAction exitAction = currentMap.FindAction(exitActionName, true);
-        InputAction clickAction = currentMap.FindAction(clickActionName, true);
         lookAction.performed -= OnLookPerformed;
         exitAction.started -= OnExitPerformed;
-        clickAction.started -= OnClickStarted;
-        clickAction.canceled -= OnClickCanceled;
-        _isDragging = false;
         _currentPlayer.OnUnPossessionState(this);
-
         _currentPlayer = null;
-
         enabled = false;
-
         Log.Info("Lever Released");
     }
 
@@ -91,7 +64,6 @@ public class LeverInteractionStation : MonoBehaviour, IPossessable
 
     private void OnLookPerformed(InputAction.CallbackContext context)
     {
-        if (!_isDragging) return;
         if (_leverControls == null) return;
         Vector2 delta = context.ReadValue<Vector2>();
         Log.Info($"[LEVER] Dragging: {delta}");
@@ -102,17 +74,6 @@ public class LeverInteractionStation : MonoBehaviour, IPossessable
     {
         Log.Info("Exit");
         UnPossess();
-    }
-    private void OnClickStarted(InputAction.CallbackContext context)
-    {
-        _isDragging = true;
-        Log.Info("[LEVER] Started dragging.");
-    }
-
-    private void OnClickCanceled(InputAction.CallbackContext context)
-    {
-        _isDragging = false;
-        Log.Info("[LEVER] Stopped dragging.");
     }
 
     #endregion
