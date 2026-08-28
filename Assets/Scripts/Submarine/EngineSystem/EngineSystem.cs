@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class EngineSystem : MonoBehaviour
 { 
     [Header("Startup")] 
@@ -32,7 +32,17 @@ public class EngineSystem : MonoBehaviour
             navigationLeverPull.onDeactivation += StopEngine;
         }
     }
+    private void Update()
+    {
+        if (Keyboard.current != null && Keyboard.current.f1Key.wasPressedThisFrame)
+        {
+            currentTemperature = maxTemperature;
 
+            Debug.Log($"[ENGINE TEST] Temperature forced to {currentTemperature}%");
+
+            CheckTemperature();
+        }
+    }
     private void OnDestroy()
     {
         if (navigationLeverPull != null)
