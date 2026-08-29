@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class EngineMiniGame : MonoBehaviour
@@ -17,6 +18,11 @@ public class EngineMiniGame : MonoBehaviour
     private int _currentInput;
 
     private bool _isActive;
+    [Header("Emergency Timer")]
+    [SerializeField] private float timeLimit = 120f;
+
+    private float _remainingTime;
+    private Coroutine _timerCoroutine;
 
     private void Awake()
     {
@@ -60,12 +66,45 @@ public class EngineMiniGame : MonoBehaviour
         _isActive = true;
         _currentRound = 1;
         _currentInput = 0;
+        foreach (EngineMiniGameComponent component in components)
+        {
+            if (component != null) component.TurnOffFeedback();
+        }
+        _remainingTime = timeLimit;
 
+        if (_timerCoroutine != null) StopCoroutine(_timerCoroutine);
+        _timerCoroutine = StartCoroutine(EmergencyTimerRoutine());
+
+        Debug.Log($"[ENGINE MINIGAME] Timer started: {_remainingTime} seconds.");
         Debug.Log("[ENGINE MINIGAME] ==========================");
         Debug.Log("[ENGINE MINIGAME] REINICIO DE EMERGENCIA INICIADO");
         Debug.Log("[ENGINE MINIGAME] Ronda 1");
 
         GenerateSequence();
+    }
+    private IEnumerator EmergencyTimerRoutine()
+    {
+        while (_remainingTime > 0f && _isActive)
+        {
+            yield return new WaitForSeconds(1f);
+
+            _remainingTime -= 1f;
+
+            //Debug.Log(
+            //    $"[ENGINE MINIGAME] Time remaining: {_remainingTime:F0}s"
+            //);
+        }
+        if (_remainingTime <= 0f && _isActive) TimeExpired();
+    }
+    private void TimeExpired()
+    {
+        _isActive = false;
+
+        Debug.Log("[ENGINE MINIGAME] ==========================");
+        Debug.Log("[ENGINE MINIGAME] TIME EXPIRED.");
+        Debug.Log("[ENGINE MINIGAME] EMERGENCY RESTART FAILED.");
+
+        _timerCoroutine = null;
     }
 
     private void GenerateSequence()
@@ -85,8 +124,34 @@ public class EngineMiniGame : MonoBehaviour
             $"[ENGINE MINIGAME] Nueva secuencia: " +
             $"{string.Join(" -> ", _currentSequence)}"
         );
+        StartCoroutine(ShowSequence());
 
         _currentInput = 0;
+    }
+    private IEnumerator ShowSequence()
+    {
+        Debug.Log("[ENGINE MINIGAME] Showing sequence...");
+
+        foreach (int index in _currentSequence)
+        {
+            if (index < 0 || index >= components.Count) continue;
+
+            EngineMiniGameComponent component = components[index];
+
+            // Encender componente
+            component.ShowSequenceFeedback();
+
+            // Mantener la luz encendida durante 0.5 segundos
+            yield return new WaitForSeconds(0.5f);
+
+            // Apagar componente
+            component.TurnOffFeedback();
+
+            // Pequeña pausa antes del siguiente
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        Debug.Log("[ENGINE MINIGAME] Sequence finished.");
     }
 
     public void OnComponentInteracted(EngineMiniGameComponent component)
@@ -122,15 +187,16 @@ public class EngineMiniGame : MonoBehaviour
                 $"Esperado: {expectedIndex} | " +
                 $"Recibido: {componentIndex}"
             );
-
+            //Poner efecto de respuesta incorrecta
             ResetCurrentRound();
             return;
         }
 
         Debug.Log(
             $"[ENGINE MINIGAME] Correcto: " +
-            $"{componentIndex}"
-        );
+            $"{componentIndex}");
+
+        component.ShowCorrectFeedback();
 
         _currentInput++;
 
@@ -173,9 +239,39 @@ public class EngineMiniGame : MonoBehaviour
     private void CompleteMinigame()
     {
         _isActive = false;
-
+        if (_timerCoroutine != null)
+        {
+            StopCoroutine(_timerCoroutine);
+            _timerCoroutine = null;
+        }
         Debug.Log("[ENGINE MINIGAME] ==========================");
         Debug.Log("[ENGINE MINIGAME] REINICIO DE EMERGENCIA COMPLETADO");
+        StartCoroutine(EmergencyRestartFeedback());
+    }
+    private IEnumerator EmergencyRestartFeedback()
+    {
+        Debug.Log("[ENGINE MINIGAME] Emergency restart feedback started.");
+
+        for (int i = 0; i < 3; i++)
+        {
+            foreach (EngineMiniGameComponent component in components)
+            {
+                if (component != null)
+                    component.ShowCorrectFeedback();
+            }
+
+            yield return new WaitForSeconds(0.2f);
+
+            foreach (EngineMiniGameComponent component in components)
+            {
+                if (component != null)
+                    component.TurnOffFeedback();
+            }
+
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        Debug.Log("[ENGINE MINIGAME] Emergency restart feedback finished.");
 
         if (engineSystem != null)
         {
