@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
-
+using TMPro;
 public class EngineMiniGame : MonoBehaviour
 {
     [Header("Engine")]
@@ -20,6 +20,8 @@ public class EngineMiniGame : MonoBehaviour
     private bool _isActive;
     [Header("Emergency Timer")]
     [SerializeField] private float timeLimit = 120f;
+    [Header("Timer UI")]
+    [SerializeField] private TMP_Text timerText;
 
     private float _remainingTime;
     private Coroutine _timerCoroutine;
@@ -71,7 +73,8 @@ public class EngineMiniGame : MonoBehaviour
             if (component != null) component.TurnOffFeedback();
         }
         _remainingTime = timeLimit;
-
+        if (timerText != null) timerText.gameObject.SetActive(true);
+        UpdateTimerUI();
         if (_timerCoroutine != null) StopCoroutine(_timerCoroutine);
         _timerCoroutine = StartCoroutine(EmergencyTimerRoutine());
 
@@ -89,7 +92,7 @@ public class EngineMiniGame : MonoBehaviour
             yield return new WaitForSeconds(1f);
 
             _remainingTime -= 1f;
-
+            UpdateTimerUI();
             //Debug.Log(
             //    $"[ENGINE MINIGAME] Time remaining: {_remainingTime:F0}s"
             //);
@@ -99,11 +102,10 @@ public class EngineMiniGame : MonoBehaviour
     private void TimeExpired()
     {
         _isActive = false;
-
+        if (timerText != null) timerText.gameObject.SetActive(false);
         Debug.Log("[ENGINE MINIGAME] ==========================");
         Debug.Log("[ENGINE MINIGAME] TIME EXPIRED.");
         Debug.Log("[ENGINE MINIGAME] EMERGENCY RESTART FAILED.");
-
         _timerCoroutine = null;
     }
 
@@ -244,6 +246,7 @@ public class EngineMiniGame : MonoBehaviour
             StopCoroutine(_timerCoroutine);
             _timerCoroutine = null;
         }
+        if (timerText != null) timerText.gameObject.SetActive(false);
         Debug.Log("[ENGINE MINIGAME] ==========================");
         Debug.Log("[ENGINE MINIGAME] REINICIO DE EMERGENCIA COMPLETADO");
         StartCoroutine(EmergencyRestartFeedback());
@@ -255,27 +258,22 @@ public class EngineMiniGame : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             foreach (EngineMiniGameComponent component in components)
-            {
-                if (component != null)
-                    component.ShowCorrectFeedback();
-            }
-
+                if (component != null) component.ShowCorrectFeedback();
             yield return new WaitForSeconds(0.2f);
 
             foreach (EngineMiniGameComponent component in components)
-            {
-                if (component != null)
-                    component.TurnOffFeedback();
-            }
-
+                if (component != null) component.TurnOffFeedback();
+            
             yield return new WaitForSeconds(0.2f);
         }
 
         Debug.Log("[ENGINE MINIGAME] Emergency restart feedback finished.");
-
-        if (engineSystem != null)
-        {
-            engineSystem.RestartEngine();
-        }
+        if (engineSystem != null) engineSystem.RestartEngine();
+    }
+    private void UpdateTimerUI()
+    {
+        if (timerText == null) return;
+        int seconds = Mathf.CeilToInt(_remainingTime);
+        timerText.text = $"TIEMPO: {seconds}";
     }
 }
