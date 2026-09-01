@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
-using TMPro;
+
 public class EngineMiniGame : MonoBehaviour
 {
     [Header("Engine")]
@@ -20,19 +20,19 @@ public class EngineMiniGame : MonoBehaviour
     private bool _isActive;
     [Header("Emergency Timer")]
     [SerializeField] private float timeLimit = 120f;
-    [Header("Timer UI")]
-    [SerializeField] private TMP_Text timerText;
+    [Header("Timer 3D")]
+    [SerializeField] private bool showTimer = true;
+    [SerializeField] private bool createTimerIfMissing = true;
+    [SerializeField] private float timerCharacterSize = 0.08f;
+    [SerializeField] private Color timerColor = Color.white;
+    private TextMesh timerText;
 
     private float _remainingTime;
     private Coroutine _timerCoroutine;
 
     private void Awake()
     {
-        if (engineSystem == null)
-        {
-            Debug.LogError("[ENGINE MINIGAME] EngineSystem no está asignado.");
-        }
-
+        if (engineSystem == null) Debug.LogError("[ENGINE MINIGAME] EngineSystem no está asignado.");
         if (components == null || components.Count < 6)
         {
             Debug.LogError(
@@ -40,6 +40,29 @@ public class EngineMiniGame : MonoBehaviour
                 $"Actualmente hay {components?.Count ?? 0}."
             );
         }
+        EnsureTimerLabel();
+    }
+    private void EnsureTimerLabel()
+    {
+        if (!showTimer) return;
+        if (timerText != null) return;
+        if (!createTimerIfMissing) return;
+        GameObject timerObject = new GameObject("EngineEmergencyTimer");
+        timerObject.transform.SetParent(transform);
+        timerText = timerObject.AddComponent<TextMesh>();
+        timerText.anchor = TextAnchor.MiddleCenter;
+        timerText.alignment = TextAlignment.Center;
+        timerText.transform.localPosition = new Vector3(0.869f, -0.395f, 0f);
+        timerText.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+        timerText.characterSize = timerCharacterSize;
+        timerText.color = timerColor;
+        // No debe interferir con el sistema de interacción.
+        timerObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        Collider[] colliders = timerObject.GetComponents<Collider>();
+        foreach (Collider collider in colliders)
+            collider.enabled = false;
+        // Empieza oculto.
+        timerObject.SetActive(false);
     }
     private void OnEnable()
     {
@@ -199,13 +222,8 @@ public class EngineMiniGame : MonoBehaviour
             $"{componentIndex}");
 
         component.ShowCorrectFeedback();
-
         _currentInput++;
-
-        if (_currentInput >= _currentSequence.Count)
-        {
-            CompleteRound();
-        }
+        if (_currentInput >= _currentSequence.Count) CompleteRound();
     }
 
     private void CompleteRound()
@@ -222,10 +240,7 @@ public class EngineMiniGame : MonoBehaviour
 
         _currentRound++;
 
-        Debug.Log(
-            $"[ENGINE MINIGAME] Comenzando ronda {_currentRound}."
-        );
-
+        Debug.Log($"[ENGINE MINIGAME] Comenzando ronda {_currentRound}.");
         GenerateSequence();
     }
 
@@ -274,6 +289,6 @@ public class EngineMiniGame : MonoBehaviour
     {
         if (timerText == null) return;
         int seconds = Mathf.CeilToInt(_remainingTime);
-        timerText.text = $"TIEMPO: {seconds}";
+        timerText.text = $"TIME: {seconds}";
     }
 }
