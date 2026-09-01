@@ -4935,6 +4935,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2520860549417467482, guid: cdc16cd52343474428df4555318b315c, type: 3}
+      propertyPath: maxOxygen
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 3636989460143065708, guid: cdc16cd52343474428df4555318b315c, type: 3}
       propertyPath: volume
       value: 
@@ -6117,6 +6121,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2282629936573746252, guid: 2d45668ca99ba1b418a6ca96f950aa6d, type: 3}
+      propertyPath: maxCharge
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 3296531921577520442, guid: 2d45668ca99ba1b418a6ca96f950aa6d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.9499999
