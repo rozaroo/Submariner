@@ -62,4 +62,16 @@ public class EngineMiniGameComponent : MonoBehaviour, IInteractable
         if (indicatorLight == null) return;
         indicatorLight.enabled = false;
     }
+    public void ClickInteract(PlayerCharacter player)
+    {
+        if (engineMinigame == null)
+        {
+            Debug.LogError($"[ENGINE MINIGAME] {name}: EngineMinigame no está asignado.");
+            return;
+        }
+
+        Debug.Log($"[ENGINE MINIGAME] Component clicked: {gameObject.name}");
+
+        engineMinigame.OnComponentInteracted(this);
+    }
 }

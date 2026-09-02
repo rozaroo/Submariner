@@ -186,6 +186,21 @@ public class PlayerCharacter : MonoBehaviour
 
     private void TryInteractRaycast(InputAction.CallbackContext ctx)
     {
+        EngineMiniGameActivator activator = FindFirstObjectByType<EngineMiniGameActivator>();
+
+        if (activator != null)
+        {
+            float distance = Vector3.Distance(
+                transform.position,
+                activator.transform.position);
+
+            if (distance <= 2.5f)
+            {
+                activator.Activate(this);
+                return;
+            }
+        }
+
         Ray ray = new Ray(
             CamController.MainCamera.transform.position,
             CamController.MainCamera.transform.forward);
@@ -193,12 +208,17 @@ public class PlayerCharacter : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactableLayer))
         {
             Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 2f);
+
             if (hit.collider.TryGetComponent(out IInteractable interactable))
                 interactable.Interact(this);
         }
         else
         {
-            Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red, 2f);
+            Debug.DrawRay(
+                ray.origin,
+                ray.direction * interactionDistance,
+                Color.red,
+                2f);
         }
     }
 
@@ -208,6 +228,19 @@ public class PlayerCharacter : MonoBehaviour
 
     private void TryUseItem(InputAction.CallbackContext ctx)
     {
+        Ray ray = new Ray(
+            CamController.MainCamera.transform.position,
+            CamController.MainCamera.transform.forward);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactableLayer))
+        {
+            if (hit.collider.TryGetComponent(out EngineMiniGameComponent component))
+            {
+                component.ClickInteract(this);
+                return;
+            }
+        }
+
         if (ctx.interaction is HoldInteraction)
         {
             _isHolding = true;

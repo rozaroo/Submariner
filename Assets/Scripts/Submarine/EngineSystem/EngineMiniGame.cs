@@ -64,22 +64,7 @@ public class EngineMiniGame : MonoBehaviour
         // Empieza oculto.
         timerObject.SetActive(false);
     }
-    private void OnEnable()
-    {
-        GameEventChannel<OnEngineStateChanged>.OnEventRaised += OnEngineStateChanged;
-    }
-    private void OnDisable()
-    {
-        GameEventChannel<OnEngineStateChanged>.OnEventRaised -= OnEngineStateChanged;
-    }
-    private void OnEngineStateChanged(OnEngineStateChanged eventData)
-    {
-        if (eventData.State != EngineState.Broken)
-            return;
-
-        Debug.Log("[ENGINE MINIGAME] Engine is BROKEN.");
-        StartMinigame();
-    }
+    
     public void StartMinigame()
     {
         if (_isActive)
