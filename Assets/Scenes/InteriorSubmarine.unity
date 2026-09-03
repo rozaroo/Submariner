@@ -705,6 +705,37 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &188850381
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 188850382}
+  m_Layer: 0
+  m_Name: CameraAnchor1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &188850382
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188850381}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.221, y: 0.044, z: 0.958}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1477548301}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &222584104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1051,6 +1082,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   engineMiniGame: {fileID: 1646339324}
+  cameraAnchor: {fileID: 188850382}
+  directionAnchor: {fileID: 1646339323}
+  transitionDuration: 0.4
+  cursorLockMode: 0
+  showMouseCursor: 1
+  stationMapName: Station
 --- !u!65 &304751006
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6545,6 +6582,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8269782343961149573, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       insertIndex: -1
       addedObject: {fileID: 304751004}
+    - targetCorrespondingSourceObject: {fileID: 8269782343961149573, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 188850382}
     - targetCorrespondingSourceObject: {fileID: 2381980916961005864, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1325387137}
