@@ -4,11 +4,27 @@ public class EngineMiniGameComponent : MonoBehaviour, IInteractable
 {
     [SerializeField] private EngineMiniGame engineMinigame;
 
-    [Header("Visual Feedback")]
-    [SerializeField] private Light indicatorLight;
+    private Material tubeMaterial;
 
+    [Header("Visual Feedback")]
+    [SerializeField] private Renderer tubeRenderer;
+
+    [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color sequenceColor = Color.red;
     [SerializeField] private Color correctColor = Color.green;
+
+    [SerializeField] private float normalEmission = 0f;
+    [SerializeField] private float feedbackEmission = 1f;
+
+    private void Awake()
+    {
+        if (tubeRenderer != null)
+        {
+            tubeMaterial = tubeRenderer.material;
+            tubeMaterial.SetColor("_Color", normalColor);
+            tubeMaterial.SetFloat("_Emission", normalEmission);
+        }
+    }
 
     public void Interact(PlayerCharacter player)
     {
@@ -24,43 +40,25 @@ public class EngineMiniGameComponent : MonoBehaviour, IInteractable
     }
     public void ShowSequenceFeedback()
     {
-        if (indicatorLight == null)
-        {
-            Debug.LogWarning(
-                $"[ENGINE MINIGAME] {name}: Indicator Light no está asignada."
-            );
-            return;
-        }
-        indicatorLight.gameObject.SetActive(true);
-        indicatorLight.color = sequenceColor;
-        indicatorLight.enabled = true;
+        if (tubeMaterial == null) return;
 
-        Debug.Log(
-            $"[ENGINE MINIGAME] Showing sequence on: {gameObject.name}"
-        );
+        tubeMaterial.SetColor("_Color", sequenceColor);
+        tubeMaterial.SetFloat("_Emission", feedbackEmission);
     }
 
     public void ShowCorrectFeedback()
     {
-        if (indicatorLight == null)
-        {
-            Debug.LogWarning(
-                $"[ENGINE MINIGAME] {name}: Indicator Light no está asignada."
-            );
-            return;
-        }
+        if (tubeMaterial == null) return;
 
-        indicatorLight.color = correctColor;
-        indicatorLight.enabled = true;
-
-        Debug.Log(
-            $"[ENGINE MINIGAME] Correct component: {gameObject.name}"
-        );
+        tubeMaterial.SetColor("_Color", correctColor);
+        tubeMaterial.SetFloat("_Emission", feedbackEmission);
     }
     public void TurnOffFeedback()
     {
-        if (indicatorLight == null) return;
-        indicatorLight.enabled = false;
+        if (tubeMaterial == null) return;
+
+        tubeMaterial.SetColor("_Color", normalColor);
+        tubeMaterial.SetFloat("_Emission", normalEmission);
     }
     public void ClickInteract(PlayerCharacter player)
     {
