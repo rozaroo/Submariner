@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EngineMiniGameComponent : MonoBehaviour, IInteractable
@@ -49,9 +50,9 @@ public class EngineMiniGameComponent : MonoBehaviour, IInteractable
     public void ShowCorrectFeedback()
     {
         if (tubeMaterial == null) return;
-
         tubeMaterial.SetColor("_Color", correctColor);
         tubeMaterial.SetFloat("_Emission", feedbackEmission);
+        StartCoroutine(ReturnToNormalAfterDelay());
     }
     public void TurnOffFeedback()
     {
@@ -71,5 +72,10 @@ public class EngineMiniGameComponent : MonoBehaviour, IInteractable
         Debug.Log($"[ENGINE MINIGAME] Component clicked: {gameObject.name}");
 
         engineMinigame.OnComponentInteracted(this);
+    }
+    private IEnumerator ReturnToNormalAfterDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        TurnOffFeedback();
     }
 }
