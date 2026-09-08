@@ -34,7 +34,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3401228817" Language="SFX" Hash="800455516">
+		<SoundBank Id="3401228817" Language="SFX" Hash="666389261">
 			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
 			<ShortName>GamePlay_SFX</ShortName>
 			<Path>GamePlay_SFX.bnk</Path>
@@ -47,6 +47,7 @@
 				<Event Id="2571798077" Name="Start_HullBreachSFX" ObjectPath="\Events\Gameplay_SFX\Start_HullBreachSFX" MaxAttenuation="100." DurationType="Infinite"/>
 				<Event Id="2469108041" Name="Start_LeverPullFinished" ObjectPath="\Events\Gameplay_SFX\Start_LeverPullFinished" DurationType="OneShot" DurationMin="0.398979" DurationMax="0.398979"/>
 				<Event Id="149397142" Name="Start_Motor_Engine" ObjectPath="\Events\Gameplay_SFX\Start_Motor_Engine" MaxAttenuation="10." DurationType="Infinite"/>
+				<Event Id="684633665" Name="Start_Motor_Engine_Fail" ObjectPath="\Events\Gameplay_SFX\Start_Motor_Engine_Fail" DurationType="OneShot" DurationMin="2.181225" DurationMax="2.181225"/>
 				<Event Id="2060351696" Name="Start_OnMissionCompleted" ObjectPath="\Events\Gameplay_SFX\Start_OnMissionCompleted" DurationType="OneShot" DurationMin="3.064671" DurationMax="3.064671"/>
 				<Event Id="4235702204" Name="Start_Opening_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Opening_Pressure_DoorSFX" DurationType="OneShot" DurationMin="1.35771" DurationMax="1.35771"/>
 				<Event Id="438413481" Name="Start_PhosphorusCameraCooldown" ObjectPath="\Events\Gameplay_SFX\Start_PhosphorusCameraCooldown" DurationType="OneShot" DurationMin="1.902773" DurationMax="1.902773"/>
@@ -56,6 +57,7 @@
 				<Event Id="997126444" Name="Start_SonarPingOuter" ObjectPath="\Events\Gameplay_SFX\Start_SonarPingOuter" DurationType="OneShot" DurationMin="3.2" DurationMax="3.2"/>
 				<Event Id="3771492726" Name="Start_SubmarineCollision" ObjectPath="\Events\Gameplay_SFX\Start_SubmarineCollision" DurationType="OneShot" DurationMin="7.994576" DurationMax="8.817284"/>
 				<Event Id="1403223316" Name="Start_TensionEvent" ObjectPath="\Events\Gameplay_SFX\Start_TensionEvent" DurationType="Infinite"/>
+				<Event Id="2692854921" Name="Start_Tube_Repair_Engine" ObjectPath="\Events\Gameplay_SFX\Start_Tube_Repair_Engine" DurationType="OneShot" DurationMin="0.548571" DurationMax="1.201633"/>
 				<Event Id="116843463" Name="Stop_BackgroundSubmarineMFX" ObjectPath="\Events\Gameplay_SFX\Stop_BackgroundSubmarineMFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="1982947219" Name="Stop_BlowtorchSFX" ObjectPath="\Events\Gameplay_SFX\Stop_BlowtorchSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="860956674" Name="Stop_DrainagePumpSFX" ObjectPath="\Events\Gameplay_SFX\Stop_DrainagePumpSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
@@ -165,6 +167,10 @@
 					<ShortName>Project_1_Tension 5.wav</ShortName>
 					<Path>SFX\Project_1_Tension 5_D79FB2B7.wem</Path>
 				</File>
+				<File Id="491929147" Language="SFX">
+					<ShortName>freesound_community-stone-pale-ale-bottle-clank-106191.wav</ShortName>
+					<Path>SFX\freesound_community-stone-pale-ale-bottle-clank-106191_10C4C929.wem</Path>
+				</File>
 				<File Id="495489055" Language="SFX">
 					<ShortName>17216__meatball4u__countdown.wav</ShortName>
 					<Path>SFX\17216__meatball4u__countdown_43B927F8.wem</Path>
@@ -221,6 +227,10 @@
 					<ShortName>425090__neospica__pressurized-door-opening.wav</ShortName>
 					<Path>SFX\425090__neospica__pressurized-door-opening_2EA370B6.wem</Path>
 				</File>
+				<File Id="811089060" Language="SFX">
+					<ShortName>freesound_community-high-clank-86142.wav</ShortName>
+					<Path>SFX\freesound_community-high-clank-86142_10C4C929.wem</Path>
+				</File>
 				<File Id="813881389" Language="SFX">
 					<ShortName>Project_1_BAS Pilobass.wav</ShortName>
 					<Path>SFX\Project_1_BAS Pilobass_D79FB2B7.wem</Path>
@@ -260,6 +270,10 @@
 				<File Id="912122509" Language="SFX">
 					<ShortName>556708__nachtmahrtv__metal-hit.wav</ShortName>
 					<Path>SFX\556708__nachtmahrtv__metal-hit_C285AEF5.wem</Path>
+				</File>
+				<File Id="945802731" Language="SFX">
+					<ShortName>167911__lonemonk__short-engine-turnover-no-start.wav</ShortName>
+					<Path>SFX\167911__lonemonk__short-engine-turnover-no-start_10C4C929.wem</Path>
 				</File>
 				<File Id="974555202" Language="SFX">
 					<ShortName>696374__sanderboah__walking-on-metal.wav</ShortName>

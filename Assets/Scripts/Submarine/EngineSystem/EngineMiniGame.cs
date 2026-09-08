@@ -31,6 +31,11 @@ public class EngineMiniGame : MonoBehaviour
     [SerializeField] private float timerCharacterSize = 0.08f;
     [SerializeField] private Color timerColor = Color.white;
     [SerializeField] private TextMesh timerText;
+    
+    [Header("Audio (Wwise)")]
+    [SerializeField] private string engineTubeFix = "Start_Tube_Repair_Engine";
+    [SerializeField] private string engineSequenceFailed = "Start_Motor_Engine_Fail";
+    [SerializeField] private string succeededRound = "Start_Engine_Minigame_SucceededStage";
 
     private readonly List<int> _currentSequence = new();
     private int _currentRound;
@@ -194,6 +199,7 @@ public class EngineMiniGame : MonoBehaviour
             return;
         }
 
+        SFXManager.PostEvent(engineTubeFix, gameObject);
         component.ShowCorrectFeedback();
         _currentInput++;
 
@@ -204,6 +210,7 @@ public class EngineMiniGame : MonoBehaviour
     {
         _totalErrors++;
         _acceptingInput = false;
+        SFXManager.PostEvent(engineSequenceFailed, gameObject);
         Debug.Log($"[ENGINE MINIGAME] Error {_totalErrors}. Se reinicia la ronda {_currentRound}.");
         ShowFailureFeedbackOnAllComponents();
 
@@ -228,7 +235,7 @@ public class EngineMiniGame : MonoBehaviour
     {
         _acceptingInput = false;
         Debug.Log($"[ENGINE MINIGAME] Ronda {_currentRound} completada.");
-
+        SFXManager.PostEvent(succeededRound, gameObject);
         if (_currentRound >= totalRounds)
         {
             CompleteMinigame();

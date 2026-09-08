@@ -261,7 +261,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 21ceb8a29a2d9141bf9458ff73f9eb44
     GuidInternal: 
-    m_lastTime: -8584139166429811364
+    m_lastTime: -8584127097971889017
     List: []
   - PhysicalPath: Events\Gameplay_SFX.wwu
     PathAndIcons:
@@ -274,7 +274,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584139166429811364
+    m_lastTime: -8584127097971714922
     List:
     - name: Start_BackgroundSubmarineMFX
       guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
@@ -410,6 +410,23 @@ MonoBehaviour:
         guid: 86fb40a32e896d478254353e0b41ea6e
       Path: Events\Gameplay_SFX\Start_Motor_Engine
       maxAttenuation: 10
+      maxDuration: -1
+      minDuration: -1
+    - name: Start_Motor_Engine_Fail
+      guid: 7fa4e7c30f1e75449f33be5ec89503f8
+      id: 684633665
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_Motor_Engine_Fail
+        ObjectType: 3
+        guid: 7fa4e7c30f1e75449f33be5ec89503f8
+      Path: Events\Gameplay_SFX\Start_Motor_Engine_Fail
+      maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
     - name: Start_OnMissionCompleted
@@ -562,6 +579,23 @@ MonoBehaviour:
         ObjectType: 3
         guid: fd0c6db95aa59a4bba27964681c14af4
       Path: Events\Gameplay_SFX\Start_TensionEvent
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Start_Tube_Repair_Engine
+      guid: 82bb7de14198ee46810ab0967173df11
+      id: 2692854921
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_Tube_Repair_Engine
+        ObjectType: 3
+        guid: 82bb7de14198ee46810ab0967173df11
+      Path: Events\Gameplay_SFX\Start_Tube_Repair_Engine
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1

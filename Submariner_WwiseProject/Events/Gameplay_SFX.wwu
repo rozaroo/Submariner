@@ -310,6 +310,28 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Start_Tube_Repair_Engine" ID="{E17DBB82-9841-46EE-810A-B0967173DF11}">
+					<ChildrenList>
+						<Action Name="" ID="{54480BB3-E3AD-4FDD-A091-D959C3828091}" ShortID="706532465">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Tube_Repair_Engine" ID="{B1C0A291-390F-4DFD-8D62-88C17CA0E7D9}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_Motor_Engine_Fail" ID="{C3E7A47F-1E0F-4475-9F33-BE5EC89503F8}">
+					<ChildrenList>
+						<Action Name="" ID="{0D56C30F-C66D-4632-A49F-0AFAB14AC78E}" ShortID="1048077723">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Motor_Engine_Fail" ID="{21B356A6-5185-4690-B7C0-E112B71ACCC9}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
