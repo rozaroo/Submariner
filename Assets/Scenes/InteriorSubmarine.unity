@@ -4445,7 +4445,7 @@ MonoBehaviour:
   - {fileID: 1129466010}
   - {fileID: 289964969}
   totalRounds: 3
-  timeLimit: 120
+  timeLimit: 60
   showTimer: 1
   createTimerIfMissing: 1
   timerCharacterSize: 0.08

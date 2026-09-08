@@ -1,221 +1,233 @@
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Emergency engine restart. The player first watches a sequence and then
+/// repeats it by clicking the physical components at the engine station.
+/// </summary>
 public class EngineMiniGame : MonoBehaviour
 {
     [Header("Engine")]
     [SerializeField] private EngineSystem engineSystem;
 
     [Header("Components")]
-    [SerializeField] private List<EngineMiniGameComponent> components;
+    [SerializeField] private List<EngineMiniGameComponent> components = new();
 
     [Header("Minigame Settings")]
     [SerializeField] private int totalRounds = 3;
+    [SerializeField] private float timeLimit = 60f;
+    [SerializeField] private float sequenceLightDuration = 0.5f;
+    [SerializeField] private float sequenceGapDuration = 0.2f;
+    [SerializeField] private float sequenceReplayDelay = 2f;
+    [SerializeField] private float failedSequenceDelay = 0.5f;
+    [SerializeField] private int errorsBeforeHullDamage = 5;
+    [SerializeField] private int hullDamageOnErrorLimit = 2;
+    [SerializeField] private HullDamageManager hullDamageManager;
 
-    private List<int> _currentSequence = new List<int>();
-    private int _currentRound;
-    private int _currentInput;
-
-    private bool _isActive;
-    [Header("Emergency Timer")]
-    [SerializeField] private float timeLimit = 120f;
     [Header("Timer 3D")]
     [SerializeField] private bool showTimer = true;
     [SerializeField] private bool createTimerIfMissing = true;
     [SerializeField] private float timerCharacterSize = 0.08f;
     [SerializeField] private Color timerColor = Color.white;
-    private TextMesh timerText;
+    [SerializeField] private TextMesh timerText;
 
+    private readonly List<int> _currentSequence = new();
+    private int _currentRound;
+    private int _currentInput;
+    private int _totalErrors;
     private float _remainingTime;
+    private bool _isActive;
+    private bool _acceptingInput;
+    private bool _hullDamageTriggered;
     private Coroutine _timerCoroutine;
+    private Coroutine _sequenceCoroutine;
+    private Coroutine _idleReplayCoroutine;
+
+    public bool IsActive => _isActive;
+    public bool IsAcceptingInput => _acceptingInput;
+    public bool CanStart => engineSystem != null && engineSystem.IsBroken() && !_isActive;
+    public event System.Action Completed;
 
     private void Awake()
     {
         if (engineSystem == null) Debug.LogError("[ENGINE MINIGAME] EngineSystem no está asignado.");
-        if (components == null || components.Count < 6)
-        {
-            Debug.LogError(
-                $"[ENGINE MINIGAME] Se necesitan 6 componentes. " +
-                $"Actualmente hay {components?.Count ?? 0}."
-            );
-        }
+        if (components.Count < 6)
+            Debug.LogError($"[ENGINE MINIGAME] Se necesitan 6 componentes. Actualmente hay {components.Count}.");
+
         EnsureTimerLabel();
     }
+
+    private void OnDisable()
+    {
+        StopRunningCoroutines();
+    }
+
     private void EnsureTimerLabel()
     {
-        if (!showTimer) return;
-        if (timerText != null) return;
-        if (!createTimerIfMissing) return;
+        if (!showTimer || timerText != null || !createTimerIfMissing) return;
+
         GameObject timerObject = new GameObject("EngineEmergencyTimer");
         timerObject.transform.SetParent(transform);
+        timerObject.transform.localPosition = new Vector3(0.869f, -0.395f, 0f);
+        timerObject.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+        timerObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+
         timerText = timerObject.AddComponent<TextMesh>();
         timerText.anchor = TextAnchor.MiddleCenter;
         timerText.alignment = TextAlignment.Center;
-        timerText.transform.localPosition = new Vector3(0.869f, -0.395f, 0f);
-        timerText.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
         timerText.characterSize = timerCharacterSize;
         timerText.color = timerColor;
-        // No debe interferir con el sistema de interacción.
-        timerObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-        Collider[] colliders = timerObject.GetComponents<Collider>();
-        foreach (Collider collider in colliders)
-            collider.enabled = false;
-        // Empieza oculto.
         timerObject.SetActive(false);
     }
-    
+
     public void StartMinigame()
     {
-        if (_isActive)
+        if (_isActive) return;
+        if (engineSystem == null || !engineSystem.IsBroken())
         {
-            Debug.Log("[ENGINE MINIGAME] El minijuego ya está activo.");
+            Debug.Log("[ENGINE MINIGAME] El reinicio de emergencia solo está disponible con el motor averiado.");
             return;
         }
 
         _isActive = true;
+        _acceptingInput = false;
         _currentRound = 1;
         _currentInput = 0;
-        foreach (EngineMiniGameComponent component in components)
-        {
-            if (component != null) component.TurnOffFeedback();
-        }
+        _totalErrors = 0;
+        _hullDamageTriggered = false;
         _remainingTime = timeLimit;
+        TurnOffAllComponents();
+
         if (timerText != null) timerText.gameObject.SetActive(true);
         UpdateTimerUI();
-        if (_timerCoroutine != null) StopCoroutine(_timerCoroutine);
         _timerCoroutine = StartCoroutine(EmergencyTimerRoutine());
 
-        Debug.Log($"[ENGINE MINIGAME] Timer started: {_remainingTime} seconds.");
-        Debug.Log("[ENGINE MINIGAME] ==========================");
+        StartRoundWithNewSequence();
         Debug.Log("[ENGINE MINIGAME] REINICIO DE EMERGENCIA INICIADO");
-        Debug.Log("[ENGINE MINIGAME] Ronda 1");
-
-        GenerateSequence();
     }
+
     private IEnumerator EmergencyTimerRoutine()
     {
-        while (_remainingTime > 0f && _isActive)
+        while (_isActive && _remainingTime > 0f)
         {
             yield return new WaitForSeconds(1f);
-
-            _remainingTime -= 1f;
+            _remainingTime = Mathf.Max(0f, _remainingTime - 1f);
             UpdateTimerUI();
-            //Debug.Log(
-            //    $"[ENGINE MINIGAME] Time remaining: {_remainingTime:F0}s"
-            //);
         }
-        if (_remainingTime <= 0f && _isActive) TimeExpired();
-    }
-    private void TimeExpired()
-    {
-        _isActive = false;
-        if (timerText != null) timerText.gameObject.SetActive(false);
-        Debug.Log("[ENGINE MINIGAME] ==========================");
-        Debug.Log("[ENGINE MINIGAME] TIME EXPIRED.");
-        Debug.Log("[ENGINE MINIGAME] EMERGENCY RESTART FAILED.");
-        _timerCoroutine = null;
+
+        if (_isActive && _remainingTime <= 0f) TimeExpired();
     }
 
-    private void GenerateSequence()
+    private void StartRoundWithNewSequence()
     {
         _currentSequence.Clear();
+        _currentInput = 0;
 
-        int sequenceLength = _currentRound + 2;
+        int sequenceLength = Mathf.Clamp(_currentRound + 2, 1, components.Count);
+        List<int> availableIndexes = new();
+        for (int i = 0; i < components.Count; i++) availableIndexes.Add(i);
 
         for (int i = 0; i < sequenceLength; i++)
         {
-            int randomIndex = Random.Range(0, components.Count);
-
-            _currentSequence.Add(randomIndex);
+            int availableIndex = Random.Range(0, availableIndexes.Count);
+            _currentSequence.Add(availableIndexes[availableIndex]);
+            availableIndexes.RemoveAt(availableIndex);
         }
 
-        Debug.Log(
-            $"[ENGINE MINIGAME] Nueva secuencia: " +
-            $"{string.Join(" -> ", _currentSequence)}"
-        );
-        StartCoroutine(ShowSequence());
-
-        _currentInput = 0;
+        ShowCurrentSequence();
     }
+
+    private void ShowCurrentSequence()
+    {
+        if (_sequenceCoroutine != null) StopCoroutine(_sequenceCoroutine);
+        StopIdleSequenceReplay();
+        _sequenceCoroutine = StartCoroutine(ShowSequence());
+    }
+
     private IEnumerator ShowSequence()
     {
-        Debug.Log("[ENGINE MINIGAME] Showing sequence...");
+        _acceptingInput = false;
+        TurnOffAllComponents();
 
         foreach (int index in _currentSequence)
         {
-            if (index < 0 || index >= components.Count) continue;
+            EngineMiniGameComponent component = GetComponentAt(index);
+            if (component == null) continue;
 
-            EngineMiniGameComponent component = components[index];
-
-            // Encender componente
             component.ShowSequenceFeedback();
-
-            // Mantener la luz encendida durante 0.5 segundos
-            yield return new WaitForSeconds(0.5f);
-
-            // Apagar componente
+            yield return new WaitForSeconds(sequenceLightDuration);
             component.TurnOffFeedback();
-
-            // Pequeña pausa antes del siguiente
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(sequenceGapDuration);
         }
 
-        Debug.Log("[ENGINE MINIGAME] Sequence finished.");
+        _sequenceCoroutine = null;
+        _acceptingInput = _isActive;
+        if (_acceptingInput) _idleReplayCoroutine = StartCoroutine(ReplaySequenceIfIdle());
+        Debug.Log($"[ENGINE MINIGAME] Ronda {_currentRound}: secuencia lista para repetir.");
+    }
+
+    private IEnumerator ReplaySequenceIfIdle()
+    {
+        yield return new WaitForSeconds(sequenceReplayDelay);
+
+        _idleReplayCoroutine = null;
+        if (_isActive && _acceptingInput && _currentInput == 0)
+        {
+            ShowCurrentSequence();
+        }
     }
 
     public void OnComponentInteracted(EngineMiniGameComponent component)
     {
-        if (!_isActive)
-        {
-            Debug.Log("[ENGINE MINIGAME] Interacción ignorada. Minijuego inactivo.");
-            return;
-        }
+        if (!_isActive || !_acceptingInput || component == null) return;
+
+        // The player has begun the attempt, so do not interrupt it with another preview.
+        StopIdleSequenceReplay();
 
         int componentIndex = components.IndexOf(component);
+        if (componentIndex < 0 || _currentInput >= _currentSequence.Count) return;
 
-        if (componentIndex == -1)
+        if (componentIndex != _currentSequence[_currentInput])
         {
-            Debug.LogWarning(
-                $"[ENGINE MINIGAME] Componente no registrado: {component.name}"
-            );
-
+            RegisterIncorrectInput();
             return;
         }
-
-        Debug.Log(
-            $"[ENGINE MINIGAME] Componente presionado: " +
-            $"{componentIndex}"
-        );
-
-        int expectedIndex = _currentSequence[_currentInput];
-
-        if (componentIndex != expectedIndex)
-        {
-            Debug.Log(
-                $"[ENGINE MINIGAME] INCORRECTO. " +
-                $"Esperado: {expectedIndex} | " +
-                $"Recibido: {componentIndex}"
-            );
-            //Poner efecto de respuesta incorrecta
-            ResetCurrentRound();
-            return;
-        }
-
-        Debug.Log(
-            $"[ENGINE MINIGAME] Correcto: " +
-            $"{componentIndex}");
 
         component.ShowCorrectFeedback();
         _currentInput++;
+
         if (_currentInput >= _currentSequence.Count) CompleteRound();
+    }
+
+    private void RegisterIncorrectInput()
+    {
+        _totalErrors++;
+        _acceptingInput = false;
+        Debug.Log($"[ENGINE MINIGAME] Error {_totalErrors}. Se reinicia la ronda {_currentRound}.");
+        ShowFailureFeedbackOnAllComponents();
+
+        if (!_hullDamageTriggered && _totalErrors >= errorsBeforeHullDamage)
+        {
+            _hullDamageTriggered = true;
+            SpawnHullDamage();
+        }
+
+        if (_sequenceCoroutine != null) StopCoroutine(_sequenceCoroutine);
+        _sequenceCoroutine = StartCoroutine(RestartCurrentSequenceRoutine());
+    }
+
+    private IEnumerator RestartCurrentSequenceRoutine()
+    {
+        yield return new WaitForSeconds(failedSequenceDelay);
+        _sequenceCoroutine = null;
+        ShowCurrentSequence();
     }
 
     private void CompleteRound()
     {
-        Debug.Log(
-            $"[ENGINE MINIGAME] Ronda {_currentRound} completada."
-        );
+        _acceptingInput = false;
+        Debug.Log($"[ENGINE MINIGAME] Ronda {_currentRound} completada.");
 
         if (_currentRound >= totalRounds)
         {
@@ -224,56 +236,109 @@ public class EngineMiniGame : MonoBehaviour
         }
 
         _currentRound++;
-
-        Debug.Log($"[ENGINE MINIGAME] Comenzando ronda {_currentRound}.");
-        GenerateSequence();
-    }
-
-    private void ResetCurrentRound()
-    {
-        Debug.Log(
-            $"[ENGINE MINIGAME] Ronda {_currentRound} fallida. Reiniciando."
-        );
-
-        _currentInput = 0;
+        StartRoundWithNewSequence();
     }
 
     private void CompleteMinigame()
     {
         _isActive = false;
+        _acceptingInput = false;
+        StopRunningCoroutines();
+        if (timerText != null) timerText.gameObject.SetActive(false);
+        StartCoroutine(EmergencyRestartFeedback());
+    }
+
+    private IEnumerator EmergencyRestartFeedback()
+    {
+        // Three seconds of escalating feedback before the repaired engine is handed back to navigation.
+        for (int i = 0; i < 3; i++)
+        {
+            foreach (EngineMiniGameComponent component in components)
+                if (component != null) component.ShowCorrectFeedback();
+            yield return new WaitForSeconds(0.5f);
+
+            TurnOffAllComponents();
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        foreach (EngineMiniGameComponent component in components)
+            if (component != null) component.ShowCorrectFeedback();
+
+        if (engineSystem != null) engineSystem.RestartEngine();
+        Debug.Log("[ENGINE MINIGAME] Motor reparado. Vuelve a la palanca de navegación.");
+        Completed?.Invoke();
+    }
+
+    private void TimeExpired()
+    {
+        _isActive = false;
+        _acceptingInput = false;
+        StopRunningCoroutines();
+        TurnOffAllComponents();
+        if (timerText != null) timerText.gameObject.SetActive(false);
+
+        Debug.Log("[ENGINE MINIGAME] Tiempo agotado: sobrecalentamiento crítico.");
+        GameEventChannel<OnDeath>.RaiseEvent(new OnDeath(DeathType.EngineOverheat));
+    }
+
+    private void SpawnHullDamage()
+    {
+        if (hullDamageManager == null) hullDamageManager = FindFirstObjectByType<HullDamageManager>();
+        if (hullDamageManager == null)
+        {
+            Debug.LogWarning("[ENGINE MINIGAME] No hay HullDamageManager para generar fugas.");
+            return;
+        }
+
+        int spawnedDamage = hullDamageManager.SpawnImmediateDamage(hullDamageOnErrorLimit);
+        Debug.Log($"[ENGINE MINIGAME] Daño estructural: {spawnedDamage} fugas generadas.");
+    }
+
+    private void TurnOffAllComponents()
+    {
+        foreach (EngineMiniGameComponent component in components)
+            if (component != null) component.TurnOffFeedback();
+    }
+
+    private void ShowFailureFeedbackOnAllComponents()
+    {
+        foreach (EngineMiniGameComponent component in components)
+            if (component != null) component.ShowSequenceFeedback();
+    }
+
+    private EngineMiniGameComponent GetComponentAt(int index)
+    {
+        return index >= 0 && index < components.Count ? components[index] : null;
+    }
+
+    private void StopRunningCoroutines()
+    {
         if (_timerCoroutine != null)
         {
             StopCoroutine(_timerCoroutine);
             _timerCoroutine = null;
         }
-        if (timerText != null) timerText.gameObject.SetActive(false);
-        Debug.Log("[ENGINE MINIGAME] ==========================");
-        Debug.Log("[ENGINE MINIGAME] REINICIO DE EMERGENCIA COMPLETADO");
-        StartCoroutine(EmergencyRestartFeedback());
-    }
-    private IEnumerator EmergencyRestartFeedback()
-    {
-        Debug.Log("[ENGINE MINIGAME] Emergency restart feedback started.");
 
-        for (int i = 0; i < 3; i++)
+        if (_sequenceCoroutine != null)
         {
-            foreach (EngineMiniGameComponent component in components)
-                if (component != null) component.ShowCorrectFeedback();
-            yield return new WaitForSeconds(0.2f);
-
-            foreach (EngineMiniGameComponent component in components)
-                if (component != null) component.TurnOffFeedback();
-            
-            yield return new WaitForSeconds(0.2f);
+            StopCoroutine(_sequenceCoroutine);
+            _sequenceCoroutine = null;
         }
 
-        Debug.Log("[ENGINE MINIGAME] Emergency restart feedback finished.");
-        if (engineSystem != null) engineSystem.RestartEngine();
+        StopIdleSequenceReplay();
     }
+
+    private void StopIdleSequenceReplay()
+    {
+        if (_idleReplayCoroutine == null) return;
+
+        StopCoroutine(_idleReplayCoroutine);
+        _idleReplayCoroutine = null;
+    }
+
     private void UpdateTimerUI()
     {
         if (timerText == null) return;
-        int seconds = Mathf.CeilToInt(_remainingTime);
-        timerText.text = $"TIME: {seconds}";
+        timerText.text = $"TIME: {Mathf.CeilToInt(_remainingTime)}";
     }
 }
