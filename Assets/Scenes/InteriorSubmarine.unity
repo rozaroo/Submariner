@@ -490,8 +490,19 @@ MonoBehaviour:
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   sequenceColor: {r: 1, g: 0, b: 0, a: 1}
   correctColor: {r: 0, g: 1, b: 0, a: 1}
+  hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  roundTransitionColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   normalEmission: 0
   feedbackEmission: 1
+  surfaceGlowMultiplier: 1.6
+  materialEmissionIntensity: 2
+  glowLight: {fileID: 0}
+  createGlowLightIfMissing: 1
+  glowLightIntensity: 1.2
+  glowLightRange: 0.6
+  colorTransitionDuration: 0.12
+  hitBlinkDuration: 0.1
+  hitBlinkCount: 2
 --- !u!65 &140453465
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -511,8 +522,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.256883, y: 1.0645448, z: 0.8015974}
-  m_Center: {x: 0.16541266, y: 0.13210963, z: -0.40271357}
+  m_Size: {x: 0.10672015, y: 1.0645448, z: 0.8015974}
+  m_Center: {x: 0.1619713, y: 0.13210964, z: -0.40271357}
 --- !u!1 &188850381
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,9 +534,9 @@ GameObject:
   m_Component:
   - component: {fileID: 188850382}
   m_Layer: 0
-  m_Name: CameraAnchor1
+  m_Name: EngineAnchor
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -538,7 +549,7 @@ Transform:
   m_GameObject: {fileID: 188850381}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.221, y: 0.044, z: 0.958}
+  m_LocalPosition: {x: 0.873, y: 0.989, z: 0.672}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -649,8 +660,19 @@ MonoBehaviour:
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   sequenceColor: {r: 1, g: 0, b: 0, a: 1}
   correctColor: {r: 0, g: 1, b: 0, a: 1}
+  hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  roundTransitionColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   normalEmission: 0
   feedbackEmission: 1
+  surfaceGlowMultiplier: 1.6
+  materialEmissionIntensity: 2
+  glowLight: {fileID: 0}
+  createGlowLightIfMissing: 1
+  glowLightIntensity: 1.2
+  glowLightRange: 0.6
+  colorTransitionDuration: 0.12
+  hitBlinkDuration: 0.1
+  hitBlinkCount: 2
 --- !u!65 &202914969
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -670,8 +692,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.256883, y: 1.0645448, z: 0.8015974}
-  m_Center: {x: 0.16541266, y: 0.13210963, z: -0.40271357}
+  m_Size: {x: 0.11424309, y: 1.0645448, z: 0.8015974}
+  m_Center: {x: 0.16672519, y: 0.13210964, z: -0.40271357}
 --- !u!1001 &222584104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1077,8 +1099,19 @@ MonoBehaviour:
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   sequenceColor: {r: 1, g: 0, b: 0, a: 1}
   correctColor: {r: 0, g: 1, b: 0, a: 1}
+  hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  roundTransitionColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   normalEmission: 0
   feedbackEmission: 1
+  surfaceGlowMultiplier: 1.6
+  materialEmissionIntensity: 2
+  glowLight: {fileID: 0}
+  createGlowLightIfMissing: 1
+  glowLightIntensity: 1.2
+  glowLightRange: 0.6
+  colorTransitionDuration: 0.12
+  hitBlinkDuration: 0.1
+  hitBlinkCount: 2
 --- !u!65 &289964970
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1098,8 +1131,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.256883, y: 1.0645448, z: 0.8015974}
-  m_Center: {x: 0.16541266, y: 0.13210963, z: -0.40271357}
+  m_Size: {x: 0.12136173, y: 1.0645448, z: 0.8015974}
+  m_Center: {x: 0.1685319, y: 0.13210964, z: -0.40271357}
 --- !u!1 &304751003
 GameObject:
   m_ObjectHideFlags: 0
@@ -1147,11 +1180,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   engineMiniGame: {fileID: 1646339324}
   cameraAnchor: {fileID: 188850382}
-  directionAnchor: {fileID: 1646339323}
+  directionAnchor: {fileID: 1112739567}
   transitionDuration: 0.4
   cursorLockMode: 0
   showMouseCursor: 1
   stationMapName: Station
+  clickActionName: ClickInteraction
+  exitActionName: ExitStation
+  raycastDistance: 5
+  showHoverPreview: 0
 --- !u!65 &304751006
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1171,8 +1208,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.5, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.3291917, y: 0.86611557, z: 1.2790518}
+  m_Center: {x: 0.090332985, y: 0.18305779, z: -1.0375905}
 --- !u!1 &326423404
 GameObject:
   m_ObjectHideFlags: 0
@@ -2749,8 +2786,19 @@ MonoBehaviour:
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   sequenceColor: {r: 1, g: 0, b: 0, a: 1}
   correctColor: {r: 0, g: 1, b: 0, a: 1}
+  hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  roundTransitionColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   normalEmission: 0
   feedbackEmission: 1
+  surfaceGlowMultiplier: 1.6
+  materialEmissionIntensity: 2
+  glowLight: {fileID: 0}
+  createGlowLightIfMissing: 1
+  glowLightIntensity: 1.2
+  glowLightRange: 0.6
+  colorTransitionDuration: 0.12
+  hitBlinkDuration: 0.1
+  hitBlinkCount: 2
 --- !u!65 &1069128979
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2770,8 +2818,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.256883, y: 1.0645448, z: 0.8015974}
-  m_Center: {x: 0.16541266, y: 0.13210963, z: -0.40271357}
+  m_Size: {x: 0.11540806, y: 1.0645448, z: 0.8015974}
+  m_Center: {x: 0.16397136, y: 0.13210964, z: -0.40271357}
 --- !u!1 &1095062448
 GameObject:
   m_ObjectHideFlags: 0
@@ -3057,6 +3105,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1104440120}
   m_CullTransparentMesh: 1
+--- !u!1 &1112739566
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1112739567}
+  m_Layer: 0
+  m_Name: EngineAnchor (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1112739567
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112739566}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.873, y: 0.138, z: -0.366}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1477548301}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1129466006
 GameObject:
   m_ObjectHideFlags: 0
@@ -3162,8 +3241,19 @@ MonoBehaviour:
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   sequenceColor: {r: 1, g: 0, b: 0, a: 1}
   correctColor: {r: 0, g: 1, b: 0, a: 1}
+  hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  roundTransitionColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   normalEmission: 0
   feedbackEmission: 1
+  surfaceGlowMultiplier: 1.6
+  materialEmissionIntensity: 2
+  glowLight: {fileID: 0}
+  createGlowLightIfMissing: 1
+  glowLightIntensity: 1.2
+  glowLightRange: 0.6
+  colorTransitionDuration: 0.12
+  hitBlinkDuration: 0.1
+  hitBlinkCount: 2
 --- !u!65 &1129466011
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3183,8 +3273,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.256883, y: 1.0645448, z: 0.8015974}
-  m_Center: {x: 0.16541266, y: 0.13210963, z: -0.40271357}
+  m_Size: {x: 0.12050307, y: 1.0645448, z: 0.8015974}
+  m_Center: {x: 0.16702682, y: 0.13210964, z: -0.40271357}
 --- !u!1 &1169832601
 GameObject:
   m_ObjectHideFlags: 0
@@ -4065,8 +4155,19 @@ MonoBehaviour:
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   sequenceColor: {r: 1, g: 0, b: 0, a: 1}
   correctColor: {r: 0, g: 1, b: 0, a: 1}
+  hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  roundTransitionColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   normalEmission: 0
   feedbackEmission: 1
+  surfaceGlowMultiplier: 1.6
+  materialEmissionIntensity: 2
+  glowLight: {fileID: 0}
+  createGlowLightIfMissing: 1
+  glowLightIntensity: 1.2
+  glowLightRange: 0.6
+  colorTransitionDuration: 0.12
+  hitBlinkDuration: 0.1
+  hitBlinkCount: 2
 --- !u!65 &1494799134
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4086,8 +4187,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.256883, y: 1.0645448, z: 0.8015974}
-  m_Center: {x: 0.16541266, y: 0.13210963, z: -0.40271357}
+  m_Size: {x: 0.11369169, y: 1.0645448, z: 0.8015974}
+  m_Center: {x: 0.16675794, y: 0.13210964, z: -0.40271357}
 --- !u!1001 &1495644453
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4161,6 +4262,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45c12e2cd143bca45b4aa14fbbdd1952, type: 3}
+--- !u!114 &1514654684 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3378471433174470436, guid: 6d7f57eddb5aeb2418a8e16b435e5b8a, type: 3}
+  m_PrefabInstance: {fileID: 222584104}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 875025d0d325e8c4a8c2a98bc596770a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1521835662
 GameObject:
   m_ObjectHideFlags: 0
@@ -4419,11 +4531,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3383343606455425486, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
   m_PrefabInstance: {fileID: 4366306935647553036}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1646339323 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2381980916961005864, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
-  m_PrefabInstance: {fileID: 4366306935647553036}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1646339324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4446,10 +4553,26 @@ MonoBehaviour:
   - {fileID: 289964969}
   totalRounds: 3
   timeLimit: 60
+  sequenceLightDuration: 0.5
+  sequenceGapDuration: 0.2
+  sequenceReplayDelay: 2
+  failedSequenceDelay: 0.5
+  roundTransitionInitialPause: 0.25
+  roundTransitionPulseDuration: 0.25
+  roundTransitionPulseCount: 2
+  completionGreenHoldDuration: 0.35
+  completionFadeOutDelay: 0.2
+  errorsBeforeHullDamage: 5
+  hullDamageOnErrorLimit: 2
+  hullDamageManager: {fileID: 1514654684}
   showTimer: 1
   createTimerIfMissing: 1
   timerCharacterSize: 0.08
   timerColor: {r: 1, g: 1, b: 1, a: 1}
+  timerText: {fileID: 0}
+  engineTubeFix: Start_Tube_Repair_Engine
+  engineSequenceFailed: Start_Motor_Engine_Fail
+  succeededRound: Start_Engine_Minigame_SucceededStage
 --- !u!1 &1655562799
 GameObject:
   m_ObjectHideFlags: 0
@@ -6227,12 +6350,32 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 82291183937720312, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
+      propertyPath: m_Size.x
+      value: 2.132094
+      objectReference: {fileID: 0}
+    - target: {fileID: 82291183937720312, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
+      propertyPath: m_Size.y
+      value: 0.85651064
+      objectReference: {fileID: 0}
+    - target: {fileID: 82291183937720312, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       propertyPath: m_Size.z
-      value: 1.81371
+      value: 0.8773403
+      objectReference: {fileID: 0}
+    - target: {fileID: 82291183937720312, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
+      propertyPath: m_Center.x
+      value: 0.9116292
+      objectReference: {fileID: 0}
+    - target: {fileID: 82291183937720312, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
+      propertyPath: m_Center.y
+      value: -0.37586045
+      objectReference: {fileID: 0}
+    - target: {fileID: 82291183937720312, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
+      propertyPath: m_Center.z
+      value: -0.24538422
       objectReference: {fileID: 0}
     - target: {fileID: 82291183937720312, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 681480854613616689, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       propertyPath: m_LocalScale.x
@@ -6452,6 +6595,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8269782343961149573, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       insertIndex: -1
       addedObject: {fileID: 188850382}
+    - targetCorrespondingSourceObject: {fileID: 8269782343961149573, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1112739567}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3383343606455425486, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       insertIndex: -1

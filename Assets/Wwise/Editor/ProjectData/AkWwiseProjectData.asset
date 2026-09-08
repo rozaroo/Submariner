@@ -274,7 +274,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584127097971714922
+    m_lastTime: -8584127086616269029
     List:
     - name: Start_BackgroundSubmarineMFX
       guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
@@ -427,8 +427,8 @@ MonoBehaviour:
         guid: 7fa4e7c30f1e75449f33be5ec89503f8
       Path: Events\Gameplay_SFX\Start_Motor_Engine_Fail
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 2.181225
+      minDuration: 2.181225
     - name: Start_OnMissionCompleted
       guid: 19fc9d773e9f8642bdc199ef277e567b
       id: 2060351696
@@ -597,8 +597,8 @@ MonoBehaviour:
         guid: 82bb7de14198ee46810ab0967173df11
       Path: Events\Gameplay_SFX\Start_Tube_Repair_Engine
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 1.201633
+      minDuration: 0.548571
     - name: Stop_BackgroundSubmarineMFX
       guid: 4a677021b45f5f4f8d00fb1db4eff360
       id: 116843463
