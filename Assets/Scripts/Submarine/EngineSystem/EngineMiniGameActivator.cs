@@ -114,9 +114,7 @@ public class EngineMiniGameActivator : MonoBehaviour, IPossessable, IInteractabl
 
     private void OnExitPerformed(InputAction.CallbackContext context)
     {
-        // Leaving during a repair would leave an unwinnable countdown running.
-        // Once it ends (success or failure), ExitStation behaves like the other tables.
-        if (engineMiniGame != null && engineMiniGame.IsActive) return;
+        if (engineMiniGame != null) engineMiniGame.CancelMinigame();
         _currentPlayer?.OnUnPossessionState(this);
     }
 

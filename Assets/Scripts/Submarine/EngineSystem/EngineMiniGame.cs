@@ -21,6 +21,11 @@ public class EngineMiniGame : MonoBehaviour
     [SerializeField] private float sequenceGapDuration = 0.2f;
     [SerializeField] private float sequenceReplayDelay = 2f;
     [SerializeField] private float failedSequenceDelay = 0.5f;
+    [SerializeField] private float roundTransitionInitialPause = 0.25f;
+    [SerializeField] private float roundTransitionPulseDuration = 0.25f;
+    [SerializeField] private int roundTransitionPulseCount = 2;
+    [SerializeField] private float completionGreenHoldDuration = 0.35f;
+    [SerializeField] private float completionFadeOutDelay = 0.2f;
     [SerializeField] private int errorsBeforeHullDamage = 5;
     [SerializeField] private int hullDamageOnErrorLimit = 2;
     [SerializeField] private HullDamageManager hullDamageManager;
@@ -43,15 +48,19 @@ public class EngineMiniGame : MonoBehaviour
     private int _totalErrors;
     private float _remainingTime;
     private bool _isActive;
+    private bool _isCompleting;
     private bool _acceptingInput;
     private bool _hullDamageTriggered;
     private Coroutine _timerCoroutine;
     private Coroutine _sequenceCoroutine;
     private Coroutine _idleReplayCoroutine;
+    private Coroutine _roundTransitionCoroutine;
+    private Coroutine _completionCoroutine;
 
     public bool IsActive => _isActive;
     public bool IsAcceptingInput => _acceptingInput;
-    public bool CanStart => engineSystem != null && engineSystem.IsBroken() && !_isActive;
+    public bool CanCancel => _isActive || _isCompleting;
+    public bool CanStart => engineSystem != null && engineSystem.IsBroken() && !_isActive && !_isCompleting;
     public event System.Action Completed;
 
     private void Awake()
@@ -110,6 +119,20 @@ public class EngineMiniGame : MonoBehaviour
 
         StartRoundWithNewSequence();
         Debug.Log("[ENGINE MINIGAME] REINICIO DE EMERGENCIA INICIADO");
+    }
+
+    public void CancelMinigame()
+    {
+        if (!CanCancel) return;
+
+        _isActive = false;
+        _isCompleting = false;
+        _acceptingInput = false;
+        StopRunningCoroutines();
+        StopCompletionFeedback();
+        TurnOffAllComponents();
+        if (timerText != null) timerText.gameObject.SetActive(false);
+        Debug.Log("[ENGINE MINIGAME] Reparación cancelada por el jugador.");
     }
 
     private IEnumerator EmergencyTimerRoutine()
@@ -243,16 +266,36 @@ public class EngineMiniGame : MonoBehaviour
         }
 
         _currentRound++;
-        StartRoundWithNewSequence();
+        _roundTransitionCoroutine = StartCoroutine(AdvanceToNextRoundRoutine());
+    }
+
+    private IEnumerator AdvanceToNextRoundRoutine()
+    {
+        TurnOffAllComponents();
+        yield return new WaitForSeconds(roundTransitionInitialPause);
+
+        for (int i = 0; i < roundTransitionPulseCount; i++)
+        {
+            foreach (EngineMiniGameComponent component in components)
+                if (component != null) component.ShowRoundTransitionFeedback();
+            yield return new WaitForSeconds(roundTransitionPulseDuration);
+
+            TurnOffAllComponents();
+            yield return new WaitForSeconds(roundTransitionPulseDuration);
+        }
+
+        _roundTransitionCoroutine = null;
+        if (_isActive) StartRoundWithNewSequence();
     }
 
     private void CompleteMinigame()
     {
         _isActive = false;
+        _isCompleting = true;
         _acceptingInput = false;
         StopRunningCoroutines();
         if (timerText != null) timerText.gameObject.SetActive(false);
-        StartCoroutine(EmergencyRestartFeedback());
+        _completionCoroutine = StartCoroutine(EmergencyRestartFeedback());
     }
 
     private IEnumerator EmergencyRestartFeedback()
@@ -269,9 +312,15 @@ public class EngineMiniGame : MonoBehaviour
         }
 
         foreach (EngineMiniGameComponent component in components)
-            if (component != null) component.ShowCorrectFeedback();
+            if (component != null) component.ShowCompletionFeedback();
+
+        yield return new WaitForSeconds(completionGreenHoldDuration);
+        TurnOffAllComponents();
+        yield return new WaitForSeconds(completionFadeOutDelay);
 
         if (engineSystem != null) engineSystem.RestartEngine();
+        _isCompleting = false;
+        _completionCoroutine = null;
         Debug.Log("[ENGINE MINIGAME] Motor reparado. Vuelve a la palanca de navegación.");
         Completed?.Invoke();
     }
@@ -310,7 +359,7 @@ public class EngineMiniGame : MonoBehaviour
     private void ShowFailureFeedbackOnAllComponents()
     {
         foreach (EngineMiniGameComponent component in components)
-            if (component != null) component.ShowSequenceFeedback();
+            if (component != null) component.ShowFailureFeedback();
     }
 
     private EngineMiniGameComponent GetComponentAt(int index)
@@ -333,6 +382,20 @@ public class EngineMiniGame : MonoBehaviour
         }
 
         StopIdleSequenceReplay();
+
+        if (_roundTransitionCoroutine != null)
+        {
+            StopCoroutine(_roundTransitionCoroutine);
+            _roundTransitionCoroutine = null;
+        }
+    }
+
+    private void StopCompletionFeedback()
+    {
+        if (_completionCoroutine == null) return;
+
+        StopCoroutine(_completionCoroutine);
+        _completionCoroutine = null;
     }
 
     private void StopIdleSequenceReplay()
@@ -346,6 +409,6 @@ public class EngineMiniGame : MonoBehaviour
     private void UpdateTimerUI()
     {
         if (timerText == null) return;
-        timerText.text = $"TIME: {Mathf.CeilToInt(_remainingTime)}";
+        timerText.text = $"ROUND {_currentRound}/{totalRounds}\nTIME: {Mathf.CeilToInt(_remainingTime)}";
     }
 }
