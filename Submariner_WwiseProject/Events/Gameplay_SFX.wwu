@@ -337,7 +337,7 @@
 						<Action Name="" ID="{C330D6DF-935E-450E-9EEB-CBA936417593}" ShortID="606006540">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="Engine_Minigame_SuccededStage" ID="{1E32A4D7-8366-41FD-9D28-4083B6D2CEC7}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+									<ObjectRef Name="Engine_Minigame_SucceededStage" ID="{1E32A4D7-8366-41FD-9D28-4083B6D2CEC7}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

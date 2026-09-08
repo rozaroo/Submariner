@@ -21,6 +21,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	3214537693	Start_PhosphorusCameraFlash_Event			\Gameplay_SFX\Start_PhosphorusCameraFlash_Event	
 	3771492726	Start_SubmarineCollision			\Gameplay_SFX\Start_SubmarineCollision	
 	3884825202	Stop_TensionEvent			\Gameplay_SFX\Stop_TensionEvent	
+	3907807344	Start_Engine_Minigame_SucceededStage			\Gameplay_SFX\Start_Engine_Minigame_SucceededStage	
 	3933279043	Stop_HullBreachSFX			\Gameplay_SFX\Stop_HullBreachSFX	
 	4235702204	Start_Opening_Pressure_DoorSFX			\Gameplay_SFX\Start_Opening_Pressure_DoorSFX	
 	4238673748	Start_DrainagePumpSFX			\Gameplay_SFX\Start_DrainagePumpSFX	
@@ -121,6 +122,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	813881389	Project_1_BAS Pilobass	D:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\Project_1_BAS Pilobass_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_BAS Pilobass		564608
 	820298617	LowWaterLevelWalk_2	D:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\490951__nox_sound__footsteps_walk_D0B43910.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Water_Steps_Level\LowWaterLevel\LowWaterLevelWalk_2		62810
 	824057027	SonarPingInner	D:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\Project_1_Sonar_DAF8F2F4.wem		\Actor-Mixer Hierarchy\SubmarineSFX\SonarPingInner		573568
+	824137965	Engine_Minigame_SucceededStage	D:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\94127__bmaczero__clank1 (1)_10C4C929.wem		\Actor-Mixer Hierarchy\SubmarineSFX\Engine\Engine_Minigame_SucceededStage		59456
 	845855491	Motor_Engine	D:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\16937__sculptor__watersubmarine render 001_5AF8BD8A.wem		\Actor-Mixer Hierarchy\SubmarineSFX\Engine\Motor_Engine		2267836
 	851935918	Project_1_BackgroundWhiteNoise_01	D:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\Project_1_BackgroundWhiteNoise_B546D908.wem		\Actor-Mixer Hierarchy\SubmarineSFX\BackgroudNoisesRandom\Project_1_BackgroundWhiteNoise_01		2252928
 	866744274	Project_1_BackgroundWhiteNoise_02	D:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\Project_1_BackgroundWhiteNoise_3019D2B5.wem		\Actor-Mixer Hierarchy\SubmarineSFX\BackgroudNoisesRandom\Project_1_BackgroundWhiteNoise_02		811136

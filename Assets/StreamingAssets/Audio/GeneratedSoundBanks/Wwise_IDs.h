@@ -18,6 +18,7 @@ namespace AK
         static const AkUniqueID START_BUTTONPRESS = 738466431U;
         static const AkUniqueID START_CLOSING_PRESSURE_DOORSFX = 378872923U;
         static const AkUniqueID START_DRAINAGEPUMPSFX = 4238673748U;
+        static const AkUniqueID START_ENGINE_MINIGAME_SUCCEEDEDSTAGE = 3907807344U;
         static const AkUniqueID START_HULLBREACHSFX = 2571798077U;
         static const AkUniqueID START_LEVERPULLFINISHED = 2469108041U;
         static const AkUniqueID START_MOTOR_ENGINE = 149397142U;

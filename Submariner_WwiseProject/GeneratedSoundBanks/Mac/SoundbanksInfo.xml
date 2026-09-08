@@ -34,7 +34,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3401228817" Language="SFX" Hash="666389261">
+		<SoundBank Id="3401228817" Language="SFX" Hash="1167831394">
 			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
 			<ShortName>GamePlay_SFX</ShortName>
 			<Path>GamePlay_SFX.bnk</Path>
@@ -44,6 +44,7 @@
 				<Event Id="738466431" Name="Start_ButtonPress" ObjectPath="\Events\Gameplay_SFX\Start_ButtonPress" DurationType="OneShot" DurationMin="0.082455" DurationMax="0.115269"/>
 				<Event Id="378872923" Name="Start_Closing_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Closing_Pressure_DoorSFX" DurationType="OneShot" DurationMin="2.07" DurationMax="2.257351"/>
 				<Event Id="4238673748" Name="Start_DrainagePumpSFX" ObjectPath="\Events\Gameplay_SFX\Start_DrainagePumpSFX" MaxAttenuation="100." DurationType="Infinite"/>
+				<Event Id="3907807344" Name="Start_Engine_Minigame_SucceededStage" ObjectPath="\Events\Gameplay_SFX\Start_Engine_Minigame_SucceededStage" DurationType="OneShot" DurationMin="0.673379" DurationMax="0.673379"/>
 				<Event Id="2571798077" Name="Start_HullBreachSFX" ObjectPath="\Events\Gameplay_SFX\Start_HullBreachSFX" MaxAttenuation="100." DurationType="Infinite"/>
 				<Event Id="2469108041" Name="Start_LeverPullFinished" ObjectPath="\Events\Gameplay_SFX\Start_LeverPullFinished" DurationType="OneShot" DurationMin="0.398979" DurationMax="0.398979"/>
 				<Event Id="149397142" Name="Start_Motor_Engine" ObjectPath="\Events\Gameplay_SFX\Start_Motor_Engine" MaxAttenuation="10." DurationType="Infinite"/>
@@ -242,6 +243,10 @@
 				<File Id="824057027" Language="SFX">
 					<ShortName>Project_1_Sonar.wav</ShortName>
 					<Path>SFX\Project_1_Sonar_DAF8F2F4.wem</Path>
+				</File>
+				<File Id="824137965" Language="SFX">
+					<ShortName>94127__bmaczero__clank1 (1).wav</ShortName>
+					<Path>SFX\94127__bmaczero__clank1 (1)_10C4C929.wem</Path>
 				</File>
 				<File Id="845855491" Language="SFX">
 					<ShortName>16937__sculptor__watersubmarine render 001.wav</ShortName>

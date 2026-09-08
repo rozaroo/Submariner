@@ -1900,7 +1900,7 @@
 								<ActiveSource Name="167911__lonemonk__short-engine-turnover-no-start" ID="{DE386828-61D2-4AA8-8484-C1397B787E6B}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
-						<Sound Name="Engine_Minigame_SuccededStage" ID="{1E32A4D7-8366-41FD-9D28-4083B6D2CEC7}" ShortID="336288525">
+						<Sound Name="Engine_Minigame_SucceededStage" ID="{1E32A4D7-8366-41FD-9D28-4083B6D2CEC7}" ShortID="336288525">
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
