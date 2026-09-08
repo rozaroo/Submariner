@@ -343,6 +343,28 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Start_Motor_Engine_Minigame_Succeeded" ID="{209E74A7-D358-4DED-9ADA-4B11454ADAAA}">
+					<ChildrenList>
+						<Action Name="" ID="{C90D0770-1C3E-4489-AB91-D44E10117E25}" ShortID="752554568">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Motor_Engine_Minigame_Succeeded" ID="{C249754F-8B6F-41C6-A2D9-B1D96C691F33}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_Engine_Minigame_Failed" ID="{7422B8D7-D8EC-451C-A81C-64E0DCCE0392}">
+					<ChildrenList>
+						<Action Name="" ID="{4DD31701-8AD5-4591-B595-3A1BD534193D}" ShortID="562924720">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Explosion_Engine_TEMPORAL" ID="{261D5018-3449-44D3-9A74-4871761F9FBC}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

@@ -34,7 +34,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3401228817" Language="SFX" Hash="805358579">
+		<SoundBank Id="3401228817" Language="SFX" Hash="2467986476">
 			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
 			<ShortName>GamePlay_SFX</ShortName>
 			<Path>GamePlay_SFX.bnk</Path>
@@ -44,11 +44,13 @@
 				<Event Id="738466431" Name="Start_ButtonPress" ObjectPath="\Events\Gameplay_SFX\Start_ButtonPress" DurationType="OneShot" DurationMin="0.082455" DurationMax="0.115269"/>
 				<Event Id="378872923" Name="Start_Closing_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Closing_Pressure_DoorSFX" DurationType="OneShot" DurationMin="2.07" DurationMax="2.257351"/>
 				<Event Id="4238673748" Name="Start_DrainagePumpSFX" ObjectPath="\Events\Gameplay_SFX\Start_DrainagePumpSFX" MaxAttenuation="100." DurationType="Infinite"/>
+				<Event Id="1459308672" Name="Start_Engine_Minigame_Failed" ObjectPath="\Events\Gameplay_SFX\Start_Engine_Minigame_Failed" DurationType="OneShot" DurationMin="7.557029" DurationMax="7.557029"/>
 				<Event Id="3907807344" Name="Start_Engine_Minigame_SucceededStage" ObjectPath="\Events\Gameplay_SFX\Start_Engine_Minigame_SucceededStage" DurationType="OneShot" DurationMin="0.673379" DurationMax="0.673379"/>
 				<Event Id="2571798077" Name="Start_HullBreachSFX" ObjectPath="\Events\Gameplay_SFX\Start_HullBreachSFX" MaxAttenuation="100." DurationType="Infinite"/>
 				<Event Id="2469108041" Name="Start_LeverPullFinished" ObjectPath="\Events\Gameplay_SFX\Start_LeverPullFinished" DurationType="OneShot" DurationMin="0.398979" DurationMax="0.398979"/>
 				<Event Id="149397142" Name="Start_Motor_Engine" ObjectPath="\Events\Gameplay_SFX\Start_Motor_Engine" MaxAttenuation="10." DurationType="Infinite"/>
 				<Event Id="684633665" Name="Start_Motor_Engine_Fail" ObjectPath="\Events\Gameplay_SFX\Start_Motor_Engine_Fail" DurationType="OneShot" DurationMin="2.181225" DurationMax="2.181225"/>
+				<Event Id="3037698516" Name="Start_Motor_Engine_Minigame_Succeeded" ObjectPath="\Events\Gameplay_SFX\Start_Motor_Engine_Minigame_Succeeded" DurationType="OneShot" DurationMin="4.518579" DurationMax="4.518579"/>
 				<Event Id="2060351696" Name="Start_OnMissionCompleted" ObjectPath="\Events\Gameplay_SFX\Start_OnMissionCompleted" DurationType="OneShot" DurationMin="3.064671" DurationMax="3.064671"/>
 				<Event Id="4235702204" Name="Start_Opening_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Opening_Pressure_DoorSFX" DurationType="OneShot" DurationMin="1.35771" DurationMax="1.35771"/>
 				<Event Id="438413481" Name="Start_PhosphorusCameraCooldown" ObjectPath="\Events\Gameplay_SFX\Start_PhosphorusCameraCooldown" DurationType="OneShot" DurationMin="1.902773" DurationMax="1.902773"/>
@@ -107,6 +109,10 @@
 				<File Id="175779074" Language="SFX">
 					<ShortName>17216__meatball4u__countdown.wav</ShortName>
 					<Path>SFX\17216__meatball4u__countdown_DB187815.wem</Path>
+				</File>
+				<File Id="180513701" Language="SFX">
+					<ShortName>freesound_community-air-or-steam-pressure-release-29600.wav</ShortName>
+					<Path>SFX\freesound_community-air-or-steam-pressure-release-29600_BCBC7F3A.wem</Path>
 				</File>
 				<File Id="183692339" Language="SFX">
 					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>

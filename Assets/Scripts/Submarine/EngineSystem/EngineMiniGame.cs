@@ -38,10 +38,11 @@ public class EngineMiniGame : MonoBehaviour
     [SerializeField] private TextMesh timerText;
     
     [Header("Audio (Wwise)")]
-    [SerializeField] private string engineTubeFix = "Start_Tube_Repair_Engine";
-    [SerializeField] private string engineSequenceFailed = "Start_Motor_Engine_Fail";
-    [SerializeField] private string succeededRound = "Start_Engine_Minigame_SucceededStage";
+    [SerializeField] private string onEngineTubeFix = "Start_Tube_Repair_Engine";
+    [SerializeField] private string onEngineSequenceFailed = "Start_Motor_Engine_Fail";
+    [SerializeField] private string onSucceededRound = "Start_Engine_Minigame_SucceededStage";
     [SerializeField] private string onFailedMinigame = "Start_Engine_Minigame_Failed";
+    [SerializeField] private string onSucceededMinigame = "Start_Motor_Engine_Minigame_Succeeded";
 
     private readonly List<int> _currentSequence = new();
     private int _currentRound;
@@ -223,7 +224,7 @@ public class EngineMiniGame : MonoBehaviour
             return;
         }
 
-        SFXManager.PostEvent(engineTubeFix, gameObject);
+        SFXManager.PostEvent(onEngineTubeFix, gameObject);
         component.ShowCorrectFeedback();
         _currentInput++;
 
@@ -234,7 +235,7 @@ public class EngineMiniGame : MonoBehaviour
     {
         _totalErrors++;
         _acceptingInput = false;
-        SFXManager.PostEvent(engineSequenceFailed, gameObject);
+        SFXManager.PostEvent(onEngineSequenceFailed, gameObject);
         Debug.Log($"[ENGINE MINIGAME] Error {_totalErrors}. Se reinicia la ronda {_currentRound}.");
         ShowFailureFeedbackOnAllComponents();
 
@@ -259,7 +260,7 @@ public class EngineMiniGame : MonoBehaviour
     {
         _acceptingInput = false;
         Debug.Log($"[ENGINE MINIGAME] Ronda {_currentRound} completada.");
-        SFXManager.PostEvent(succeededRound, gameObject);
+        SFXManager.PostEvent(onSucceededRound, gameObject);
         if (_currentRound >= totalRounds)
         {
             CompleteMinigame();
@@ -294,6 +295,7 @@ public class EngineMiniGame : MonoBehaviour
         _isActive = false;
         _isCompleting = true;
         _acceptingInput = false;
+        SFXManager.PostEvent(onSucceededMinigame, gameObject);
         StopRunningCoroutines();
         if (timerText != null) timerText.gameObject.SetActive(false);
         _completionCoroutine = StartCoroutine(EmergencyRestartFeedback());

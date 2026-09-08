@@ -10,6 +10,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	997126444	Start_SonarPingOuter			\Gameplay_SFX\Start_SonarPingOuter	
 	1116808773	Start_BlowtorchSFX			\Gameplay_SFX\Start_BlowtorchSFX	
 	1403223316	Start_TensionEvent			\Gameplay_SFX\Start_TensionEvent	
+	1459308672	Start_Engine_Minigame_Failed			\Gameplay_SFX\Start_Engine_Minigame_Failed	
 	1735885581	Start_SonarPingInner			\Gameplay_SFX\Start_SonarPingInner	
 	1982947219	Stop_BlowtorchSFX			\Gameplay_SFX\Stop_BlowtorchSFX	
 	2060351696	Start_OnMissionCompleted			\Gameplay_SFX\Start_OnMissionCompleted	
@@ -18,6 +19,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	2692854921	Start_Tube_Repair_Engine			\Gameplay_SFX\Start_Tube_Repair_Engine	
 	2940474702	Start_PlayerFootsteps			\Gameplay_SFX\Start_PlayerFootsteps	
 	3003027233	Start_BackgroundSubmarineMFX			\Gameplay_SFX\Start_BackgroundSubmarineMFX	
+	3037698516	Start_Motor_Engine_Minigame_Succeeded			\Gameplay_SFX\Start_Motor_Engine_Minigame_Succeeded	
 	3214537693	Start_PhosphorusCameraFlash_Event			\Gameplay_SFX\Start_PhosphorusCameraFlash_Event	
 	3771492726	Start_SubmarineCollision			\Gameplay_SFX\Start_SubmarineCollision	
 	3884825202	Stop_TensionEvent			\Gameplay_SFX\Stop_TensionEvent	
@@ -88,6 +90,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	134703114	MetalSteps_1	D:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\696374__sanderboah__walking-on-metal_08A414DF.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Metal_Steps_Random\MetalSteps_1		58782
 	150726513	Project_1_BackgroundWhiteNoise	D:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\Project_1_BackgroundWhiteNoise_B6873822.wem		\Actor-Mixer Hierarchy\SubmarineSFX\BackgroudNoisesRandom\Project_1_BackgroundWhiteNoise		2252928
 	175779074	Distance_CountDown	D:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\17216__meatball4u__countdown_DB187815.wem		\Actor-Mixer Hierarchy\SubmarineSFX\Distance\Distance_CountDown		3880
+	180513701	Motor_Engine_Minigame_Succeeded	D:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\freesound_community-air-or-steam-pressure-release-29600_BCBC7F3A.wem		\Actor-Mixer Hierarchy\SubmarineSFX\Engine\Motor_Engine_Minigame_Succeeded		398602
 	183692339	LowWaterLevelWalk_1	D:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\490951__nox_sound__footsteps_walk_C54DDBC5.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Water_Steps_Level\LowWaterLevel\LowWaterLevelWalk_1		57982
 	227317674	151624__qubodup__clank-car-crash-collision	D:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\151624__qubodup__clank-car-crash-collision_10C4C929.wem		\Actor-Mixer Hierarchy\SubmarineSFX\SubmarineCollision\ExtraSoundsImpact\151624__qubodup__clank-car-crash-collision		95280
 	269478501	HighWaterLevelWalk_5	D:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\SFX\490951__nox_sound__footsteps_walk_E6DD8854.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Water_Steps_Level\HighWaterLevel\HighWaterLevelWalk_5		77288
