@@ -4570,9 +4570,11 @@ MonoBehaviour:
   timerCharacterSize: 0.08
   timerColor: {r: 1, g: 1, b: 1, a: 1}
   timerText: {fileID: 0}
-  engineTubeFix: Start_Tube_Repair_Engine
-  engineSequenceFailed: Start_Motor_Engine_Fail
-  succeededRound: Start_Engine_Minigame_SucceededStage
+  onEngineTubeFix: Start_Tube_Repair_Engine
+  onEngineSequenceFailed: Start_Motor_Engine_Fail
+  onSucceededRound: Start_Engine_Minigame_SucceededStage
+  onFailedMinigame: Start_Engine_Minigame_Failed
+  onSucceededMinigame: Start_Motor_Engine_Minigame_Succeeded
 --- !u!1 &1655562799
 GameObject:
   m_ObjectHideFlags: 0
@@ -6504,6 +6506,10 @@ PrefabInstance:
     - target: {fileID: 7452075789254345979, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.602304
+      objectReference: {fileID: 0}
+    - target: {fileID: 8055608357796643299, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
+      propertyPath: energyConsumption
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8066910223130465333, guid: d2a8a4e1d91ab4c47a8d2acd61d6dcdf, type: 3}
       propertyPath: triggerObject

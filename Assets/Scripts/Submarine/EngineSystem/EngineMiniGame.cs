@@ -235,6 +235,9 @@ public class EngineMiniGame : MonoBehaviour
     {
         _totalErrors++;
         _acceptingInput = false;
+
+        _currentInput = 0;
+
         SFXManager.PostEvent(onEngineSequenceFailed, gameObject);
         Debug.Log($"[ENGINE MINIGAME] Error {_totalErrors}. Se reinicia la ronda {_currentRound}.");
         ShowFailureFeedbackOnAllComponents();

@@ -274,7 +274,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584127080053474566
+    m_lastTime: -8584127075326657742
     List:
     - name: Start_BackgroundSubmarineMFX
       guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
@@ -376,8 +376,8 @@ MonoBehaviour:
         guid: d7b82274ecd81c45a81c64e0dcce0392
       Path: Events\Gameplay_SFX\Start_Engine_Minigame_Failed
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 7.557029
+      minDuration: 7.557029
     - name: Start_Engine_Minigame_SucceededStage
       guid: 1308a994c3298c4d804698f15ea618d1
       id: 3907807344
@@ -478,8 +478,8 @@ MonoBehaviour:
         guid: a7749e2058d3ed4d9ada4b11454adaaa
       Path: Events\Gameplay_SFX\Start_Motor_Engine_Minigame_Succeeded
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 4.518579
+      minDuration: 4.518579
     - name: Start_OnMissionCompleted
       guid: 19fc9d773e9f8642bdc199ef277e567b
       id: 2060351696
