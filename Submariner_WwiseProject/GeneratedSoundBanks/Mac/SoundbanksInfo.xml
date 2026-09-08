@@ -34,7 +34,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3401228817" Language="SFX" Hash="1167831394">
+		<SoundBank Id="3401228817" Language="SFX" Hash="805358579">
 			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
 			<ShortName>GamePlay_SFX</ShortName>
 			<Path>GamePlay_SFX.bnk</Path>
@@ -87,6 +87,10 @@
 				<File Id="103211724" Language="SFX">
 					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
 					<Path>SFX\490951__nox_sound__footsteps_walk_191AADB4.wem</Path>
+				</File>
+				<File Id="108859605" Language="SFX">
+					<ShortName>33637__herbertboland__cinematicboomnorm.wav</ShortName>
+					<Path>SFX\33637__herbertboland__cinematicboomnorm_10C4C929.wem</Path>
 				</File>
 				<File Id="130164563" Language="SFX">
 					<ShortName>reaper_stems_105293__anton__water_pump_sewer_water_stream.wav</ShortName>
