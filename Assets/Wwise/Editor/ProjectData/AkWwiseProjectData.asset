@@ -24,7 +24,7 @@ MonoBehaviour:
     ParentPath: Virtual Acoustics\Default Work Unit
     guid: fadc46e67b34394890f3a3b45fb9c58d
     GuidInternal: 
-    m_lastTime: -8584171482151366673
+    m_lastTime: -8584139166420848593
     List: []
   AuxBusWwu:
   - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: eb88c8468a8b7740b7f87fe70f3aa207
     GuidInternal: 
-    m_lastTime: -8584171481866120355
+    m_lastTime: -8584139166426712617
     List:
     - name: General_MFX
       guid: a26874e2029dd541a1621432a7b66c24
@@ -220,7 +220,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 78d019e9a98b624b95f48ecd972e88f9
     GuidInternal: 
-    m_lastTime: -8584171482152099698
+    m_lastTime: -8584139166420905866
     List: []
   - PhysicalPath: SoundBanks\VoicesOfTides.wwu
     PathAndIcons:
@@ -233,7 +233,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\VoicesOfTides
     guid: 6cfb55a730df374090e3de101ed00759
     GuidInternal: 
-    m_lastTime: -8584171481379361747
+    m_lastTime: -8584139166420905866
     List:
     - name: GamePlay_SFX
       guid: 8f55fbaac4adf94c90c05b67fca3cb88
@@ -261,7 +261,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 21ceb8a29a2d9141bf9458ff73f9eb44
     GuidInternal: 
-    m_lastTime: -8584127211932604403
+    m_lastTime: -8584127080053647117
     List: []
   - PhysicalPath: Events\Gameplay_SFX.wwu
     PathAndIcons:
@@ -274,7 +274,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584127211932544358
+    m_lastTime: -8584127075326657742
     List:
     - name: Start_BackgroundSubmarineMFX
       guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
@@ -361,9 +361,9 @@ MonoBehaviour:
       maxAttenuation: 100
       maxDuration: -1
       minDuration: -1
-    - name: Start_FuseMake
-      guid: 1e578f1c8efc264f824ad8c308b5a049
-      id: 3355137523
+    - name: Start_Engine_Minigame_Failed
+      guid: d7b82274ecd81c45a81c64e0dcce0392
+      id: 1459308672
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -371,13 +371,30 @@ MonoBehaviour:
       - ElementName: Gameplay_SFX
         ObjectType: 12
         guid: a7075cb480cc804bbbacef59f1484550
-      - ElementName: Start_FuseMake
+      - ElementName: Start_Engine_Minigame_Failed
         ObjectType: 3
-        guid: 1e578f1c8efc264f824ad8c308b5a049
-      Path: Events\Gameplay_SFX\Start_FuseMake
+        guid: d7b82274ecd81c45a81c64e0dcce0392
+      Path: Events\Gameplay_SFX\Start_Engine_Minigame_Failed
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 7.557029
+      minDuration: 7.557029
+    - name: Start_Engine_Minigame_SucceededStage
+      guid: 1308a994c3298c4d804698f15ea618d1
+      id: 3907807344
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_Engine_Minigame_SucceededStage
+        ObjectType: 3
+        guid: 1308a994c3298c4d804698f15ea618d1
+      Path: Events\Gameplay_SFX\Start_Engine_Minigame_SucceededStage
+      maxAttenuation: 0
+      maxDuration: 0.673379
+      minDuration: 0.673379
     - name: Start_HullBreachSFX
       guid: 2cb37db3919c9c4a986dfbd0643ecf21
       id: 2571798077
@@ -429,6 +446,40 @@ MonoBehaviour:
       maxAttenuation: 10
       maxDuration: -1
       minDuration: -1
+    - name: Start_Motor_Engine_Fail
+      guid: 7fa4e7c30f1e75449f33be5ec89503f8
+      id: 684633665
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_Motor_Engine_Fail
+        ObjectType: 3
+        guid: 7fa4e7c30f1e75449f33be5ec89503f8
+      Path: Events\Gameplay_SFX\Start_Motor_Engine_Fail
+      maxAttenuation: 0
+      maxDuration: 2.181225
+      minDuration: 2.181225
+    - name: Start_Motor_Engine_Minigame_Succeeded
+      guid: a7749e2058d3ed4d9ada4b11454adaaa
+      id: 3037698516
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_Motor_Engine_Minigame_Succeeded
+        ObjectType: 3
+        guid: a7749e2058d3ed4d9ada4b11454adaaa
+      Path: Events\Gameplay_SFX\Start_Motor_Engine_Minigame_Succeeded
+      maxAttenuation: 0
+      maxDuration: 4.518579
+      minDuration: 4.518579
     - name: Start_OnMissionCompleted
       guid: 19fc9d773e9f8642bdc199ef277e567b
       id: 2060351696
@@ -582,6 +633,23 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
+    - name: Start_Tube_Repair_Engine
+      guid: 82bb7de14198ee46810ab0967173df11
+      id: 2692854921
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_Tube_Repair_Engine
+        ObjectType: 3
+        guid: 82bb7de14198ee46810ab0967173df11
+      Path: Events\Gameplay_SFX\Start_Tube_Repair_Engine
+      maxAttenuation: 0
+      maxDuration: 1.201633
+      minDuration: 0.548571
     - name: Stop_BackgroundSubmarineMFX
       guid: 4a677021b45f5f4f8d00fb1db4eff360
       id: 116843463
@@ -630,23 +698,6 @@ MonoBehaviour:
         ObjectType: 3
         guid: 7e3ae5b6a0d65b4da7c5339c0717039f
       Path: Events\Gameplay_SFX\Stop_DrainagePumpSFX
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - name: Stop_FuseMake
-      guid: 9fadae0cd7afb2499faf009bd235ea8e
-      id: 880757133
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Gameplay_SFX
-        ObjectType: 12
-        guid: a7075cb480cc804bbbacef59f1484550
-      - ElementName: Stop_FuseMake
-        ObjectType: 3
-        guid: 9fadae0cd7afb2499faf009bd235ea8e
-      Path: Events\Gameplay_SFX\Stop_FuseMake
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -713,7 +764,7 @@ MonoBehaviour:
     ParentPath: Game Parameters\Default Work Unit
     guid: a7ff66bd37ebcb4d8742b321de6f68dd
     GuidInternal: 
-    m_lastTime: -8584171482194177269
+    m_lastTime: -8584139166429801361
     List: []
   - PhysicalPath: Game Parameters\ParametersVOT.wwu
     PathAndIcons:
@@ -726,7 +777,7 @@ MonoBehaviour:
     ParentPath: Game Parameters\ParametersVOT
     guid: 7ca9e527ff3296499ba38599ac94cf84
     GuidInternal: 
-    m_lastTime: -8584171481869151868
+    m_lastTime: -8584139166429801361
     List:
     - name: Game_MFX_SoundVolume
       guid: 588951c06b771642aadb10559dc27865
@@ -796,7 +847,7 @@ MonoBehaviour:
     ParentPath: States\Default Work Unit
     guid: a83996bd2906d040b5bfdbe07e7a93d5
     GuidInternal: 
-    m_lastTime: -8584171482151826443
+    m_lastTime: -8584139166420888800
     List:
     - name: Energy_Status
       guid: 6bb8af47e1076843ae6bf248aea5823b
@@ -958,7 +1009,7 @@ MonoBehaviour:
     ParentPath: Switches\Default Work Unit
     guid: c07239db9f6acd43b302be800a106cfe
     GuidInternal: 
-    m_lastTime: -8584171482151466765
+    m_lastTime: -8584139166420858653
     List:
     - name: Player_FootstepsSurface
       guid: c1ef939f5bac214e8097ca0e8200f4a9
@@ -1072,7 +1123,7 @@ MonoBehaviour:
     ParentPath: Triggers\Default Work Unit
     guid: 7913290596eebc4e9a3278cf25c2e527
     GuidInternal: 
-    m_lastTime: -8584171482151416719
+    m_lastTime: -8584139166420848593
     List: []
   ExpandedFileSystemItemIds: 
   ExpandedWaapiItemIds: 

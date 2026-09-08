@@ -310,26 +310,56 @@
 						</Action>
 					</ChildrenList>
 				</Event>
-				<Event Name="Stop_FuseMake" ID="{0CAEAD9F-AFD7-49B2-9FAF-009BD235EA8E}">
+				<Event Name="Start_Tube_Repair_Engine" ID="{E17DBB82-9841-46EE-810A-B0967173DF11}">
 					<ChildrenList>
-						<Action Name="" ID="{22424301-3350-4DB1-B971-17FEA1EFEA87}" ShortID="399354499">
-							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="2"/>
-							</PropertyList>
+						<Action Name="" ID="{54480BB3-E3AD-4FDD-A091-D959C3828091}" ShortID="706532465">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="BlowTorchSFX" ID="{1C669A42-DE2D-4FF1-BE31-F5EA3C736300}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+									<ObjectRef Name="Tube_Repair_Engine" ID="{B1C0A291-390F-4DFD-8D62-88C17CA0E7D9}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
 					</ChildrenList>
 				</Event>
-				<Event Name="Start_FuseMake" ID="{1C8F571E-FC8E-4F26-824A-D8C308B5A049}">
+				<Event Name="Start_Motor_Engine_Fail" ID="{C3E7A47F-1E0F-4475-9F33-BE5EC89503F8}">
 					<ChildrenList>
-						<Action Name="" ID="{541BCAE5-90CB-4B8E-9184-96C8A348C610}" ShortID="383966412">
+						<Action Name="" ID="{0D56C30F-C66D-4632-A49F-0AFAB14AC78E}" ShortID="1048077723">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="BlowTorchSFX" ID="{1C669A42-DE2D-4FF1-BE31-F5EA3C736300}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+									<ObjectRef Name="Motor_Engine_Fail" ID="{21B356A6-5185-4690-B7C0-E112B71ACCC9}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_Engine_Minigame_SucceededStage" ID="{94A90813-29C3-4D8C-8046-98F15EA618D1}">
+					<ChildrenList>
+						<Action Name="" ID="{C330D6DF-935E-450E-9EEB-CBA936417593}" ShortID="606006540">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Engine_Minigame_SucceededStage" ID="{1E32A4D7-8366-41FD-9D28-4083B6D2CEC7}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_Motor_Engine_Minigame_Succeeded" ID="{209E74A7-D358-4DED-9ADA-4B11454ADAAA}">
+					<ChildrenList>
+						<Action Name="" ID="{C90D0770-1C3E-4489-AB91-D44E10117E25}" ShortID="752554568">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Motor_Engine_Minigame_Succeeded" ID="{C249754F-8B6F-41C6-A2D9-B1D96C691F33}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_Engine_Minigame_Failed" ID="{7422B8D7-D8EC-451C-A81C-64E0DCCE0392}">
+					<ChildrenList>
+						<Action Name="" ID="{4DD31701-8AD5-4591-B595-3A1BD534193D}" ShortID="562924720">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Explosion_Engine_TEMPORAL" ID="{261D5018-3449-44D3-9A74-4871761F9FBC}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

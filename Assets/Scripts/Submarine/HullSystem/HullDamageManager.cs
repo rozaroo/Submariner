@@ -95,14 +95,30 @@ public class HullDamageManager : MonoBehaviour
         }
     }
     
-    private void TrySpawnCrack()
+    /// <summary>
+    /// Spawns up to <paramref name="amount"/> currently available leaks immediately.
+    /// Used by emergencies that must create an instant, visible consequence.
+    /// </summary>
+    public int SpawnImmediateDamage(int amount)
+    {
+        int spawned = 0;
+        for (int i = 0; i < amount; i++)
+        {
+            if (!TrySpawnCrack()) break;
+            spawned++;
+        }
+
+        return spawned;
+    }
+
+    private bool TrySpawnCrack()
     {
         var available = _pool.FindAll(c => !c.gameObject.activeSelf);
     
         if (available.Count == 0) 
         {
             StopSpawningBehaviour();
-            return;
+            return false;
         }
     
         Log.Info("Spawned Crack");
@@ -112,6 +128,7 @@ public class HullDamageManager : MonoBehaviour
         ActiveCrackCount++;
 
         GameEventChannel<OnHullPropertyChange>.RaiseEvent(new OnHullPropertyChange(spawnZones.Length, ActiveCrackCount));
+        return true;
     }
 
     private void OnHullRepaired(HullDamage hullDamage)
