@@ -310,6 +310,31 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Stop_FuseMake" ID="{0CAEAD9F-AFD7-49B2-9FAF-009BD235EA8E}">
+					<ChildrenList>
+						<Action Name="" ID="{22424301-3350-4DB1-B971-17FEA1EFEA87}" ShortID="399354499">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BlowTorchSFX" ID="{1C669A42-DE2D-4FF1-BE31-F5EA3C736300}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_FuseMake" ID="{1C8F571E-FC8E-4F26-824A-D8C308B5A049}">
+					<ChildrenList>
+						<Action Name="" ID="{541BCAE5-90CB-4B8E-9184-96C8A348C610}" ShortID="383966412">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BlowTorchSFX" ID="{1C669A42-DE2D-4FF1-BE31-F5EA3C736300}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

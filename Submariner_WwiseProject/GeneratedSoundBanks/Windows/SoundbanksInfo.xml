@@ -34,7 +34,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3401228817" Language="SFX" Hash="800455516">
+		<SoundBank Id="3401228817" Language="SFX" Hash="3098607700">
 			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
 			<ShortName>GamePlay_SFX</ShortName>
 			<Path>GamePlay_SFX.bnk</Path>
@@ -44,6 +44,7 @@
 				<Event Id="738466431" Name="Start_ButtonPress" ObjectPath="\Events\Gameplay_SFX\Start_ButtonPress" DurationType="OneShot" DurationMin="0.082455" DurationMax="0.115269"/>
 				<Event Id="378872923" Name="Start_Closing_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Closing_Pressure_DoorSFX" DurationType="OneShot" DurationMin="2.07" DurationMax="2.257351"/>
 				<Event Id="4238673748" Name="Start_DrainagePumpSFX" ObjectPath="\Events\Gameplay_SFX\Start_DrainagePumpSFX" MaxAttenuation="100." DurationType="Infinite"/>
+				<Event Id="3355137523" Name="Start_FuseMake" ObjectPath="\Events\Gameplay_SFX\Start_FuseMake" DurationType="Infinite"/>
 				<Event Id="2571798077" Name="Start_HullBreachSFX" ObjectPath="\Events\Gameplay_SFX\Start_HullBreachSFX" MaxAttenuation="100." DurationType="Infinite"/>
 				<Event Id="2469108041" Name="Start_LeverPullFinished" ObjectPath="\Events\Gameplay_SFX\Start_LeverPullFinished" DurationType="OneShot" DurationMin="0.398979" DurationMax="0.398979"/>
 				<Event Id="149397142" Name="Start_Motor_Engine" ObjectPath="\Events\Gameplay_SFX\Start_Motor_Engine" MaxAttenuation="10." DurationType="Infinite"/>
@@ -59,6 +60,7 @@
 				<Event Id="116843463" Name="Stop_BackgroundSubmarineMFX" ObjectPath="\Events\Gameplay_SFX\Stop_BackgroundSubmarineMFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="1982947219" Name="Stop_BlowtorchSFX" ObjectPath="\Events\Gameplay_SFX\Stop_BlowtorchSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="860956674" Name="Stop_DrainagePumpSFX" ObjectPath="\Events\Gameplay_SFX\Stop_DrainagePumpSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
+				<Event Id="880757133" Name="Stop_FuseMake" ObjectPath="\Events\Gameplay_SFX\Stop_FuseMake" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="3933279043" Name="Stop_HullBreachSFX" ObjectPath="\Events\Gameplay_SFX\Stop_HullBreachSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="344065456" Name="Stop_Motor_Engine" ObjectPath="\Events\Gameplay_SFX\Stop_Motor_Engine" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="3884825202" Name="Stop_TensionEvent" ObjectPath="\Events\Gameplay_SFX\Stop_TensionEvent" DurationType="Infinite"/>

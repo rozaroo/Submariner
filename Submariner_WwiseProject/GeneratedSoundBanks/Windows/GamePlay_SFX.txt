@@ -6,6 +6,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	438413481	Start_PhosphorusCameraCooldown			\Gameplay_SFX\Start_PhosphorusCameraCooldown	
 	738466431	Start_ButtonPress			\Gameplay_SFX\Start_ButtonPress	
 	860956674	Stop_DrainagePumpSFX			\Gameplay_SFX\Stop_DrainagePumpSFX	
+	880757133	Stop_FuseMake			\Gameplay_SFX\Stop_FuseMake	
 	997126444	Start_SonarPingOuter			\Gameplay_SFX\Start_SonarPingOuter	
 	1116808773	Start_BlowtorchSFX			\Gameplay_SFX\Start_BlowtorchSFX	
 	1403223316	Start_TensionEvent			\Gameplay_SFX\Start_TensionEvent	
@@ -17,6 +18,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	2940474702	Start_PlayerFootsteps			\Gameplay_SFX\Start_PlayerFootsteps	
 	3003027233	Start_BackgroundSubmarineMFX			\Gameplay_SFX\Start_BackgroundSubmarineMFX	
 	3214537693	Start_PhosphorusCameraFlash_Event			\Gameplay_SFX\Start_PhosphorusCameraFlash_Event	
+	3355137523	Start_FuseMake			\Gameplay_SFX\Start_FuseMake	
 	3771492726	Start_SubmarineCollision			\Gameplay_SFX\Start_SubmarineCollision	
 	3884825202	Stop_TensionEvent			\Gameplay_SFX\Stop_TensionEvent	
 	3933279043	Stop_HullBreachSFX			\Gameplay_SFX\Stop_HullBreachSFX	

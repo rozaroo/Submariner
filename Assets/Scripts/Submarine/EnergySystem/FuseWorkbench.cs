@@ -47,6 +47,10 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     [SerializeField] private Transform bottomConnectionPoint;
     [SerializeField] private float solderRadius = 0.2f;
     [SerializeField] private float solderDuration = 1f;
+    
+    [Header("Audio (Wwise)")]
+    [SerializeField] private string blowtorchStartEvent = "Start_FuseMake";
+    [SerializeField] private string blowtorchStopEvent = "Stop_FuseMake";
 
     [Header("Top Parts")]
     [SerializeField] private FusePart topPartPrefab;
@@ -585,6 +589,7 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         if (newTarget == FuseWorkbenchConnectionType.None)
         {
             _solderTarget = FuseWorkbenchConnectionType.None;
+            SFXManager.PostEvent(blowtorchStopEvent, gameObject);
             _solderProgress = 0f;
             _draggedSolderingIron.SetSoldering(false);
             return;
@@ -593,6 +598,7 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         if (newTarget != _solderTarget)
         {
             _solderTarget = newTarget;
+            SFXManager.PostEvent(blowtorchStartEvent, gameObject);
             _solderProgress = 0f;
         }
 
@@ -639,6 +645,7 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
 
     private void CompleteSolderTarget(FuseWorkbenchConnectionType solderTarget)
     {
+        SFXManager.PostEvent(blowtorchStopEvent, gameObject);
         switch (solderTarget)
         {
             case FuseWorkbenchConnectionType.TopToCore:

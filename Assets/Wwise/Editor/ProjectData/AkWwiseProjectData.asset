@@ -261,7 +261,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 21ceb8a29a2d9141bf9458ff73f9eb44
     GuidInternal: 
-    m_lastTime: -8584169577798268182
+    m_lastTime: -8584127211932604403
     List: []
   - PhysicalPath: Events\Gameplay_SFX.wwu
     PathAndIcons:
@@ -274,7 +274,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584142696631044753
+    m_lastTime: -8584127211932544358
     List:
     - name: Start_BackgroundSubmarineMFX
       guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
@@ -359,6 +359,23 @@ MonoBehaviour:
         guid: e02afe7491ee1348b114ba8a7f4943a9
       Path: Events\Gameplay_SFX\Start_DrainagePumpSFX
       maxAttenuation: 100
+      maxDuration: -1
+      minDuration: -1
+    - name: Start_FuseMake
+      guid: 1e578f1c8efc264f824ad8c308b5a049
+      id: 3355137523
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_FuseMake
+        ObjectType: 3
+        guid: 1e578f1c8efc264f824ad8c308b5a049
+      Path: Events\Gameplay_SFX\Start_FuseMake
+      maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
     - name: Start_HullBreachSFX
@@ -613,6 +630,23 @@ MonoBehaviour:
         ObjectType: 3
         guid: 7e3ae5b6a0d65b4da7c5339c0717039f
       Path: Events\Gameplay_SFX\Stop_DrainagePumpSFX
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Stop_FuseMake
+      guid: 9fadae0cd7afb2499faf009bd235ea8e
+      id: 880757133
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Stop_FuseMake
+        ObjectType: 3
+        guid: 9fadae0cd7afb2499faf009bd235ea8e
+      Path: Events\Gameplay_SFX\Stop_FuseMake
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
