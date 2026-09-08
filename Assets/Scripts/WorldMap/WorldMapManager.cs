@@ -290,6 +290,7 @@ public class WorldMapManager : MonoBehaviour
 
     private bool IsPositionValid(Vector3 candidate, float requiredSize)
     {
+        // Chequeo contra otros elementos ya posicionados (como antes)
         foreach (var pair in _mapElements)
         {
             if (pair.Key == null) continue;
