@@ -9,7 +9,11 @@ public static class MapIconFactory
             createFunc:      () => CreateNewIcon(config),
             actionOnGet:     icon => icon.IsVisible = true,
             actionOnRelease: icon => { icon.ResetToDefaultState(); icon.IsVisible = false; },
-            actionOnDestroy: icon => Object.Destroy(icon.gameObject),
+            actionOnDestroy: icon =>
+            {
+                if (icon != null)
+                    Object.Destroy(icon.gameObject);
+            },
             collectionCheck: false,
             defaultCapacity: 10,
             maxSize:         50
@@ -27,6 +31,8 @@ public static class MapIconFactory
         if (icon == null || icon.MapAssetConfig == null) return;
         _pool.Release(icon.MapAssetConfig, icon);
     }
+    
+    public static void ClearPools() => _pool.ClearAll();
 
     private static MapIcon CreateNewIcon(MapAssetSO config)
     {

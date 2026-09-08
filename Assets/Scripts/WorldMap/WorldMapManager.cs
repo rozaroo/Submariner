@@ -48,7 +48,7 @@ public class WorldMapManager : MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"[WorldMapManager] CRASH: {e.Message}\n{e.StackTrace}");
+            Log.Error($"[WorldMapManager] CRASH: {e.Message}\n{e.StackTrace}");
         }
         
     }

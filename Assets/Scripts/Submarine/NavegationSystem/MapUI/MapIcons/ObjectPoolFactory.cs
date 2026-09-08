@@ -28,4 +28,11 @@ public class ObjectPoolFactory<TKey, TObject> where TObject : class
             _pools[key] = _poolFactory(key);
         return _pools[key];
     }
+    
+    public void ClearAll()
+    {
+        foreach (var pool in _pools.Values)
+            pool.Clear();
+        _pools.Clear();
+    }
 }
