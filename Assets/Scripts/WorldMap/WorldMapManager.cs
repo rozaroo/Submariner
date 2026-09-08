@@ -48,7 +48,7 @@ public class WorldMapManager : MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"[WorldMapManager] CRASH: {e.Message}\n{e.StackTrace}");
+            Log.Error($"[WorldMapManager] CRASH: {e.Message}\n{e.StackTrace}");
         }
         
     }
@@ -290,6 +290,7 @@ public class WorldMapManager : MonoBehaviour
 
     private bool IsPositionValid(Vector3 candidate, float requiredSize)
     {
+        // Chequeo contra otros elementos ya posicionados (como antes)
         foreach (var pair in _mapElements)
         {
             if (pair.Key == null) continue;

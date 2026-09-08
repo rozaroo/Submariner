@@ -17,21 +17,24 @@ public class FloodSystem : MonoBehaviour
     private float _currentHeight;
     private bool _sunkLogged;
     private bool _isFlooding;
-    
+
+    private void Awake()
+    {
+        // Nos suscribimos en Awake para que el script escuche los eventos 
+        // INCLUSO si está apagado (enabled = false).
+        GameEventChannel<OnHullPropertyChange>.OnEventRaised += OnHullStatusChanged;
+        GameEventChannel<OnDrainagePropertyChange>.OnEventRaised += OnDrainageStatusReceived;
+    }
+
     private void Start()
     {
         _currentHeight = startHeight;
         SetWaterHeight(_currentHeight);
     }
 
-    private void OnEnable()
+    private void OnDestroy()
     {
-        GameEventChannel<OnHullPropertyChange>.OnEventRaised += OnHullStatusChanged;
-        GameEventChannel<OnDrainagePropertyChange>.OnEventRaised += OnDrainageStatusReceived;
-    }
-
-    private void OnDisable()
-    {
+        // Nos desuscribimos solo cuando el objeto es destruido (ej: cambio de escena)
         GameEventChannel<OnHullPropertyChange>.OnEventRaised -= OnHullStatusChanged;
         GameEventChannel<OnDrainagePropertyChange>.OnEventRaised -= OnDrainageStatusReceived;
     }
@@ -40,6 +43,7 @@ public class FloodSystem : MonoBehaviour
     {
         if (_currentHeight <= startHeight && EffectiveFloodingSpeed <= 0)
         {
+            // Ahora esto es 100% seguro. Apaga el Update pero no los Eventos.
             enabled = false;
             return;
         }
@@ -59,13 +63,14 @@ public class FloodSystem : MonoBehaviour
             return;
         }
 
+        // Si hay daño, volvemos a encender el Update para que el agua suba
         enabled = true;
-        
-        float damageRatio = onHullPropertyChange.activeHullDamage / onHullPropertyChange.maxHullDamagePosible;
+
+        float damageRatio = onHullPropertyChange.activeHullDamage / (float)onHullPropertyChange.maxHullDamagePosible;
         _hullFloodingSpeed = maxRiseSpeed * damageRatio;
 
         if (!_isFlooding)
-        {        
+        {
             _isFlooding = true;
             SFXManager.PostEvent("Start_TensionEvent", gameObject);
         }
@@ -75,7 +80,7 @@ public class FloodSystem : MonoBehaviour
     {
         _drainageSpeed = maxRiseSpeed * onDrainagePropertyChange.drainagePercentage;
     }
-    
+
     private void CheckProgress()
     {
         if (_sunkLogged) return;
@@ -95,5 +100,4 @@ public class FloodSystem : MonoBehaviour
         pos.y = y;
         waterMesh.position = pos;
     }
-   
 }

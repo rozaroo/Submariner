@@ -17,7 +17,13 @@ public class WorldMapCollisionElementSO : WorldMapElementSO
 
         go.layer = LayerMask.NameToLayer("ExternalCollision");
         element.Setup(DetectionMode);
-
-        SetLastRequiredSize(RequiredSize * scaleFactor);
+        
+        float effectiveRadius = RequiredSize * scaleFactor;
+        if (go.TryGetComponent(out Collider col))
+        {
+            float boundsRadius = col.bounds.extents.magnitude; // Worst Case Scenario Cover
+            effectiveRadius = Mathf.Max(effectiveRadius, boundsRadius);
+        }
+        SetLastRequiredSize(effectiveRadius);
     }
 }

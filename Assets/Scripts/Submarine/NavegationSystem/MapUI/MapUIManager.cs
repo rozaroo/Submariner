@@ -32,6 +32,8 @@ public class MapUIManager : MonoBehaviour
 
     private void Awake()
     {
+        MapIconFactory.ClearPools(); //Fix For Reload
+        
         MapCanvas = GetComponent<Canvas>();
         _worldElementIconDictionary = new Dictionary<IWorldMapUIElement, MapIcon>(); 
         _dynamicIconDictionary = new Dictionary<IWorldMapUIElement, DynamicIconData>();
