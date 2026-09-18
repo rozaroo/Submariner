@@ -110,11 +110,11 @@ public class InventorySystem : MonoBehaviour
 
     private float GetSafeScaleValue(float targetScale, float parentScale)
     {
-        if (Mathf.Approximately(parentScale, 0f))
-        {
-            return targetScale;
-        }
-
+        if (Mathf.Approximately(parentScale, 0f)) return targetScale;
         return targetScale / parentScale;
+    }
+    public bool IsHolding<T>() where T : class
+    {
+        return _heldItem is T;
     }
 }

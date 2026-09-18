@@ -37,20 +37,12 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     [SerializeField] private Transform topAssemblyPoint;
     [SerializeField] private Transform coreAssemblyPoint;
     [SerializeField] private Transform bottomAssemblyPoint;
-
-    [Header("Soldering")]
-    [SerializeField] private FuseSolderingIron solderingIronPrefab;
-    [SerializeField] private FuseSolderingIron solderingIron;
-    [SerializeField] private Transform solderingIronRestPoint;
-    [SerializeField] private bool generateSolderingIronIfMissing = true;
-    [SerializeField] private Transform topConnectionPoint;
-    [SerializeField] private Transform bottomConnectionPoint;
-    [SerializeField] private float solderRadius = 0.2f;
-    [SerializeField] private float solderDuration = 1f;
     
     [Header("Audio (Wwise)")]
     [SerializeField] private string blowtorchStartEvent = "Start_FuseMake";
     [SerializeField] private string blowtorchStopEvent = "Stop_FuseMake";
+    [SerializeField] private float solderDuration = 1f;
+    [SerializeField] private float solderRadius = 0.2f;
 
     [Header("Top Parts")]
     [SerializeField] private FusePart topPartPrefab;
@@ -72,7 +64,6 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     private FusePart _snappedCorePart;
     private FusePart _snappedBottomPart;
     private FusePart _draggedPart;
-    private FuseSolderingIron _draggedSolderingIron;
     private Fuse _assembledFuse;
     private Coroutine _dragCoroutine;
     private Coroutine _hoverCoroutine;
@@ -90,6 +81,7 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     public CursorLockMode CursorLockMode => cursorLockMode;
     public bool IsMouseVisible => showMouseCursor;
 
+    private bool _isSoldering;
 
     public void Interact(PlayerCharacter player)
     {
@@ -112,7 +104,6 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         {
             GenerateParts();
         }
-        EnsureSolderingIron();
         StartHoverTracking();
         enabled = true;
     }
@@ -141,35 +132,59 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         }
 
         Vector2 mousePosition = Mouse.current.position.ReadValue();
-        Vector2 viewportPos = new Vector2(mousePosition.x / Screen.width, mousePosition.y / Screen.height);
+
+        Vector2 viewportPos = new Vector2(
+            mousePosition.x / Screen.width,
+            mousePosition.y / Screen.height
+        );
+
         Ray ray = _playerCamera.ViewportPointToRay(viewportPos);
 
-        if (!Physics.Raycast(ray, out RaycastHit hit, raycastDistance))
+        if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance))
         {
-            return;
+            FusePart fusePart = hit.collider.GetComponentInParent<FusePart>();
+
+            if (fusePart != null)
+            {
+                SetHoveredPart(null);
+                BeginDragPart(fusePart);
+                return;
+            }
         }
 
-        FusePart fusePart = hit.collider.GetComponentInParent<FusePart>();
-        if (fusePart != null)
+        if (_currentPlayer.InventorySystem.IsHolding<Blowtorch>())
         {
+            _isSoldering = true;
             SetHoveredPart(null);
-            BeginDragPart(fusePart);
-            return;
-        }
-
-        FuseSolderingIron hitSolderingIron = hit.collider.GetComponentInParent<FuseSolderingIron>();
-        if (hitSolderingIron != null && hitSolderingIron == solderingIron)
-        {
-            SetHoveredPart(null);
-            BeginDragSolderingIron(hitSolderingIron);
         }
     }
 
     private void OnClickCanceled(InputAction.CallbackContext context)
     {
         StopDrag();
+        if (_isSoldering)
+        {
+            _isSoldering = false;
+            _solderTarget = FuseWorkbenchConnectionType.None;
+            _solderProgress = 0f;
+            SFXManager.PostEvent(blowtorchStopEvent, gameObject);
+        }
     }
-
+    private void Update()
+    {
+        if (!_isSoldering) return;
+        if (_currentPlayer == null) return;
+        
+        if (!_currentPlayer.InventorySystem.IsHolding<Blowtorch>())
+        {
+            _isSoldering = false;
+            _solderTarget = FuseWorkbenchConnectionType.None;
+            _solderProgress = 0f;
+            SFXManager.PostEvent(blowtorchStopEvent, gameObject);
+            return;
+        }
+        if (TryGetCursorPointOnWorkPlane(out Vector3 cursorPoint)) HandleSoldering(cursorPoint);
+    }
     private void OnExitPerformed(InputAction.CallbackContext context)
     {
         _currentPlayer.OnUnPossessionState(this);
@@ -193,34 +208,6 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         SpawnPartGroup(bottomPartPrefab, bottomPartSpawnPoints, bottomAmperages);
 
         _hasGeneratedParts = true;
-    }
-
-    private void EnsureSolderingIron()
-    {
-        if (solderingIron != null)
-        {
-            return;
-        }
-
-        if (!generateSolderingIronIfMissing)
-        {
-            return;
-        }
-
-        if (solderingIronPrefab == null || solderingIronRestPoint == null)
-        {
-            Log.Warning("[FuseWorkbench] Soldering Iron Prefab or Rest Point Not Set");
-            return;
-        }
-
-        solderingIron = Instantiate(
-            solderingIronPrefab,
-            solderingIronRestPoint.position,
-            solderingIronRestPoint.rotation
-        );
-
-        solderingIron.SnapTo(solderingIronRestPoint);
-        solderingIron.CacheInitialPlacement();
     }
 
     private void SpawnPartGroup(FusePart partPrefab, List<Transform> spawnPoints, IReadOnlyList<int> catalogAmperages)
@@ -276,18 +263,6 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         _dragCoroutine = StartCoroutine(DragPart());
     }
 
-    private void BeginDragSolderingIron(FuseSolderingIron hitSolderingIron)
-    {
-        StopDrag();
-        SetHoveredPart(null);
-        _draggedSolderingIron = hitSolderingIron;
-        _draggedSolderingIron.SetSelected(true);
-        _draggedSolderingIron.transform.SetParent(transform, true);
-        _solderTarget = FuseWorkbenchConnectionType.None;
-        _solderProgress = 0f;
-        _dragCoroutine = StartCoroutine(DragSolderingIron());
-    }
-
     private IEnumerator DragPart()
     {
         while (_draggedPart != null)
@@ -295,20 +270,6 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
             if (TryGetCursorPointOnWorkPlane(out Vector3 cursorPoint))
             {
                 _draggedPart.transform.position = cursorPoint;
-            }
-
-            yield return null;
-        }
-    }
-
-    private IEnumerator DragSolderingIron()
-    {
-        while (_draggedSolderingIron != null)
-        {
-            if (TryGetCursorPointOnWorkPlane(out Vector3 cursorPoint))
-            {
-                _draggedSolderingIron.transform.position = cursorPoint;
-                HandleSoldering(cursorPoint);
             }
 
             yield return null;
@@ -340,7 +301,7 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     {
         while (true)
         {
-            if (_draggedPart != null || _draggedSolderingIron != null)
+            if (_draggedPart != null)
             {
                 SetHoveredPart(null);
                 yield return null;
@@ -434,15 +395,9 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
             StopCoroutine(_dragCoroutine);
             _dragCoroutine = null;
         }
-
         if (_draggedPart != null)
         {
             DropDraggedPart();
-        }
-
-        if (_draggedSolderingIron != null)
-        {
-            DropSolderingIron();
         }
     }
 
@@ -458,25 +413,6 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
 
         part.ReturnToInitialPlacement();
         DestroyAssembledFuse();
-    }
-
-    private void DropSolderingIron()
-    {
-        _draggedSolderingIron.SetSelected(false);
-        _draggedSolderingIron.SetSoldering(false);
-
-        if (solderingIronRestPoint != null)
-        {
-            _draggedSolderingIron.SnapTo(solderingIronRestPoint);
-        }
-        else
-        {
-            _draggedSolderingIron.ReturnToInitialPlacement();
-        }
-
-        _draggedSolderingIron = null;
-        _solderTarget = FuseWorkbenchConnectionType.None;
-        _solderProgress = 0f;
     }
 
     private bool TrySnapPartToAssembly(FusePart part)
@@ -586,12 +522,13 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     private void HandleSoldering(Vector3 solderingPosition)
     {
         FuseWorkbenchConnectionType newTarget = GetSolderTarget(solderingPosition);
+
         if (newTarget == FuseWorkbenchConnectionType.None)
         {
             _solderTarget = FuseWorkbenchConnectionType.None;
             SFXManager.PostEvent(blowtorchStopEvent, gameObject);
             _solderProgress = 0f;
-            _draggedSolderingIron.SetSoldering(false);
+
             return;
         }
 
@@ -602,14 +539,8 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
             _solderProgress = 0f;
         }
 
-        _draggedSolderingIron.SetSoldering(true);
         _solderProgress += Time.deltaTime;
-
-        if (_solderProgress < solderDuration)
-        {
-            return;
-        }
-
+        if (_solderProgress < solderDuration) return;
         CompleteSolderTarget(_solderTarget);
         _solderProgress = 0f;
         TryAssembleFuse();
@@ -617,29 +548,21 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
 
     private FuseWorkbenchConnectionType GetSolderTarget(Vector3 solderingPosition)
     {
-        if (_snappedCorePart == null)
+        if (_snappedCorePart == null) return FuseWorkbenchConnectionType.None;
+        
+
+        if (!_isTopConnectionSoldered && _snappedTopPart != null && topAssemblyPoint != null)
         {
-            return FuseWorkbenchConnectionType.None;
+            float topDistance = Vector3.Distance(solderingPosition,topAssemblyPoint.position);
+            if (topDistance <= solderRadius) return FuseWorkbenchConnectionType.TopToCore;
         }
 
-        if (!_isTopConnectionSoldered && _snappedTopPart != null && topConnectionPoint != null)
+        if (!_isBottomConnectionSoldered && _snappedBottomPart != null && bottomAssemblyPoint != null)
         {
-            float topDistance = Vector3.Distance(solderingPosition, topConnectionPoint.position);
-            if (topDistance <= solderRadius)
-            {
-                return FuseWorkbenchConnectionType.TopToCore;
-            }
+            float bottomDistance = Vector3.Distance(solderingPosition,bottomAssemblyPoint.position);
+            if (bottomDistance <= solderRadius) return FuseWorkbenchConnectionType.BottomToCore;
+            
         }
-
-        if (!_isBottomConnectionSoldered && _snappedBottomPart != null && bottomConnectionPoint != null)
-        {
-            float bottomDistance = Vector3.Distance(solderingPosition, bottomConnectionPoint.position);
-            if (bottomDistance <= solderRadius)
-            {
-                return FuseWorkbenchConnectionType.BottomToCore;
-            }
-        }
-
         return FuseWorkbenchConnectionType.None;
     }
 
@@ -661,27 +584,14 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
 
     private void TryAssembleFuse()
     {
-        if (_snappedTopPart == null || _snappedCorePart == null || _snappedBottomPart == null)
-        {
-            return;
-        }
-
-        if (!_isTopConnectionSoldered || !_isBottomConnectionSoldered)
-        {
-            return;
-        }
-
+        if (_snappedTopPart == null || _snappedCorePart == null || _snappedBottomPart == null) return;
+        if (!_isTopConnectionSoldered || !_isBottomConnectionSoldered) return;
         if (assembledFusePrefab == null || assembledFuseSpawnPoint == null)
         {
             Log.Warning("[FuseWorkbench] Assembled Fuse Prefab or Spawn Point Not Set");
             return;
         }
-
-        if (destroyPreviousFuseOnAssembly && _assembledFuse != null)
-        {
-            Destroy(_assembledFuse.gameObject);
-        }
-
+        if (destroyPreviousFuseOnAssembly && _assembledFuse != null) Destroy(_assembledFuse.gameObject);
         int totalAmperage = _snappedTopPart.Amperage + _snappedCorePart.Amperage + _snappedBottomPart.Amperage;
         _assembledFuse = Instantiate(assembledFusePrefab, assembledFuseSpawnPoint.position, assembledFuseSpawnPoint.rotation);
         _assembledFuse.SetAmperage(totalAmperage);
