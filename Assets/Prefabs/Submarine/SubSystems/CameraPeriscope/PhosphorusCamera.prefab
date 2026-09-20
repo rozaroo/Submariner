@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5069593907928987219}
   - component: {fileID: 647663133882715202}
   - component: {fileID: 7591401671884472162}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PhosphorusCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,9 +143,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   periscopeCameraAnchorSo: {fileID: 11400000, guid: 522a189dbd2c157479bb7efa2786b504, type: 2}
   exteriorCamera: {fileID: 5069593907928987219}
-  mouseSensitivity: 0.2
+  rotationSpeed: 45
+  edgeThreshold: 0.1
   verticalClamp: 70
+  rotationSmoothness: 8
   flashFadeInDuration: 0.05
   whiteScreenDuration: 0.15
   exteriorCameraDuration: 2
   finalFadeOutDuration: 0.5
+  energyConsumption: 5

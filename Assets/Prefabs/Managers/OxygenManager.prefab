@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad6860af3661d5b418419a5ac60a7509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxOxygen: 100
+  maxOxygen: 120
   currentOxygen: 60
   suffocationDuration: 60
   suffocationTimeRemaining: 0

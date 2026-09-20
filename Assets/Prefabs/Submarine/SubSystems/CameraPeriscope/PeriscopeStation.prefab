@@ -90,15 +90,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6457387169702611866}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.8299999, z: 5.2899995}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.00000002142042, y: 1.8382493, z: -3.0192194}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6534777486174989250}
   - {fileID: 9197622544301988076}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4347358874085506081
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -130,7 +130,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 33f1fd8c06758c94cbdc1c3233c703b0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -167,8 +167,8 @@ MonoBehaviour:
   cameraAnchor: {fileID: 6534777486174989250}
   directionAnchor: {fileID: 9197622544301988076}
   transitionDuration: 0.1
-  cursorLockMode: 0
-  showMouseCursor: 0
+  cursorLockMode: 2
+  showMouseCursor: 1
   _periscopeCameraAnchorSo: {fileID: 11400000, guid: 522a189dbd2c157479bb7efa2786b504, type: 2}
   playerMapName: Player
   stationMapName: Station

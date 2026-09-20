@@ -73,6 +73,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterMesh: {fileID: 0}
-  maxRiseSpeed: 0.2
+  maxRiseSpeed: 0.3
   startHeight: -45.81
   maxHeight: -43

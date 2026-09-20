@@ -1145,7 +1145,7 @@ GameObject:
   - component: {fileID: 4917294596352061485}
   - component: {fileID: 2241162399424717717}
   m_Layer: 3
-  m_Name: DrainageSystemBase
+  m_Name: DrainageSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1159,9 +1159,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7887449158100243412}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -42.58, y: -0.298, z: 1.109}
-  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.173, y: -0.0050007105, z: -0.33199978}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3891704851256750377}
@@ -1207,7 +1207,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: -876546973899608171, guid: 751c00d49239e1f439d4cf925dd3f602, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1241,7 +1241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36eb502c6099869449ad6cdd6da81e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainLever: {fileID: 5109130274364252179}
+  mainLeverPull: {fileID: 5109130274364252179}
   cameraAnchor: {fileID: 891722991463712762}
   directionAnchor: {fileID: 3891704851256750377}
   transitionDuration: 0.4
@@ -1253,7 +1253,7 @@ MonoBehaviour:
   pointerDeltaActionName: Pointer
   exitActionName: ExitStation
   drainagePercentage: 0.5
-  energyConsumption: 5
+  energyConsumption: 10
 --- !u!114 &4917294596352061485
 MonoBehaviour:
   m_ObjectHideFlags: 0

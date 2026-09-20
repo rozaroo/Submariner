@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 405614251050696006}
   - component: {fileID: 4256806763141072197}
   m_Layer: 3
-  m_Name: SoldadorWorkbench
+  m_Name: SolderWorkbench
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

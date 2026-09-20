@@ -6,6 +6,7 @@ using System.Collections.Generic;
 /// Manager centralizado para controlar luces, alertas y desvanecimientos (fades).
 /// Fusiona las funcionalidades de SimpleFlicker, FadeManager y el LightManager original.
 /// </summary>
+/// 
 public class LightManager : MonoBehaviour
 {
     public static LightManager Instance { get; private set; }
