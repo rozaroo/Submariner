@@ -7230,21 +7230,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2126186007429667805
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6958195361297982214}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.4300863, y: -42.288517, z: -13.908192}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2154951932699378502 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7927919225873622769, guid: 4c33d95006125f34480e5f2a0f3f85da, type: 3}
@@ -8490,25 +8475,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 597820938294520340, guid: c493fc2032feb2a4ab35b64d4caa6099, type: 3}
---- !u!114 &3922750099511486534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6958195361297982214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fe88ab5ba9755e4883b06d840c1e657, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxIntensity: 2
-  minIntensity: 0.2
-  enableFlicker: 1
-  flickerThreshold: 20
-  flickerChance: 0.05
-  minFlickerTime: 0.05
-  maxFlickerTime: 0.15
 --- !u!4 &3943555566376100011
 Transform:
   m_ObjectHideFlags: 0
@@ -9760,6 +9726,63 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8854750803988126140, guid: 5f51e023dfa338c468917334c7011031, type: 3}
+--- !u!1001 &5672962389202818936
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 310550308286591546, guid: d03f470bb31267e488b2b9403c7a66f5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.4300863
+      objectReference: {fileID: 0}
+    - target: {fileID: 310550308286591546, guid: d03f470bb31267e488b2b9403c7a66f5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -42.288517
+      objectReference: {fileID: 0}
+    - target: {fileID: 310550308286591546, guid: d03f470bb31267e488b2b9403c7a66f5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -13.908192
+      objectReference: {fileID: 0}
+    - target: {fileID: 310550308286591546, guid: d03f470bb31267e488b2b9403c7a66f5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 310550308286591546, guid: d03f470bb31267e488b2b9403c7a66f5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 310550308286591546, guid: d03f470bb31267e488b2b9403c7a66f5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 310550308286591546, guid: d03f470bb31267e488b2b9403c7a66f5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 310550308286591546, guid: d03f470bb31267e488b2b9403c7a66f5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 310550308286591546, guid: d03f470bb31267e488b2b9403c7a66f5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 310550308286591546, guid: d03f470bb31267e488b2b9403c7a66f5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1880708098505650781, guid: d03f470bb31267e488b2b9403c7a66f5, type: 3}
+      propertyPath: m_Name
+      value: SubmarineLightManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d03f470bb31267e488b2b9403c7a66f5, type: 3}
 --- !u!64 &5699218842417307163
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10436,23 +10459,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8854750803988126140, guid: 5f51e023dfa338c468917334c7011031, type: 3}
---- !u!1 &6958195361297982214
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2126186007429667805}
-  - component: {fileID: 3922750099511486534}
-  m_Layer: 0
-  m_Name: SubmarineLightManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!108 &6988986729026547046 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 7746337793786187457, guid: 7438cfc29902c464091b783abd4b2252, type: 3}
@@ -12544,7 +12550,7 @@ SceneRoots:
   - {fileID: 6467765714465179542}
   - {fileID: 1585097670396917852}
   - {fileID: 1397897100433839250}
-  - {fileID: 2126186007429667805}
+  - {fileID: 5672962389202818936}
   - {fileID: 222584104}
   - {fileID: 2725972567633721026}
   - {fileID: 4316534512922342337}
