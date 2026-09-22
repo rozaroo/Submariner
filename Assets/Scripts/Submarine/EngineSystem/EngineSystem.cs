@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class EngineSystem : MonoBehaviour
 { 
     [Header("Startup")] 
@@ -17,6 +17,7 @@ public class EngineSystem : MonoBehaviour
 
     [Header("Cooling")]
     [SerializeField] private float coolingAmount = 2f;
+    [SerializeField, Range(0f, 100f)] private float repairedTemperature = 50f;
     
     private EngineState _currentState = EngineState.Off;
     private Coroutine _engineStartingCoroutine;
@@ -32,7 +33,17 @@ public class EngineSystem : MonoBehaviour
             navigationLeverPull.onDeactivation += StopEngine;
         }
     }
+    private void Update()
+    {
+        if (Keyboard.current != null && Keyboard.current.f2Key.wasPressedThisFrame)
+        {
+            currentTemperature = maxTemperature;
 
+            Debug.Log($"[ENGINE TEST] Temperature forced to {currentTemperature}%");
+
+            CheckTemperature();
+        }
+    }
     private void OnDestroy()
     {
         if (navigationLeverPull != null)
@@ -153,6 +164,7 @@ public class EngineSystem : MonoBehaviour
     public bool CanBeCooled() => _currentState != EngineState.Off && _currentState != EngineState.Broken; //Not Used, but just in case.
     
     public bool IsRunning() => _currentState == EngineState.Operative || _currentState == EngineState.Degraded;
+    public bool IsBroken() => _currentState == EngineState.Broken;
 
     public void RestartEngine()
     {
@@ -163,9 +175,11 @@ public class EngineSystem : MonoBehaviour
         }
         Log.Info("[ENGINE] Restart button pressed.");
         Log.Info("[ENGINE] Repairing engine...");
-        currentTemperature = 0f;
+        // The restart unblocks the engine, but does not magically cool it down.
+        // Cooling must still be operated after navigation starts the engine again.
+        currentTemperature = Mathf.Clamp(repairedTemperature, 0f, maxTemperature);
         _currentState = EngineState.Off;
-        Log.Info("[ENGINE] Temperature reset to 0%");
+        Log.Info($"[ENGINE] Temperature restored to {currentTemperature}%");
         Log.Info("[ENGINE] Status changed -> OFF");
         Log.Info("[ENGINE] Engine repaired. Pull the navigation lever to start it again.");
         if (_temperatureCoroutine != null) 

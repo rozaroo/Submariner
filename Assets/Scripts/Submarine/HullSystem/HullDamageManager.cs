@@ -16,7 +16,7 @@ public class HullDamageManager : MonoBehaviour
     [SerializeField] private float maxSpawnInterval = 15f;
 
     [Header("Debug")]
-    [Tooltip("Marca esta casilla en el Inspector (en Play Mode) para forzar la aparición de una grieta instantáneamente.")]
+    [Tooltip("Marca esta casilla en el Inspector (en Play Mode) para forzar la apariciï¿½n de una grieta instantï¿½neamente.")]
     [SerializeField] private bool forceHullDamageTrigger;
 
     private int ActiveCrackCount { get; set; }
@@ -51,12 +51,12 @@ public class HullDamageManager : MonoBehaviour
             if (crack != null) crack.OnCrackRepaired -= OnHullRepaired;
     }
 
-    // Leemos la variable en Update para que actúe como un botón desde el Inspector
+    // Leemos la variable en Update para que actï¿½e como un botï¿½n desde el Inspector
     private void Update()
     {
         if (forceHullDamageTrigger)
         {
-            forceHullDamageTrigger = false; // Desmarcamos la casilla automáticamente
+            forceHullDamageTrigger = false; // Desmarcamos la casilla automï¿½ticamente
             TrySpawnCrack();
         }
     }
@@ -70,11 +70,11 @@ public class HullDamageManager : MonoBehaviour
         StartCoroutine(StartHullGracePeriod());
     }
 
-    [ContextMenu("Force Spawn Crack")] // Opción adicional haciendo clic derecho en el script
+    [ContextMenu("Force Spawn Crack")] // Opciï¿½n adicional haciendo clic derecho en el script
     private void DebugSpawnCrack()
     {
         if (Application.isPlaying) TrySpawnCrack();
-        else Debug.LogWarning("Solo puedes generar daño en Play Mode.");
+        else Debug.LogWarning("Solo puedes generar daï¿½o en Play Mode.");
     }
 
     private IEnumerator StartHullGracePeriod()
@@ -115,15 +115,31 @@ public class HullDamageManager : MonoBehaviour
             TrySpawnCrack();
         }
     }
+    
+    /// <summary>
+    /// Spawns up to <paramref name="amount"/> currently available leaks immediately.
+    /// Used by emergencies that must create an instant, visible consequence.
+    /// </summary>
+    public int SpawnImmediateDamage(int amount)
+    {
+        int spawned = 0;
+        for (int i = 0; i < amount; i++)
+        {
+            if (!TrySpawnCrack()) break;
+            spawned++;
+        }
 
-    private void TrySpawnCrack()
+        return spawned;
+    }
+
+    private bool TrySpawnCrack()
     {
         var available = _pool.FindAll(c => !c.gameObject.activeSelf);
 
         if (available.Count == 0)
         {
             StopSpawningBehaviour();
-            return;
+            return false;
         }
 
         Log.Info("Spawned Crack");
@@ -133,6 +149,7 @@ public class HullDamageManager : MonoBehaviour
         ActiveCrackCount++;
 
         GameEventChannel<OnHullPropertyChange>.RaiseEvent(new OnHullPropertyChange(spawnZones.Length, ActiveCrackCount));
+        return true;
     }
 
     private void OnHullRepaired(HullDamage hullDamage)

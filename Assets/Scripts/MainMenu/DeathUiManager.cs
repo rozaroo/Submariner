@@ -34,6 +34,10 @@ public class DeathUIManager : MonoBehaviour
                 deathReasonText.text = "You ran out of oxygen.";
                 break;
 
+            case DeathType.EngineOverheat:
+                deathReasonText.text = "El motor colapsó. El submarino está perdido.";
+                break;
+
             case DeathType.SkillIssue:
                 deathReasonText.text = "Skill issue.";
                 break;

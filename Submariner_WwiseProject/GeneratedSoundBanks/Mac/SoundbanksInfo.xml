@@ -34,7 +34,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3401228817" Language="SFX" Hash="3098607700">
+		<SoundBank Id="3401228817" Language="SFX" Hash="2467986476">
 			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
 			<ShortName>GamePlay_SFX</ShortName>
 			<Path>GamePlay_SFX.bnk</Path>
@@ -44,10 +44,13 @@
 				<Event Id="738466431" Name="Start_ButtonPress" ObjectPath="\Events\Gameplay_SFX\Start_ButtonPress" DurationType="OneShot" DurationMin="0.082455" DurationMax="0.115269"/>
 				<Event Id="378872923" Name="Start_Closing_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Closing_Pressure_DoorSFX" DurationType="OneShot" DurationMin="2.07" DurationMax="2.257351"/>
 				<Event Id="4238673748" Name="Start_DrainagePumpSFX" ObjectPath="\Events\Gameplay_SFX\Start_DrainagePumpSFX" MaxAttenuation="100." DurationType="Infinite"/>
-				<Event Id="3355137523" Name="Start_FuseMake" ObjectPath="\Events\Gameplay_SFX\Start_FuseMake" DurationType="Infinite"/>
+				<Event Id="1459308672" Name="Start_Engine_Minigame_Failed" ObjectPath="\Events\Gameplay_SFX\Start_Engine_Minigame_Failed" DurationType="OneShot" DurationMin="7.557029" DurationMax="7.557029"/>
+				<Event Id="3907807344" Name="Start_Engine_Minigame_SucceededStage" ObjectPath="\Events\Gameplay_SFX\Start_Engine_Minigame_SucceededStage" DurationType="OneShot" DurationMin="0.673379" DurationMax="0.673379"/>
 				<Event Id="2571798077" Name="Start_HullBreachSFX" ObjectPath="\Events\Gameplay_SFX\Start_HullBreachSFX" MaxAttenuation="100." DurationType="Infinite"/>
 				<Event Id="2469108041" Name="Start_LeverPullFinished" ObjectPath="\Events\Gameplay_SFX\Start_LeverPullFinished" DurationType="OneShot" DurationMin="0.398979" DurationMax="0.398979"/>
 				<Event Id="149397142" Name="Start_Motor_Engine" ObjectPath="\Events\Gameplay_SFX\Start_Motor_Engine" MaxAttenuation="10." DurationType="Infinite"/>
+				<Event Id="684633665" Name="Start_Motor_Engine_Fail" ObjectPath="\Events\Gameplay_SFX\Start_Motor_Engine_Fail" DurationType="OneShot" DurationMin="2.181225" DurationMax="2.181225"/>
+				<Event Id="3037698516" Name="Start_Motor_Engine_Minigame_Succeeded" ObjectPath="\Events\Gameplay_SFX\Start_Motor_Engine_Minigame_Succeeded" DurationType="OneShot" DurationMin="4.518579" DurationMax="4.518579"/>
 				<Event Id="2060351696" Name="Start_OnMissionCompleted" ObjectPath="\Events\Gameplay_SFX\Start_OnMissionCompleted" DurationType="OneShot" DurationMin="3.064671" DurationMax="3.064671"/>
 				<Event Id="4235702204" Name="Start_Opening_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Opening_Pressure_DoorSFX" DurationType="OneShot" DurationMin="1.35771" DurationMax="1.35771"/>
 				<Event Id="438413481" Name="Start_PhosphorusCameraCooldown" ObjectPath="\Events\Gameplay_SFX\Start_PhosphorusCameraCooldown" DurationType="OneShot" DurationMin="1.902773" DurationMax="1.902773"/>
@@ -57,10 +60,10 @@
 				<Event Id="997126444" Name="Start_SonarPingOuter" ObjectPath="\Events\Gameplay_SFX\Start_SonarPingOuter" DurationType="OneShot" DurationMin="3.2" DurationMax="3.2"/>
 				<Event Id="3771492726" Name="Start_SubmarineCollision" ObjectPath="\Events\Gameplay_SFX\Start_SubmarineCollision" DurationType="OneShot" DurationMin="7.994576" DurationMax="8.817284"/>
 				<Event Id="1403223316" Name="Start_TensionEvent" ObjectPath="\Events\Gameplay_SFX\Start_TensionEvent" DurationType="Infinite"/>
+				<Event Id="2692854921" Name="Start_Tube_Repair_Engine" ObjectPath="\Events\Gameplay_SFX\Start_Tube_Repair_Engine" DurationType="OneShot" DurationMin="0.548571" DurationMax="1.201633"/>
 				<Event Id="116843463" Name="Stop_BackgroundSubmarineMFX" ObjectPath="\Events\Gameplay_SFX\Stop_BackgroundSubmarineMFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="1982947219" Name="Stop_BlowtorchSFX" ObjectPath="\Events\Gameplay_SFX\Stop_BlowtorchSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="860956674" Name="Stop_DrainagePumpSFX" ObjectPath="\Events\Gameplay_SFX\Stop_DrainagePumpSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
-				<Event Id="880757133" Name="Stop_FuseMake" ObjectPath="\Events\Gameplay_SFX\Stop_FuseMake" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="3933279043" Name="Stop_HullBreachSFX" ObjectPath="\Events\Gameplay_SFX\Stop_HullBreachSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="344065456" Name="Stop_Motor_Engine" ObjectPath="\Events\Gameplay_SFX\Stop_Motor_Engine" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="3884825202" Name="Stop_TensionEvent" ObjectPath="\Events\Gameplay_SFX\Stop_TensionEvent" DurationType="Infinite"/>
@@ -87,6 +90,10 @@
 					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
 					<Path>SFX\490951__nox_sound__footsteps_walk_191AADB4.wem</Path>
 				</File>
+				<File Id="108859605" Language="SFX">
+					<ShortName>33637__herbertboland__cinematicboomnorm.wav</ShortName>
+					<Path>SFX\33637__herbertboland__cinematicboomnorm_10C4C929.wem</Path>
+				</File>
 				<File Id="130164563" Language="SFX">
 					<ShortName>reaper_stems_105293__anton__water_pump_sewer_water_stream.wav</ShortName>
 					<Path>SFX\reaper_stems_105293__anton__water_pump_sewer_water_stream_D79FB2B7.wem</Path>
@@ -102,6 +109,10 @@
 				<File Id="175779074" Language="SFX">
 					<ShortName>17216__meatball4u__countdown.wav</ShortName>
 					<Path>SFX\17216__meatball4u__countdown_DB187815.wem</Path>
+				</File>
+				<File Id="180513701" Language="SFX">
+					<ShortName>freesound_community-air-or-steam-pressure-release-29600.wav</ShortName>
+					<Path>SFX\freesound_community-air-or-steam-pressure-release-29600_BCBC7F3A.wem</Path>
 				</File>
 				<File Id="183692339" Language="SFX">
 					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
@@ -167,6 +178,10 @@
 					<ShortName>Project_1_Tension 5.wav</ShortName>
 					<Path>SFX\Project_1_Tension 5_D79FB2B7.wem</Path>
 				</File>
+				<File Id="491929147" Language="SFX">
+					<ShortName>freesound_community-stone-pale-ale-bottle-clank-106191.wav</ShortName>
+					<Path>SFX\freesound_community-stone-pale-ale-bottle-clank-106191_10C4C929.wem</Path>
+				</File>
 				<File Id="495489055" Language="SFX">
 					<ShortName>17216__meatball4u__countdown.wav</ShortName>
 					<Path>SFX\17216__meatball4u__countdown_43B927F8.wem</Path>
@@ -223,6 +238,10 @@
 					<ShortName>425090__neospica__pressurized-door-opening.wav</ShortName>
 					<Path>SFX\425090__neospica__pressurized-door-opening_2EA370B6.wem</Path>
 				</File>
+				<File Id="811089060" Language="SFX">
+					<ShortName>freesound_community-high-clank-86142.wav</ShortName>
+					<Path>SFX\freesound_community-high-clank-86142_10C4C929.wem</Path>
+				</File>
 				<File Id="813881389" Language="SFX">
 					<ShortName>Project_1_BAS Pilobass.wav</ShortName>
 					<Path>SFX\Project_1_BAS Pilobass_D79FB2B7.wem</Path>
@@ -234,6 +253,10 @@
 				<File Id="824057027" Language="SFX">
 					<ShortName>Project_1_Sonar.wav</ShortName>
 					<Path>SFX\Project_1_Sonar_DAF8F2F4.wem</Path>
+				</File>
+				<File Id="824137965" Language="SFX">
+					<ShortName>94127__bmaczero__clank1 (1).wav</ShortName>
+					<Path>SFX\94127__bmaczero__clank1 (1)_10C4C929.wem</Path>
 				</File>
 				<File Id="845855491" Language="SFX">
 					<ShortName>16937__sculptor__watersubmarine render 001.wav</ShortName>
@@ -262,6 +285,10 @@
 				<File Id="912122509" Language="SFX">
 					<ShortName>556708__nachtmahrtv__metal-hit.wav</ShortName>
 					<Path>SFX\556708__nachtmahrtv__metal-hit_C285AEF5.wem</Path>
+				</File>
+				<File Id="945802731" Language="SFX">
+					<ShortName>167911__lonemonk__short-engine-turnover-no-start.wav</ShortName>
+					<Path>SFX\167911__lonemonk__short-engine-turnover-no-start_10C4C929.wem</Path>
 				</File>
 				<File Id="974555202" Language="SFX">
 					<ShortName>696374__sanderboah__walking-on-metal.wav</ShortName>

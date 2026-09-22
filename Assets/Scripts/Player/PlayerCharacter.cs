@@ -193,12 +193,17 @@ public class PlayerCharacter : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactableLayer))
         {
             Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 2f);
+
             if (hit.collider.TryGetComponent(out IInteractable interactable))
                 interactable.Interact(this);
         }
         else
         {
-            Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red, 2f);
+            Debug.DrawRay(
+                ray.origin,
+                ray.direction * interactionDistance,
+                Color.red,
+                2f);
         }
     }
 

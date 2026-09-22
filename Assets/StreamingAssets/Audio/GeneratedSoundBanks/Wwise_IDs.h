@@ -18,10 +18,13 @@ namespace AK
         static const AkUniqueID START_BUTTONPRESS = 738466431U;
         static const AkUniqueID START_CLOSING_PRESSURE_DOORSFX = 378872923U;
         static const AkUniqueID START_DRAINAGEPUMPSFX = 4238673748U;
-        static const AkUniqueID START_FUSEMAKE = 3355137523U;
+        static const AkUniqueID START_ENGINE_MINIGAME_FAILED = 1459308672U;
+        static const AkUniqueID START_ENGINE_MINIGAME_SUCCEEDEDSTAGE = 3907807344U;
         static const AkUniqueID START_HULLBREACHSFX = 2571798077U;
         static const AkUniqueID START_LEVERPULLFINISHED = 2469108041U;
         static const AkUniqueID START_MOTOR_ENGINE = 149397142U;
+        static const AkUniqueID START_MOTOR_ENGINE_FAIL = 684633665U;
+        static const AkUniqueID START_MOTOR_ENGINE_MINIGAME_SUCCEEDED = 3037698516U;
         static const AkUniqueID START_ONMISSIONCOMPLETED = 2060351696U;
         static const AkUniqueID START_OPENING_PRESSURE_DOORSFX = 4235702204U;
         static const AkUniqueID START_PHOSPHORUSCAMERACOOLDOWN = 438413481U;
@@ -31,10 +34,10 @@ namespace AK
         static const AkUniqueID START_SONARPINGOUTER = 997126444U;
         static const AkUniqueID START_SUBMARINECOLLISION = 3771492726U;
         static const AkUniqueID START_TENSIONEVENT = 1403223316U;
+        static const AkUniqueID START_TUBE_REPAIR_ENGINE = 2692854921U;
         static const AkUniqueID STOP_BACKGROUNDSUBMARINEMFX = 116843463U;
         static const AkUniqueID STOP_BLOWTORCHSFX = 1982947219U;
         static const AkUniqueID STOP_DRAINAGEPUMPSFX = 860956674U;
-        static const AkUniqueID STOP_FUSEMAKE = 880757133U;
         static const AkUniqueID STOP_HULLBREACHSFX = 3933279043U;
         static const AkUniqueID STOP_MOTOR_ENGINE = 344065456U;
         static const AkUniqueID STOP_TENSIONEVENT = 3884825202U;

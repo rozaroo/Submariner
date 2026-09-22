@@ -1764,51 +1764,218 @@
 						<ActiveSource Name="387232__steaq__badge-coin-win" ID="{AC0B1234-DFCA-4A0B-9EC8-0B0384B3269A}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
-				<Sound Name="Motor_Engine" ID="{97ECF01A-642E-44A5-9E3B-13ADF21030A6}" ShortID="1000258430">
-					<PropertyList>
-						<Property Name="3DSpatialization" Type="int16" Value="2"/>
-						<Property Name="Highpass" Type="int16">
-							<ValueList>
-								<Value>20</Value>
-							</ValueList>
-						</Property>
-						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Attenuation">
-							<ObjectRef Name="Engine_Attenuation" ID="{A6C01932-ED43-4395-9248-C4F5BBD72692}" WorkUnitID="{FA43832F-6DF7-497E-836D-6C0AC9D9DC7E}"/>
-						</Reference>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="General_SFX" ID="{7D58A2F4-D121-43DD-BB96-2F34B0A30465}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
-						</Reference>
-					</ReferenceList>
+				<Folder Name="Engine" ID="{93223B08-E6D2-4AC4-8BF5-B40819DB414F}" ShortID="438293975">
 					<ChildrenList>
-						<AudioFileSource Name="16937__sculptor__watersubmarine render 001" ID="{3A9A8B1E-525D-459D-9505-3B1FC615227E}">
+						<RandomSequenceContainer Name="Tube_Repair_Engine" ID="{B1C0A291-390F-4DFD-8D62-88C17CA0E7D9}" ShortID="835911682">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="Tube_Repair_2" ID="{8EEC1C12-D5A0-4ADD-91F7-4AA72A741825}" ShortID="347781883">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-6</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="freesound_community-stone-pale-ale-bottle-clank-106191" ID="{BF46965E-C6D0-4C0E-B300-7D3BBDAF7CED}">
+											<Language>SFX</Language>
+											<AudioFile>freesound_community-stone-pale-ale-bottle-clank-106191.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="491929147"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="freesound_community-stone-pale-ale-bottle-clank-106191" ID="{BF46965E-C6D0-4C0E-B300-7D3BBDAF7CED}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Tube_Repair_1" ID="{DDFEDAA4-B64D-4C4A-B8B7-07307119B4A2}" ShortID="265653605">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="freesound_community-high-clank-86142" ID="{71DEF63E-191E-4452-9EFB-FD379499BED2}">
+											<Language>SFX</Language>
+											<AudioFile>freesound_community-high-clank-86142.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="811089060"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="freesound_community-high-clank-86142" ID="{71DEF63E-191E-4452-9EFB-FD379499BED2}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+							<ObjectLists/>
+						</RandomSequenceContainer>
+						<Sound Name="Motor_Engine" ID="{97ECF01A-642E-44A5-9E3B-13ADF21030A6}" ShortID="1000258430">
 							<PropertyList>
-								<Property Name="CrossfadeDuration" Type="Real64" Value="1178.947"/>
-								<Property Name="FadeInDuration" Type="Real64" Value="1.43352601156069"/>
-								<Property Name="FadeOutDuration" Type="Real64" Value="1.31791907514451"/>
-								<Property Name="LoopBegin" Type="Real64" Value="4.16184971098266"/>
-								<Property Name="LoopEnd" Type="Real64" Value="8.04624277456647"/>
-								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
-								<Property Name="TrimBegin" Type="Real64" Value="0.601156069364162"/>
-								<Property Name="TrimEnd" Type="Real64" Value="13.4566473988439"/>
+								<Property Name="3DSpatialization" Type="int16" Value="2"/>
+								<Property Name="Highpass" Type="int16">
+									<ValueList>
+										<Value>20</Value>
+									</ValueList>
+								</Property>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 							</PropertyList>
-							<Language>SFX</Language>
-							<AudioFile>16937__sculptor__watersubmarine render 001.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="845855491"/>
-							</MediaIDList>
-						</AudioFileSource>
+							<ReferenceList>
+								<Reference Name="Attenuation">
+									<ObjectRef Name="Engine_Attenuation" ID="{A6C01932-ED43-4395-9248-C4F5BBD72692}" WorkUnitID="{FA43832F-6DF7-497E-836D-6C0AC9D9DC7E}"/>
+								</Reference>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="16937__sculptor__watersubmarine render 001" ID="{3A9A8B1E-525D-459D-9505-3B1FC615227E}">
+									<PropertyList>
+										<Property Name="CrossfadeDuration" Type="Real64" Value="1178.947"/>
+										<Property Name="FadeInDuration" Type="Real64" Value="1.43352601156069"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="1.31791907514451"/>
+										<Property Name="LoopBegin" Type="Real64" Value="4.16184971098266"/>
+										<Property Name="LoopEnd" Type="Real64" Value="8.04624277456647"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+										<Property Name="TrimBegin" Type="Real64" Value="0.601156069364162"/>
+										<Property Name="TrimEnd" Type="Real64" Value="13.4566473988439"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>16937__sculptor__watersubmarine render 001.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="845855491"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="16937__sculptor__watersubmarine render 001" ID="{3A9A8B1E-525D-459D-9505-3B1FC615227E}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Motor_Engine_Fail" ID="{21B356A6-5185-4690-B7C0-E112B71ACCC9}" ShortID="413309575">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="167911__lonemonk__short-engine-turnover-no-start" ID="{DE386828-61D2-4AA8-8484-C1397B787E6B}">
+									<Language>SFX</Language>
+									<AudioFile>167911__lonemonk__short-engine-turnover-no-start.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="945802731"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="167911__lonemonk__short-engine-turnover-no-start" ID="{DE386828-61D2-4AA8-8484-C1397B787E6B}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Engine_Minigame_SucceededStage" ID="{1E32A4D7-8366-41FD-9D28-4083B6D2CEC7}" ShortID="336288525">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="94127__bmaczero__clank1 (1)" ID="{A9697BED-1164-4F91-AF2B-DB363A6E2304}">
+									<Language>SFX</Language>
+									<AudioFile>94127__bmaczero__clank1 (1).wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="824137965"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="94127__bmaczero__clank1 (1)" ID="{A9697BED-1164-4F91-AF2B-DB363A6E2304}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Explosion_Engine_TEMPORAL" ID="{261D5018-3449-44D3-9A74-4871761F9FBC}" ShortID="848722797">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="33637__herbertboland__cinematicboomnorm" ID="{806FE28A-1F5E-42EB-AC83-5548492E25A0}">
+									<Language>SFX</Language>
+									<AudioFile>33637__herbertboland__cinematicboomnorm.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="108859605"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="33637__herbertboland__cinematicboomnorm" ID="{806FE28A-1F5E-42EB-AC83-5548492E25A0}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Motor_Engine_Minigame_Succeeded" ID="{C249754F-8B6F-41C6-A2D9-B1D96C691F33}" ShortID="221901434">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{36E6ACCB-6B56-41DE-9192-C51813DA8B51}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Submarine_SFX" ID="{9F2B7D55-7042-43D2-A162-C72F6EEF196B}" WorkUnitID="{46C888EB-8B8A-4077-B7F8-7FE70F3AA207}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="freesound_community-air-or-steam-pressure-release-29600" ID="{6AB65B72-91BF-4D08-86A8-5EF62E709261}">
+									<PropertyList>
+										<Property Name="LoopEnd" Type="Real64" Value="4.49275923085997"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+										<Property Name="TrimEnd" Type="Real64" Value="4.51857968620974"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>freesound_community-air-or-steam-pressure-release-29600.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="180513701"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="freesound_community-air-or-steam-pressure-release-29600" ID="{6AB65B72-91BF-4D08-86A8-5EF62E709261}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
 					</ChildrenList>
-					<ObjectLists/>
-					<ActiveSourceList>
-						<ActiveSource Name="16937__sculptor__watersubmarine render 001" ID="{3A9A8B1E-525D-459D-9505-3B1FC615227E}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
+				</Folder>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>
