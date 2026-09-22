@@ -9623,8 +9623,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8616237675809204612, guid: 2abcebeab99e1214fb721953b094acf8, type: 3}
+      propertyPath: m_Size.y
+      value: 1.007801
+      objectReference: {fileID: 0}
+    - target: {fileID: 8616237675809204612, guid: 2abcebeab99e1214fb721953b094acf8, type: 3}
+      propertyPath: m_Center.y
+      value: 0.003900528
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3321281025317993052, guid: 2abcebeab99e1214fb721953b094acf8, type: 3}
+    - {fileID: 4801464232407081012, guid: 2abcebeab99e1214fb721953b094acf8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
