@@ -10978,7 +10978,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2772145200882560125, guid: f311007da95f0ea4ea45ef4c0b087200, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13.58
+      value: -14.118
       objectReference: {fileID: 0}
     - target: {fileID: 2772145200882560125, guid: f311007da95f0ea4ea45ef4c0b087200, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11468,7 +11468,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3296531921577520442, guid: 2d45668ca99ba1b418a6ca96f950aa6d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.9499999
+      value: -1.017
       objectReference: {fileID: 0}
     - target: {fileID: 3296531921577520442, guid: 2d45668ca99ba1b418a6ca96f950aa6d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11476,7 +11476,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3296531921577520442, guid: 2d45668ca99ba1b418a6ca96f950aa6d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12.6
+      value: -14.046
       objectReference: {fileID: 0}
     - target: {fileID: 3296531921577520442, guid: 2d45668ca99ba1b418a6ca96f950aa6d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11509,6 +11509,14 @@ PrefabInstance:
     - target: {fileID: 3350554650319353135, guid: 2d45668ca99ba1b418a6ca96f950aa6d, type: 3}
       propertyPath: m_Name
       value: OxygenTank
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447761502590902187, guid: 2d45668ca99ba1b418a6ca96f950aa6d, type: 3}
+      propertyPath: m_Mass
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447761502590902187, guid: 2d45668ca99ba1b418a6ca96f950aa6d, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
