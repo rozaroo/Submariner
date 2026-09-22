@@ -20,6 +20,7 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     private Camera _camera;
     private Collider _collider;
     private Rigidbody _rb;
+    private FuseWorkbench _activeWorkbench;
     
     public GameObject GameObject => gameObject;
     public Vector3 HoldPositionOffset => holdOffset;
@@ -44,6 +45,8 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     
     public void OnDrop()
     {
+        _activeWorkbench?.CancelHandheldSoldering();
+        _activeWorkbench = null;
         StopWeldingAudio();
         _rb.isKinematic = false;
         _collider.enabled = true;
@@ -51,11 +54,17 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     
     public void UseItem()
     {
-        //Maybe play animation/sound?
+        TrySolderWorkbench();
     }
     
     public void UseItemHold()
     {
+        if (TrySolderWorkbench())
+        {
+            StopWeldingAudio();
+            return;
+        }
+
         Ray ray = new Ray(_camera.transform.position, _camera.transform.forward);
         
         if (Physics.Raycast(ray, out RaycastHit hit, repairRange, crackLayer) && hit.collider.TryGetComponent(out HullDamage crack))
@@ -76,7 +85,32 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
 
     public void UseItemReleased()
     {
+        _activeWorkbench?.CancelHandheldSoldering();
+        _activeWorkbench = null;
         StopWeldingAudio();
+    }
+
+    private bool TrySolderWorkbench()
+    {
+        if (_camera == null)
+        {
+            return false;
+        }
+
+        Ray ray = new Ray(_camera.transform.position, _camera.transform.forward);
+        if (!Physics.Raycast(ray, out RaycastHit hit, repairRange))
+        {
+            return false;
+        }
+
+        FuseWorkbench workbench = hit.collider.GetComponentInParent<FuseWorkbench>();
+        if (workbench == null)
+        {
+            return false;
+        }
+
+        _activeWorkbench = workbench;
+        return workbench.TrySolderWithHandheldBlowtorch();
     }
     
     public void StopWeldingAudio()
