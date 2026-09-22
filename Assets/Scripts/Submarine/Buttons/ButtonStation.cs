@@ -15,7 +15,9 @@ public class ButtonStation : MonoBehaviour, IButtonControls
     
     public bool isLocked { get; set; }
     public bool isPressed { get; set; }
+    public bool isActive { get; set; }
     public Action onActivation { get; set; }
+    public Action onDeactivation { get; set; }
     private Renderer _renderer;
     private Coroutine _colorCoroutine;
 

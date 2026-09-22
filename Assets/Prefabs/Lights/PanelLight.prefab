@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6202392741857895490, guid: 99eecefe390580c4fa13dd2826189511, type: 3}
+  - {fileID: 2100000, guid: 7167144ad031b70458cc51fa768eeed2, type: 2}
   - {fileID: 2100000, guid: b544936fccc97e244a14f6aa0c72e11f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -136,7 +136,7 @@ MonoBehaviour:
   targetRenderer: {fileID: 6176581988609985132}
   lightComponent: {fileID: 5891397553202659919}
   lightColor: {r: 1, g: 1, b: 1, a: 1}
-  intensity: 1
+  intensity: 0.1
 --- !u!1 &8715671591505122503
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +187,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1

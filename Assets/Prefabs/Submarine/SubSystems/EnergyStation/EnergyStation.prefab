@@ -63,8 +63,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7580648125639381366}
-  - component: {fileID: 4520797575236275782}
   - component: {fileID: 3664135744965327815}
+  - component: {fileID: 4520797575236275782}
+  - component: {fileID: 3069232663077317330}
   - component: {fileID: 4132265726108384603}
   m_Layer: 3
   m_Name: EnergyStation
@@ -90,6 +91,27 @@ Transform:
   - {fileID: 7832168435837454234}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3664135744965327815
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912725693533120769}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.28, y: 1, z: 1.63}
+  m_Center: {x: 0.27, y: 0, z: -0.24}
 --- !u!114 &4520797575236275782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,27 +135,35 @@ MonoBehaviour:
   overloadCheckDelayAfterFuseRepair: 1
   isFuseBroken: 0
   _energyStatus: 0
---- !u!65 &3664135744965327815
-BoxCollider:
+--- !u!114 &3069232663077317330
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 912725693533120769}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.28, y: 1, z: 1.63}
-  m_Center: {x: 0.27, y: 0, z: -0.24}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9974ebadc44448449955d148a1dde95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energySystem: {fileID: 4520797575236275782}
+  fusePrefab: {fileID: 0}
+  generateInitialFusesOnStart: 1
+  generatedFuseSlotCount: 0
+  fuseSlots:
+  - {fileID: 908472604705111727}
+  - {fileID: 2991080974235562858}
+  - {fileID: 3781250621021853031}
+  - {fileID: 6146706670204403776}
+  - {fileID: 7576962270055137659}
+  fuseSlotPivots: []
+  fuseRecipeCatalog: {fileID: 11400000, guid: 9e50a154ea6c5204391d4b6d2f67f9d9, type: 2}
+  fallbackRequiredAmperages: 1e00000023000000280000002d00000032000000
+  requiredAmperages: 
+  underAmperageThresholdMultiplier: 0.5
+  underAmperageFuseLifetime: 25
+  overAmperageBurnDelay: 1
 --- !u!114 &4132265726108384603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c9fef3f37f34394b834fd0459b2a6d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyPanelControl: {fileID: 0}
+  energyPanelControl: {fileID: 3069232663077317330}
 --- !u!1 &1922993805428310492
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,7 +501,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8463911593925580273}
-  - {fileID: 362298044687183880}
+  - {fileID: 8787554006128173546}
   - {fileID: 3841447317372628954}
   - {fileID: 1954993747856509882}
   m_Father: {fileID: 7580648125639381366}
@@ -490,7 +520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energyLightsGo:
   - {fileID: 4719722607351325636}
-  - {fileID: 362298044687183879}
+  - {fileID: 5618699838215706591}
   - {fileID: 91628418917964271}
   - {fileID: 3398951081548987791}
   onColor: {r: 0, g: 1, b: 0, a: 1}
@@ -499,7 +529,7 @@ MonoBehaviour:
   offColorIntensity: 0.1
   _lightObjects:
   - {fileID: 6592317974096777732}
-  - {fileID: 362298044687183881}
+  - {fileID: 6339640328795727391}
   - {fileID: 1965482030981965871}
   - {fileID: 3830536820908641359}
 --- !u!1 &2549519438675753222
@@ -1227,7 +1257,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 362298044687183880}
+  m_Father: {fileID: 8787554006128173546}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5898718107099561584
 GameObject:
@@ -1559,27 +1589,27 @@ PrefabInstance:
       addedObject: {fileID: 3499809463611623658}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1520976a37c97ee4f8fda087634e656e, type: 3}
---- !u!1 &362298044687183879 stripped
+--- !u!1 &5618699838215706591 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5259788324775765977, guid: 1520976a37c97ee4f8fda087634e656e, type: 3}
   m_PrefabInstance: {fileID: 362298044687183878}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &362298044687183880 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9003977589365232108, guid: 1520976a37c97ee4f8fda087634e656e, type: 3}
-  m_PrefabInstance: {fileID: 362298044687183878}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &362298044687183881 stripped
+--- !u!114 &6339640328795727391 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5980157349031695897, guid: 1520976a37c97ee4f8fda087634e656e, type: 3}
   m_PrefabInstance: {fileID: 362298044687183878}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 362298044687183879}
+  m_GameObject: {fileID: 5618699838215706591}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 283b0515cd70df143b8ebd3be87d238c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &8787554006128173546 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9003977589365232108, guid: 1520976a37c97ee4f8fda087634e656e, type: 3}
+  m_PrefabInstance: {fileID: 362298044687183878}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &684924454854181917
 PrefabInstance:
   m_ObjectHideFlags: 0
