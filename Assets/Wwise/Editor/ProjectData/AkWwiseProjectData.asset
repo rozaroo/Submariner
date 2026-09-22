@@ -274,7 +274,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584127075326657742
+    m_lastTime: -8584114964135948078
     List:
     - name: Start_BackgroundSubmarineMFX
       guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
@@ -325,8 +325,8 @@ MonoBehaviour:
         guid: d268ed99fbc3aa459ad3a8342256d0a7
       Path: Events\Gameplay_SFX\Start_ButtonPress
       maxAttenuation: 0
-      maxDuration: 0.115269
-      minDuration: 0.082455
+      maxDuration: -1
+      minDuration: -1
     - name: Start_Closing_Pressure_DoorSFX
       guid: 552c3fbabfe9bd458dfedc14383be9f9
       id: 378872923
@@ -342,8 +342,8 @@ MonoBehaviour:
         guid: 552c3fbabfe9bd458dfedc14383be9f9
       Path: Events\Gameplay_SFX\Start_Closing_Pressure_DoorSFX
       maxAttenuation: 0
-      maxDuration: 2.257351
-      minDuration: 2.07
+      maxDuration: -1
+      minDuration: -1
     - name: Start_DrainagePumpSFX
       guid: e02afe7491ee1348b114ba8a7f4943a9
       id: 4238673748
@@ -358,7 +358,7 @@ MonoBehaviour:
         ObjectType: 3
         guid: e02afe7491ee1348b114ba8a7f4943a9
       Path: Events\Gameplay_SFX\Start_DrainagePumpSFX
-      maxAttenuation: 100
+      maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
     - name: Start_Engine_Minigame_Failed
@@ -376,8 +376,8 @@ MonoBehaviour:
         guid: d7b82274ecd81c45a81c64e0dcce0392
       Path: Events\Gameplay_SFX\Start_Engine_Minigame_Failed
       maxAttenuation: 0
-      maxDuration: 7.557029
-      minDuration: 7.557029
+      maxDuration: -1
+      minDuration: -1
     - name: Start_Engine_Minigame_SucceededStage
       guid: 1308a994c3298c4d804698f15ea618d1
       id: 3907807344
@@ -393,8 +393,8 @@ MonoBehaviour:
         guid: 1308a994c3298c4d804698f15ea618d1
       Path: Events\Gameplay_SFX\Start_Engine_Minigame_SucceededStage
       maxAttenuation: 0
-      maxDuration: 0.673379
-      minDuration: 0.673379
+      maxDuration: -1
+      minDuration: -1
     - name: Start_HullBreachSFX
       guid: 2cb37db3919c9c4a986dfbd0643ecf21
       id: 2571798077
@@ -409,7 +409,7 @@ MonoBehaviour:
         ObjectType: 3
         guid: 2cb37db3919c9c4a986dfbd0643ecf21
       Path: Events\Gameplay_SFX\Start_HullBreachSFX
-      maxAttenuation: 100
+      maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
     - name: Start_LeverPullFinished
@@ -427,8 +427,8 @@ MonoBehaviour:
         guid: 708c8da4d475f64785a10bef769af746
       Path: Events\Gameplay_SFX\Start_LeverPullFinished
       maxAttenuation: 0
-      maxDuration: 0.398979
-      minDuration: 0.398979
+      maxDuration: -1
+      minDuration: -1
     - name: Start_Motor_Engine
       guid: 86fb40a32e896d478254353e0b41ea6e
       id: 149397142
@@ -443,7 +443,7 @@ MonoBehaviour:
         ObjectType: 3
         guid: 86fb40a32e896d478254353e0b41ea6e
       Path: Events\Gameplay_SFX\Start_Motor_Engine
-      maxAttenuation: 10
+      maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
     - name: Start_Motor_Engine_Fail
@@ -461,8 +461,8 @@ MonoBehaviour:
         guid: 7fa4e7c30f1e75449f33be5ec89503f8
       Path: Events\Gameplay_SFX\Start_Motor_Engine_Fail
       maxAttenuation: 0
-      maxDuration: 2.181225
-      minDuration: 2.181225
+      maxDuration: -1
+      minDuration: -1
     - name: Start_Motor_Engine_Minigame_Succeeded
       guid: a7749e2058d3ed4d9ada4b11454adaaa
       id: 3037698516
@@ -478,8 +478,8 @@ MonoBehaviour:
         guid: a7749e2058d3ed4d9ada4b11454adaaa
       Path: Events\Gameplay_SFX\Start_Motor_Engine_Minigame_Succeeded
       maxAttenuation: 0
-      maxDuration: 4.518579
-      minDuration: 4.518579
+      maxDuration: -1
+      minDuration: -1
     - name: Start_OnMissionCompleted
       guid: 19fc9d773e9f8642bdc199ef277e567b
       id: 2060351696
@@ -495,8 +495,8 @@ MonoBehaviour:
         guid: 19fc9d773e9f8642bdc199ef277e567b
       Path: Events\Gameplay_SFX\Start_OnMissionCompleted
       maxAttenuation: 0
-      maxDuration: 3.064671
-      minDuration: 3.064671
+      maxDuration: -1
+      minDuration: -1
     - name: Start_Opening_Pressure_DoorSFX
       guid: 1cec1fc9c843b94eb94c33b41770a6d6
       id: 4235702204
@@ -512,8 +512,8 @@ MonoBehaviour:
         guid: 1cec1fc9c843b94eb94c33b41770a6d6
       Path: Events\Gameplay_SFX\Start_Opening_Pressure_DoorSFX
       maxAttenuation: 0
-      maxDuration: 1.35771
-      minDuration: 1.35771
+      maxDuration: -1
+      minDuration: -1
     - name: Start_PhosphorusCameraCooldown
       guid: 1f3407ab7ebe284383f12bdd48ad9ecd
       id: 438413481
@@ -529,8 +529,8 @@ MonoBehaviour:
         guid: 1f3407ab7ebe284383f12bdd48ad9ecd
       Path: Events\Gameplay_SFX\Start_PhosphorusCameraCooldown
       maxAttenuation: 0
-      maxDuration: 1.902773
-      minDuration: 1.902773
+      maxDuration: -1
+      minDuration: -1
     - name: Start_PhosphorusCameraFlash_Event
       guid: 75d2e8942c2e0447ad01f759a9c2dfa4
       id: 3214537693
@@ -546,8 +546,8 @@ MonoBehaviour:
         guid: 75d2e8942c2e0447ad01f759a9c2dfa4
       Path: Events\Gameplay_SFX\Start_PhosphorusCameraFlash_Event
       maxAttenuation: 0
-      maxDuration: 2.752797
-      minDuration: 1.902773
+      maxDuration: -1
+      minDuration: -1
     - name: Start_PlayerFootsteps
       guid: 07726e6f7f9f004580ebce0988d8aa93
       id: 2940474702
@@ -563,8 +563,8 @@ MonoBehaviour:
         guid: 07726e6f7f9f004580ebce0988d8aa93
       Path: Events\Gameplay_SFX\Start_PlayerFootsteps
       maxAttenuation: 0
-      maxDuration: 1.307199
-      minDuration: 0.502769
+      maxDuration: -1
+      minDuration: -1
     - name: Start_SonarPingInner
       guid: 1229c9717802a54a8d32dbeb8e91b82d
       id: 1735885581
@@ -579,9 +579,9 @@ MonoBehaviour:
         ObjectType: 3
         guid: 1229c9717802a54a8d32dbeb8e91b82d
       Path: Events\Gameplay_SFX\Start_SonarPingInner
-      maxAttenuation: 100
-      maxDuration: 3.2
-      minDuration: 3.2
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Start_SonarPingOuter
       guid: 7ab25205714fe24eb2eb9728f9017b7d
       id: 997126444
@@ -597,8 +597,8 @@ MonoBehaviour:
         guid: 7ab25205714fe24eb2eb9728f9017b7d
       Path: Events\Gameplay_SFX\Start_SonarPingOuter
       maxAttenuation: 0
-      maxDuration: 3.2
-      minDuration: 3.2
+      maxDuration: -1
+      minDuration: -1
     - name: Start_SubmarineCollision
       guid: 2856af8c092c704c966298539548bedc
       id: 3771492726
@@ -614,8 +614,8 @@ MonoBehaviour:
         guid: 2856af8c092c704c966298539548bedc
       Path: Events\Gameplay_SFX\Start_SubmarineCollision
       maxAttenuation: 0
-      maxDuration: 8.817284
-      minDuration: 7.994576
+      maxDuration: -1
+      minDuration: -1
     - name: Start_TensionEvent
       guid: fd0c6db95aa59a4bba27964681c14af4
       id: 1403223316
@@ -648,8 +648,8 @@ MonoBehaviour:
         guid: 82bb7de14198ee46810ab0967173df11
       Path: Events\Gameplay_SFX\Start_Tube_Repair_Engine
       maxAttenuation: 0
-      maxDuration: 1.201633
-      minDuration: 0.548571
+      maxDuration: -1
+      minDuration: -1
     - name: Stop_BackgroundSubmarineMFX
       guid: 4a677021b45f5f4f8d00fb1db4eff360
       id: 116843463
@@ -665,8 +665,8 @@ MonoBehaviour:
         guid: 4a677021b45f5f4f8d00fb1db4eff360
       Path: Events\Gameplay_SFX\Stop_BackgroundSubmarineMFX
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Stop_BlowtorchSFX
       guid: 5c2bd84caa088342866b063a58e54e77
       id: 1982947219
@@ -682,8 +682,8 @@ MonoBehaviour:
         guid: 5c2bd84caa088342866b063a58e54e77
       Path: Events\Gameplay_SFX\Stop_BlowtorchSFX
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Stop_DrainagePumpSFX
       guid: 7e3ae5b6a0d65b4da7c5339c0717039f
       id: 860956674
@@ -699,8 +699,8 @@ MonoBehaviour:
         guid: 7e3ae5b6a0d65b4da7c5339c0717039f
       Path: Events\Gameplay_SFX\Stop_DrainagePumpSFX
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Stop_HullBreachSFX
       guid: 911c643bef10214aa4d6000633b5b489
       id: 3933279043
@@ -716,8 +716,8 @@ MonoBehaviour:
         guid: 911c643bef10214aa4d6000633b5b489
       Path: Events\Gameplay_SFX\Stop_HullBreachSFX
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Stop_Motor_Engine
       guid: f7a4f125d45f8c46abf91696e0b6c194
       id: 344065456
@@ -733,8 +733,8 @@ MonoBehaviour:
         guid: f7a4f125d45f8c46abf91696e0b6c194
       Path: Events\Gameplay_SFX\Stop_Motor_Engine
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Stop_TensionEvent
       guid: c843b536f2f2e64280000dbc70d8a202
       id: 3884825202
