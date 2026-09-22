@@ -32,6 +32,8 @@ public class PauseMenu : MonoBehaviour
             }
             else
             {
+                if (Time.timeScale == 0f) return;
+
                 if (IsPlayerInStation()) return;
                 Pause();
             }
