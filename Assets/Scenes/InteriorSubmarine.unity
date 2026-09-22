@@ -5701,6 +5701,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4203357956124874218, guid: 4fdacbb93f6aa3844ac58f04d1370c19, type: 3}
+      propertyPath: m_Size.y
+      value: 1.0066113
+      objectReference: {fileID: 0}
+    - target: {fileID: 4203357956124874218, guid: 4fdacbb93f6aa3844ac58f04d1370c19, type: 3}
+      propertyPath: m_Center.y
+      value: -0.3008101
+      objectReference: {fileID: 0}
     - target: {fileID: 6216536138458989934, guid: 4fdacbb93f6aa3844ac58f04d1370c19, type: 3}
       propertyPath: hullDamageManager
       value: 
