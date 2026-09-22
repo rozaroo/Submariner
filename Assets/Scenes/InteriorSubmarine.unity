@@ -5822,6 +5822,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnergyStation
       objectReference: {fileID: 0}
+    - target: {fileID: 2943186250143932036, guid: 3bb057c2114cf024fbbed359f420a7d7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.237
+      objectReference: {fileID: 0}
+    - target: {fileID: 2943186250143932036, guid: 3bb057c2114cf024fbbed359f420a7d7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.988
+      objectReference: {fileID: 0}
     - target: {fileID: 3398951081548987791, guid: 3bb057c2114cf024fbbed359f420a7d7, type: 3}
       propertyPath: m_Name
       value: PanelLight_4
@@ -6368,6 +6376,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
+      propertyPath: lights.Array.size
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[0]'
       value: 
       objectReference: {fileID: 8843697910555354068}
@@ -6382,107 +6394,107 @@ PrefabInstance:
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[3]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5385101896060665171}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[4]'
       value: 
-      objectReference: {fileID: 5385101896060665171}
+      objectReference: {fileID: 6988986729026547046}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[5]'
       value: 
-      objectReference: {fileID: 6988986729026547046}
+      objectReference: {fileID: 9093629382577742404}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[6]'
       value: 
-      objectReference: {fileID: 9093629382577742404}
+      objectReference: {fileID: 6635704961893091192}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[7]'
       value: 
-      objectReference: {fileID: 6635704961893091192}
+      objectReference: {fileID: 5995380717519527100}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[8]'
       value: 
-      objectReference: {fileID: 5995380717519527100}
+      objectReference: {fileID: 5235779966450508052}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[9]'
       value: 
-      objectReference: {fileID: 5235779966450508052}
+      objectReference: {fileID: 9202359062366831908}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[10]'
       value: 
-      objectReference: {fileID: 9202359062366831908}
+      objectReference: {fileID: 2974669050552314007}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[11]'
       value: 
-      objectReference: {fileID: 2974669050552314007}
+      objectReference: {fileID: 8301132137710436196}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[12]'
       value: 
-      objectReference: {fileID: 8301132137710436196}
+      objectReference: {fileID: 6300140172880555242}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[13]'
       value: 
-      objectReference: {fileID: 6300140172880555242}
+      objectReference: {fileID: 3617068291648789044}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[14]'
       value: 
-      objectReference: {fileID: 3617068291648789044}
+      objectReference: {fileID: 8731516903182232405}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[15]'
       value: 
-      objectReference: {fileID: 8731516903182232405}
+      objectReference: {fileID: 4282108692273055243}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[16]'
       value: 
-      objectReference: {fileID: 4282108692273055243}
+      objectReference: {fileID: 3881343945998695221}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[17]'
       value: 
-      objectReference: {fileID: 3881343945998695221}
+      objectReference: {fileID: 4476334733694211896}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[18]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1762418377198179516}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[19]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6020838078316500374}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[20]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4756504400885084509}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[21]'
       value: 
-      objectReference: {fileID: 4476334733694211896}
+      objectReference: {fileID: 815175447082066864}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[22]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6593331355078006206}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[23]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6593331355078006206}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[24]'
       value: 
-      objectReference: {fileID: 1762418377198179516}
+      objectReference: {fileID: 6593331355078006206}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[25]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6593331355078006206}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[26]'
       value: 
-      objectReference: {fileID: 6020838078316500374}
+      objectReference: {fileID: 6593331355078006206}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[27]'
       value: 
-      objectReference: {fileID: 4756504400885084509}
+      objectReference: {fileID: 6593331355078006206}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[28]'
       value: 
-      objectReference: {fileID: 815175447082066864}
+      objectReference: {fileID: 6593331355078006206}
     - target: {fileID: 4580897560813532788, guid: 9d4766732dc479447895331e1829829d, type: 3}
       propertyPath: 'lights.Array.data[29]'
       value: 

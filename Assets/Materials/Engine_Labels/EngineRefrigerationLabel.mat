@@ -52,7 +52,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Desaturation: 1
-    - _Metallic: 0.71
+    - _Metallic: 0.2
     - _PixelatingFactor: 0.58
     - _TextureScale: 0.1
     - _TextureToColor: 0

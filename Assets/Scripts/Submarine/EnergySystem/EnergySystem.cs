@@ -6,7 +6,7 @@ public class EnergySystem : MonoBehaviour
 {
     [Header("Energy Settings")]
     [SerializeField] private float maxEnergy = 5000f;
-    [SerializeField] private float _currentEnergy;
+    [SerializeField] private float currentEnergy;
     [SerializeField] private float energyToRegenPercentage = 1f;
     [SerializeField] private float timeToRegenerateEnergy = 60f;
     
@@ -20,7 +20,10 @@ public class EnergySystem : MonoBehaviour
 
     [Header("Energy Status")]
     [SerializeField] private EnergyStatus _energyStatus;
-    private int _stressIndex;
+    
+    [Header("Feedback")]
+    [SerializeField] private GalvanometerIndicator _galvanometerIndicatorEnergy;
+    [SerializeField] private GalvanometerIndicator _galvanometerIndicatorOverload;
     
     [Header("Coroutines")]
     private Coroutine _energyRegenerationCoroutine;
@@ -35,10 +38,10 @@ public class EnergySystem : MonoBehaviour
 
     private float CurrentEnergy
     {
-        get => _currentEnergy;
+        get => currentEnergy;
         set
         {
-            _currentEnergy = Mathf.Clamp(value, 0f, maxEnergy);
+            currentEnergy = Mathf.Clamp(value, 0f, maxEnergy);
             GameEventChannel<OnEnergyPropertyChange>.RaiseEvent(new OnEnergyPropertyChange(GetCurrentEnergyPercentage(),100f) );
             SetEnergyStatus();
         }
@@ -50,7 +53,6 @@ public class EnergySystem : MonoBehaviour
     {
         _baseFuseBreakConsumptionThreshold = fuseBreakConsumptionThreshold;
         energyConsumptionRate = 0f;
-        _stressIndex = 0;
     }
 
     private void OnEnable()
@@ -98,15 +100,23 @@ public class EnergySystem : MonoBehaviour
         if (consumption.isAddingStress)
         {
             energyConsumptionRate += consumption.energyToConsumeRate;
-            _stressIndex++;
         }
         else
         {
             energyConsumptionRate -= consumption.energyToConsumeRate;
-            _stressIndex = Mathf.Max(0, _stressIndex - 1);
         }
 
         energyConsumptionRate = Mathf.Max(0f, energyConsumptionRate);
+
+        if (_galvanometerIndicatorEnergy != null)
+        {
+            _galvanometerIndicatorEnergy.UpdateIndicator(currentEnergy, 0f, maxEnergy);
+        }
+        
+        if (_galvanometerIndicatorOverload != null)
+        {
+            _galvanometerIndicatorEnergy.UpdateIndicator(energyConsumptionRate, 0f, fuseBreakConsumptionThreshold);
+        }
 
         if (isFuseBroken)
         {
@@ -129,7 +139,7 @@ public class EnergySystem : MonoBehaviour
         {
             StartEnergyConsumption();
         }
-        Log.Info($"Energy Consumption Rate: {Mathf.Abs(energyConsumptionRate)} - Stress Index: {_stressIndex}");
+        Log.Info($"Energy Consumption Rate: {Mathf.Abs(energyConsumptionRate)}");
     }
     
     private IEnumerator EnergyConsumption()
@@ -226,6 +236,17 @@ public class EnergySystem : MonoBehaviour
         {
             _energyStatus = EnergyStatus.Full;
         }
+        
+        if (_galvanometerIndicatorEnergy != null)
+        {
+            _galvanometerIndicatorEnergy.UpdateIndicator(currentEnergy, 0f, maxEnergy);
+        }
+        
+        if (_galvanometerIndicatorOverload != null)
+        {
+            _galvanometerIndicatorEnergy.UpdateIndicator(energyConsumptionRate, 0f, fuseBreakConsumptionThreshold);
+        }
+        
         if (_energyStatus != previousStatus)
         {
             TriggerEnergyEvents();
