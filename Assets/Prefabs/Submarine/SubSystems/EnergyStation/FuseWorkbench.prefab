@@ -257,34 +257,20 @@ MonoBehaviour:
   topAssemblyPoint: {fileID: 7023180663856842836}
   coreAssemblyPoint: {fileID: 8123199603982512537}
   bottomAssemblyPoint: {fileID: 3790515152599388583}
-  solderingIronPrefab: {fileID: 4256806763141072197, guid: 683ebf74d052af2418237036fb118b22, type: 3}
-  solderingIron: {fileID: 0}
-  solderingIronRestPoint: {fileID: 9177399764158374034}
-  generateSolderingIronIfMissing: 1
-  topConnectionPoint: {fileID: 6940963851849524079}
-  bottomConnectionPoint: {fileID: 1304375424615137726}
-  solderRadius: 0.2
+  blowtorchStartEvent: Start_FuseMake
+  blowtorchStopEvent: Stop_FuseMake
   solderDuration: 1
-  topPartPrefabs:
-  - {fileID: 1660390698674463070, guid: 74bd8fecd4c35da4087e25043ffbfba0, type: 3}
-  - {fileID: 1660390698674463070, guid: e19ad8e24262ae54da13a7777fa49401, type: 3}
-  - {fileID: 1660390698674463070, guid: f775257a7f8b55d46a86ee349716854c, type: 3}
+  topPartPrefab: {fileID: 1660390698674463070, guid: 74bd8fecd4c35da4087e25043ffbfba0, type: 3}
   topPartSpawnPoints:
   - {fileID: 1989544273141112167}
   - {fileID: 4230457069271658078}
   - {fileID: 8526549302593366816}
-  corePartPrefabs:
-  - {fileID: 1660390698674463070, guid: ab709e567ac7847468aa2027efb81ce0, type: 3}
-  - {fileID: 1660390698674463070, guid: 58fff6566c7383d4faf7c7fa747c2d4a, type: 3}
-  - {fileID: 1660390698674463070, guid: a3e71de7c586f66419dc9ae5fec40436, type: 3}
+  corePartPrefab: {fileID: 1660390698674463070, guid: ab709e567ac7847468aa2027efb81ce0, type: 3}
   corePartSpawnPoints:
   - {fileID: 1720445334600579589}
   - {fileID: 5791289686105594645}
   - {fileID: 8328589574706288835}
-  bottomPartPrefabs:
-  - {fileID: 1660390698674463070, guid: bd5160cfde691d14c9b63e573326d256, type: 3}
-  - {fileID: 1660390698674463070, guid: fb2ebb9db2ffe0b4f99bdc7b5c777175, type: 3}
-  - {fileID: 1660390698674463070, guid: 5b3a12b78705fe446874af93854397ee, type: 3}
+  bottomPartPrefab: {fileID: 1660390698674463070, guid: bd5160cfde691d14c9b63e573326d256, type: 3}
   bottomPartSpawnPoints:
   - {fileID: 1441902343227388721}
   - {fileID: 4588287455068366174}

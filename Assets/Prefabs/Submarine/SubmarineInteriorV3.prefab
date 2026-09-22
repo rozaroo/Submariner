@@ -15864,13 +15864,8 @@ MonoBehaviour:
   topAssemblyPoint: {fileID: 1583344180212219857}
   coreAssemblyPoint: {fileID: 5728439928330994433}
   bottomAssemblyPoint: {fileID: 1388346419695135670}
-  solderingIronPrefab: {fileID: 4256806763141072197, guid: 683ebf74d052af2418237036fb118b22, type: 3}
-  solderingIron: {fileID: 0}
-  solderingIronRestPoint: {fileID: 5099945275752493842}
-  generateSolderingIronIfMissing: 1
-  topConnectionPoint: {fileID: 6735246711985184506}
-  bottomConnectionPoint: {fileID: 928647344298193406}
-  solderRadius: 0.2
+  blowtorchStartEvent: Start_FuseMake
+  blowtorchStopEvent: Stop_FuseMake
   solderDuration: 1
   topPartPrefab: {fileID: 1660390698674463070, guid: 74bd8fecd4c35da4087e25043ffbfba0, type: 3}
   topPartSpawnPoints:
