@@ -27,5 +27,5 @@ public class NumberLampObject : MonoBehaviour
     {
         desiredNumber = number;
         ApplySettings();
-    }
+    }   
 }

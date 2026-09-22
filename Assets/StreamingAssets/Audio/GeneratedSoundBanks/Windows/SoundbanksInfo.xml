@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="140">
+	<RootPaths>
+		<ProjectRoot>D:\Github\Submariner\Submariner_WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>D:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>D:\Github\Submariner\Submariner_WwiseProject\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>D:\Github\Submariner\Submariner_WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<StreamedFiles/>
+	<MediaFilesNotInAnyBank/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Language="SFX" Hash="1241460624">
+			<ObjectPath>Init</ObjectPath>
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+			<IncludedAuxBusses>
+				<AuxBus Id="2070985102" Name="Player_Reverb_AUX_SFX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Player_Reverb_AUX_SFX"/>
+				<AuxBus Id="2315337392" Name="Reverb_Muffled_MFX_AUX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_MFX\Reverb_Muffled_MFX_AUX"/>
+				<AuxBus Id="3031736565" Name="Submarine_Reverb_AUX_SFX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Submarine_Reverb_AUX_SFX"/>
+			</IncludedAuxBusses>
+			<GameParameters>
+				<GameParameter Id="1465352627" Name="Game_MFX_SoundVolume" ObjectPath="\Game Parameters\ParametersVOT\Game_MFX_SoundVolume"/>
+				<GameParameter Id="3453168921" Name="Game_SFX_SoundVolume" ObjectPath="\Game Parameters\ParametersVOT\Game_SFX_SoundVolume"/>
+			</GameParameters>
+			<StateGroups>
+				<StateGroup Id="4071417932" Name="Player_State" ObjectPath="\States\Default Work Unit\Player_State" GUID="{E6F0C986-7EA9-445E-87F2-C62236FE5080}">
+					<States>
+						<State Id="748895195" Name="None" ObjectPath="\States\Default Work Unit\Player_State\None" GUID="{342CF4E7-6DD8-41CC-A36F-4380235B5988}"/>
+						<State Id="655265632" Name="Alive" ObjectPath="\States\Default Work Unit\Player_State\Alive" GUID="{27CCEF96-E986-4239-8783-B018BFADC7EC}"/>
+						<State Id="124361234" Name="Stunned" ObjectPath="\States\Default Work Unit\Player_State\Stunned" GUID="{DFBAFB8E-6EA2-46FE-ABB5-3956C9D89CCC}"/>
+					</States>
+				</StateGroup>
+			</StateGroups>
+		</SoundBank>
+		<SoundBank Id="3401228817" Language="SFX" Hash="3098607700">
+			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
+			<ShortName>GamePlay_SFX</ShortName>
+			<Path>GamePlay_SFX.bnk</Path>
+			<IncludedEvents>
+				<Event Id="3003027233" Name="Start_BackgroundSubmarineMFX" ObjectPath="\Events\Gameplay_SFX\Start_BackgroundSubmarineMFX" DurationType="Infinite"/>
+				<Event Id="1116808773" Name="Start_BlowtorchSFX" ObjectPath="\Events\Gameplay_SFX\Start_BlowtorchSFX" DurationType="Infinite"/>
+				<Event Id="738466431" Name="Start_ButtonPress" ObjectPath="\Events\Gameplay_SFX\Start_ButtonPress" DurationType="OneShot" DurationMin="0.082455" DurationMax="0.115269"/>
+				<Event Id="378872923" Name="Start_Closing_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Closing_Pressure_DoorSFX" DurationType="OneShot" DurationMin="2.07" DurationMax="2.257351"/>
+				<Event Id="4238673748" Name="Start_DrainagePumpSFX" ObjectPath="\Events\Gameplay_SFX\Start_DrainagePumpSFX" MaxAttenuation="100." DurationType="Infinite"/>
+				<Event Id="3355137523" Name="Start_FuseMake" ObjectPath="\Events\Gameplay_SFX\Start_FuseMake" DurationType="Infinite"/>
+				<Event Id="2571798077" Name="Start_HullBreachSFX" ObjectPath="\Events\Gameplay_SFX\Start_HullBreachSFX" MaxAttenuation="100." DurationType="Infinite"/>
+				<Event Id="2469108041" Name="Start_LeverPullFinished" ObjectPath="\Events\Gameplay_SFX\Start_LeverPullFinished" DurationType="OneShot" DurationMin="0.398979" DurationMax="0.398979"/>
+				<Event Id="149397142" Name="Start_Motor_Engine" ObjectPath="\Events\Gameplay_SFX\Start_Motor_Engine" MaxAttenuation="10." DurationType="Infinite"/>
+				<Event Id="2060351696" Name="Start_OnMissionCompleted" ObjectPath="\Events\Gameplay_SFX\Start_OnMissionCompleted" DurationType="OneShot" DurationMin="3.064671" DurationMax="3.064671"/>
+				<Event Id="4235702204" Name="Start_Opening_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Opening_Pressure_DoorSFX" DurationType="OneShot" DurationMin="1.35771" DurationMax="1.35771"/>
+				<Event Id="438413481" Name="Start_PhosphorusCameraCooldown" ObjectPath="\Events\Gameplay_SFX\Start_PhosphorusCameraCooldown" DurationType="OneShot" DurationMin="1.902773" DurationMax="1.902773"/>
+				<Event Id="3214537693" Name="Start_PhosphorusCameraFlash_Event" ObjectPath="\Events\Gameplay_SFX\Start_PhosphorusCameraFlash_Event" DurationType="OneShot" DurationMin="1.902773" DurationMax="2.752797"/>
+				<Event Id="2940474702" Name="Start_PlayerFootsteps" ObjectPath="\Events\Gameplay_SFX\Start_PlayerFootsteps" DurationType="OneShot" DurationMin="0.502769" DurationMax="1.307199"/>
+				<Event Id="1735885581" Name="Start_SonarPingInner" ObjectPath="\Events\Gameplay_SFX\Start_SonarPingInner" MaxAttenuation="100." DurationType="OneShot" DurationMin="3.2" DurationMax="3.2"/>
+				<Event Id="997126444" Name="Start_SonarPingOuter" ObjectPath="\Events\Gameplay_SFX\Start_SonarPingOuter" DurationType="OneShot" DurationMin="3.2" DurationMax="3.2"/>
+				<Event Id="3771492726" Name="Start_SubmarineCollision" ObjectPath="\Events\Gameplay_SFX\Start_SubmarineCollision" DurationType="OneShot" DurationMin="7.994576" DurationMax="8.817284"/>
+				<Event Id="1403223316" Name="Start_TensionEvent" ObjectPath="\Events\Gameplay_SFX\Start_TensionEvent" DurationType="Infinite"/>
+				<Event Id="116843463" Name="Stop_BackgroundSubmarineMFX" ObjectPath="\Events\Gameplay_SFX\Stop_BackgroundSubmarineMFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
+				<Event Id="1982947219" Name="Stop_BlowtorchSFX" ObjectPath="\Events\Gameplay_SFX\Stop_BlowtorchSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
+				<Event Id="860956674" Name="Stop_DrainagePumpSFX" ObjectPath="\Events\Gameplay_SFX\Stop_DrainagePumpSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
+				<Event Id="880757133" Name="Stop_FuseMake" ObjectPath="\Events\Gameplay_SFX\Stop_FuseMake" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
+				<Event Id="3933279043" Name="Stop_HullBreachSFX" ObjectPath="\Events\Gameplay_SFX\Stop_HullBreachSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
+				<Event Id="344065456" Name="Stop_Motor_Engine" ObjectPath="\Events\Gameplay_SFX\Stop_Motor_Engine" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
+				<Event Id="3884825202" Name="Stop_TensionEvent" ObjectPath="\Events\Gameplay_SFX\Stop_TensionEvent" DurationType="Infinite"/>
+			</IncludedEvents>
+			<IncludedAuxBusses>
+				<AuxBus Id="2070985102" Name="Player_Reverb_AUX_SFX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Player_Reverb_AUX_SFX"/>
+				<AuxBus Id="2315337392" Name="Reverb_Muffled_MFX_AUX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_MFX\Reverb_Muffled_MFX_AUX"/>
+				<AuxBus Id="3031736565" Name="Submarine_Reverb_AUX_SFX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Submarine_Reverb_AUX_SFX"/>
+			</IncludedAuxBusses>
+			<IncludedMemoryFiles>
+				<File Id="23372763" Language="SFX">
+					<ShortName>338969__timkahn__massive-metal-hit.wav</ShortName>
+					<Path>SFX\338969__timkahn__massive-metal-hit_10C4C929.wem</Path>
+				</File>
+				<File Id="24752111" Language="SFX">
+					<ShortName>593755__mighael__blowtorch.wav</ShortName>
+					<Path>SFX\593755__mighael__blowtorch_3D3E1A9B.wem</Path>
+				</File>
+				<File Id="30412895" Language="SFX">
+					<ShortName>244983__ani_music__ani-big-pipe-hit.wav</ShortName>
+					<Path>SFX\244983__ani_music__ani-big-pipe-hit_10C4C929.wem</Path>
+				</File>
+				<File Id="103211724" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_191AADB4.wem</Path>
+				</File>
+				<File Id="130164563" Language="SFX">
+					<ShortName>reaper_stems_105293__anton__water_pump_sewer_water_stream.wav</ShortName>
+					<Path>SFX\reaper_stems_105293__anton__water_pump_sewer_water_stream_D79FB2B7.wem</Path>
+				</File>
+				<File Id="134703114" Language="SFX">
+					<ShortName>696374__sanderboah__walking-on-metal.wav</ShortName>
+					<Path>SFX\696374__sanderboah__walking-on-metal_08A414DF.wem</Path>
+				</File>
+				<File Id="150726513" Language="SFX">
+					<ShortName>Project_1_BackgroundWhiteNoise.wav</ShortName>
+					<Path>SFX\Project_1_BackgroundWhiteNoise_B6873822.wem</Path>
+				</File>
+				<File Id="175779074" Language="SFX">
+					<ShortName>17216__meatball4u__countdown.wav</ShortName>
+					<Path>SFX\17216__meatball4u__countdown_DB187815.wem</Path>
+				</File>
+				<File Id="183692339" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_C54DDBC5.wem</Path>
+				</File>
+				<File Id="227317674" Language="SFX">
+					<ShortName>151624__qubodup__clank-car-crash-collision.wav</ShortName>
+					<Path>SFX\151624__qubodup__clank-car-crash-collision_10C4C929.wem</Path>
+				</File>
+				<File Id="269478501" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_E6DD8854.wem</Path>
+				</File>
+				<File Id="307274219" Language="SFX">
+					<ShortName>404049__deathscyp__breaker-1.wav</ShortName>
+					<Path>SFX\404049__deathscyp__breaker-1_10C4C929.wem</Path>
+				</File>
+				<File Id="324386202" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_90F3FF8A.wem</Path>
+				</File>
+				<File Id="363360337" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_D20C9472.wem</Path>
+				</File>
+				<File Id="375624474" Language="SFX">
+					<ShortName>653294__osvoldon__big-structure-collision-heard-from-inside.wav</ShortName>
+					<Path>SFX\653294__osvoldon__big-structure-collision-heard-from-inside_10C4C929.wem</Path>
+				</File>
+				<File Id="383140111" Language="SFX">
+					<ShortName>Project_1_Sonar.wav</ShortName>
+					<Path>SFX\Project_1_Sonar_6915DE9A.wem</Path>
+				</File>
+				<File Id="397077542" Language="SFX">
+					<ShortName>696374__sanderboah__walking-on-metal.wav</ShortName>
+					<Path>SFX\696374__sanderboah__walking-on-metal_F3540663.wem</Path>
+				</File>
+				<File Id="412602450" Language="SFX">
+					<ShortName>Project_1_TinyMelody.wav</ShortName>
+					<Path>SFX\Project_1_TinyMelody_D79FB2B7.wem</Path>
+				</File>
+				<File Id="434043643" Language="SFX">
+					<ShortName>323158__mrfineppine__canon-310xl-super-8-camera-motor-sound.wav</ShortName>
+					<Path>SFX\323158__mrfineppine__canon-310xl-super-8-camera-motor-sound_3EF94F2F.wem</Path>
+				</File>
+				<File Id="441572400" Language="SFX">
+					<ShortName>Flash reversed 001.wav</ShortName>
+					<Path>SFX\Flash reversed 001_4C940592.wem</Path>
+				</File>
+				<File Id="441861788" Language="SFX">
+					<ShortName>415151__burghrecords__stream-running-water-aviemore-scotland.wav</ShortName>
+					<Path>SFX\415151__burghrecords__stream-running-water-aviemore-scotland_01CC34F8.wem</Path>
+				</File>
+				<File Id="458355858" Language="SFX">
+					<ShortName>696374__sanderboah__walking-on-metal.wav</ShortName>
+					<Path>SFX\696374__sanderboah__walking-on-metal_3E8AF12D.wem</Path>
+				</File>
+				<File Id="479738779" Language="SFX">
+					<ShortName>PressureDoorClose.wav</ShortName>
+					<Path>SFX\PressureDoorClose_10C4C929.wem</Path>
+				</File>
+				<File Id="485392549" Language="SFX">
+					<ShortName>Project_1_Tension 5.wav</ShortName>
+					<Path>SFX\Project_1_Tension 5_D79FB2B7.wem</Path>
+				</File>
+				<File Id="495489055" Language="SFX">
+					<ShortName>17216__meatball4u__countdown.wav</ShortName>
+					<Path>SFX\17216__meatball4u__countdown_43B927F8.wem</Path>
+				</File>
+				<File Id="507675057" Language="SFX">
+					<ShortName>556714__nachtmahrtv__bending-metal.wav</ShortName>
+					<Path>SFX\556714__nachtmahrtv__bending-metal_10C4C929.wem</Path>
+				</File>
+				<File Id="550708862" Language="SFX">
+					<ShortName>Project_1_Tension2.wav</ShortName>
+					<Path>SFX\Project_1_Tension2_D79FB2B7.wem</Path>
+				</File>
+				<File Id="566744649" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_086D7909.wem</Path>
+				</File>
+				<File Id="586941861" Language="SFX">
+					<ShortName>Project_1_Tension1.wav</ShortName>
+					<Path>SFX\Project_1_Tension1_D79FB2B7.wem</Path>
+				</File>
+				<File Id="632780041" Language="SFX">
+					<ShortName>46934__digifishmusic__dripping.wav</ShortName>
+					<Path>SFX\46934__digifishmusic__dripping_1F6A3BA2.wem</Path>
+				</File>
+				<File Id="655064136" Language="SFX">
+					<ShortName>Project_1_BassTension1.wav</ShortName>
+					<Path>SFX\Project_1_BassTension1_D79FB2B7.wem</Path>
+				</File>
+				<File Id="657499168" Language="SFX">
+					<ShortName>Project_1_Tension3.wav</ShortName>
+					<Path>SFX\Project_1_Tension3_D79FB2B7.wem</Path>
+				</File>
+				<File Id="674079710" Language="SFX">
+					<ShortName>CameraIntro.wav</ShortName>
+					<Path>SFX\CameraIntro_B03F89E8.wem</Path>
+				</File>
+				<File Id="678727613" Language="SFX">
+					<ShortName>Project_1_BackgroundWhiteNoise.wav</ShortName>
+					<Path>SFX\Project_1_BackgroundWhiteNoise_D79FB2B7.wem</Path>
+				</File>
+				<File Id="694013265" Language="SFX">
+					<ShortName>387232__steaq__badge-coin-win.wav</ShortName>
+					<Path>SFX\387232__steaq__badge-coin-win_B402D4D8.wem</Path>
+				</File>
+				<File Id="750154524" Language="SFX">
+					<ShortName>244394__werra__bangexplosion-metallic.wav</ShortName>
+					<Path>SFX\244394__werra__bangexplosion-metallic_10C4C929.wem</Path>
+				</File>
+				<File Id="783648702" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_8CACD102.wem</Path>
+				</File>
+				<File Id="794426764" Language="SFX">
+					<ShortName>425090__neospica__pressurized-door-opening.wav</ShortName>
+					<Path>SFX\425090__neospica__pressurized-door-opening_2EA370B6.wem</Path>
+				</File>
+				<File Id="813881389" Language="SFX">
+					<ShortName>Project_1_BAS Pilobass.wav</ShortName>
+					<Path>SFX\Project_1_BAS Pilobass_D79FB2B7.wem</Path>
+				</File>
+				<File Id="820298617" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_D0B43910.wem</Path>
+				</File>
+				<File Id="824057027" Language="SFX">
+					<ShortName>Project_1_Sonar.wav</ShortName>
+					<Path>SFX\Project_1_Sonar_DAF8F2F4.wem</Path>
+				</File>
+				<File Id="845855491" Language="SFX">
+					<ShortName>16937__sculptor__watersubmarine render 001.wav</ShortName>
+					<Path>SFX\16937__sculptor__watersubmarine render 001_5AF8BD8A.wem</Path>
+				</File>
+				<File Id="851935918" Language="SFX">
+					<ShortName>Project_1_BackgroundWhiteNoise.wav</ShortName>
+					<Path>SFX\Project_1_BackgroundWhiteNoise_B546D908.wem</Path>
+				</File>
+				<File Id="866744274" Language="SFX">
+					<ShortName>Project_1_BackgroundWhiteNoise.wav</ShortName>
+					<Path>SFX\Project_1_BackgroundWhiteNoise_3019D2B5.wem</Path>
+				</File>
+				<File Id="886412129" Language="SFX">
+					<ShortName>Flash.wav</ShortName>
+					<Path>SFX\Flash_82F5351A.wem</Path>
+				</File>
+				<File Id="886848604" Language="SFX">
+					<ShortName>12654__wwwbonsonca__drop_slow_long_01.wav</ShortName>
+					<Path>SFX\12654__wwwbonsonca__drop_slow_long_01_57742CAF.wem</Path>
+				</File>
+				<File Id="892432398" Language="SFX">
+					<ShortName>Project_1_Tension 4.wav</ShortName>
+					<Path>SFX\Project_1_Tension 4_D79FB2B7.wem</Path>
+				</File>
+				<File Id="912122509" Language="SFX">
+					<ShortName>556708__nachtmahrtv__metal-hit.wav</ShortName>
+					<Path>SFX\556708__nachtmahrtv__metal-hit_C285AEF5.wem</Path>
+				</File>
+				<File Id="974555202" Language="SFX">
+					<ShortName>696374__sanderboah__walking-on-metal.wav</ShortName>
+					<Path>SFX\696374__sanderboah__walking-on-metal_15B4D9E4.wem</Path>
+				</File>
+				<File Id="999257298" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_F86FEB61.wem</Path>
+				</File>
+				<File Id="1002913569" Language="SFX">
+					<ShortName>425090__neospica__pressurized-door-opening.wav</ShortName>
+					<Path>SFX\425090__neospica__pressurized-door-opening_7AA2CC43.wem</Path>
+				</File>
+				<File Id="1004030655" Language="SFX">
+					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
+					<Path>SFX\490951__nox_sound__footsteps_walk_8BA8F09A.wem</Path>
+				</File>
+			</IncludedMemoryFiles>
+			<GameParameters>
+				<GameParameter Id="511617432" Name="Submarine_Colision_Distance" ObjectPath="\Game Parameters\ParametersVOT\Submarine_Colision_Distance"/>
+				<GameParameter Id="1465352627" Name="Game_MFX_SoundVolume" ObjectPath="\Game Parameters\ParametersVOT\Game_MFX_SoundVolume"/>
+				<GameParameter Id="3138205067" Name="IncrementalTension" ObjectPath="\Game Parameters\ParametersVOT\IncrementalTension"/>
+				<GameParameter Id="3453168921" Name="Game_SFX_SoundVolume" ObjectPath="\Game Parameters\ParametersVOT\Game_SFX_SoundVolume"/>
+			</GameParameters>
+			<StateGroups>
+				<StateGroup Id="894977922" Name="Energy_Status" ObjectPath="\States\Default Work Unit\Energy_Status" GUID="{47AFB86B-07E1-4368-AE6B-F248AEA5823B}">
+					<States>
+						<State Id="748895195" Name="None" ObjectPath="\States\Default Work Unit\Energy_Status\None" GUID="{9EB3B7D9-52B4-475A-A769-C726EC9D0F4B}"/>
+						<State Id="2510516222" Name="Full" ObjectPath="\States\Default Work Unit\Energy_Status\Full" GUID="{9994C281-2EA3-401E-B1AB-86D2A52AAEE4}"/>
+						<State Id="545371365" Name="Low" ObjectPath="\States\Default Work Unit\Energy_Status\Low" GUID="{A5BB699C-970F-4297-A432-86D4813BDB27}"/>
+						<State Id="3354297748" Name="Empty" ObjectPath="\States\Default Work Unit\Energy_Status\Empty" GUID="{9B25FCBF-5CCB-4DD4-B4BD-7590E516F771}"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="4071417932" Name="Player_State" ObjectPath="\States\Default Work Unit\Player_State" GUID="{E6F0C986-7EA9-445E-87F2-C62236FE5080}">
+					<States>
+						<State Id="748895195" Name="None" ObjectPath="\States\Default Work Unit\Player_State\None" GUID="{342CF4E7-6DD8-41CC-A36F-4380235B5988}"/>
+						<State Id="655265632" Name="Alive" ObjectPath="\States\Default Work Unit\Player_State\Alive" GUID="{27CCEF96-E986-4239-8783-B018BFADC7EC}"/>
+						<State Id="124361234" Name="Stunned" ObjectPath="\States\Default Work Unit\Player_State\Stunned" GUID="{DFBAFB8E-6EA2-46FE-ABB5-3956C9D89CCC}"/>
+					</States>
+				</StateGroup>
+			</StateGroups>
+			<SwitchGroups>
+				<SwitchGroup Id="290589761" Name="Water_Level" ObjectPath="\Switches\Default Work Unit\Water_Level" GUID="{4F00CDE3-4CE5-4764-ADD2-05473B1362C7}">
+					<Switches>
+						<Switch Id="3550808449" Name="High" ObjectPath="\Switches\Default Work Unit\Water_Level\High" GUID="{36F88B60-73C2-4F81-BBD2-E2E59C48D57D}"/>
+						<Switch Id="545371365" Name="Low" ObjectPath="\Switches\Default Work Unit\Water_Level\Low" GUID="{CAF7903E-177D-453E-8513-FCD2C2C2797E}"/>
+					</Switches>
+				</SwitchGroup>
+				<SwitchGroup Id="1044191727" Name="Player_FootstepsSurface" ObjectPath="\Switches\Default Work Unit\Player_FootstepsSurface" GUID="{9F93EFC1-AC5B-4E21-8097-CA0E8200F4A9}">
+					<Switches>
+						<Switch Id="2473969246" Name="Metal" ObjectPath="\Switches\Default Work Unit\Player_FootstepsSurface\Metal" GUID="{E5DA8ADC-6D02-4891-B440-204CCB777310}"/>
+						<Switch Id="2654748154" Name="Water" ObjectPath="\Switches\Default Work Unit\Player_FootstepsSurface\Water" GUID="{9A1ABF5D-53A5-4656-8A58-D33AB3CEC431}"/>
+					</Switches>
+				</SwitchGroup>
+			</SwitchGroups>
+		</SoundBank>
+	</SoundBanks>
+</SoundBanksInfo>

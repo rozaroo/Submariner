@@ -10,12 +10,11 @@ public class LightObject : MonoBehaviour
     [SerializeField] private float intensity = 0.01f;
 
     [Header("Material Settings")]
-    [Tooltip("La intensidad de emisión base del material. Pon aquí el mismo valor que tienes en tu shader (ej. 1).")]
+    [Tooltip("La intensidad de emisiï¿½n base del material. Pon aquï¿½ el mismo valor que tienes en tu shader (ej. 1).")]
     [SerializeField] private float materialEmissionIntensity = 1f;
 
     private MaterialPropertyBlock _lightMaterialPropertyBlock;
     private bool _isToggledOn = true;
-
     
     private Color _initialLightColor;
     private float _initialLightIntensity;
@@ -32,8 +31,7 @@ public class LightObject : MonoBehaviour
         if (lightComponent != null)
         {
             _isToggledOn = lightComponent.enabled;
-
-          
+            
             lightColor = lightComponent.color;
             intensity = lightComponent.intensity;
 
@@ -43,7 +41,6 @@ public class LightObject : MonoBehaviour
 
         if (targetRenderer != null)
         {
-            
             _baseMatLightColor = targetRenderer.sharedMaterial.GetColor("_LightColor");
             _baseMatEmissionColor = targetRenderer.sharedMaterial.GetColor("_EmissionColor");
         }

@@ -312,10 +312,6 @@ PrefabInstance:
       propertyPath: m_Intensity
       value: 0.01
       objectReference: {fileID: 0}
-    - target: {fileID: 7737080450068338378, guid: 1054e14c108cd8b40a5ec1f059c100cd, type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8242527315732525916, guid: 1054e14c108cd8b40a5ec1f059c100cd, type: 3}
       propertyPath: m_Name
       value: StationLight_L
@@ -404,10 +400,6 @@ PrefabInstance:
     - target: {fileID: 7737080450068338378, guid: 1054e14c108cd8b40a5ec1f059c100cd, type: 3}
       propertyPath: m_Intensity
       value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 7737080450068338378, guid: 1054e14c108cd8b40a5ec1f059c100cd, type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8242527315732525916, guid: 1054e14c108cd8b40a5ec1f059c100cd, type: 3}
       propertyPath: m_Name

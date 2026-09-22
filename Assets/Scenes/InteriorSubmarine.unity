@@ -5837,29 +5837,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3022788904190028010}
     m_Modifications:
-    - target: {fileID: 91628418917964271, guid: 3bb057c2114cf024fbbed359f420a7d7, type: 3}
-      propertyPath: m_Name
-      value: PanelLight_3
-      objectReference: {fileID: 0}
-    - target: {fileID: 362298044687183879, guid: 3bb057c2114cf024fbbed359f420a7d7, type: 3}
-      propertyPath: m_Name
-      value: PanelLight_2
-      objectReference: {fileID: 0}
     - target: {fileID: 912725693533120769, guid: 3bb057c2114cf024fbbed359f420a7d7, type: 3}
       propertyPath: m_Name
       value: EnergyStation
-      objectReference: {fileID: 0}
-    - target: {fileID: 3398951081548987791, guid: 3bb057c2114cf024fbbed359f420a7d7, type: 3}
-      propertyPath: m_Name
-      value: PanelLight_4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4132265726108384603, guid: 3bb057c2114cf024fbbed359f420a7d7, type: 3}
-      propertyPath: energyPanelControl
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4719722607351325636, guid: 3bb057c2114cf024fbbed359f420a7d7, type: 3}
-      propertyPath: m_Name
-      value: PanelLight_1
       objectReference: {fileID: 0}
     - target: {fileID: 7580648125639381366, guid: 3bb057c2114cf024fbbed359f420a7d7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5900,10 +5880,6 @@ PrefabInstance:
     - target: {fileID: 7580648125639381366, guid: 3bb057c2114cf024fbbed359f420a7d7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8808936816247249058, guid: 3bb057c2114cf024fbbed359f420a7d7, type: 3}
-      propertyPath: trembleThreshold
-      value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9647,7 +9623,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3321281025317993052, guid: 2abcebeab99e1214fb721953b094acf8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -10862,6 +10839,14 @@ PrefabInstance:
       propertyPath: intensity
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 1118270548004770562, guid: 9c81e745038a1674680029b33641a955, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7167144ad031b70458cc51fa768eeed2, type: 2}
+    - target: {fileID: 1118270548004770562, guid: 9c81e745038a1674680029b33641a955, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b544936fccc97e244a14f6aa0c72e11f, type: 2}
     - target: {fileID: 2624366909169817230, guid: 9c81e745038a1674680029b33641a955, type: 3}
       propertyPath: m_Name
       value: MotorStationController
@@ -10905,10 +10890,6 @@ PrefabInstance:
     - target: {fileID: 3395801393845177396, guid: 9c81e745038a1674680029b33641a955, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7887349554955543816, guid: 9c81e745038a1674680029b33641a955, type: 3}
-      propertyPath: intensity
-      value: 0.01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

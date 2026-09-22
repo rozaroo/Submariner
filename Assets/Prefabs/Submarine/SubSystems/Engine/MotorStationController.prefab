@@ -360,6 +360,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6424982276208270170, guid: 6ac456375bf8cda478d6b27f4d1860d1, type: 3}
+      propertyPath: intensity
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 8584806280787106991, guid: 6ac456375bf8cda478d6b27f4d1860d1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

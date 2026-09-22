@@ -17,11 +17,6 @@ public class NumberLampsController : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        UpdateDisplay(numberToShow);
-    }
-
     public void UpdateDisplay(int value)
     {
         if(lamps == null || lamps.Count == 0)

@@ -257,16 +257,9 @@ MonoBehaviour:
   topAssemblyPoint: {fileID: 7023180663856842836}
   coreAssemblyPoint: {fileID: 8123199603982512537}
   bottomAssemblyPoint: {fileID: 3790515152599388583}
-  solderingIronPrefab: {fileID: 4256806763141072197, guid: 683ebf74d052af2418237036fb118b22, type: 3}
-  solderingIron: {fileID: 0}
-  solderingIronRestPoint: {fileID: 9177399764158374034}
-  generateSolderingIronIfMissing: 1
-  topConnectionPoint: {fileID: 6940963851849524079}
-  bottomConnectionPoint: {fileID: 1304375424615137726}
-  solderRadius: 0.2
-  solderDuration: 1
   blowtorchStartEvent: Start_FuseMake
   blowtorchStopEvent: Stop_FuseMake
+  solderDuration: 1
   topPartPrefab: {fileID: 1660390698674463070, guid: 74bd8fecd4c35da4087e25043ffbfba0, type: 3}
   topPartSpawnPoints:
   - {fileID: 1989544273141112167}
@@ -829,7 +822,6 @@ GameObject:
   - component: {fileID: 2414515503966641802}
   - component: {fileID: 7443005894433581594}
   - component: {fileID: 3405115676268925766}
-  - component: {fileID: 3321281025317993052}
   m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
@@ -905,28 +897,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3321281025317993052
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8214009341446027551}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8903617152714375242
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,7 +908,6 @@ GameObject:
   - component: {fileID: 4762142103742916474}
   - component: {fileID: 6082594163757019709}
   - component: {fileID: 5602835081693169383}
-  - component: {fileID: 4801464232407081012}
   m_Layer: 3
   m_Name: WorkPlaneAnchor
   m_TagString: Untagged
@@ -1014,28 +983,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4801464232407081012
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8903617152714375242}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &3653845975119047557
 PrefabInstance:
   m_ObjectHideFlags: 0
