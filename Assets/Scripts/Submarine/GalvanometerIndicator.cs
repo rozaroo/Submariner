@@ -21,7 +21,6 @@ public class GalvanometerIndicator : MonoBehaviour
     
     public void UpdateIndicator(float currentValue, float originalMin, float originalMax)
     {
-        Log.Info("Updating Galvanometer Indicator: Current Value = " + currentValue + "Original Min = " + originalMin + ", Original Max = " + originalMax);
         float normalizedValue = Mathf.InverseLerp(originalMin, originalMax, currentValue);
         _currentRotationDataX = Mathf.Lerp(minRotation, maxRotation, normalizedValue);
         

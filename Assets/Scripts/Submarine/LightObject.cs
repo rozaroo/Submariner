@@ -9,6 +9,8 @@ public class LightObject : MonoBehaviour
     [Range(0f, 10f)]
     [SerializeField] private float intensity = 0.01f;
     private MaterialPropertyBlock _lightMaterialPropertyBlock;
+    public Color LightColor { get; }
+    public float Intensity => intensity;
 
     public void Initialize()
     {

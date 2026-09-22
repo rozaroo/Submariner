@@ -244,7 +244,7 @@ public class EnergySystem : MonoBehaviour
         
         if (_galvanometerIndicatorOverload != null)
         {
-            _galvanometerIndicatorEnergy.UpdateIndicator(energyConsumptionRate, 0f, fuseBreakConsumptionThreshold);
+            _galvanometerIndicatorOverload.UpdateIndicator(energyConsumptionRate, 0f, fuseBreakConsumptionThreshold);
         }
         
         if (_energyStatus != previousStatus)

@@ -33,6 +33,10 @@ PrefabInstance:
       value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 5891397553202659919, guid: 1520976a37c97ee4f8fda087634e656e, type: 3}
+      propertyPath: m_Shadows.m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5891397553202659919, guid: 1520976a37c97ee4f8fda087634e656e, type: 3}
       propertyPath: m_BounceIntensity
       value: 0
       objectReference: {fileID: 0}
@@ -52,6 +56,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: b544936fccc97e244a14f6aa0c72e11f, type: 2}
+    - target: {fileID: 8715671591505122503, guid: 1520976a37c97ee4f8fda087634e656e, type: 3}
+      propertyPath: m_Name
+      value: Station Point Light
+      objectReference: {fileID: 0}
     - target: {fileID: 9003977589365232108, guid: 1520976a37c97ee4f8fda087634e656e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 7927919225873622769}
   - component: {fileID: 7158789211659318419}
   - component: {fileID: 2424398219311554831}
+  - component: {fileID: 3602769503677679335}
   m_Layer: 10
   m_Name: LightSphere
   m_TagString: Untagged
@@ -186,7 +187,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 751c00d49239e1f439d4cf925dd3f602, type: 3}
+  - {fileID: 2100000, guid: b544936fccc97e244a14f6aa0c72e11f, type: 2}
   - {fileID: 2100000, guid: 7167144ad031b70458cc51fa768eeed2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -209,3 +210,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3602769503677679335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5060094182701017192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 283b0515cd70df143b8ebd3be87d238c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 2424398219311554831}
+  lightComponent: {fileID: 7746337793786187457}
+  lightColor: {r: 1, g: 1, b: 1, a: 1}
+  intensity: 0.01

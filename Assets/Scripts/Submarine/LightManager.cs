@@ -11,15 +11,15 @@ public class LightManager : MonoBehaviour
 {
     public static LightManager Instance { get; private set; }
 
-    [Header("Configuración de Alertas")]
-    [SerializeField] private Light[] lights;
+    [Header("Alert Config")]
+    [SerializeField] private LightObject[] lightsObjects;
     [SerializeField] private float flickerSpeed = 2f;
     [SerializeField] private float flickerMinIntensity = 0.2f;
     [SerializeField] private float flickerMaxIntensity = 1.5f;
     [SerializeField] private float flickerDuration = 3f;
     [SerializeField] private float alertCycleDuration = 1f;
     
-    [Header("Colores Temáticos")]
+    [Header("Light Themes")]
     [SerializeField] private Color hullDamageColor = Color.red;
     [SerializeField] private Color lowOxygenColor = new Color(0f, 0.5f, 1f);
 
@@ -42,6 +42,11 @@ public class LightManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+
+        foreach (LightObject lights in lightsObjects)
+        {
+            lights.Initialize();
         }
     }
 
@@ -80,19 +85,19 @@ public class LightManager : MonoBehaviour
 
     private void SaveOriginalIfNeeded()
     {
-        if (_originalSaved || lights == null || lights.Length == 0) return;
+        if (_originalSaved || lightsObjects == null || lightsObjects.Length == 0) return;
         
-        Light firstValidLight = System.Array.Find(lights, l => l != null);
+        LightObject firstValidLight = System.Array.Find(lightsObjects, l => l != null);
         if (firstValidLight != null)
         {
-            _originalColor = firstValidLight.color;
+            _originalColor = firstValidLight.LightColor;
         }
 
-        _originalIntensities = new float[lights.Length];
-        for (int i = 0; i < lights.Length; i++)
+        _originalIntensities = new float[lightsObjects.Length];
+        for (int i = 0; i < lightsObjects.Length; i++)
         {
-            if (lights[i] != null)
-                _originalIntensities[i] = lights[i].intensity;
+            if (lightsObjects[i] != null)
+                _originalIntensities[i] = lightsObjects[i].Intensity;
         }
         _originalSaved = true;
     }
@@ -136,24 +141,24 @@ public class LightManager : MonoBehaviour
             float noise = Mathf.PerlinNoise(elapsed * flickerSpeed, 0f);
             float t = Mathf.Lerp(sin, noise, 0.5f);
 
-            for (int i = 0; i < lights.Length; i++)
+            for (int i = 0; i < lightsObjects.Length; i++)
             {
-                if (lights[i] != null)
+                if (lightsObjects[i] != null)
                 {
-                    lights[i].intensity = Mathf.Lerp(
-                        _originalIntensities[i] * flickerMinIntensity,
-                        _originalIntensities[i] * flickerMaxIntensity, t);
+                    lightsObjects[i].SetIntensity(Mathf.Lerp(
+                        flickerMinIntensity,
+                        flickerMaxIntensity, 
+                        t)); 
                 }
             }
-
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        for (int i = 0; i < lights.Length; i++)
+        for (int i = 0; i < lightsObjects.Length; i++)
         {
-            if (lights[i] != null)
-                lights[i].intensity = _originalIntensities[i];
+            if (lightsObjects[i] != null)
+                lightsObjects[i].SetIntensity(_originalIntensities[i]);
         }
     }
 
@@ -161,10 +166,10 @@ public class LightManager : MonoBehaviour
     {
         if (_originalIntensities != null)
         {
-            for (int i = 0; i < lights.Length; i++)
+            for (int i = 0; i < lightsObjects.Length; i++)
             {
-                if (lights[i] != null)
-                    lights[i].intensity = _originalIntensities[i];
+                if (lightsObjects[i] != null)
+                    lightsObjects[i].SetIntensity(_originalIntensities[i]);
             }
         }
 
@@ -174,10 +179,10 @@ public class LightManager : MonoBehaviour
 
     private void SetAlertLightsColor(Color color)
     {
-        foreach (var light in lights)
+        foreach (var light in lightsObjects)
         {
             if (light != null)
-                light.color = color;
+                light.SetColor(color);
         }
     }
 

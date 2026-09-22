@@ -8,9 +8,9 @@ public class StationSwitchLightController : MonoBehaviour
     
     [Header("Light Settings")]
     [SerializeField] private Color activeColor = Color.green;
-    [SerializeField] private float activeColorIntensity = 0.01f;
+    [SerializeField] private float activeColorIntensity = 0.1f;
     [SerializeField] private Color deactivatedColor = Color.red;
-    [SerializeField] private float deactivatedColorIntensity = 0.01f;
+    [SerializeField] private float deactivatedColorIntensity = 0.1f;
     
     private IActivatable _activationElement;
     
