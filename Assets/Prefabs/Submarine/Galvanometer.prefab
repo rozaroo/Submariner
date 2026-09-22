@@ -67,6 +67,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: bbe9953cd3e7332429b2d8f746e9be86, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,10 +101,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b2093b157049a419579c6ccf145c39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minValue: 0
-  maxValue: 100
   minRotation: -45
   maxRotation: 45
+  trembleThreshold: 0.9
+  trembleIntensity: 5
+  trembleSpeed: 30
   needleTransform: {fileID: 3461365954697932494}
 --- !u!1 &5946470681670691156
 GameObject:
@@ -169,7 +171,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 01f954912a2622d4ab838197dab973c6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

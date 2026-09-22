@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnergyPanelControl : MonoBehaviour, IInteractable
 {
     [Header("References")]
+    [SerializeField] private List<NumberLampsController> numberLampsController;
     [SerializeField] private EnergySystem energySystem;
 
     [Header("Fuse Slots")]
@@ -195,6 +196,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
             if (fuse != null)
             {
                 fuse.SetAmperage(requiredAmperages[i]);
+                numberLampsController[i].UpdateDisplay(requiredAmperages[i]);
                 InstallFuseInSlot(fuse, i);
             }
         }
@@ -367,7 +369,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
         }
     }
 
-    public int GetRequiredAmperage(int slotIndex)
+    private int GetRequiredAmperage(int slotIndex)
     {
         if (slotIndex < 0 || slotIndex >= requiredAmperages.Count)
         {
