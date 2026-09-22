@@ -5731,6 +5731,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnergyStation
       objectReference: {fileID: 0}
+    - target: {fileID: 5104891662859546440, guid: 3bb057c2114cf024fbbed359f420a7d7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b82f7a94827f5604dab6db5d8528570e, type: 2}
     - target: {fileID: 7580648125639381366, guid: 3bb057c2114cf024fbbed359f420a7d7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.7794905
