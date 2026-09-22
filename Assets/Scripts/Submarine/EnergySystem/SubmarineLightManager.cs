@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class SubmarineLightManager : MonoBehaviour
 {
-    private Light[] submarineLights;
+    public static SubmarineLightManager Instance { get; private set; }
+
+    private LightObject[] submarineLights;
 
     [Header("Intensity")]
     [SerializeField] private float maxIntensity = 2f;
@@ -20,9 +22,12 @@ public class SubmarineLightManager : MonoBehaviour
 
     private void Awake()
     {
-        submarineLights = FindObjectsByType<Light>(FindObjectsSortMode.None);
-        submarineLights = System.Array.FindAll(submarineLights,light => light.gameObject.name == "Light");
+        Instance = this;
+
+        submarineLights = FindObjectsByType<LightObject>(FindObjectsSortMode.None);
+        submarineLights = System.Array.FindAll(submarineLights, light => light.gameObject.name == "Light");
     }
+
     private void OnEnable()
     {
         GameEventChannel<OnEnergyPropertyChange>.OnEventRaised += OnEnergyChanged;
@@ -39,8 +44,8 @@ public class SubmarineLightManager : MonoBehaviour
 
         if (enableFlicker)
         {
-            foreach (Light light in submarineLights)
-                StartCoroutine(FlickerRoutine(light)); 
+            foreach (LightObject light in submarineLights)
+                StartCoroutine(FlickerRoutine(light));
         }
     }
 
@@ -50,23 +55,23 @@ public class SubmarineLightManager : MonoBehaviour
         UpdateLightIntensity();
     }
 
-    private void UpdateLightIntensity()
+    public void UpdateLightIntensity()
     {
         float t = currentEnergyPercentage / 100f;
         float intensity = Mathf.Lerp(minIntensity, maxIntensity, t);
-        foreach (Light light in submarineLights)
-            if (light != null) light.intensity = intensity;
+        foreach (LightObject light in submarineLights)
+            if (light != null) light.SetIntensity(intensity);
     }
 
-    private IEnumerator FlickerRoutine(Light light)
+    private IEnumerator FlickerRoutine(LightObject light)
     {
         while (true)
         {
             if (currentEnergyPercentage <= flickerThreshold && Random.value < flickerChance)
             {
-                light.enabled = false;
+                light.Toggle(false);
                 yield return new WaitForSeconds(Random.Range(minFlickerTime, maxFlickerTime));
-                light.enabled = true;
+                light.Toggle(true);
             }
             yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));
         }

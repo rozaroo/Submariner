@@ -2,11 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-/// <summary>
-/// Manager centralizado para controlar luces, alertas y desvanecimientos (fades).
-/// Fusiona las funcionalidades de SimpleFlicker, FadeManager y el LightManager original.
-/// </summary>
-/// 
 public class LightManager : MonoBehaviour
 {
     public static LightManager Instance { get; private set; }
@@ -18,7 +13,7 @@ public class LightManager : MonoBehaviour
     [SerializeField] private float flickerMaxIntensity = 1.5f;
     [SerializeField] private float flickerDuration = 3f;
     [SerializeField] private float alertCycleDuration = 1f;
-    
+
     [Header("Light Themes")]
     [SerializeField] private Color hullDamageColor = Color.red;
     [SerializeField] private Color lowOxygenColor = new Color(0f, 0.5f, 1f);
@@ -26,43 +21,35 @@ public class LightManager : MonoBehaviour
     private Color _originalColor;
     private float[] _originalIntensities;
     private bool _originalSaved;
-    
+
     private bool _hullDamageActive;
     private float _lastActiveCrackCount;
     private bool _lowOxygenActive;
-    
+
     private Coroutine _alertCoroutine;
-    
+
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
 
         foreach (LightObject lights in lightsObjects)
-        {
             lights.Initialize();
-        }
     }
 
     private void OnEnable()
     {
         GameEventChannel<OnHullPropertyChange>.OnEventRaised += OnHullStatusChanged;
-        GameEventChannel<OnLowOxygen>.OnEventRaised += OnLowOxygenStatusChanged; // Nueva suscripción
+        GameEventChannel<OnLowOxygen>.OnEventRaised += OnLowOxygenStatusChanged;
     }
 
     private void OnDisable()
     {
         GameEventChannel<OnHullPropertyChange>.OnEventRaised -= OnHullStatusChanged;
-        GameEventChannel<OnLowOxygen>.OnEventRaised -= OnLowOxygenStatusChanged; // Limpieza de suscripción
+        GameEventChannel<OnLowOxygen>.OnEventRaised -= OnLowOxygenStatusChanged;
     }
 
-    #region Alert Logic (Original LightManager)
+    #region Alert Logic
 
     private void OnHullStatusChanged(OnHullPropertyChange onHullPropertyChange)
     {
@@ -73,11 +60,11 @@ public class LightManager : MonoBehaviour
         if (increased) SaveOriginalIfNeeded();
         UpdateAlertState();
     }
-    
+
     private void OnLowOxygenStatusChanged(OnLowOxygen onLowOxygen)
     {
         bool wasActive = _lowOxygenActive;
-        _lowOxygenActive = onLowOxygen.IsLow; 
+        _lowOxygenActive = onLowOxygen.IsLow;
 
         if (_lowOxygenActive && !wasActive) SaveOriginalIfNeeded();
         UpdateAlertState();
@@ -86,7 +73,7 @@ public class LightManager : MonoBehaviour
     private void SaveOriginalIfNeeded()
     {
         if (_originalSaved || lightsObjects == null || lightsObjects.Length == 0) return;
-        
+
         LightObject firstValidLight = System.Array.Find(lightsObjects, l => l != null);
         if (firstValidLight != null)
         {
@@ -109,47 +96,53 @@ public class LightManager : MonoBehaviour
             StopCoroutine(_alertCoroutine);
             _alertCoroutine = null;
         }
-        
+
         if (!_hullDamageActive && !_lowOxygenActive)
         {
-            StopAllCoroutines(); 
+            StopAllCoroutines();
             RestoreLights();
             return;
         }
 
         _alertCoroutine = StartCoroutine(AlertRoutine());
     }
-    
+
     private IEnumerator AlertRoutine()
     {
+        bool alternateColor = false;
+
         while (_hullDamageActive || _lowOxygenActive)
         {
-            Color currentColorAlert = _hullDamageActive ? hullDamageColor : lowOxygenColor;
-            
-            yield return StartCoroutine(AlertFlickerRoutine(currentColorAlert, flickerDuration));
+            Color currentColorAlert;
+
+            if (_hullDamageActive && _lowOxygenActive)
+            {
+                currentColorAlert = alternateColor ? hullDamageColor : lowOxygenColor;
+                alternateColor = !alternateColor;
+            }
+            else
+            {
+                currentColorAlert = _hullDamageActive ? hullDamageColor : lowOxygenColor;
+                alternateColor = false;
+            }
+
+            yield return StartCoroutine(AlertPulseRoutine(currentColorAlert, alertCycleDuration));
         }
     }
 
-    private IEnumerator AlertFlickerRoutine(Color color, float duration)
+    private IEnumerator AlertPulseRoutine(Color color, float duration)
     {
         SetAlertLightsColor(color);
         float elapsed = 0f;
 
         while (elapsed < duration)
         {
-            float sin = (Mathf.Sin(elapsed * flickerSpeed * Mathf.PI * 2f) + 1f) / 2f;
-            float noise = Mathf.PerlinNoise(elapsed * flickerSpeed, 0f);
-            float t = Mathf.Lerp(sin, noise, 0.5f);
+            float t = Mathf.Sin((elapsed / duration) * Mathf.PI);
 
             for (int i = 0; i < lightsObjects.Length; i++)
             {
                 if (lightsObjects[i] != null)
-                {
-                    lightsObjects[i].SetIntensity(Mathf.Lerp(
-                        flickerMinIntensity,
-                        flickerMaxIntensity, 
-                        t)); 
-                }
+                    lightsObjects[i].SetIntensity(Mathf.Lerp(flickerMinIntensity, flickerMaxIntensity, t));
             }
             elapsed += Time.deltaTime;
             yield return null;
@@ -158,7 +151,7 @@ public class LightManager : MonoBehaviour
         for (int i = 0; i < lightsObjects.Length; i++)
         {
             if (lightsObjects[i] != null)
-                lightsObjects[i].SetIntensity(_originalIntensities[i]);
+                lightsObjects[i].SetIntensity(flickerMinIntensity);
         }
     }
 
@@ -175,6 +168,12 @@ public class LightManager : MonoBehaviour
 
         if (_originalSaved) SetAlertLightsColor(_originalColor);
         _originalSaved = false;
+
+        
+        if (SubmarineLightManager.Instance != null)
+        {
+            SubmarineLightManager.Instance.UpdateLightIntensity();
+        }
     }
 
     private void SetAlertLightsColor(Color color)
@@ -231,7 +230,6 @@ public class LightManager : MonoBehaviour
         Material mat = renderer.material;
         if (!mat.HasProperty(propertyName))
         {
-            Debug.LogWarning($"LightManager: El material en {renderer.name} no tiene la propiedad {propertyName}");
             yield break;
         }
         float startValue = mat.GetFloat(propertyName);
