@@ -637,6 +637,18 @@ PrefabInstance:
       propertyPath: 'spawnZones.Array.data[9]'
       value: 
       objectReference: {fileID: 7009297163108279403}
+    - target: {fileID: 3378471433174470436, guid: 6d7f57eddb5aeb2418a8e16b435e5b8a, type: 3}
+      propertyPath: hullDamagePrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3378471433174470436, guid: 6d7f57eddb5aeb2418a8e16b435e5b8a, type: 3}
+      propertyPath: 'hullDamagePrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 9048228622915541748, guid: 4eadd9f08bf8bc74eb6de28e2248d930, type: 3}
+    - target: {fileID: 3378471433174470436, guid: 6d7f57eddb5aeb2418a8e16b435e5b8a, type: 3}
+      propertyPath: 'hullDamagePrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 3826922651841889477, guid: 2a9c9c8d2928ff143b3ba25a6c2a2bf2, type: 3}
     - target: {fileID: 4284337136202105156, guid: 6d7f57eddb5aeb2418a8e16b435e5b8a, type: 3}
       propertyPath: waterMesh
       value: 
