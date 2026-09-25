@@ -19,8 +19,9 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     
     [Header("Input Settings")]
     [SerializeField] private string takePhotoActionName; 
-    [SerializeField] private string exitActionName; 
-    
+    [SerializeField] private string exitActionName;
+    [SerializeField] private string ResetStationName;
+
     [Header("Inputs")]
     [SerializeField] private string lookActionName = "Look";
 
@@ -62,7 +63,10 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
         
         InputAction cancelAction = _currentPlayer.Input.actions[exitActionName];
         cancelAction.started += OnExitStarted;
-        
+
+        InputAction resetAction = _currentPlayer.Input.actions[ResetStationName];
+        resetAction.started += OnResetStarted;
+
         enabled = true;
         GameEventChannel<OnPeriscopePossess>.RaiseEvent(new OnPeriscopePossess());
         
@@ -77,7 +81,10 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
         
         InputAction cancelAction = _currentPlayer.Input.actions[exitActionName];
         cancelAction.started -= OnExitStarted;
-        
+
+        InputAction resetAction = _currentPlayer.Input.actions[ResetStationName];
+        resetAction.started -= OnResetStarted;
+
         _periscopeCameraAnchorSo.phosphorusCameraComponent.EndPeriscopeControl();
         _periscopeCameraAnchorSo.phosphorusCameraComponent.ForceDisable();
             
@@ -108,6 +115,11 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     {
         _currentPlayer.OnUnPossessionState(this);
     }
-    
+    private void OnResetStarted(InputAction.CallbackContext context)
+    {
+        if (_periscopeCameraAnchorSo.phosphorusCameraComponent == null) return;
+        _periscopeCameraAnchorSo.phosphorusCameraComponent.ResetCameraRotation();
+    }
+
     #endregion
 }

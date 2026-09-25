@@ -34,21 +34,24 @@ public class PhosphorusCamera : MonoBehaviour
     private bool _isProcessingPhoto;
     private bool _isPossessingCamera;
     private bool _hasRegisteredEnergyConsumption;
-    
+
+    private float _initialYaw;
+    private float _initialPitch;
     private float _yaw;
     private float _pitch;
     private Coroutine _photoSequenceRoutine;
-    
+    private float _cooldownRemaining;
+
     public bool IsPossessed => _isPossessingCamera;
     public float CurrentYaw => Mathf.Repeat(_yaw, 360f);
     public float CurrentPitch => -_pitch;
-    
+    public bool IsProcessingPhoto => _isProcessingPhoto;
+    public float CooldownRemaining => _cooldownRemaining;
+    public bool IsBatteryEmpty => _energyStatus == EnergyStatus.Empty;
+
     private void Start()
     {
-        if (exteriorCamera != null) 
-        {
-            exteriorCamera.enabled = false;
-        }
+        if (exteriorCamera != null) exteriorCamera.enabled = false;
         else Log.Warning("[PhosphorusCamera]: No Exterior Camera");
         
         if (periscopeCameraAnchorSo != null) periscopeCameraAnchorSo.phosphorusCameraComponent = this;
@@ -57,10 +60,7 @@ public class PhosphorusCamera : MonoBehaviour
     
     private void Update()
     {
-        if (_isPossessingCamera)
-        {
-            HandleEdgeRotation();
-        }
+        if (_isPossessingCamera) HandleEdgeRotation();
     }
     
     private void OnEnable() => GameEventChannel<OnEnergyStatusChange>.OnEventRaised += UpdateEnergyStatus;
@@ -104,9 +104,7 @@ public class PhosphorusCamera : MonoBehaviour
         {
             _yaw += _currentVelocityX * Time.deltaTime;
             _pitch += _currentVelocityY * Time.deltaTime;
-            
             _pitch = Mathf.Clamp(_pitch, -verticalClamp, verticalClamp);
-            
             exteriorCamera.transform.rotation = Quaternion.Euler(_pitch, _yaw, 0f);
         }
     }
@@ -139,7 +137,7 @@ public class PhosphorusCamera : MonoBehaviour
     private IEnumerator PhotoSequenceRoutine()
     {
         _isProcessingPhoto = true;
-
+        _cooldownRemaining = flashFadeInDuration + whiteScreenDuration + exteriorCameraDuration + finalFadeOutDuration;
         StartEnergyConsumption();
         PeriscopeFlash3D flash = periscopeCameraAnchorSo.flashComponent;
         
@@ -149,22 +147,35 @@ public class PhosphorusCamera : MonoBehaviour
         while (timer < flashFadeInDuration)
         {
             timer += Time.deltaTime;
+            _cooldownRemaining -= Time.deltaTime;
             float progress = timer / flashFadeInDuration;
             if (flash != null) flash.SetOverlayColor(Color.white, Mathf.SmoothStep(0f, 1f, progress));
             yield return null;
         }
         if (flash != null) flash.SetOverlayColor(Color.white, 1f);
-        
-        yield return new WaitForSeconds(whiteScreenDuration);
-        if (flash != null) flash.SetOverlayAlpha(0f); 
-        
-        yield return new WaitForSeconds(exteriorCameraDuration);
-        
+        float whiteScreenTimer = 0f;
+        while (whiteScreenTimer < whiteScreenDuration)
+        {
+            whiteScreenTimer += Time.deltaTime;
+            _cooldownRemaining -= Time.deltaTime;
+            yield return null;
+        }
+        if (flash != null) flash.SetOverlayAlpha(0f);
+
+        float exteriorCameraTimer = 0f;
+        while (exteriorCameraTimer < exteriorCameraDuration)
+        {
+            exteriorCameraTimer += Time.deltaTime;
+            _cooldownRemaining -= Time.deltaTime;
+            yield return null;
+        }
+
         timer = 0f;
         while (timer < finalFadeOutDuration)
         {
             timer += Time.deltaTime;
             float progress = timer / finalFadeOutDuration;
+            _cooldownRemaining -= Time.deltaTime;
             if (flash != null) flash.SetOverlayColor(Color.black, Mathf.SmoothStep(0f, 1f, progress));
             yield return null;
         }
@@ -172,32 +183,35 @@ public class PhosphorusCamera : MonoBehaviour
         
         StopEnergyConsumption();
         _isProcessingPhoto = false;
+        _cooldownRemaining = 0f;
     }
 
     public void EnableCamera()
     {
         if (periscopeCameraAnchorSo.playerCamera != null) 
         {
-            if (exteriorCamera != null)
-            {
-                exteriorCamera.targetTexture = periscopeCameraAnchorSo.playerCamera.targetTexture;
-            }
+            if (exteriorCamera != null) exteriorCamera.targetTexture = periscopeCameraAnchorSo.playerCamera.targetTexture; 
             periscopeCameraAnchorSo.playerCamera.enabled = false;
         }
-        
         if (exteriorCamera != null) exteriorCamera.enabled = true; 
-        
-        if (periscopeCameraAnchorSo.flashComponent != null) 
-        {
-            periscopeCameraAnchorSo.flashComponent.SetOverlayColor(Color.black, 1f);
-        }
-
+        if (periscopeCameraAnchorSo.flashComponent != null)  periscopeCameraAnchorSo.flashComponent.SetOverlayColor(Color.black, 1f);
         Vector3 rotation = exteriorCamera.transform.eulerAngles;
         _yaw = rotation.y;
         _pitch = rotation.x;
         if (_pitch > 180f) _pitch -= 360f;
+        _initialYaw = _yaw;
+        _initialPitch = _pitch;
     }
 
+    public void ResetCameraRotation()
+    {
+        if (exteriorCamera == null) return;
+        _yaw = _initialYaw;
+        _pitch = _initialPitch;
+        _currentVelocityX = 0f;
+        _currentVelocityY = 0f;
+        exteriorCamera.transform.rotation = Quaternion.Euler(_pitch, _yaw, 0f);
+    }
     public void ForceDisable()
     {
         if (_photoSequenceRoutine != null) StopCoroutine(_photoSequenceRoutine);
