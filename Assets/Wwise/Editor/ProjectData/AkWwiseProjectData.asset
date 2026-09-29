@@ -274,7 +274,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584113192642860756
+    m_lastTime: -8584112380199816127
     List:
     - name: Start_BackgroundSubmarineMFX
       guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
@@ -395,23 +395,6 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.673379
       minDuration: 0.673379
-    - name: Start_FuseMake
-      guid: a62b0a837fd60d40a66890238fe39859
-      id: 3355137523
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Gameplay_SFX
-        ObjectType: 12
-        guid: a7075cb480cc804bbbacef59f1484550
-      - ElementName: Start_FuseMake
-        ObjectType: 3
-        guid: a62b0a837fd60d40a66890238fe39859
-      Path: Events\Gameplay_SFX\Start_FuseMake
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
     - name: Start_HullBreachSFX
       guid: 2cb37db3919c9c4a986dfbd0643ecf21
       id: 2571798077
@@ -715,23 +698,6 @@ MonoBehaviour:
         ObjectType: 3
         guid: 7e3ae5b6a0d65b4da7c5339c0717039f
       Path: Events\Gameplay_SFX\Stop_DrainagePumpSFX
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - name: Stop_FuseMake
-      guid: 83b1aebd5016f34b851332ccec5bd0d9
-      id: 880757133
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Gameplay_SFX
-        ObjectType: 12
-        guid: a7075cb480cc804bbbacef59f1484550
-      - ElementName: Stop_FuseMake
-        ObjectType: 3
-        guid: 83b1aebd5016f34b851332ccec5bd0d9
-      Path: Events\Gameplay_SFX\Stop_FuseMake
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -1160,7 +1126,7 @@ MonoBehaviour:
     m_lastTime: -8584139166420848593
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 0500000007000000
+  ExpandedWaapiItemIds: 
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0
