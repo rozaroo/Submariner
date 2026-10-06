@@ -7,6 +7,8 @@ public class LeverPullStation : MonoBehaviour, ILeverControls
     [Header("Lever Settings")]
     [SerializeField] private float pullSpeed = 0.5f;
     [SerializeField] private float maxAngleActivation = 90f;
+    [SerializeField, Tooltip("Use -1 to mirror the lever's visual rotation without changing its input direction.")]
+    private float rotationDirection = 1f;
     
     private float _initialAngle;
     private float _currentAngle = 0f;
@@ -48,7 +50,9 @@ public class LeverPullStation : MonoBehaviour, ILeverControls
         if (isLocked) return;
         _currentAngle -= delta * pullSpeed;
         _currentAngle = Mathf.Clamp(_currentAngle, _initialAngle, maxAngleActivation);
-        transform.localRotation = Quaternion.Euler(0f, 0f, _currentAngle);
+        // Keep the drag preview on the same side as the configured pull
+        // direction; SetLeverRotation applies the visual mirror when needed.
+        SetLeverRotation(_currentAngle);
 
         if (_currentAngle >= maxAngleActivation && !isActive)
         {
@@ -71,7 +75,9 @@ public class LeverPullStation : MonoBehaviour, ILeverControls
 
     private void SetLeverRotation(float angle)
     {
-        transform.localRotation = Quaternion.Euler(0f, 0f, angle);
+        float direction = Mathf.Approximately(rotationDirection, 0f) ? 1f : Mathf.Sign(rotationDirection);
+        float visualAngle = _initialAngle + ((angle - _initialAngle) * direction);
+        transform.localRotation = Quaternion.Euler(0f, 0f, visualAngle);
         _currentAngle = angle;
     }
 }

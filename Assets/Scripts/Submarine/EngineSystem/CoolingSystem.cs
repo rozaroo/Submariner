@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -8,13 +9,12 @@ public class CoolingSystem : MonoBehaviour
     [SerializeField] private float coolingInterval = 10f;
     [SerializeField] private float maxUsageTime = 30f;
     [SerializeField] private float cooldownTime = 20f;
-    [SerializeField] private float energyConsumption = 5f; // Consumo ajustado a 5
+    [SerializeField] private float energyConsumption = 5f;
 
     private CoolingState _state;
     private Coroutine _coolingRoutine;
     [SerializeField] private LeverPullStation coolingLeverPull;
 
-    // Bandera de control similar a la de DrainageStation
     private bool _hasRegisteredCoolingConsumption;
 
     private void Start()
@@ -24,6 +24,12 @@ public class CoolingSystem : MonoBehaviour
             coolingLeverPull.onActivation += StartCooling;
             coolingLeverPull.onDeactivation += StopCooling;
         }
+
+        if (engineSystem != null)
+        {
+            engineSystem.OnEngineStartedEvent += CheckCoolingState;
+            engineSystem.OnEngineStoppedEvent += StopCooling; // Frena al apagarse
+        }
     }
 
     private void OnDestroy()
@@ -32,6 +38,20 @@ public class CoolingSystem : MonoBehaviour
         {
             coolingLeverPull.onActivation -= StartCooling;
             coolingLeverPull.onDeactivation -= StopCooling;
+        }
+
+        if (engineSystem != null)
+        {
+            engineSystem.OnEngineStartedEvent -= CheckCoolingState;
+            engineSystem.OnEngineStoppedEvent -= StopCooling;
+        }
+    }
+
+    private void CheckCoolingState()
+    {
+        if (coolingLeverPull != null && coolingLeverPull.isActive)
+        {
+            StartCooling();
         }
     }
 
@@ -93,7 +113,7 @@ public class CoolingSystem : MonoBehaviour
     private void EnterCooldown()
     {
         Log.Info($"Cooling entered cooldown ({cooldownTime}s)");
-        RemoveEnergyConsumption(); // Deja de consumir energía durante el cooldown
+        RemoveEnergyConsumption();
         _state = CoolingState.Cooldown;
         if (_coolingRoutine != null)
         {
@@ -111,7 +131,6 @@ public class CoolingSystem : MonoBehaviour
         Log.Info("Cooling cooldown finished.");
     }
 
-    // Lógica de consumo de energía adaptada de DrainageStation
     private void AddEnergyConsumption()
     {
         if (_hasRegisteredCoolingConsumption)
