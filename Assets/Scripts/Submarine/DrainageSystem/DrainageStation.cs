@@ -275,6 +275,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         
         if (_energyStatus == EnergyStatus.Empty && _isDrainageActive)
         {
+            SFXManager.PostEvent("Stop_DrainagePumpSFX", gameObject);
             if (mainLeverPull != null)
             {
                 mainLeverPull.SetActive(false);
