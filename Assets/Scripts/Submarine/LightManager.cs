@@ -14,29 +14,44 @@ public class LightManager : MonoBehaviour
     [SerializeField] private float blackoutIntensity = 0.05f;
     [SerializeField] private float flickerDuration = 3f;
     [SerializeField] private float alertCycleDuration = 1f;
+    [SerializeField] private float restoreFadeDuration = 2f; // Tiempo que tarda la luz en volver lentamente
 
     [Header("Light Themes")]
     [SerializeField] private Color hullDamageColor = Color.red;
     [SerializeField] private Color lowOxygenColor = new Color(0f, 0.5f, 1f);
 
-    private Color _originalColor;
+    private Color[] _originalColors;
     private float[] _originalIntensities;
     private bool _originalSaved;
 
     private bool _hullDamageActive;
-    private float _lastActiveCrackCount;
     private bool _lowOxygenActive;
     private bool _isBlackout;
 
     private Coroutine _alertCoroutine;
+    private Coroutine _restoreFadeCoroutine;
+
+    public bool IsAlertActive => _hullDamageActive || _lowOxygenActive;
+    public bool IsBlackout => _isBlackout;
+    public bool IsRestoring => _restoreFadeCoroutine != null;
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         foreach (LightObject lights in lightsObjects)
-            lights.Initialize();
+        {
+            if (lights != null)
+                lights.Initialize();
+        }
+
+        // Guardamos el color y la intensidad original apenas se inicializan las luces
+        SaveOriginalState();
     }
 
     private void OnEnable()
@@ -57,44 +72,47 @@ public class LightManager : MonoBehaviour
 
     private void OnEnergyStatusChanged(OnEnergyStatusChange status)
     {
+        bool wasBlackout = _isBlackout;
         _isBlackout = (status.energyStatus == EnergyStatus.Empty);
-        UpdateAlertState();
+
+        // Solo actualizamos el estado de luces si realmente entramos o salimos de Blackout
+        if (wasBlackout != _isBlackout)
+        {
+            UpdateAlertState();
+        }
     }
 
     private void OnHullStatusChanged(OnHullPropertyChange onHullPropertyChange)
     {
-        bool increased = onHullPropertyChange.activeHullDamage > _lastActiveCrackCount;
-        _lastActiveCrackCount = onHullPropertyChange.activeHullDamage;
-        _hullDamageActive = onHullPropertyChange.activeHullDamage > 0;
+        bool hasDamage = onHullPropertyChange.activeHullDamage > 0;
+        if (_hullDamageActive == hasDamage) return;
 
-        if (increased) SaveOriginalIfNeeded();
+        _hullDamageActive = hasDamage;
         UpdateAlertState();
     }
 
     private void OnLowOxygenStatusChanged(OnLowOxygen onLowOxygen)
     {
-        bool wasActive = _lowOxygenActive;
-        _lowOxygenActive = onLowOxygen.IsLow;
+        if (_lowOxygenActive == onLowOxygen.IsLow) return;
 
-        if (_lowOxygenActive && !wasActive) SaveOriginalIfNeeded();
+        _lowOxygenActive = onLowOxygen.IsLow;
         UpdateAlertState();
     }
 
-    private void SaveOriginalIfNeeded()
+    private void SaveOriginalState()
     {
         if (_originalSaved || lightsObjects == null || lightsObjects.Length == 0) return;
 
-        LightObject firstValidLight = System.Array.Find(lightsObjects, l => l != null);
-        if (firstValidLight != null)
-        {
-            _originalColor = firstValidLight.LightColor;
-        }
-
+        _originalColors = new Color[lightsObjects.Length];
         _originalIntensities = new float[lightsObjects.Length];
+
         for (int i = 0; i < lightsObjects.Length; i++)
         {
             if (lightsObjects[i] != null)
-                _originalIntensities[i] = lightsObjects[i].Intensity;
+            {
+                _originalColors[i] = lightsObjects[i].LightColor;
+                _originalIntensities[i] = lightsObjects[i].Intensity > blackoutIntensity ? lightsObjects[i].Intensity : 1.5f;
+            }
         }
         _originalSaved = true;
     }
@@ -107,9 +125,16 @@ public class LightManager : MonoBehaviour
             _alertCoroutine = null;
         }
 
+        if (_restoreFadeCoroutine != null)
+        {
+            StopCoroutine(_restoreFadeCoroutine);
+            _restoreFadeCoroutine = null;
+        }
+
+        // Prioridad 1: Apagón total (Fusible quemado / Sin energía)
         if (_isBlackout)
         {
-            if (_originalSaved) SetAlertLightsColor(_originalColor);
+            RestoreOriginalColors();
 
             for (int i = 0; i < lightsObjects.Length; i++)
             {
@@ -119,20 +144,17 @@ public class LightManager : MonoBehaviour
                     lightsObjects[i].SetIntensity(blackoutIntensity);
                 }
             }
-
-            if (SubmarineLightManager.Instance != null)
-            {
-                SubmarineLightManager.Instance.UpdateLightIntensity();
-            }
             return;
         }
 
+        // Prioridad 2: Si NO hay daño en el casco Y el oxígeno está bien -> vuelve la luz lentamente
         if (!_hullDamageActive && !_lowOxygenActive)
         {
-            RestoreLights();
+            _restoreFadeCoroutine = StartCoroutine(RestoreLightsSlowlyRoutine());
             return;
         }
 
+        // Prioridad 3: Hay al menos una alerta activa (HullDamage, LowOxygen, o ambas)
         for (int i = 0; i < lightsObjects.Length; i++)
         {
             if (lightsObjects[i] != null)
@@ -170,7 +192,7 @@ public class LightManager : MonoBehaviour
         SetAlertLightsColor(color);
         float elapsed = 0f;
 
-        while (elapsed < duration && !_isBlackout)
+        while (elapsed < duration && !_isBlackout && (_hullDamageActive || _lowOxygenActive))
         {
             float t = Mathf.Sin((elapsed / duration) * Mathf.PI);
 
@@ -182,37 +204,63 @@ public class LightManager : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-
-        if (!_isBlackout)
-        {
-            for (int i = 0; i < lightsObjects.Length; i++)
-            {
-                if (lightsObjects[i] != null)
-                    lightsObjects[i].SetIntensity(flickerMinIntensity);
-            }
-        }
     }
 
-    private void RestoreLights()
+    private IEnumerator RestoreLightsSlowlyRoutine()
     {
-        if (_originalIntensities != null)
+        SaveOriginalState();
+
+        float[] startIntensities = new float[lightsObjects.Length];
+        Color[] startColors = new Color[lightsObjects.Length];
+
+        for (int i = 0; i < lightsObjects.Length; i++)
         {
+            if (lightsObjects[i] != null)
+            {
+                lightsObjects[i].Toggle(true);
+                startIntensities[i] = lightsObjects[i].Intensity;
+                startColors[i] = lightsObjects[i].LightColor;
+            }
+        }
+
+        float elapsed = 0f;
+        while (elapsed < restoreFadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.SmoothStep(0f, 1f, elapsed / restoreFadeDuration);
+
             for (int i = 0; i < lightsObjects.Length; i++)
             {
                 if (lightsObjects[i] != null)
                 {
-                    lightsObjects[i].Toggle(true);
-                    lightsObjects[i].SetIntensity(_originalIntensities[i]);
+                    lightsObjects[i].SetColor(Color.Lerp(startColors[i], _originalColors[i], t));
+                    lightsObjects[i].SetIntensity(Mathf.Lerp(startIntensities[i], _originalIntensities[i], t));
                 }
+            }
+            yield return null;
+        }
+
+        RestoreOriginalColors();
+        for (int i = 0; i < lightsObjects.Length; i++)
+        {
+            if (lightsObjects[i] != null)
+            {
+                lightsObjects[i].Toggle(true);
+                lightsObjects[i].SetIntensity(_originalIntensities[i]);
             }
         }
 
-        if (_originalSaved) SetAlertLightsColor(_originalColor);
-        _originalSaved = false;
+        _restoreFadeCoroutine = null;
+    }
 
-        if (SubmarineLightManager.Instance != null)
+    private void RestoreOriginalColors()
+    {
+        if (!_originalSaved || _originalColors == null) return;
+
+        for (int i = 0; i < lightsObjects.Length; i++)
         {
-            SubmarineLightManager.Instance.UpdateLightIntensity();
+            if (lightsObjects[i] != null)
+                lightsObjects[i].SetColor(_originalColors[i]);
         }
     }
 

@@ -9,7 +9,7 @@ public class SubmarineLightManager : MonoBehaviour
 
     [Header("Intensity")]
     [SerializeField] private float maxIntensity = 2f;
-    [SerializeField] private float minIntensity = 0.2f;
+    [SerializeField] private float minIntensity = 1.5f;
     [SerializeField] private float blackoutIntensity = 0.05f;
 
     [Header("Flicker")]
@@ -41,8 +41,6 @@ public class SubmarineLightManager : MonoBehaviour
 
     private void Start()
     {
-        UpdateLightIntensity();
-
         if (enableFlicker)
         {
             foreach (LightObject light in submarineLights)
@@ -53,14 +51,18 @@ public class SubmarineLightManager : MonoBehaviour
     private void OnEnergyChanged(OnEnergyPropertyChange data)
     {
         currentEnergyPercentage = data.currentEnergyPercentage;
-        UpdateLightIntensity();
     }
 
     public void UpdateLightIntensity()
     {
+        
+        if (LightManager.Instance != null && (LightManager.Instance.IsAlertActive || LightManager.Instance.IsBlackout || LightManager.Instance.IsRestoring))
+        {
+            return;
+        }
+
         bool hasEnergy = currentEnergyPercentage > 0f;
-        float t = currentEnergyPercentage / 100f;
-        float intensity = hasEnergy ? Mathf.Lerp(minIntensity, maxIntensity, t) : blackoutIntensity;
+        float intensity = hasEnergy ? maxIntensity : blackoutIntensity;
 
         foreach (LightObject light in submarineLights)
         {
@@ -76,12 +78,18 @@ public class SubmarineLightManager : MonoBehaviour
     {
         while (true)
         {
-            if (currentEnergyPercentage > 0f && currentEnergyPercentage <= flickerThreshold && Random.value < flickerChance)
+            bool canFlicker = currentEnergyPercentage > 0f
+                              && currentEnergyPercentage <= flickerThreshold
+                              && (LightManager.Instance == null || (!LightManager.Instance.IsAlertActive && !LightManager.Instance.IsBlackout && !LightManager.Instance.IsRestoring));
+
+            if (canFlicker && Random.value < flickerChance)
             {
                 light.Toggle(false);
                 yield return new WaitForSeconds(Random.Range(minFlickerTime, maxFlickerTime));
-                light.Toggle(true);
-                UpdateLightIntensity();
+                if (LightManager.Instance == null || (!LightManager.Instance.IsAlertActive && !LightManager.Instance.IsBlackout))
+                {
+                    light.Toggle(true);
+                }
             }
             yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));
         }

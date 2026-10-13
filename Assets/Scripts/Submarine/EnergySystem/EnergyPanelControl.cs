@@ -231,8 +231,11 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
             _burnedSlotIndex = functionalFuseIndexes[randomIndex];
         }
 
-        fuseSlots[_burnedSlotIndex].Burn();
-        Log.Info($"Fuse burned in slot {_burnedSlotIndex}");
+        Fuse burnedFuse = fuseSlots[_burnedSlotIndex];
+        int requiredAmp = GetRequiredAmperage(_burnedSlotIndex);
+        burnedFuse.Burn();
+
+        Log.Info($"[EnergyPanelControl] SE QUEMÓ EL FUSIBLE en el slot {_burnedSlotIndex} | Amperaje del fusible: {burnedFuse.Amperage}A | Amperaje requerido en este slot: {requiredAmp}A");
     }
 
     private void OnFuseRestored()
@@ -277,15 +280,18 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
 
         if (!fuse.IsFunctional)
         {
-            Log.Warning("The selected fuse is burned and cannot restore the panel.");
+            Log.Warning($"The selected fuse ({fuse.Amperage}A) is burned and cannot restore the panel.");
             player.InventorySystem.TryPickUp(fuse);
             return false;
         }
 
-        _burnedSlotIndex = repairSlotIndex;
         int requiredAmperage = GetRequiredAmperage(repairSlotIndex);
-        InstallFuseInSlot(fuse, repairSlotIndex);
+
+        
         _lastInstalledFuseSlotIndex = repairSlotIndex;
+        InstallFuseInSlot(fuse, repairSlotIndex);
+
+        Log.Info($"[EnergyPanelControl] Fusible instalado en slot {repairSlotIndex} -> Instalado: {fuse.Amperage}A | Requerido por el slot: {requiredAmperage}A");
 
         if (fuse.Amperage == requiredAmperage)
         {
@@ -293,10 +299,12 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
         }
         else if (fuse.Amperage < requiredAmperage)
         {
+            Log.Warning($"[EnergyPanelControl] Sub-amperaje detectado ({fuse.Amperage}A < {requiredAmperage}A). Se quemará en {underAmperageFuseLifetime}s.");
             RestoreEnergyWithUnderAmperageFuse(fuse);
         }
         else
         {
+            Log.Warning($"[EnergyPanelControl] Sobre-amperaje detectado ({fuse.Amperage}A > {requiredAmperage}A). Se quemará en {overAmperageBurnDelay}s.");
             RestoreEnergyWithOverAmperageFuse(fuse);
         }
 
@@ -476,6 +484,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
             yield break;
         }
 
+        int requiredAmp = GetRequiredAmperage(fuseIndex);
         fuse.Burn();
         _burnedSlotIndex = fuseIndex;
 
@@ -484,7 +493,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
             energySystem.BreakFuseFromPanel();
         }
 
-        Log.Warning("Wrong amperage fuse burned.");
+        Log.Warning($"[EnergyPanelControl] SE QUEMÓ FUSIBLE POR AMPERAJE INCORRECTO en slot {fuseIndex} | Tenía: {fuse.Amperage}A | Requería: {requiredAmp}A");
         _wrongFuseCoroutine = null;
     }
 

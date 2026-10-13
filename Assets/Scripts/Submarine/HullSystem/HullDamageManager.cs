@@ -24,10 +24,19 @@ public class HullDamageManager : MonoBehaviour
     {
         foreach (var prefab in hullDamageGOs)
         {
-                prefab.SetActive(false);
-                var crack = prefab.GetComponentInChildren<HullDamage>();
+            if (prefab == null) continue;
+
+            var crack = prefab.GetComponentInChildren<HullDamage>(true);
+            if (crack != null)
+            {
+                if (crack.gameObject != prefab)
+                {
+                    prefab.SetActive(true);
+                }
+                crack.gameObject.SetActive(false);
                 crack.OnCrackRepaired += OnHullRepaired;
                 _pool.Add(crack);
+            }
         }
     }
 
@@ -56,9 +65,6 @@ public class HullDamageManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Maybe remove the Grace Period.
-    /// </summary>
     [ContextMenu("Start Hull Grace Period")]
     private void OnStartGracePeriod()
     {
@@ -110,10 +116,7 @@ public class HullDamageManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Spawns up to <paramref name="amount"/> currently available leaks immediately.
-    /// Used by emergencies that must create an instant, visible consequence.
-    /// </summary>
+    
     public int SpawnImmediateDamage(int amount)
     {
         int spawned = 0;
@@ -128,7 +131,7 @@ public class HullDamageManager : MonoBehaviour
 
     private bool TrySpawnCrack()
     {
-        var available = _pool.FindAll(c => !c.gameObject.activeSelf);
+        var available = _pool.FindAll(c => c != null && !c.gameObject.activeSelf);
 
         if (available.Count == 0)
         {
@@ -136,11 +139,12 @@ public class HullDamageManager : MonoBehaviour
             return false;
         }
 
-        Log.Info("Spawned Crack");
-
         var crack = available[Random.Range(0, available.Count)];
         crack.gameObject.SetActive(true);
-        ActiveCrackCount++;
+
+     
+        ActiveCrackCount = _pool.FindAll(c => c != null && c.gameObject.activeSelf).Count;
+        Log.Info($"[HullDamageManager] Grieta generada. Grietas activas: {ActiveCrackCount}");
 
         GameEventChannel<OnHullPropertyChange>.RaiseEvent(new OnHullPropertyChange(hullDamageGOs.Count, ActiveCrackCount));
         return true;
@@ -148,7 +152,15 @@ public class HullDamageManager : MonoBehaviour
 
     private void OnHullRepaired(HullDamage hullDamage)
     {
-        ActiveCrackCount = Mathf.Max(0, ActiveCrackCount - 1);
+        
+        if (hullDamage != null)
+        {
+            hullDamage.gameObject.SetActive(false);
+        }
+
+        ActiveCrackCount = _pool.FindAll(c => c != null && c.gameObject.activeSelf).Count;
+        Log.Info($"[HullDamageManager] Grieta reparada. Grietas restantes: {ActiveCrackCount}");
+
         GameEventChannel<OnHullPropertyChange>.RaiseEvent(new OnHullPropertyChange(hullDamageGOs.Count, ActiveCrackCount));
 
         if (ActiveCrackCount == 0)
