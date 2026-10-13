@@ -26,7 +26,6 @@ Event	ID	Name			Wwise Object Path	Notes
 	3037698516	Start_Motor_Engine_Minigame_Succeeded			\Gameplay_SFX\Start_Motor_Engine_Minigame_Succeeded	
 	3214537693	Start_PhosphorusCameraFlash_Event			\Gameplay_SFX\Start_PhosphorusCameraFlash_Event	
 	3355137523	Start_FuseMake			\Gameplay_SFX\Start_FuseMake	
-	3457084944	Stop_Electric_Ambience			\Gameplay_SFX\Stop_Electric_Ambience	
 	3771492726	Start_SubmarineCollision			\Gameplay_SFX\Start_SubmarineCollision	
 	3884825202	Stop_TensionEvent			\Gameplay_SFX\Stop_TensionEvent	
 	3907807344	Start_Engine_Minigame_SucceededStage			\Gameplay_SFX\Start_Engine_Minigame_SucceededStage	
@@ -121,7 +120,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	550708862	Project_1_Tension2	D:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_Tension2_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_Tension2		564608
 	566744649	HighWaterLevelWalk_1	D:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\490951__nox_sound__footsteps_walk_086D7909.wem		\Actor-Mixer Hierarchy\PlayerSFX\FootstepsType\Water_Steps_Level\HighWaterLevel\HighWaterLevelWalk_1		125556
 	586941861	Project_1_Tension1	D:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_Tension1_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_Tension1		564608
-	622764296	Electricty_Ambience	D:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\341617__pureaudioninja__electricity-ambience-2_49D28395.wem		\Actor-Mixer Hierarchy\SubmarineSFX\Energy\Energy_Status\Electricty_Ambience		2585378
+	622764296	Electricty_Ambience	D:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\341617__pureaudioninja__electricity-ambience-2_49D28395.wem		\Actor-Mixer Hierarchy\SubmarineSFX\Energy\Electricty_Ambience		2585378
 	632780041	46934__digifishmusic__dripping	D:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\46934__digifishmusic__dripping_1F6A3BA2.wem		\Actor-Mixer Hierarchy\SubmarineSFX\HullBreach_SFX\Hull_Random_Sounds\46934__digifishmusic__dripping		1187212
 	655064136	Project_1_BassTension1	D:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_BassTension1_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_BassTension1		564608
 	657499168	Project_1_Tension3	D:\Github\Submariner\Submariner_WwiseProject\.cache\Mac\SFX\Project_1_Tension3_D79FB2B7.wem		\Interactive Music Hierarchy\SubmarineMFX\TensionPlaylist\TensionMusic\Project_1_Tension3		564608

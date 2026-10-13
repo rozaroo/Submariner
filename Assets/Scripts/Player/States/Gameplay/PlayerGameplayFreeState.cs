@@ -7,8 +7,8 @@ public class PlayerGameplayFreeState : PlayerGameplayState
     private float _walkBobFrequency = 1.75f;
     private float _walkBobAmplitude = 0.05f;
     
-    private float _idleBobFrequency = 1f;
-    private float _idleBobAmplitude = 0.015f; 
+    private float _idleBobFrequency = 1.5f;
+    private float _idleBobAmplitude = 0.020f; 
     
     private float _bobSmoothing = 5f;
 

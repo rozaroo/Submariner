@@ -154,7 +154,7 @@
 				</Attenuation>
 				<Attenuation Name="Electric_Attenuation" ID="{E2CE6B7D-D182-4F39-851C-B4A28A3AD701}" ShortID="682400962">
 					<PropertyList>
-						<Property Name="RadiusMax" Type="Real64" Value="10"/>
+						<Property Name="RadiusMax" Type="Real64" Value="6"/>
 					</PropertyList>
 					<CurveUsageInfoList>
 						<VolumeDryUsage>
@@ -170,7 +170,7 @@
 											<Flags>5</Flags>
 										</Point>
 										<Point>
-											<XPos>10</XPos>
+											<XPos>6</XPos>
 											<YPos>-200</YPos>
 											<Flags>37</Flags>
 										</Point>

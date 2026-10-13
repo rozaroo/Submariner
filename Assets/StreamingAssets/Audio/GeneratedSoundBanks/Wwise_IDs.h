@@ -42,7 +42,6 @@ namespace AK
         static const AkUniqueID STOP_BACKGROUNDSUBMARINEMFX = 116843463U;
         static const AkUniqueID STOP_BLOWTORCHSFX = 1982947219U;
         static const AkUniqueID STOP_DRAINAGEPUMPSFX = 860956674U;
-        static const AkUniqueID STOP_ELECTRIC_AMBIENCE = 3457084944U;
         static const AkUniqueID STOP_FUSEMAKE = 880757133U;
         static const AkUniqueID STOP_HULLBREACHSFX = 3933279043U;
         static const AkUniqueID STOP_MOTOR_ENGINE = 344065456U;

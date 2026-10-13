@@ -395,7 +395,7 @@
 						<Action Name="" ID="{CC26E633-AAF4-4C4C-9C92-0CCEA9EFC025}" ShortID="715727408">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="Energy_Status" ID="{789029F3-6E90-41E8-964D-6FA5EB96BB4C}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+									<ObjectRef Name="Electricty_Ambience" ID="{D768E5ED-E424-4DA8-963B-A2F611557266}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

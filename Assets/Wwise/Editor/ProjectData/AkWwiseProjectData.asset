@@ -274,7 +274,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584096786815245805
+    m_lastTime: -8584096768870985546
     List:
     - name: Fuse_Break_SFX
       guid: b066f001ec0a9d43a1664e1b435589fa
@@ -290,7 +290,7 @@ MonoBehaviour:
         ObjectType: 3
         guid: b066f001ec0a9d43a1664e1b435589fa
       Path: Events\Gameplay_SFX\Fuse_Break_SFX
-      maxAttenuation: 10
+      maxAttenuation: 6
       maxDuration: 2.272
       minDuration: 2.272
     - name: Start_BackgroundSubmarineMFX
@@ -392,7 +392,7 @@ MonoBehaviour:
         ObjectType: 3
         guid: 008a21fcfa6aa24190c21cd745c132e4
       Path: Events\Gameplay_SFX\Start_Electric_Ambience
-      maxAttenuation: 10
+      maxAttenuation: 6
       maxDuration: -1
       minDuration: -1
     - name: Start_Energy_Down
@@ -801,8 +801,8 @@ MonoBehaviour:
         guid: 5d7dbdec1c0e2a40aa4dae4663cd9edc
       Path: Events\Gameplay_SFX\Stop_Electric_Ambience
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Stop_FuseMake
       guid: 83b1aebd5016f34b851332ccec5bd0d9
       id: 880757133
