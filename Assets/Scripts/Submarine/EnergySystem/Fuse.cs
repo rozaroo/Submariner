@@ -18,6 +18,8 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
     [SerializeField] private Mesh burnedMesh;
     [SerializeField] private TextMesh amperageLabel;
     [SerializeField] private ParticleSystem blowOutParticles;
+    
+    [SerializeField] private string _fuseBreakSFX = "Fuse_Break_SFX";
 
     private Collider _collider;
     private Rigidbody _rb;
@@ -72,6 +74,7 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
     public void Burn()
     {
         isBurned = true;
+        SFXManager.PostEvent(_fuseBreakSFX, gameObject);
         if (blowOutParticles != null)
         {
             blowOutParticles.Play();

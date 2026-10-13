@@ -390,6 +390,43 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Start_Electric_Ambience" ID="{FC218A00-6AFA-41A2-90C2-1CD745C132E4}">
+					<ChildrenList>
+						<Action Name="" ID="{CC26E633-AAF4-4C4C-9C92-0CCEA9EFC025}" ShortID="715727408">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Energy_Status" ID="{789029F3-6E90-41E8-964D-6FA5EB96BB4C}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_Electric_Ambience" ID="{ECBD7D5D-0E1C-402A-AA4D-AE4663CD9EDC}">
+					<ChildrenList>
+						<Action Name="" ID="{01BCB203-92E5-41C3-A8AA-B42E8B0662D4}" ShortID="806921791">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Energy_Status" ID="{789029F3-6E90-41E8-964D-6FA5EB96BB4C}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_Fuse_Break" ID="{01F066B0-0AEC-439D-A166-4E1B435589FA}">
+					<ChildrenList>
+						<Action Name="" ID="{39060276-E903-4C3F-ACBE-D59DA350416C}" ShortID="952054542">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Fuse_Breakdown" ID="{ABCD41A5-7BAD-43F2-95FA-B37B996C3BEF}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Start_Power_Down" ID="{3AAF271A-7102-456C-B690-1C1E647EB2E3}"/>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

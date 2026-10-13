@@ -20,8 +20,11 @@ public class EnergySystem : MonoBehaviour
 
     [Header("Energy Status")]
     [SerializeField] private EnergyStatus _energyStatus;
-    
-    [Header("Feedback")]
+
+    [Header("Feedback")] 
+    [SerializeField] private string _energyBreakdownStart = "Start_Energy_Down";
+    [SerializeField] private string _energyAmbienceStart = "Start_Electric_Ambience";
+    [SerializeField] private string _energyAmbienceStop = "Stop_Electric_Ambience";
     [SerializeField] private GalvanometerIndicator _galvanometerIndicatorEnergy;
     [SerializeField] private GalvanometerIndicator _galvanometerIndicatorOverload;
     
@@ -68,6 +71,7 @@ public class EnergySystem : MonoBehaviour
     private void Start()
     {
         CurrentEnergy = maxEnergy;
+        SFXManager.PostEvent(_energyAmbienceStart, gameObject);
         SetEnergyStatus();
     }
 
@@ -345,6 +349,8 @@ public class EnergySystem : MonoBehaviour
         StopDelayedFuseOverloadCheck();
         CurrentEnergy = 0f;
         SetEnergyStatus();
+        SFXManager.PostEvent(_energyAmbienceStop, gameObject);
+        SFXManager.PostEvent(_energyBreakdownStart, gameObject);
         Log.Info(_energyStatus.ToString());
         
         Log.Info("Fuse burned. Total blackout activated.");
@@ -361,14 +367,13 @@ public class EnergySystem : MonoBehaviour
         {
             return;
         }
-
+        SFXManager.PostEvent(_energyAmbienceStart, gameObject);
         isFuseBroken = false;
         StopFuseOverloadCheck();
         StopDelayedFuseOverloadCheck();
         CurrentEnergy = Mathf.Max(CurrentEnergy, GetPercentageToEnergy(startupEnergyPercentageAfterFuseRepair));
         Log.Info("Fuse restored. Energy flow resumed.");
         FuseRestored?.Invoke();
-
         CheckEnergyConsumption();
         CheckEnergyRegeneration();
         _delayedFuseOverloadCheckCoroutine = StartCoroutine(DelayedFuseOverloadCheck());

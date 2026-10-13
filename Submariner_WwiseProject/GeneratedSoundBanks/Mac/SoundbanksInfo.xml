@@ -34,7 +34,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3401228817" Language="SFX" Hash="1014266590">
+		<SoundBank Id="3401228817" Language="SFX" Hash="1772798818">
 			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
 			<ShortName>GamePlay_SFX</ShortName>
 			<Path>GamePlay_SFX.bnk</Path>
@@ -44,8 +44,10 @@
 				<Event Id="738466431" Name="Start_ButtonPress" ObjectPath="\Events\Gameplay_SFX\Start_ButtonPress" DurationType="OneShot" DurationMin="0.082455" DurationMax="0.115269"/>
 				<Event Id="378872923" Name="Start_Closing_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Closing_Pressure_DoorSFX" DurationType="OneShot" DurationMin="2.07" DurationMax="2.257351"/>
 				<Event Id="4238673748" Name="Start_DrainagePumpSFX" ObjectPath="\Events\Gameplay_SFX\Start_DrainagePumpSFX" MaxAttenuation="100." DurationType="Infinite"/>
+				<Event Id="2986707250" Name="Start_Electric_Ambience" ObjectPath="\Events\Gameplay_SFX\Start_Electric_Ambience" MaxAttenuation="10." DurationType="Infinite"/>
 				<Event Id="1459308672" Name="Start_Engine_Minigame_Failed" ObjectPath="\Events\Gameplay_SFX\Start_Engine_Minigame_Failed" DurationType="OneShot" DurationMin="7.557029" DurationMax="7.557029"/>
 				<Event Id="3907807344" Name="Start_Engine_Minigame_SucceededStage" ObjectPath="\Events\Gameplay_SFX\Start_Engine_Minigame_SucceededStage" DurationType="OneShot" DurationMin="0.673379" DurationMax="0.673379"/>
+				<Event Id="3893702217" Name="Start_Fuse_Break" ObjectPath="\Events\Gameplay_SFX\Start_Fuse_Break" MaxAttenuation="10." DurationType="OneShot" DurationMin="2.272" DurationMax="2.272"/>
 				<Event Id="3355137523" Name="Start_FuseMake" ObjectPath="\Events\Gameplay_SFX\Start_FuseMake" DurationType="Infinite"/>
 				<Event Id="2571798077" Name="Start_HullBreachSFX" ObjectPath="\Events\Gameplay_SFX\Start_HullBreachSFX" MaxAttenuation="100." DurationType="Infinite"/>
 				<Event Id="2469108041" Name="Start_LeverPullFinished" ObjectPath="\Events\Gameplay_SFX\Start_LeverPullFinished" DurationType="OneShot" DurationMin="0.398979" DurationMax="0.398979"/>
@@ -65,6 +67,7 @@
 				<Event Id="116843463" Name="Stop_BackgroundSubmarineMFX" ObjectPath="\Events\Gameplay_SFX\Stop_BackgroundSubmarineMFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="1982947219" Name="Stop_BlowtorchSFX" ObjectPath="\Events\Gameplay_SFX\Stop_BlowtorchSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="860956674" Name="Stop_DrainagePumpSFX" ObjectPath="\Events\Gameplay_SFX\Stop_DrainagePumpSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
+				<Event Id="3457084944" Name="Stop_Electric_Ambience" ObjectPath="\Events\Gameplay_SFX\Stop_Electric_Ambience" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="880757133" Name="Stop_FuseMake" ObjectPath="\Events\Gameplay_SFX\Stop_FuseMake" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="3933279043" Name="Stop_HullBreachSFX" ObjectPath="\Events\Gameplay_SFX\Stop_HullBreachSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="344065456" Name="Stop_Motor_Engine" ObjectPath="\Events\Gameplay_SFX\Stop_Motor_Engine" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
@@ -76,6 +79,10 @@
 				<AuxBus Id="3031736565" Name="Submarine_Reverb_AUX_SFX" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\General_SFX\Submarine_Reverb_AUX_SFX"/>
 			</IncludedAuxBusses>
 			<IncludedMemoryFiles>
+				<File Id="10797137" Language="SFX">
+					<ShortName>237407__squareal__match-sizzle-02.wav</ShortName>
+					<Path>SFX\237407__squareal__match-sizzle-02_10C4C929.wem</Path>
+				</File>
 				<File Id="23372763" Language="SFX">
 					<ShortName>338969__timkahn__massive-metal-hit.wav</ShortName>
 					<Path>SFX\338969__timkahn__massive-metal-hit_10C4C929.wem</Path>
@@ -176,6 +183,10 @@
 					<ShortName>PressureDoorClose.wav</ShortName>
 					<Path>SFX\PressureDoorClose_10C4C929.wem</Path>
 				</File>
+				<File Id="483165177" Language="SFX">
+					<ShortName>222372__qubodup__powerdown.wav</ShortName>
+					<Path>SFX\222372__qubodup__powerdown_10C4C929.wem</Path>
+				</File>
 				<File Id="485392549" Language="SFX">
 					<ShortName>Project_1_Tension 5.wav</ShortName>
 					<Path>SFX\Project_1_Tension 5_D79FB2B7.wem</Path>
@@ -203,6 +214,10 @@
 				<File Id="586941861" Language="SFX">
 					<ShortName>Project_1_Tension1.wav</ShortName>
 					<Path>SFX\Project_1_Tension1_D79FB2B7.wem</Path>
+				</File>
+				<File Id="622764296" Language="SFX">
+					<ShortName>341617__pureaudioninja__electricity-ambience-2.wav</ShortName>
+					<Path>SFX\341617__pureaudioninja__electricity-ambience-2_49D28395.wem</Path>
 				</File>
 				<File Id="632780041" Language="SFX">
 					<ShortName>46934__digifishmusic__dripping.wav</ShortName>
@@ -291,6 +306,10 @@
 				<File Id="945802731" Language="SFX">
 					<ShortName>167911__lonemonk__short-engine-turnover-no-start.wav</ShortName>
 					<Path>SFX\167911__lonemonk__short-engine-turnover-no-start_10C4C929.wem</Path>
+				</File>
+				<File Id="973628141" Language="SFX">
+					<ShortName>485518__byjesusjp__cristales-rotos.wav</ShortName>
+					<Path>SFX\485518__byjesusjp__cristales-rotos_10C4C929.wem</Path>
 				</File>
 				<File Id="974555202" Language="SFX">
 					<ShortName>696374__sanderboah__walking-on-metal.wav</ShortName>
