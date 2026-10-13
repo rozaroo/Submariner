@@ -19,7 +19,7 @@ public class GalvanometerIndicator : MonoBehaviour
     private float _targetRotationX;
     private float _currentRotationX;
 
-    private void Start()
+    private void Awake()
     {
         _targetRotationX = minRotation;
         _currentRotationX = minRotation;
