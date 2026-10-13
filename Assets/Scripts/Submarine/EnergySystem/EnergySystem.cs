@@ -72,7 +72,7 @@ public class EnergySystem : MonoBehaviour
     {
         CurrentEnergy = maxEnergy;
         SFXManager.PostEvent(_energyAmbienceStart, gameObject);
-        SetEnergyStatus(true);
+        SetEnergyStatus();
     }
 
     #endregion
@@ -224,7 +224,7 @@ public class EnergySystem : MonoBehaviour
 
     #region Energy Status
 
-    private void SetEnergyStatus(bool forceNotify = false)
+    private void SetEnergyStatus()
     {
         float energyPercentage = GetCurrentEnergyPercentage();
         EnergyStatus previousStatus = _energyStatus;
@@ -351,7 +351,7 @@ public class EnergySystem : MonoBehaviour
         StopFuseOverloadCheck();
         StopDelayedFuseOverloadCheck();
         CurrentEnergy = 0f;
-        SetEnergyStatus(true);
+        SetEnergyStatus();
         SFXManager.PostEvent(_energyAmbienceStop, gameObject);
         SFXManager.PostEvent(_energyBreakdownStart, gameObject);
         Log.Info(_energyStatus.ToString());
@@ -374,7 +374,7 @@ public class EnergySystem : MonoBehaviour
         StopFuseOverloadCheck();
         StopDelayedFuseOverloadCheck();
         CurrentEnergy = Mathf.Max(CurrentEnergy, GetPercentageToEnergy(startupEnergyPercentageAfterFuseRepair));
-        SetEnergyStatus(true);
+        SetEnergyStatus();
         Log.Info("Fuse restored. Energy flow resumed.");
         FuseRestored?.Invoke();
 
