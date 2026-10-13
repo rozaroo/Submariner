@@ -46,13 +46,12 @@ public class HullDamageManager : MonoBehaviour
         foreach (var crack in _pool)
             if (crack != null) crack.OnCrackRepaired -= OnHullRepaired;
     }
-
-    // Leemos la variable en Update para que act�e como un bot�n desde el Inspector
+    
     private void Update()
     {
         if (forceHullDamageTrigger)
         {
-            forceHullDamageTrigger = false; // Desmarcamos la casilla autom�ticamente
+            forceHullDamageTrigger = false;
             TrySpawnCrack();
         }
     }
@@ -66,11 +65,10 @@ public class HullDamageManager : MonoBehaviour
         StartCoroutine(StartHullGracePeriod());
     }
 
-    [ContextMenu("Force Spawn Crack")] // Opci�n adicional haciendo clic derecho en el script
+    [ContextMenu("Force Spawn Crack")]
     private void DebugSpawnCrack()
     {
         if (Application.isPlaying) TrySpawnCrack();
-        else Debug.LogWarning("Solo puedes generar da�o en Play Mode.");
     }
 
     private IEnumerator StartHullGracePeriod()

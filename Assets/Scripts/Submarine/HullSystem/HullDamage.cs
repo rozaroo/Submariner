@@ -17,7 +17,7 @@ public class HullDamage : MonoBehaviour
         {
             if (activeTorch != null)
             {
-                activeTorch.StopWeldingAudio();
+                activeTorch.StopWeldingEffects();
             }
             Close();
         }

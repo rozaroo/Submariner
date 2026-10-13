@@ -15,6 +15,9 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     [SerializeField] private string blowtorchStartEvent = "Start_BlowtorchSFX";
     [SerializeField] private string blowtorchStopEvent = "Stop_BlowtorchSFX";
     
+    [Header("Visuals")]
+    [SerializeField] private ParticleSystem flameParticles;
+    
     private bool _isWelding;
     
     private Camera _camera;
@@ -47,7 +50,7 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     {
         _activeWorkbench?.CancelHandheldSoldering();
         _activeWorkbench = null;
-        StopWeldingAudio();
+        StopWeldingEffects();
         _rb.isKinematic = false;
         _collider.enabled = true;
     }
@@ -61,7 +64,7 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     {
         if (TrySolderWorkbench())
         {
-            StopWeldingAudio();
+            StopWeldingEffects();
             return;
         }
 
@@ -72,6 +75,7 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
             if (!_isWelding)
             {
                 SFXManager.PostEvent(blowtorchStartEvent, gameObject);
+                if (flameParticles != null) flameParticles.Play();
                 _isWelding = true;
             }
             
@@ -79,7 +83,7 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
         }
         else
         {
-            StopWeldingAudio();
+            StopWeldingEffects();
         }
     }
 
@@ -87,7 +91,7 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     {
         _activeWorkbench?.CancelHandheldSoldering();
         _activeWorkbench = null;
-        StopWeldingAudio();
+        StopWeldingEffects();
     }
 
     private bool TrySolderWorkbench()
@@ -113,11 +117,12 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
         return workbench.TrySolderWithHandheldBlowtorch();
     }
     
-    public void StopWeldingAudio()
+    public void StopWeldingEffects()
     {
         if (_isWelding)
         {
             SFXManager.PostEvent(blowtorchStopEvent, gameObject);
+            if (flameParticles != null) flameParticles.Stop();
             _isWelding = false;
         }
     }

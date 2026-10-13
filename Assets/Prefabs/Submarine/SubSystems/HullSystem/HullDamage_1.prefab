@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1874682655475429921}
   - component: {fileID: 2081002443273889774}
   - component: {fileID: 5043228705828705307}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: HullDamage_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 5278425144462929977}
   - component: {fileID: 5693927747308310986}
   - component: {fileID: 2336554919843383544}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: HullDamage_Interior_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
