@@ -4,7 +4,7 @@ public class PlayerGameplayFreeState : PlayerGameplayState
 {
     private readonly PlayerCharacter _context;
     
-    private float _walkBobFrequency = 3f;
+    private float _walkBobFrequency = 1.75f;
     private float _walkBobAmplitude = 0.05f;
     
     private float _idleBobFrequency = 1f;
