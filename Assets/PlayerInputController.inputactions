@@ -198,6 +198,17 @@
                 },
                 {
                     "name": "",
+                    "id": "cfdb2cb5-30c7-43f9-8837-689b4d9b0e2d",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "4ffae65c-386c-4f6f-909e-50c40299375c",
                     "path": "<Keyboard>/q",
                     "interactions": "",
@@ -248,6 +259,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "ResetInteraction",
+                    "type": "Button",
+                    "id": "3977fc94-0d21-463d-8306-538ac704155f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -255,6 +275,17 @@
                     "name": "",
                     "id": "ebc7ee82-1ad8-49b0-ab88-d6da293d42db",
                     "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ClickInteraction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "51211458-1cc9-4015-a155-aa829166d985",
+                    "path": "<Keyboard>/h",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -303,6 +334,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pointer",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d873f239-0057-4f76-9add-6d9d5418e984",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ResetInteraction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

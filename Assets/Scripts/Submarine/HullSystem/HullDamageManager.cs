@@ -5,10 +5,7 @@ using UnityEngine;
 public class HullDamageManager : MonoBehaviour
 {
     [Header("Prefab")]
-    [SerializeField] private GameObject hullDamagePrefab;
-
-    [Header("Spawn Zones")]
-    [SerializeField] private Transform[] spawnZones;
+    [SerializeField] private List<GameObject> hullDamageGOs;
 
     [Header("Spawn Parameters")]
     [SerializeField] private float gracePeriod = 10f;
@@ -25,13 +22,12 @@ public class HullDamageManager : MonoBehaviour
 
     private void Start()
     {
-        foreach (var zone in spawnZones)
+        foreach (var prefab in hullDamageGOs)
         {
-            var go = Instantiate(hullDamagePrefab, zone.position, zone.rotation);
-            go.SetActive(false);
-            var crack = go.GetComponent<HullDamage>();
-            crack.OnCrackRepaired += OnHullRepaired;
-            _pool.Add(crack);
+                prefab.SetActive(false);
+                var crack = prefab.GetComponentInChildren<HullDamage>();
+                crack.OnCrackRepaired += OnHullRepaired;
+                _pool.Add(crack);
         }
     }
 
@@ -50,13 +46,12 @@ public class HullDamageManager : MonoBehaviour
         foreach (var crack in _pool)
             if (crack != null) crack.OnCrackRepaired -= OnHullRepaired;
     }
-
-    // Leemos la variable en Update para que act�e como un bot�n desde el Inspector
+    
     private void Update()
     {
         if (forceHullDamageTrigger)
         {
-            forceHullDamageTrigger = false; // Desmarcamos la casilla autom�ticamente
+            forceHullDamageTrigger = false;
             TrySpawnCrack();
         }
     }
@@ -70,11 +65,10 @@ public class HullDamageManager : MonoBehaviour
         StartCoroutine(StartHullGracePeriod());
     }
 
-    [ContextMenu("Force Spawn Crack")] // Opci�n adicional haciendo clic derecho en el script
+    [ContextMenu("Force Spawn Crack")]
     private void DebugSpawnCrack()
     {
         if (Application.isPlaying) TrySpawnCrack();
-        else Debug.LogWarning("Solo puedes generar da�o en Play Mode.");
     }
 
     private IEnumerator StartHullGracePeriod()
@@ -148,14 +142,14 @@ public class HullDamageManager : MonoBehaviour
         crack.gameObject.SetActive(true);
         ActiveCrackCount++;
 
-        GameEventChannel<OnHullPropertyChange>.RaiseEvent(new OnHullPropertyChange(spawnZones.Length, ActiveCrackCount));
+        GameEventChannel<OnHullPropertyChange>.RaiseEvent(new OnHullPropertyChange(hullDamageGOs.Count, ActiveCrackCount));
         return true;
     }
 
     private void OnHullRepaired(HullDamage hullDamage)
     {
         ActiveCrackCount = Mathf.Max(0, ActiveCrackCount - 1);
-        GameEventChannel<OnHullPropertyChange>.RaiseEvent(new OnHullPropertyChange(spawnZones.Length, ActiveCrackCount));
+        GameEventChannel<OnHullPropertyChange>.RaiseEvent(new OnHullPropertyChange(hullDamageGOs.Count, ActiveCrackCount));
 
         if (ActiveCrackCount == 0)
         {

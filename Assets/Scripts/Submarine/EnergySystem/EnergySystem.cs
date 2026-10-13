@@ -9,7 +9,7 @@ public class EnergySystem : MonoBehaviour
     [SerializeField] private float currentEnergy;
     [SerializeField] private float energyToRegenPercentage = 1f;
     [SerializeField] private float timeToRegenerateEnergy = 60f;
-
+    
     [Header("Fuse Settings")]
     [SerializeField] private float fuseBreakConsumptionThreshold = 25f;
     [SerializeField] private float energyConsumptionRate = 0f;
@@ -21,10 +21,13 @@ public class EnergySystem : MonoBehaviour
     [Header("Energy Status")]
     [SerializeField] private EnergyStatus _energyStatus;
 
-    [Header("Feedback")]
+    [Header("Feedback")] 
+    [SerializeField] private string _energyBreakdownStart = "Start_Energy_Down";
+    [SerializeField] private string _energyAmbienceStart = "Start_Electric_Ambience";
+    [SerializeField] private string _energyAmbienceStop = "Stop_Electric_Ambience";
     [SerializeField] private GalvanometerIndicator _galvanometerIndicatorEnergy;
     [SerializeField] private GalvanometerIndicator _galvanometerIndicatorOverload;
-
+    
     [Header("Coroutines")]
     private Coroutine _energyRegenerationCoroutine;
     private Coroutine _energyConsumptionCoroutine;
@@ -42,7 +45,7 @@ public class EnergySystem : MonoBehaviour
         set
         {
             currentEnergy = Mathf.Clamp(value, 0f, maxEnergy);
-            GameEventChannel<OnEnergyPropertyChange>.RaiseEvent(new OnEnergyPropertyChange(GetCurrentEnergyPercentage(), 100f));
+            GameEventChannel<OnEnergyPropertyChange>.RaiseEvent(new OnEnergyPropertyChange(GetCurrentEnergyPercentage(),100f) );
             SetEnergyStatus();
         }
     }
@@ -59,22 +62,23 @@ public class EnergySystem : MonoBehaviour
     {
         GameEventChannel<OnEnergyConsumption>.OnEventRaised += OnChangeEnergyValues;
     }
-
+    
     private void OnDisable()
     {
         GameEventChannel<OnEnergyConsumption>.OnEventRaised -= OnChangeEnergyValues;
     }
-
+    
     private void Start()
     {
         CurrentEnergy = maxEnergy;
+        SFXManager.PostEvent(_energyAmbienceStart, gameObject);
         SetEnergyStatus(true);
     }
 
     #endregion
 
     #region Energy Consumption
-
+    
     [ContextMenu("Consumption/Start Energy Consumption")]
     private void StartEnergyConsumption()
     {
@@ -129,7 +133,7 @@ public class EnergySystem : MonoBehaviour
         CheckEnergyRegeneration();
         CheckFuseOverload();
     }
-
+    
     private void CheckEnergyConsumption()
     {
         if (energyConsumptionRate == 0)
@@ -142,7 +146,7 @@ public class EnergySystem : MonoBehaviour
         }
         Log.Info($"Energy Consumption Rate: {Mathf.Abs(energyConsumptionRate)}");
     }
-
+    
     private IEnumerator EnergyConsumption()
     {
         while (!isFuseBroken && CurrentEnergy > 0f)
@@ -171,7 +175,7 @@ public class EnergySystem : MonoBehaviour
         }
         _energyRegenerationCoroutine = StartCoroutine(EnergyRegenerateVPercentage());
     }
-
+    
     [ContextMenu("Regeneration/Stop Energy Regeneration")]
     private void StopEnergyRegeneration()
     {
@@ -195,7 +199,7 @@ public class EnergySystem : MonoBehaviour
             StartEnergyRegeneration();
         }
     }
-
+    
     private IEnumerator EnergyRegenerateVPercentage()
     {
         while (!isFuseBroken && CurrentEnergy < maxEnergy)
@@ -237,12 +241,12 @@ public class EnergySystem : MonoBehaviour
         {
             _energyStatus = EnergyStatus.Full;
         }
-
+        
         if (_galvanometerIndicatorEnergy != null)
         {
             _galvanometerIndicatorEnergy.UpdateIndicator(currentEnergy, 0f, maxEnergy);
         }
-
+        
         if (_galvanometerIndicatorOverload != null)
         {
             float displayOverload = isFuseBroken ? 0f : energyConsumptionRate;
@@ -254,9 +258,10 @@ public class EnergySystem : MonoBehaviour
             TriggerEnergyEvents();
         }
     }
-
+    
     private void TriggerEnergyEvents()
     {
+        SFXManager.SetState(_energyStatus.ToString(),"Energy_Status");
         GameEventChannel<OnEnergyStatusChange>.RaiseEvent(new OnEnergyStatusChange
         {
             energyStatus = _energyStatus
@@ -266,7 +271,7 @@ public class EnergySystem : MonoBehaviour
     }
 
     #endregion
-
+    
     #region Fuse Logic
 
     private void CheckFuseOverload()
@@ -298,7 +303,7 @@ public class EnergySystem : MonoBehaviour
             BurnFuse();
         }
     }
-
+    
     private void BurnFuse()
     {
         if (isFuseBroken)
@@ -349,6 +354,8 @@ public class EnergySystem : MonoBehaviour
         StopDelayedFuseOverloadCheck();
         CurrentEnergy = 0f;
         SetEnergyStatus(true);
+        SFXManager.PostEvent(_energyAmbienceStop, gameObject);
+        SFXManager.PostEvent(_energyBreakdownStart, gameObject);
         Log.Info(_energyStatus.ToString());
         Log.Info("Fuse burned. Total blackout activated.");
 
@@ -404,19 +411,19 @@ public class EnergySystem : MonoBehaviour
     }
 
     #endregion
-
+    
     #region InstantEnergyChanges
 
     private void RestoreEnergy(float amount)
     {
         CurrentEnergy += amount;
     }
-
+    
     private void ConsumeEnergyAmount(float amount)
     {
         CurrentEnergy -= amount;
     }
-
+    
     #endregion
 
     #region Getters and Utility Methods
@@ -425,7 +432,7 @@ public class EnergySystem : MonoBehaviour
     {
         return CurrentEnergy;
     }
-
+    
     public float GetCurrentEnergyPercentage()
     {
         float currentPercentage = CurrentEnergy / maxEnergy * 100f;
@@ -438,14 +445,14 @@ public class EnergySystem : MonoBehaviour
         energy = Mathf.Clamp(energy, 0f, maxEnergy);
         return energy;
     }
-
+    
     private float GetEnergyToPercentage(float energy)
     {
         float percentage = (energy / maxEnergy) * 100f;
         percentage = Mathf.Clamp(percentage, 0f, 100f);
         return percentage;
     }
-
+    
     [ContextMenu("Time/Get Total Time")]
     private float TotalTimeInGame()
     {
@@ -456,7 +463,7 @@ public class EnergySystem : MonoBehaviour
         }
         return Mathf.Infinity;
     }
-
+    
     [ContextMenu("Time/Get Current Time Remaining")]
     private float CurrentTimeRemaining()
     {
@@ -469,4 +476,5 @@ public class EnergySystem : MonoBehaviour
     }
 
     #endregion
+    
 }

@@ -6,27 +6,27 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 {
     [Header("References")]
     [SerializeField] private LeverPullStation mainLeverPull;
-
+    
     [Header("Possession Config")]
     [SerializeField] private Transform cameraAnchor;
     [SerializeField] private Transform directionAnchor;
     [SerializeField] private float transitionDuration = 0.1f;
     [SerializeField] private CursorLockMode cursorLockMode;
     [SerializeField] private bool showMouseCursor;
-
+    
     [Header("Actions Maps Settings")]
     [SerializeField] private string playerMapName;
     [SerializeField] private string stationMapName;
-
+    
     [Header("Input Settings")]
     [SerializeField] private string clickActionName;
     [SerializeField] private string pointerDeltaActionName;
     [SerializeField] private string exitActionName;
 
-    [Header("Drainage Settings")]
+    [Header("Drainage Settings")] 
     [SerializeField] private float drainagePercentage = 1f;
 
-    [Header("Energy Consumption Settings")]
+    [Header("Energy Consumption Settings")] 
     [SerializeField] private float energyConsumption = 5;
 
     private EnergyStatus _energyStatus = EnergyStatus.Full;
@@ -51,11 +51,11 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     {
         _minigame = GetComponent<DrainageMinigame>();
     }
-
+    
     private void OnEnable()
     {
         GameEventChannel<OnEnergyStatusChange>.OnEventRaised += OnEnergyStatusChanged;
-
+        
         if (_minigame != null)
         {
             _minigame.FinishedMiniGame += OnUnlockLever;
@@ -79,12 +79,12 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     private void OnDisable()
     {
         GameEventChannel<OnEnergyStatusChange>.OnEventRaised -= OnEnergyStatusChanged;
-
+        
         if (_minigame != null)
         {
             _minigame.FinishedMiniGame -= OnUnlockLever;
         }
-
+        
         if (mainLeverPull != null)
         {
             mainLeverPull.onActivation -= OnLeverActivationSequence;
@@ -93,7 +93,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     }
 
     #endregion
-
+    
     private void Update()
     {
         HandleControlDragging();
@@ -110,14 +110,14 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     {
         _currentPlayer = player;
         _playerCamera = player.CamController.MainCamera;
-
+        
         InputAction clickAction = _currentPlayer.Input.actions[clickActionName];
         InputAction exitAction = _currentPlayer.Input.actions[exitActionName];
-
+        
         clickAction.started += OnClickStarted;
         clickAction.canceled += OnClickCanceled;
         exitAction.started += OnExitPerformed;
-
+    
         CheckDrainageMinigame();
         enabled = true;
     }
@@ -126,7 +126,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     {
         InputAction clickAction = _currentPlayer.Input.actions[clickActionName];
         InputAction exitAction = _currentPlayer.Input.actions[exitActionName];
-
+                
         clickAction.started -= OnClickStarted;
         clickAction.canceled -= OnClickCanceled;
         exitAction.started -= OnExitPerformed;
@@ -143,18 +143,18 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     private void OnClickStarted(InputAction.CallbackContext context)
     {
         if (Mouse.current == null) return;
-
+        
         Vector2 mousePos = Mouse.current.position.ReadValue();
         Vector2 viewportPos = new Vector2(mousePos.x / Screen.width, mousePos.y / Screen.height);
         Ray ray = _playerCamera.ViewportPointToRay(viewportPos);
 
         if (!Physics.Raycast(ray, out RaycastHit hit, 5f)) return;
-
+    
         if (hit.collider.TryGetComponent(out IButtonControls buttonControl))
         {
             buttonControl.OnActionDown();
         }
-
+    
         if (hit.collider.TryGetComponent(out ILeverControls leverControl))
         {
             _currentDraggedControls = leverControl;
@@ -163,9 +163,9 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 
     private void OnClickCanceled(InputAction.CallbackContext context)
     {
-        _currentDraggedControls = null;
+        _currentDraggedControls = null; 
     }
-
+    
     private void OnExitPerformed(InputAction.CallbackContext context)
     {
         if (!_isDrainageActive)
@@ -174,7 +174,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         }
         _currentPlayer.OnUnPossessionState(this);
     }
-
+    
     private void HandleControlDragging()
     {
         if (_currentDraggedControls == null || Mouse.current == null) return;
@@ -182,9 +182,9 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         float mouseDeltaY = _mouseDelta.y;
         _currentDraggedControls.OnActionDrag(mouseDeltaY);
     }
-
+    
     #endregion
-
+    
     #region Lever Logic
 
     private void OnUnlockLever()
@@ -207,9 +207,9 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     }
 
     #endregion
-
+    
     #region DrainageLogic
-
+    
     private void StartDrainage()
     {
         if (_energyStatus == EnergyStatus.Empty)
@@ -233,7 +233,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
             _currentPlayer.OnUnPossessionState(this);
         }
     }
-
+    
     private void StopDrainage()
     {
         if (!_isDrainageActive && !_hasRegisteredDrainageConsumption)
@@ -247,7 +247,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         GameEventChannel<OnDrainagePropertyChange>.RaiseEvent(new OnDrainagePropertyChange(0f));
         Log.Info("Drainage Stopped");
     }
-
+    
     private void CheckDrainageMinigame()
     {
         if (!_isDrainageActive && !_minigame.hasSucceeded)
@@ -255,14 +255,14 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
             _minigame.SetupMiniGame();
         }
     }
-
+    
     private void SetDrainageStatus()
     {
         switch (_energyStatus)
         {
             case EnergyStatus.Full: drainagePercentage = 1f; break;
             case EnergyStatus.Low: drainagePercentage = 0.5f; break;
-            case EnergyStatus.Empty: drainagePercentage = 0f; break;
+            case EnergyStatus.Empty: drainagePercentage = 0f; break; 
         }
 
         if (_isDrainageActive)
@@ -270,7 +270,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
             GameEventChannel<OnDrainagePropertyChange>.RaiseEvent(new OnDrainagePropertyChange(drainagePercentage));
         }
     }
-
+    
     #endregion
 
     #region Energy Logic
@@ -278,7 +278,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     private void OnEnergyStatusChanged(OnEnergyStatusChange status)
     {
         _energyStatus = status.energyStatus;
-
+        
         if (_energyStatus == EnergyStatus.Empty && _isDrainageActive)
         {
             StopDrainage();
@@ -292,10 +292,10 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
                 _minigame.SetupMiniGame();
             }
         }
-
+        
         SetDrainageStatus();
     }
-
+    
     private void StartDrainageEnergyConsumption()
     {
         if (_hasRegisteredDrainageConsumption)

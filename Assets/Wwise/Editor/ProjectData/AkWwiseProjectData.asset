@@ -274,7 +274,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584114945862516696
+    m_lastTime: -8584096815908592806
     List:
     - name: Start_BackgroundSubmarineMFX
       guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
@@ -361,6 +361,23 @@ MonoBehaviour:
       maxAttenuation: 100
       maxDuration: -1
       minDuration: -1
+    - name: Start_Electric_Ambience
+      guid: 008a21fcfa6aa24190c21cd745c132e4
+      id: 2986707250
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_Electric_Ambience
+        ObjectType: 3
+        guid: 008a21fcfa6aa24190c21cd745c132e4
+      Path: Events\Gameplay_SFX\Start_Electric_Ambience
+      maxAttenuation: 10
+      maxDuration: -1
+      minDuration: -1
     - name: Start_Engine_Minigame_Failed
       guid: d7b82274ecd81c45a81c64e0dcce0392
       id: 1459308672
@@ -395,6 +412,40 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.673379
       minDuration: 0.673379
+    - name: Start_Fuse_Break
+      guid: b066f001ec0a9d43a1664e1b435589fa
+      id: 3893702217
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_Fuse_Break
+        ObjectType: 3
+        guid: b066f001ec0a9d43a1664e1b435589fa
+      Path: Events\Gameplay_SFX\Start_Fuse_Break
+      maxAttenuation: 10
+      maxDuration: 2.272
+      minDuration: 2.272
+    - name: Start_FuseMake
+      guid: a62b0a837fd60d40a66890238fe39859
+      id: 3355137523
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_FuseMake
+        ObjectType: 3
+        guid: a62b0a837fd60d40a66890238fe39859
+      Path: Events\Gameplay_SFX\Start_FuseMake
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Start_HullBreachSFX
       guid: 2cb37db3919c9c4a986dfbd0643ecf21
       id: 2571798077
@@ -565,6 +616,23 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 1.307199
       minDuration: 0.502769
+    - name: Start_Power_Down
+      guid: 1a27af3a02716c45b6901c1e647eb2e3
+      id: 3143738100
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_Power_Down
+        ObjectType: 3
+        guid: 1a27af3a02716c45b6901c1e647eb2e3
+      Path: Events\Gameplay_SFX\Start_Power_Down
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Start_SonarPingInner
       guid: 1229c9717802a54a8d32dbeb8e91b82d
       id: 1735885581
@@ -698,6 +766,40 @@ MonoBehaviour:
         ObjectType: 3
         guid: 7e3ae5b6a0d65b4da7c5339c0717039f
       Path: Events\Gameplay_SFX\Stop_DrainagePumpSFX
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Stop_Electric_Ambience
+      guid: 5d7dbdec1c0e2a40aa4dae4663cd9edc
+      id: 3457084944
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Stop_Electric_Ambience
+        ObjectType: 3
+        guid: 5d7dbdec1c0e2a40aa4dae4663cd9edc
+      Path: Events\Gameplay_SFX\Stop_Electric_Ambience
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Stop_FuseMake
+      guid: 83b1aebd5016f34b851332ccec5bd0d9
+      id: 880757133
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Stop_FuseMake
+        ObjectType: 3
+        guid: 83b1aebd5016f34b851332ccec5bd0d9
+      Path: Events\Gameplay_SFX\Stop_FuseMake
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -1126,7 +1228,7 @@ MonoBehaviour:
     m_lastTime: -8584139166420848593
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 
+  ExpandedWaapiItemIds: 0500000007000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

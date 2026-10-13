@@ -45,8 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 875025d0d325e8c4a8c2a98bc596770a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hullDamagePrefab: {fileID: 9048228622915541748, guid: 4eadd9f08bf8bc74eb6de28e2248d930, type: 3}
-  spawnZones:
+  hullDamageGOs:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -60,6 +59,7 @@ MonoBehaviour:
   gracePeriod: 5
   minSpawnInterval: 20
   maxSpawnInterval: 30
+  forceHullDamageTrigger: 0
 --- !u!114 &4284337136202105156
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,7 +7,8 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
     private const int IGNORE_RAYCAST_LAYER = 2;
 
     [Header("Position Settings")]
-    [SerializeField] private Vector3 holdOffset = new Vector3(0.2f, -0.2f, 0.6f);
+    [SerializeField] private Vector3 holdPositionOffset = new Vector3(0.2f, -0.2f, 0.6f);
+    [SerializeField] private Vector3 holdRotationOffset = new Vector3(0f, 0f, 0f);
 
     [Header("Fuse State")]
     [SerializeField] private bool isBurned = false;
@@ -16,6 +17,9 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
     [Header("Visuals")]
     [SerializeField] private Mesh burnedMesh;
     [SerializeField] private TextMesh amperageLabel;
+    [SerializeField] private ParticleSystem blowOutParticles;
+    
+    [SerializeField] private string _fuseBreakSFX = "Fuse_Break_SFX";
 
     private Collider _collider;
     private Rigidbody _rb;
@@ -23,7 +27,8 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
     private EnergyPanelControl _installedPanel;
 
     public GameObject GameObject => gameObject;
-    public Vector3 HoldPositionOffset => holdOffset;
+    public Vector3 HoldPositionOffset => holdPositionOffset;
+    public Vector3 HoldRotationOffset => holdRotationOffset;
     public bool IsBurned => isBurned;
     public bool IsFunctional => !isBurned;
     public int Amperage => amperage;
@@ -69,6 +74,11 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
     public void Burn()
     {
         isBurned = true;
+        SFXManager.PostEvent(_fuseBreakSFX, gameObject);
+        if (blowOutParticles != null)
+        {
+            blowOutParticles.Play();
+        }
         RefreshVisuals();
     }
 
