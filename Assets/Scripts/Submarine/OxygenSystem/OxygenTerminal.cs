@@ -14,6 +14,22 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
     private OxygenTank _dockedTank;
     private Coroutine _transferCoroutine;
     private bool _hasRegisteredEnergyConsumption;
+    private bool _isBlackout;
+
+    private void OnEnable()
+    {
+        GameEventChannel<OnEnergyStatusChange>.OnEventRaised += OnEnergyStatusChanged;
+    }
+
+    private void OnDisable()
+    {
+        GameEventChannel<OnEnergyStatusChange>.OnEventRaised -= OnEnergyStatusChanged;
+    }
+
+    private void OnEnergyStatusChanged(OnEnergyStatusChange status)
+    {
+        _isBlackout = (status.energyStatus == EnergyStatus.Empty);
+    }
 
     public void Interact(PlayerCharacter player)
     {
@@ -33,12 +49,12 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
     private void DockTank(OxygenTank tank)
     {
         if (_dockedTank != null) return;
-        
+
         _dockedTank = tank;
         _dockedTank.Dock();
         _dockedTank.transform.position = dockPoint.position;
         _dockedTank.transform.rotation = dockPoint.rotation;
-        
+
         if (_transferCoroutine != null) StopCoroutine(_transferCoroutine);
         _transferCoroutine = StartCoroutine(TransferCoroutine());
         Log.Info("[OxygenTerminal] Tank Docked.");
@@ -58,7 +74,7 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
         _dockedTank = null;
         Log.Info("[OxygenTerminal] Tank Undocked.");
     }
-    
+
     private IEnumerator TransferCoroutine()
     {
         yield return null;
@@ -66,16 +82,24 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
 
         while (_dockedTank != null && !_dockedTank.isEmpty)
         {
+            if (_isBlackout)
+            {
+                StopEnergyConsumption();
+                oxygenSystem.ResumeDrain();
+                yield return null;
+                continue;
+            }
+
             oxygenSystem.PauseDrain();
             StartEnergyConsumption();
 
-            float toDrain = oxygenSystem.CurrentOxygen < oxygenSystem.MaxOxygen 
-                ? transferRatePerSecond * Time.deltaTime 
-                : Time.deltaTime; // Maintenance rate to match system drain
+            float toDrain = oxygenSystem.CurrentOxygen < oxygenSystem.MaxOxygen
+                ? transferRatePerSecond * Time.deltaTime
+                : Time.deltaTime;
 
             float drained = _dockedTank.Drain(toDrain);
             accumulatedDrained += drained;
-            
+
             if (accumulatedDrained >= 0.5f)
             {
                 oxygenSystem.RestoreOxygen(accumulatedDrained);

@@ -11,6 +11,7 @@ public class LightManager : MonoBehaviour
     [SerializeField] private float flickerSpeed = 2f;
     [SerializeField] private float flickerMinIntensity = 0.2f;
     [SerializeField] private float flickerMaxIntensity = 1.5f;
+    [SerializeField] private float blackoutIntensity = 0.05f;
     [SerializeField] private float flickerDuration = 3f;
     [SerializeField] private float alertCycleDuration = 1f;
 
@@ -25,6 +26,7 @@ public class LightManager : MonoBehaviour
     private bool _hullDamageActive;
     private float _lastActiveCrackCount;
     private bool _lowOxygenActive;
+    private bool _isBlackout;
 
     private Coroutine _alertCoroutine;
 
@@ -41,15 +43,23 @@ public class LightManager : MonoBehaviour
     {
         GameEventChannel<OnHullPropertyChange>.OnEventRaised += OnHullStatusChanged;
         GameEventChannel<OnLowOxygen>.OnEventRaised += OnLowOxygenStatusChanged;
+        GameEventChannel<OnEnergyStatusChange>.OnEventRaised += OnEnergyStatusChanged;
     }
 
     private void OnDisable()
     {
         GameEventChannel<OnHullPropertyChange>.OnEventRaised -= OnHullStatusChanged;
         GameEventChannel<OnLowOxygen>.OnEventRaised -= OnLowOxygenStatusChanged;
+        GameEventChannel<OnEnergyStatusChange>.OnEventRaised -= OnEnergyStatusChanged;
     }
 
     #region Alert Logic
+
+    private void OnEnergyStatusChanged(OnEnergyStatusChange status)
+    {
+        _isBlackout = (status.energyStatus == EnergyStatus.Empty);
+        UpdateAlertState();
+    }
 
     private void OnHullStatusChanged(OnHullPropertyChange onHullPropertyChange)
     {
@@ -97,11 +107,36 @@ public class LightManager : MonoBehaviour
             _alertCoroutine = null;
         }
 
+        if (_isBlackout)
+        {
+            if (_originalSaved) SetAlertLightsColor(_originalColor);
+
+            for (int i = 0; i < lightsObjects.Length; i++)
+            {
+                if (lightsObjects[i] != null)
+                {
+                    lightsObjects[i].Toggle(true);
+                    lightsObjects[i].SetIntensity(blackoutIntensity);
+                }
+            }
+
+            if (SubmarineLightManager.Instance != null)
+            {
+                SubmarineLightManager.Instance.UpdateLightIntensity();
+            }
+            return;
+        }
+
         if (!_hullDamageActive && !_lowOxygenActive)
         {
-            StopAllCoroutines();
             RestoreLights();
             return;
+        }
+
+        for (int i = 0; i < lightsObjects.Length; i++)
+        {
+            if (lightsObjects[i] != null)
+                lightsObjects[i].Toggle(true);
         }
 
         _alertCoroutine = StartCoroutine(AlertRoutine());
@@ -111,7 +146,7 @@ public class LightManager : MonoBehaviour
     {
         bool alternateColor = false;
 
-        while (_hullDamageActive || _lowOxygenActive)
+        while (!_isBlackout && (_hullDamageActive || _lowOxygenActive))
         {
             Color currentColorAlert;
 
@@ -135,7 +170,7 @@ public class LightManager : MonoBehaviour
         SetAlertLightsColor(color);
         float elapsed = 0f;
 
-        while (elapsed < duration)
+        while (elapsed < duration && !_isBlackout)
         {
             float t = Mathf.Sin((elapsed / duration) * Mathf.PI);
 
@@ -148,10 +183,13 @@ public class LightManager : MonoBehaviour
             yield return null;
         }
 
-        for (int i = 0; i < lightsObjects.Length; i++)
+        if (!_isBlackout)
         {
-            if (lightsObjects[i] != null)
-                lightsObjects[i].SetIntensity(flickerMinIntensity);
+            for (int i = 0; i < lightsObjects.Length; i++)
+            {
+                if (lightsObjects[i] != null)
+                    lightsObjects[i].SetIntensity(flickerMinIntensity);
+            }
         }
     }
 
@@ -162,14 +200,16 @@ public class LightManager : MonoBehaviour
             for (int i = 0; i < lightsObjects.Length; i++)
             {
                 if (lightsObjects[i] != null)
+                {
+                    lightsObjects[i].Toggle(true);
                     lightsObjects[i].SetIntensity(_originalIntensities[i]);
+                }
             }
         }
 
         if (_originalSaved) SetAlertLightsColor(_originalColor);
         _originalSaved = false;
 
-        
         if (SubmarineLightManager.Instance != null)
         {
             SubmarineLightManager.Instance.UpdateLightIntensity();

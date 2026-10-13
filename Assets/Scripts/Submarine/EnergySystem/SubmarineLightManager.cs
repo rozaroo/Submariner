@@ -10,6 +10,7 @@ public class SubmarineLightManager : MonoBehaviour
     [Header("Intensity")]
     [SerializeField] private float maxIntensity = 2f;
     [SerializeField] private float minIntensity = 0.2f;
+    [SerializeField] private float blackoutIntensity = 0.05f;
 
     [Header("Flicker")]
     [SerializeField] private bool enableFlicker = true;
@@ -57,21 +58,30 @@ public class SubmarineLightManager : MonoBehaviour
 
     public void UpdateLightIntensity()
     {
+        bool hasEnergy = currentEnergyPercentage > 0f;
         float t = currentEnergyPercentage / 100f;
-        float intensity = Mathf.Lerp(minIntensity, maxIntensity, t);
+        float intensity = hasEnergy ? Mathf.Lerp(minIntensity, maxIntensity, t) : blackoutIntensity;
+
         foreach (LightObject light in submarineLights)
-            if (light != null) light.SetIntensity(intensity);
+        {
+            if (light != null)
+            {
+                light.Toggle(true);
+                light.SetIntensity(intensity);
+            }
+        }
     }
 
     private IEnumerator FlickerRoutine(LightObject light)
     {
         while (true)
         {
-            if (currentEnergyPercentage <= flickerThreshold && Random.value < flickerChance)
+            if (currentEnergyPercentage > 0f && currentEnergyPercentage <= flickerThreshold && Random.value < flickerChance)
             {
                 light.Toggle(false);
                 yield return new WaitForSeconds(Random.Range(minFlickerTime, maxFlickerTime));
                 light.Toggle(true);
+                UpdateLightIntensity();
             }
             yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));
         }

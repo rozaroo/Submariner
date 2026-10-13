@@ -16,6 +16,17 @@ public class CoolingSystem : MonoBehaviour
     [SerializeField] private LeverPullStation coolingLeverPull;
 
     private bool _hasRegisteredCoolingConsumption;
+    private bool _isBlackout;
+
+    private void OnEnable()
+    {
+        GameEventChannel<OnEnergyStatusChange>.OnEventRaised += OnEnergyStatusChanged;
+    }
+
+    private void OnDisable()
+    {
+        GameEventChannel<OnEnergyStatusChange>.OnEventRaised -= OnEnergyStatusChanged;
+    }
 
     private void Start()
     {
@@ -28,7 +39,7 @@ public class CoolingSystem : MonoBehaviour
         if (engineSystem != null)
         {
             engineSystem.OnEngineStartedEvent += CheckCoolingState;
-            engineSystem.OnEngineStoppedEvent += StopCooling; // Frena al apagarse
+            engineSystem.OnEngineStoppedEvent += StopCooling;
         }
     }
 
@@ -47,9 +58,22 @@ public class CoolingSystem : MonoBehaviour
         }
     }
 
+    private void OnEnergyStatusChanged(OnEnergyStatusChange status)
+    {
+        _isBlackout = (status.energyStatus == EnergyStatus.Empty);
+        if (_isBlackout && _state == CoolingState.Active)
+        {
+            StopCooling();
+            if (coolingLeverPull != null)
+            {
+                coolingLeverPull.SetActive(false);
+            }
+        }
+    }
+
     private void CheckCoolingState()
     {
-        if (coolingLeverPull != null && coolingLeverPull.isActive)
+        if (!_isBlackout && coolingLeverPull != null && coolingLeverPull.isActive)
         {
             StartCooling();
         }
@@ -58,6 +82,16 @@ public class CoolingSystem : MonoBehaviour
     public void StartCooling()
     {
         Log.Info("Cooling Lever Activated.");
+        if (_isBlackout)
+        {
+            Log.Info("Cooling blocked. No energy.");
+            if (coolingLeverPull != null)
+            {
+                coolingLeverPull.SetActive(false);
+            }
+            return;
+        }
+
         if (_state != CoolingState.Off)
         {
             Log.Info("Cooling already active.");
@@ -96,13 +130,18 @@ public class CoolingSystem : MonoBehaviour
         float elapsedTime = 0f;
         while (elapsedTime < maxUsageTime)
         {
-            if (!engineSystem.IsRunning())
+            if (_isBlackout || !engineSystem.IsRunning())
             {
                 StopCooling();
                 yield break;
             }
             Log.Info($"Cooling Tick | Elapsed: {elapsedTime}/{maxUsageTime}");
             yield return new WaitForSeconds(coolingInterval);
+            if (_isBlackout || !engineSystem.IsRunning())
+            {
+                StopCooling();
+                yield break;
+            }
             engineSystem.CoolEngine();
             elapsedTime += coolingInterval;
         }

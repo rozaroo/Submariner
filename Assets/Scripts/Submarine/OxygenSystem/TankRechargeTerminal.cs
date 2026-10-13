@@ -13,19 +13,43 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
     private bool _hasRegisteredEnergyConsumption;
     private bool _isRechargePaused;
 
-    void Start() 
+    private void OnEnable()
+    {
+        GameEventChannel<OnEnergyStatusChange>.OnEventRaised += OnEnergyStatusChanged;
+    }
+
+    private void OnDisable()
+    {
+        GameEventChannel<OnEnergyStatusChange>.OnEventRaised -= OnEnergyStatusChanged;
+    }
+
+    private void Start()
     {
         if (energySystem == null) return;
         energySystem.FuseBurned += PauseRecharge;
         energySystem.FuseRestored += ResumeRecharge;
     }
-    void OnDestroy() 
+
+    private void OnDestroy()
     {
         if (energySystem == null) return;
         energySystem.FuseBurned -= PauseRecharge;
         energySystem.FuseRestored -= ResumeRecharge;
     }
-  
+
+    private void OnEnergyStatusChanged(OnEnergyStatusChange status)
+    {
+        if (status.energyStatus == EnergyStatus.Empty)
+        {
+            PauseRecharge();
+            StopEnergyConsumption();
+        }
+        else
+        {
+            ResumeRecharge();
+        }
+    }
+
     public void Interact(PlayerCharacter player)
     {
         player.InventorySystem.TryExtractHeldItem(out OxygenTank oxygenTankItem);
@@ -44,12 +68,12 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
     private void DockTank(OxygenTank tank)
     {
         if (_dockedTank != null) return;
-        
+
         _dockedTank = tank;
         _dockedTank.Dock();
         _dockedTank.transform.position = dockPoint.position;
         _dockedTank.transform.rotation = dockPoint.rotation;
-        
+
         if (_rechargeCoroutine != null) StopCoroutine(_rechargeCoroutine);
         _rechargeCoroutine = StartCoroutine(RechargeCoroutine());
     }
@@ -62,7 +86,7 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
             _rechargeCoroutine = null;
         }
         StopEnergyConsumption();
-        
+
         _dockedTank.Interact(player);
         _dockedTank = null;
     }
@@ -71,7 +95,7 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
     {
         while (_dockedTank != null)
         {
-            if (_isRechargePaused) 
+            if (_isRechargePaused)
             {
                 StopEnergyConsumption();
                 yield return null;
@@ -82,7 +106,10 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
                 StartEnergyConsumption();
                 _dockedTank.Refill(rechargeRatePerSecond * Time.deltaTime);
             }
-            else StopEnergyConsumption();
+            else
+            {
+                StopEnergyConsumption();
+            }
             yield return null;
         }
     }
@@ -106,11 +133,13 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
         GameEventChannel<OnEnergyConsumption>.RaiseEvent(new OnEnergyConsumption(energyConsumption, false));
         Log.Info($"[TankRechargeTerminal] Energy consumption relieved: {energyConsumption}");
     }
-    public void PauseRecharge() 
+
+    public void PauseRecharge()
     {
         _isRechargePaused = true;
     }
-    public void ResumeRecharge() 
+
+    public void ResumeRecharge()
     {
         _isRechargePaused = false;
     }
