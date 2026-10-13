@@ -90,7 +90,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6457387169702611866}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.00000002142042, y: 1.8382493, z: -3.0192194}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -174,6 +174,7 @@ MonoBehaviour:
   stationMapName: Station
   takePhotoActionName: ClickInteraction
   exitActionName: ExitStation
+  ResetStationName: ResetInteraction
   lookActionName: Look
 --- !u!65 &3745928166466956748
 BoxCollider:
