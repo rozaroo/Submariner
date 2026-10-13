@@ -6,7 +6,8 @@ using UnityEngine;
 public class OxygenTank : MonoBehaviour, IInteractable, IPickable
 {
     [Header("Position Settings")]
-    [SerializeField] private Vector3 holdOffset = new Vector3(-0.3f, -0.3f, 0.6f);
+    [SerializeField] private Vector3 holdPositionOffset = new Vector3(-0.3f, -0.3f, 0.6f);
+    [SerializeField] private Vector3 holdRotationOffset = new Vector3(0f, 0f, 0f);
     
     [Header("Charge Properties")]
     [SerializeField] private float maxCharge = 100f;
@@ -17,8 +18,9 @@ public class OxygenTank : MonoBehaviour, IInteractable, IPickable
     private Rigidbody _rb;
 
     public GameObject GameObject => gameObject;
-    public Vector3 HoldPositionOffset => holdOffset;
-    
+    public Vector3 HoldPositionOffset => holdPositionOffset;
+    public Vector3 HoldRotationOffset => holdRotationOffset;
+
     private float CurrentCharge => currentCharge;
     public bool isEmpty => currentCharge <= 0f;
     public bool isFull => CurrentCharge >= maxCharge;

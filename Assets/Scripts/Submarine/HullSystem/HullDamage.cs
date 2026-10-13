@@ -7,7 +7,7 @@ public class HullDamage : MonoBehaviour
     [SerializeField] private float repairDuration = 3f; 
     
     public event Action<HullDamage> OnCrackRepaired;
-    private float _progress;
+    [SerializeField] private float _progress;
     
     public void Repair(float amount, Blowtorch activeTorch)
     {

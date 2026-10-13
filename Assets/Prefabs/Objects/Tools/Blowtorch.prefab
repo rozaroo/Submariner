@@ -9,8 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2772145200882560125}
-  - component: {fileID: 720440539567449786}
-  - component: {fileID: 7580770832185953527}
   - component: {fileID: 3835529196526610896}
   - component: {fileID: 6851090649636288516}
   - component: {fileID: 5657099322741680373}
@@ -34,24 +32,121 @@ Transform:
   m_LocalScale: {x: 1.4999999, y: 1.4999999, z: 1.4999999}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 6555700157710026944}
+  - {fileID: 2430808624742405448}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &720440539567449786
-MeshFilter:
+--- !u!65 &3835529196526610896
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 868420660485587573}
-  m_Mesh: {fileID: 3517424456835044540, guid: 2324c4ee66d483d43b9ecbd0f1055d8c, type: 3}
---- !u!23 &7580770832185953527
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.10000002, y: 0.13, z: 0.44500995}
+  m_Center: {x: 0, y: 0, z: 0.09250481}
+--- !u!114 &6851090649636288516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868420660485587573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72b5d7a9b487904eb8f958609c08a5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holdPositionOffset: {x: 0.3, y: -0.3, z: 0.6}
+  holdRotationOffset: {x: -90, y: 0, z: 0}
+  repairRange: 2.5
+  crackLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  blowtorchStartEvent: Start_BlowtorchSFX
+  blowtorchStopEvent: Stop_BlowtorchSFX
+  flameParticles: {fileID: 4459757349723131906}
+  aimSpeed: 8
+  aimRotationOffset: {x: -30, y: 0, z: 0}
+--- !u!54 &5657099322741680373
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868420660485587573}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!1 &9040387811498261457
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2430808624742405448}
+  - component: {fileID: 3819546003311704881}
+  - component: {fileID: 884853611389514265}
+  m_Layer: 0
+  m_Name: BlowtorchMesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2430808624742405448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9040387811498261457}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6555700157710026944}
+  m_Father: {fileID: 2772145200882560125}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!23 &3819546003311704881
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 868420660485587573}
+  m_GameObject: {fileID: 9040387811498261457}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -90,81 +185,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3835529196526610896
-BoxCollider:
+--- !u!33 &884853611389514265
+MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 868420660485587573}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.123965114, y: 0.43352917, z: 0.104530625}
-  m_Center: {x: -0.0097172465, y: 0.091764584, z: 0}
---- !u!114 &6851090649636288516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 868420660485587573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a72b5d7a9b487904eb8f958609c08a5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  holdOffset: {x: 0.3, y: -0.3, z: 0.6}
-  repairRange: 2.5
-  crackLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  blowtorchStartEvent: Start_BlowtorchSFX
-  blowtorchStopEvent: Stop_BlowtorchSFX
-  flameParticles: {fileID: 4459757349723131906}
---- !u!54 &5657099322741680373
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 868420660485587573}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_GameObject: {fileID: 9040387811498261457}
+  m_Mesh: {fileID: 3517424456835044540, guid: 2324c4ee66d483d43b9ecbd0f1055d8c, type: 3}
 --- !u!1001 &5002527668612054935
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2772145200882560125}
+    m_TransformParent: {fileID: 2430808624742405448}
     m_Modifications:
     - target: {fileID: 931008651029017935, guid: 440b01ae888206942bf51c3b8c0768c1, type: 3}
       propertyPath: m_Name
@@ -176,15 +211,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2276018651769894743, guid: 440b01ae888206942bf51c3b8c0768c1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 0.10000001
       objectReference: {fileID: 0}
     - target: {fileID: 2276018651769894743, guid: 440b01ae888206942bf51c3b8c0768c1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 0.10000001
       objectReference: {fileID: 0}
     - target: {fileID: 2276018651769894743, guid: 440b01ae888206942bf51c3b8c0768c1, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 0.10000001
       objectReference: {fileID: 0}
     - target: {fileID: 2276018651769894743, guid: 440b01ae888206942bf51c3b8c0768c1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -192,11 +227,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2276018651769894743, guid: 440b01ae888206942bf51c3b8c0768c1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.267
+      value: 0.26700085
       objectReference: {fileID: 0}
     - target: {fileID: 2276018651769894743, guid: 440b01ae888206942bf51c3b8c0768c1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.019
+      value: -0.019000055
       objectReference: {fileID: 0}
     - target: {fileID: 2276018651769894743, guid: 440b01ae888206942bf51c3b8c0768c1, type: 3}
       propertyPath: m_LocalRotation.w

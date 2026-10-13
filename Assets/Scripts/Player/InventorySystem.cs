@@ -17,12 +17,12 @@ public class InventorySystem : MonoBehaviour
         _heldItem = item;
         Transform itemTransform = _heldItem.GameObject.transform;
         _heldItemWorldScale = itemTransform.lossyScale;
-
-        _heldItem.OnPickUp();
+        
         itemTransform.SetParent(_heldObjectPlacement.transform, false);
         itemTransform.localPosition = item.HoldPositionOffset;
-        itemTransform.localRotation = Quaternion.identity;
+        itemTransform.localRotation = Quaternion.Euler(item.HoldRotationOffset);
         SetWorldScale(itemTransform, _heldItemWorldScale);
+        _heldItem.OnPickUp();
         return true;
     }
     
