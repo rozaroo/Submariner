@@ -274,8 +274,25 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584096806432138073
+    m_lastTime: -8584096799037287111
     List:
+    - name: Fuse_Break_SFX
+      guid: b066f001ec0a9d43a1664e1b435589fa
+      id: 1054404358
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Fuse_Break_SFX
+        ObjectType: 3
+        guid: b066f001ec0a9d43a1664e1b435589fa
+      Path: Events\Gameplay_SFX\Fuse_Break_SFX
+      maxAttenuation: 10
+      maxDuration: 2.272
+      minDuration: 2.272
     - name: Start_BackgroundSubmarineMFX
       guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
       id: 3003027233
@@ -378,6 +395,23 @@ MonoBehaviour:
       maxAttenuation: 10
       maxDuration: -1
       minDuration: -1
+    - name: Start_Energy_Down
+      guid: 604ee5b8c4b2cf4593a8185a30ab1635
+      id: 64783453
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Start_Energy_Down
+        ObjectType: 3
+        guid: 604ee5b8c4b2cf4593a8185a30ab1635
+      Path: Events\Gameplay_SFX\Start_Energy_Down
+      maxAttenuation: 0
+      maxDuration: 3.832729
+      minDuration: 3.832729
     - name: Start_Engine_Minigame_Failed
       guid: d7b82274ecd81c45a81c64e0dcce0392
       id: 1459308672
@@ -412,23 +446,6 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.673379
       minDuration: 0.673379
-    - name: Start_Fuse_Break
-      guid: b066f001ec0a9d43a1664e1b435589fa
-      id: 3893702217
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Gameplay_SFX
-        ObjectType: 12
-        guid: a7075cb480cc804bbbacef59f1484550
-      - ElementName: Start_Fuse_Break
-        ObjectType: 3
-        guid: b066f001ec0a9d43a1664e1b435589fa
-      Path: Events\Gameplay_SFX\Start_Fuse_Break
-      maxAttenuation: 10
-      maxDuration: 2.272
-      minDuration: 2.272
     - name: Start_FuseMake
       guid: a62b0a837fd60d40a66890238fe39859
       id: 3355137523

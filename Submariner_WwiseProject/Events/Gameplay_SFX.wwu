@@ -415,7 +415,7 @@
 						</Action>
 					</ChildrenList>
 				</Event>
-				<Event Name="Start_Fuse_Break" ID="{01F066B0-0AEC-439D-A166-4E1B435589FA}">
+				<Event Name="Fuse_Break_SFX" ID="{01F066B0-0AEC-439D-A166-4E1B435589FA}">
 					<ChildrenList>
 						<Action Name="" ID="{39060276-E903-4C3F-ACBE-D59DA350416C}" ShortID="952054542">
 							<ReferenceList>
@@ -427,6 +427,17 @@
 					</ChildrenList>
 				</Event>
 				<Event Name="Start_Power_Down" ID="{3AAF271A-7102-456C-B690-1C1E647EB2E3}"/>
+				<Event Name="Start_Energy_Down" ID="{B8E54E60-B2C4-45CF-93A8-185A30AB1635}">
+					<ChildrenList>
+						<Action Name="" ID="{2BCBE592-1691-4EDB-A446-06DF33D3C65B}" ShortID="673997583">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PowerDown_SFX" ID="{AEA082F2-B72B-403A-8D34-DF3402B0B4B6}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

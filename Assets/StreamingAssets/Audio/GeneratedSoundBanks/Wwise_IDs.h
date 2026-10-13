@@ -13,15 +13,16 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID FUSE_BREAK_SFX = 1054404358U;
         static const AkUniqueID START_BACKGROUNDSUBMARINEMFX = 3003027233U;
         static const AkUniqueID START_BLOWTORCHSFX = 1116808773U;
         static const AkUniqueID START_BUTTONPRESS = 738466431U;
         static const AkUniqueID START_CLOSING_PRESSURE_DOORSFX = 378872923U;
         static const AkUniqueID START_DRAINAGEPUMPSFX = 4238673748U;
         static const AkUniqueID START_ELECTRIC_AMBIENCE = 2986707250U;
+        static const AkUniqueID START_ENERGY_DOWN = 64783453U;
         static const AkUniqueID START_ENGINE_MINIGAME_FAILED = 1459308672U;
         static const AkUniqueID START_ENGINE_MINIGAME_SUCCEEDEDSTAGE = 3907807344U;
-        static const AkUniqueID START_FUSE_BREAK = 3893702217U;
         static const AkUniqueID START_FUSEMAKE = 3355137523U;
         static const AkUniqueID START_HULLBREACHSFX = 2571798077U;
         static const AkUniqueID START_LEVERPULLFINISHED = 2469108041U;

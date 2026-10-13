@@ -34,20 +34,21 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3401228817" Language="SFX" Hash="1013195068">
+		<SoundBank Id="3401228817" Language="SFX" Hash="3872617955">
 			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
 			<ShortName>GamePlay_SFX</ShortName>
 			<Path>GamePlay_SFX.bnk</Path>
 			<IncludedEvents>
+				<Event Id="1054404358" Name="Fuse_Break_SFX" ObjectPath="\Events\Gameplay_SFX\Fuse_Break_SFX" MaxAttenuation="10." DurationType="OneShot" DurationMin="2.272" DurationMax="2.272"/>
 				<Event Id="3003027233" Name="Start_BackgroundSubmarineMFX" ObjectPath="\Events\Gameplay_SFX\Start_BackgroundSubmarineMFX" DurationType="Infinite"/>
 				<Event Id="1116808773" Name="Start_BlowtorchSFX" ObjectPath="\Events\Gameplay_SFX\Start_BlowtorchSFX" DurationType="Infinite"/>
 				<Event Id="738466431" Name="Start_ButtonPress" ObjectPath="\Events\Gameplay_SFX\Start_ButtonPress" DurationType="OneShot" DurationMin="0.082455" DurationMax="0.115269"/>
 				<Event Id="378872923" Name="Start_Closing_Pressure_DoorSFX" ObjectPath="\Events\Gameplay_SFX\Start_Closing_Pressure_DoorSFX" DurationType="OneShot" DurationMin="2.07" DurationMax="2.257351"/>
 				<Event Id="4238673748" Name="Start_DrainagePumpSFX" ObjectPath="\Events\Gameplay_SFX\Start_DrainagePumpSFX" MaxAttenuation="100." DurationType="Infinite"/>
 				<Event Id="2986707250" Name="Start_Electric_Ambience" ObjectPath="\Events\Gameplay_SFX\Start_Electric_Ambience" MaxAttenuation="10." DurationType="Infinite"/>
+				<Event Id="64783453" Name="Start_Energy_Down" ObjectPath="\Events\Gameplay_SFX\Start_Energy_Down" DurationType="OneShot" DurationMin="3.832729" DurationMax="3.832729"/>
 				<Event Id="1459308672" Name="Start_Engine_Minigame_Failed" ObjectPath="\Events\Gameplay_SFX\Start_Engine_Minigame_Failed" DurationType="OneShot" DurationMin="7.557029" DurationMax="7.557029"/>
 				<Event Id="3907807344" Name="Start_Engine_Minigame_SucceededStage" ObjectPath="\Events\Gameplay_SFX\Start_Engine_Minigame_SucceededStage" DurationType="OneShot" DurationMin="0.673379" DurationMax="0.673379"/>
-				<Event Id="3893702217" Name="Start_Fuse_Break" ObjectPath="\Events\Gameplay_SFX\Start_Fuse_Break" MaxAttenuation="10." DurationType="OneShot" DurationMin="2.272" DurationMax="2.272"/>
 				<Event Id="3355137523" Name="Start_FuseMake" ObjectPath="\Events\Gameplay_SFX\Start_FuseMake" DurationType="Infinite"/>
 				<Event Id="2571798077" Name="Start_HullBreachSFX" ObjectPath="\Events\Gameplay_SFX\Start_HullBreachSFX" MaxAttenuation="100." DurationType="Infinite"/>
 				<Event Id="2469108041" Name="Start_LeverPullFinished" ObjectPath="\Events\Gameplay_SFX\Start_LeverPullFinished" DurationType="OneShot" DurationMin="0.398979" DurationMax="0.398979"/>

@@ -253,7 +253,7 @@ public class EnergySystem : MonoBehaviour
             _galvanometerIndicatorOverload.UpdateIndicator(displayOverload, 0f, fuseBreakConsumptionThreshold);
         }
 
-        if (_energyStatus != previousStatus || forceNotify)
+        if (_energyStatus != previousStatus)
         {
             TriggerEnergyEvents();
         }
@@ -266,8 +266,6 @@ public class EnergySystem : MonoBehaviour
         {
             energyStatus = _energyStatus
         });
-
-        SFXManager.SetState(_energyStatus.ToString(), "Energy_Status");
     }
 
     #endregion

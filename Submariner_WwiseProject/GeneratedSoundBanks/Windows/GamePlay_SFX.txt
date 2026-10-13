@@ -1,4 +1,5 @@
 Event	ID	Name			Wwise Object Path	Notes
+	64783453	Start_Energy_Down			\Gameplay_SFX\Start_Energy_Down	
 	116843463	Stop_BackgroundSubmarineMFX			\Gameplay_SFX\Stop_BackgroundSubmarineMFX	
 	149397142	Start_Motor_Engine			\Gameplay_SFX\Start_Motor_Engine	
 	344065456	Stop_Motor_Engine			\Gameplay_SFX\Stop_Motor_Engine	
@@ -9,6 +10,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	860956674	Stop_DrainagePumpSFX			\Gameplay_SFX\Stop_DrainagePumpSFX	
 	880757133	Stop_FuseMake			\Gameplay_SFX\Stop_FuseMake	
 	997126444	Start_SonarPingOuter			\Gameplay_SFX\Start_SonarPingOuter	
+	1054404358	Fuse_Break_SFX			\Gameplay_SFX\Fuse_Break_SFX	
 	1116808773	Start_BlowtorchSFX			\Gameplay_SFX\Start_BlowtorchSFX	
 	1403223316	Start_TensionEvent			\Gameplay_SFX\Start_TensionEvent	
 	1459308672	Start_Engine_Minigame_Failed			\Gameplay_SFX\Start_Engine_Minigame_Failed	
@@ -27,7 +29,6 @@ Event	ID	Name			Wwise Object Path	Notes
 	3457084944	Stop_Electric_Ambience			\Gameplay_SFX\Stop_Electric_Ambience	
 	3771492726	Start_SubmarineCollision			\Gameplay_SFX\Start_SubmarineCollision	
 	3884825202	Stop_TensionEvent			\Gameplay_SFX\Stop_TensionEvent	
-	3893702217	Start_Fuse_Break			\Gameplay_SFX\Start_Fuse_Break	
 	3907807344	Start_Engine_Minigame_SucceededStage			\Gameplay_SFX\Start_Engine_Minigame_SucceededStage	
 	3933279043	Stop_HullBreachSFX			\Gameplay_SFX\Stop_HullBreachSFX	
 	4235702204	Start_Opening_Pressure_DoorSFX			\Gameplay_SFX\Start_Opening_Pressure_DoorSFX	
