@@ -17,6 +17,7 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
     [Header("Visuals")]
     [SerializeField] private Mesh burnedMesh;
     [SerializeField] private TextMesh amperageLabel;
+    [SerializeField] private ParticleSystem blowOutParticles;
 
     private Collider _collider;
     private Rigidbody _rb;
@@ -71,6 +72,10 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
     public void Burn()
     {
         isBurned = true;
+        if (blowOutParticles != null)
+        {
+            blowOutParticles.Play();
+        }
         RefreshVisuals();
     }
 
