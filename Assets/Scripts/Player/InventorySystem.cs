@@ -9,6 +9,7 @@ public class InventorySystem : MonoBehaviour
     private IPickable _heldItem;
     private Vector3 _heldItemWorldScale;
     private bool isHoldingItem => _heldItem != null;
+    public bool HasHeldItem => _heldItem != null;
 
     public bool TryPickUp(IPickable item)
     {

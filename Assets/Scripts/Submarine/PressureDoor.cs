@@ -27,11 +27,7 @@ public class PressureDoor : MonoBehaviour, IInteractable
     public void Interact(PlayerCharacter player)
     {
         _isOpen = !_isOpen;
-        if (_animationCoroutine != null)
-        {
-            StopCoroutine(_animationCoroutine);
-        }
-        
+        if (_animationCoroutine != null) StopCoroutine(_animationCoroutine);
         if (_isOpen)
         {
             OpenDoor(player);
@@ -50,14 +46,8 @@ public class PressureDoor : MonoBehaviour, IInteractable
         SFXManager.PostEvent("Start_Opening_Pressure_DoorSFX", gameObject);
         Vector3 direction = transform.position - player.transform.position;
         float dotProduct = Vector3.Dot(_hingePosition, direction);
-        if (dotProduct < 0)
-        {
-            _openRotation = Quaternion.Euler(_openAngle) * _closedRotation;
-        }
-        else
-        {
-            _openRotation =  Quaternion.Euler(-_openAngle) * _closedRotation;
-        }
+        if (dotProduct < 0) _openRotation = Quaternion.Euler(_openAngle) * _closedRotation;
+        else _openRotation =  Quaternion.Euler(-_openAngle) * _closedRotation;
         _animationCoroutine = StartCoroutine(AnimateDoor(_openRotation));
     }
 

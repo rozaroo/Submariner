@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,6 +31,7 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
     public float TransitionDuration => transitionDuration;
     public CursorLockMode CursorLockMode => cursorLockMode;
     public bool IsMouseVisible => showMouseCursor;
+    public static event Action<bool> OnNavigationPossessionChanged;
 
     public void Interact(PlayerCharacter player)
     {
@@ -42,15 +44,15 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
         mapUI.MapCanvas.worldCamera = _currentPlayer.CamController.MainCamera;
         var exitAction = _currentPlayer.Input.actions[exitActionName];
         exitAction.started += OnExitPerformed;
-        
         enabled = true;
+        OnNavigationPossessionChanged?.Invoke(true);
     }
 
     public void UnPossess()
     {
         var exitAction = _currentPlayer.Input.actions[exitActionName];
         exitAction.started -= OnExitPerformed;
-        
+        OnNavigationPossessionChanged?.Invoke(false);
         mapUI.MapCanvas.worldCamera = null;
         _currentPlayer = null;
         enabled = false;

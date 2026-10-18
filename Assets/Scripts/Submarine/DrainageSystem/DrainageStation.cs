@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Vector2 = UnityEngine.Vector2;
@@ -45,6 +46,8 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     public CursorLockMode CursorLockMode => cursorLockMode;
     public bool IsMouseVisible => showMouseCursor;
 
+    public static event Action<bool> OnDrainagePossessionChanged;
+
     #region Initialization
 
     private void Awake()
@@ -55,25 +58,14 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     private void OnEnable()
     {
         GameEventChannel<OnEnergyStatusChange>.OnEventRaised += OnEnergyStatusChanged;
-
-        if (_minigame != null)
-        {
-            _minigame.FinishedMiniGame += OnUnlockLever;
-        }
-        else
-        {
-            Log.Warning("[DrainageStation] Minigame Not Set");
-        }
-
+        if (_minigame != null) _minigame.FinishedMiniGame += OnUnlockLever;
+        else Log.Warning("[DrainageStation] Minigame Not Set");
         if (mainLeverPull != null)
         {
             mainLeverPull.onActivation += OnLeverActivationSequence;
             mainLeverPull.onDeactivation += OnLeverDeactivationSequence;
         }
-        else
-        {
-            Log.Warning("[DrainageStation] Main Lever Not Set");
-        }
+        else Log.Warning("[DrainageStation] Main Lever Not Set");
     }
 
     private void OnDisable()
@@ -110,27 +102,24 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     {
         _currentPlayer = player;
         _playerCamera = player.CamController.MainCamera;
-
         InputAction clickAction = _currentPlayer.Input.actions[clickActionName];
         InputAction exitAction = _currentPlayer.Input.actions[exitActionName];
-
         clickAction.started += OnClickStarted;
         clickAction.canceled += OnClickCanceled;
         exitAction.started += OnExitPerformed;
-
         CheckDrainageMinigame();
         enabled = true;
+        OnDrainagePossessionChanged?.Invoke(true);
     }
 
     public void UnPossess()
     {
         InputAction clickAction = _currentPlayer.Input.actions[clickActionName];
         InputAction exitAction = _currentPlayer.Input.actions[exitActionName];
-
         clickAction.started -= OnClickStarted;
         clickAction.canceled -= OnClickCanceled;
         exitAction.started -= OnExitPerformed;
-
+        OnDrainagePossessionChanged?.Invoke(false);
         _currentDraggedControls = null;
         _currentPlayer = null;
         _playerCamera = null;

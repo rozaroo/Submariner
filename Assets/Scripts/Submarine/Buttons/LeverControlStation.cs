@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -35,6 +36,8 @@ public class LeverControlStation : MonoBehaviour, IInteractable, IPossessable
     public float TransitionDuration => transitionDuration;
     public CursorLockMode CursorLockMode => cursorLockMode;
     public bool IsMouseVisible => showMouseCursor;
+
+    public static event Action<bool> OnLeverStationPossessionChanged;
 
     private void Awake()
     {
@@ -76,21 +79,12 @@ public class LeverControlStation : MonoBehaviour, IInteractable, IPossessable
             _clickAction.started += OnClickStarted;
             _clickAction.canceled += OnClickCanceled;
         }
-        else
-        {
-            Log.Error($"[{nameof(LeverControlStation)}] Action '{clickActionName}' was not found.");
-        }
-
-        if (_exitAction != null)
-        {
-            _exitAction.started += OnExitStarted;
-        }
-        else
-        {
-            Log.Error($"[{nameof(LeverControlStation)}] Action '{exitActionName}' was not found.");
-        }
-
+        else Log.Error($"[{nameof(LeverControlStation)}] Action '{clickActionName}' was not found.");
+        
+        if (_exitAction != null) _exitAction.started += OnExitStarted;
+        else Log.Error($"[{nameof(LeverControlStation)}] Action '{exitActionName}' was not found.");
         enabled = true;
+        OnLeverStationPossessionChanged?.Invoke(true);
     }
 
     public void UnPossess()
@@ -100,12 +94,8 @@ public class LeverControlStation : MonoBehaviour, IInteractable, IPossessable
             _clickAction.started -= OnClickStarted;
             _clickAction.canceled -= OnClickCanceled;
         }
-
-        if (_exitAction != null)
-        {
-            _exitAction.started -= OnExitStarted;
-        }
-
+        if (_exitAction != null) _exitAction.started -= OnExitStarted;
+        OnLeverStationPossessionChanged?.Invoke(false);
         _draggedLever = null;
         _clickAction = null;
         _pointerDeltaAction = null;
