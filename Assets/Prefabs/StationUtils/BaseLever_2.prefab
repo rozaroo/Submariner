@@ -217,6 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pullSpeed: 0.5
   maxAngleActivation: 180
+  rotationDirection: -1
 --- !u!114 &5601911683959899069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,6 +249,9 @@ MonoBehaviour:
   activeColorIntensity: 0.01
   deactivatedColor: {r: 1, g: 0, b: 0, a: 1}
   deactivatedColorIntensity: 0.01
+  warningColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  warningColorIntensity: 0.1
+  engineSystem: {fileID: 0}
 --- !u!1001 &3551657075981130182
 PrefabInstance:
   m_ObjectHideFlags: 0

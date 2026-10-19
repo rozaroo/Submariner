@@ -38,6 +38,9 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     [SerializeField] private Transform coreAssemblyPoint;
     [SerializeField] private Transform bottomAssemblyPoint;
     
+    [Header("Interaction")]
+    [SerializeField] private InteractionUIData interactionUIData;
+    
     [Header("Audio (Wwise)")]
     [SerializeField] private string blowtorchStartEvent = "Start_FuseMake";
     [SerializeField] private string blowtorchStopEvent = "Stop_FuseMake";
@@ -90,6 +93,18 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         }
 
         player.OnPossessionState(this);
+    }
+
+    public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
+    {
+        if (player != null && player.InventorySystem != null)
+        {
+            if (player.InventorySystem.HeldItem is Blowtorch blowtorch)
+            {
+                return new InteractionFeedback("Create Fuse", interactionUIData);
+            }
+        }
+        return new InteractionFeedback("Enter Fuse Workbench", interactionUIData);
     }
 
     /// <summary>

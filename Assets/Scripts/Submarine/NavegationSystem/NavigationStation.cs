@@ -18,6 +18,9 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
     [Header("Property Settings")] 
     [SerializeField] private MapUIManager mapUI;
     
+    [Header("Interaction")]
+    [SerializeField] private InteractionUIData interactionUIData;
+    
     [Header("Input Settings")]
     [SerializeField] private string exitActionName;
     
@@ -31,11 +34,15 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
     public float TransitionDuration => transitionDuration;
     public CursorLockMode CursorLockMode => cursorLockMode;
     public bool IsMouseVisible => showMouseCursor;
-    public static event Action<bool> OnNavigationPossessionChanged;
 
     public void Interact(PlayerCharacter player)
     {
         player.OnPossessionState(this);
+    }
+
+    public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
+    {
+        return new InteractionFeedback("Enter Navigation", interactionUIData);
     }
 
     public void Possess(PlayerCharacter player)
@@ -45,14 +52,12 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
         var exitAction = _currentPlayer.Input.actions[exitActionName];
         exitAction.started += OnExitPerformed;
         enabled = true;
-        OnNavigationPossessionChanged?.Invoke(true);
     }
 
     public void UnPossess()
     {
         var exitAction = _currentPlayer.Input.actions[exitActionName];
         exitAction.started -= OnExitPerformed;
-        OnNavigationPossessionChanged?.Invoke(false);
         mapUI.MapCanvas.worldCamera = null;
         _currentPlayer = null;
         enabled = false;

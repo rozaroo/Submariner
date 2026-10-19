@@ -49,6 +49,7 @@ MonoBehaviour:
   _openAngle: {x: 0, y: 130, z: 0}
   _openSpeed: 5
   _doorTransform: {fileID: 5545377250265654341}
+  interactionUIData: {fileID: 11400000, guid: 267bb620c539fa34fae2bf897d03009b, type: 2}
 --- !u!65 &3995812535687361376
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -41,7 +41,7 @@ public class EngineMiniGame : MonoBehaviour
     [SerializeField] private string onEngineTubeFix = "Start_Tube_Repair_Engine";
     [SerializeField] private string onEngineSequenceFailed = "Start_Motor_Engine_Fail";
     [SerializeField] private string onSucceededRound = "Start_Engine_Minigame_SucceededStage";
-    [SerializeField] private string onFailedMinigame = "Start_Engine_Minigame_Failed";
+    //[SerializeField] private string onFailedMinigame = "Start_Engine_Minigame_Failed";
     [SerializeField] private string onSucceededMinigame = "Start_Motor_Engine_Minigame_Succeeded";
 
     private readonly List<int> _currentSequence = new();

@@ -174,7 +174,8 @@ MonoBehaviour:
   stationMapName: Station
   takePhotoActionName: ClickInteraction
   exitActionName: ExitStation
-  lookActionName: Look
+  resetStationName: ResetInteraction
+  interactionUIData: {fileID: 11400000, guid: 267bb620c539fa34fae2bf897d03009b, type: 2}
 --- !u!65 &3745928166466956748
 BoxCollider:
   m_ObjectHideFlags: 0

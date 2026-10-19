@@ -9,6 +9,9 @@ public class PressureDoor : MonoBehaviour, IInteractable
     [SerializeField] private float _openSpeed = 5f;
     [SerializeField] private Transform _doorTransform;
     
+    [Header("Interaction")]
+    [SerializeField] private InteractionUIData interactionUIData;
+    
     private bool _isOpen = false;
     private Coroutine _animationCoroutine;
     private Quaternion _closedRotation;
@@ -38,6 +41,12 @@ public class PressureDoor : MonoBehaviour, IInteractable
             CloseDoor();
             OnDoorClose?.Invoke();
         }
+    }
+
+    public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
+    {
+        string action = _isOpen ? "Close Door" : "Open Door";
+        return new InteractionFeedback(action, interactionUIData);
     }
 
     private void OpenDoor(PlayerCharacter player)

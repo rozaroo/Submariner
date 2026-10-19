@@ -129,6 +129,7 @@ MonoBehaviour:
     m_Bits: 256
   blowtorchStartEvent: Start_BlowtorchSFX
   blowtorchStopEvent: Stop_BlowtorchSFX
+  interactionUIData: {fileID: 11400000, guid: d38ccb83d32d5034393f87265238543f, type: 2}
 --- !u!54 &5657099322741680373
 Rigidbody:
   m_ObjectHideFlags: 0

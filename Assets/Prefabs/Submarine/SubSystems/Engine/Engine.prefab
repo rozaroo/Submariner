@@ -185,7 +185,6 @@ MonoBehaviour:
   onEngineTubeFix: Start_Tube_Repair_Engine
   onEngineSequenceFailed: Start_Motor_Engine_Fail
   onSucceededRound: Start_Engine_Minigame_SucceededStage
-  onFailedMinigame: Start_Engine_Minigame_Failed
   onSucceededMinigame: Start_Motor_Engine_Minigame_Succeeded
 --- !u!1 &3213846199741926131
 GameObject:
@@ -305,6 +304,7 @@ MonoBehaviour:
   colorTransitionDuration: 0.12
   hitBlinkDuration: 0.1
   hitBlinkCount: 2
+  interactionUIData: {fileID: 11400000, guid: 267bb620c539fa34fae2bf897d03009b, type: 2}
 --- !u!65 &4856135327364426727
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -552,6 +552,7 @@ MonoBehaviour:
   colorTransitionDuration: 0.12
   hitBlinkDuration: 0.1
   hitBlinkCount: 2
+  interactionUIData: {fileID: 11400000, guid: 267bb620c539fa34fae2bf897d03009b, type: 2}
 --- !u!65 &6473118333487466147
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -691,6 +692,7 @@ MonoBehaviour:
   colorTransitionDuration: 0.12
   hitBlinkDuration: 0.1
   hitBlinkCount: 2
+  interactionUIData: {fileID: 11400000, guid: 267bb620c539fa34fae2bf897d03009b, type: 2}
 --- !u!65 &3011125900213350173
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -904,6 +906,7 @@ MonoBehaviour:
   colorTransitionDuration: 0.12
   hitBlinkDuration: 0.1
   hitBlinkCount: 2
+  interactionUIData: {fileID: 11400000, guid: 267bb620c539fa34fae2bf897d03009b, type: 2}
 --- !u!65 &4987693944151504920
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1043,6 +1046,7 @@ MonoBehaviour:
   colorTransitionDuration: 0.12
   hitBlinkDuration: 0.1
   hitBlinkCount: 2
+  interactionUIData: {fileID: 11400000, guid: 267bb620c539fa34fae2bf897d03009b, type: 2}
 --- !u!65 &5353415939517253950
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1120,6 +1124,7 @@ MonoBehaviour:
   exitActionName: ExitStation
   raycastDistance: 5
   showHoverPreview: 0
+  interactionUIData: {fileID: 11400000, guid: 267bb620c539fa34fae2bf897d03009b, type: 2}
 --- !u!65 &7220017382709188883
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1259,6 +1264,7 @@ MonoBehaviour:
   colorTransitionDuration: 0.12
   hitBlinkDuration: 0.1
   hitBlinkCount: 2
+  interactionUIData: {fileID: 11400000, guid: 267bb620c539fa34fae2bf897d03009b, type: 2}
 --- !u!65 &9001562440801279299
 BoxCollider:
   m_ObjectHideFlags: 0

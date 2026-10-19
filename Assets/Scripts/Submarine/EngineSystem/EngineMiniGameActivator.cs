@@ -24,6 +24,9 @@ public class EngineMiniGameActivator : MonoBehaviour, IPossessable, IInteractabl
     [SerializeField] private string exitActionName = "ExitStation";
     [SerializeField] private float raycastDistance = 5f;
     [SerializeField] private bool showHoverPreview = false;
+    
+    [Header("Interaction")]
+    [SerializeField] private InteractionUIData interactionUIData;
 
     private PlayerCharacter _currentPlayer;
     private Camera _playerCamera;
@@ -64,6 +67,17 @@ public class EngineMiniGameActivator : MonoBehaviour, IPossessable, IInteractabl
         }
 
         player.OnPossessionState(this);
+    }
+
+    public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
+    {
+        if (engineMiniGame == null || engineMiniGame.CanStart)
+        {
+            if (cameraAnchor == null || directionAnchor == null) 
+                return new InteractionFeedback("", interactionUIData);
+        }
+
+        return new InteractionFeedback("Repair Engine", interactionUIData);
     }
 
     public void Possess(PlayerCharacter player)

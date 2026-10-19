@@ -60,6 +60,7 @@ MonoBehaviour:
   gracePeriod: 5
   minSpawnInterval: 20
   maxSpawnInterval: 30
+  forceHullDamageTrigger: 0
 --- !u!114 &4284337136202105156
 MonoBehaviour:
   m_ObjectHideFlags: 0

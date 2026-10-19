@@ -257,6 +257,7 @@ MonoBehaviour:
   topAssemblyPoint: {fileID: 7023180663856842836}
   coreAssemblyPoint: {fileID: 8123199603982512537}
   bottomAssemblyPoint: {fileID: 3790515152599388583}
+  interactionUIData: {fileID: 11400000, guid: 267bb620c539fa34fae2bf897d03009b, type: 2}
   blowtorchStartEvent: Start_FuseMake
   blowtorchStopEvent: Stop_FuseMake
   solderDuration: 1

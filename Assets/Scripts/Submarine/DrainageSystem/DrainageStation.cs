@@ -29,6 +29,9 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 
     [Header("Energy Consumption Settings")]
     [SerializeField] private float energyConsumption = 5;
+    
+    [Header("Interaction")]
+    [SerializeField] private InteractionUIData interactionUIData;
 
     private EnergyStatus _energyStatus = EnergyStatus.Full;
     private DrainageMinigame _minigame;
@@ -45,8 +48,6 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     public float TransitionDuration => transitionDuration;
     public CursorLockMode CursorLockMode => cursorLockMode;
     public bool IsMouseVisible => showMouseCursor;
-
-    public static event Action<bool> OnDrainagePossessionChanged;
 
     #region Initialization
 
@@ -96,6 +97,11 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         player.OnPossessionState(this);
     }
 
+    public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
+    {
+        return new InteractionFeedback("Enter Drainage Station", interactionUIData);
+    }
+
     #region PosessionLogic
 
     public void Possess(PlayerCharacter player)
@@ -109,7 +115,6 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         exitAction.started += OnExitPerformed;
         CheckDrainageMinigame();
         enabled = true;
-        OnDrainagePossessionChanged?.Invoke(true);
     }
 
     public void UnPossess()
@@ -118,8 +123,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         InputAction exitAction = _currentPlayer.Input.actions[exitActionName];
         clickAction.started -= OnClickStarted;
         clickAction.canceled -= OnClickCanceled;
-        exitAction.started -= OnExitPerformed;
-        OnDrainagePossessionChanged?.Invoke(false);
+        exitAction.started -= OnExitPerformed; ;
         _currentDraggedControls = null;
         _currentPlayer = null;
         _playerCamera = null;

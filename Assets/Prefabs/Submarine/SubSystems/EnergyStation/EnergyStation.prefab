@@ -119,6 +119,7 @@ MonoBehaviour:
   underAmperageThresholdMultiplier: 0.5
   underAmperageFuseLifetime: 25
   overAmperageBurnDelay: 1
+  interactionUIData: {fileID: 11400000, guid: 267bb620c539fa34fae2bf897d03009b, type: 2}
 --- !u!114 &4132265726108384603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,6 +288,7 @@ MonoBehaviour:
   amperage: 40
   burnedMesh: {fileID: -3187784610473809064, guid: 0d91f5b306919fb4c98d19a9cfd60359, type: 3}
   amperageLabel: {fileID: 0}
+  interactionUIData: {fileID: 0}
 --- !u!1 &3714976725626662985
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,6 +444,7 @@ MonoBehaviour:
   amperage: 40
   burnedMesh: {fileID: -3187784610473809064, guid: 0d91f5b306919fb4c98d19a9cfd60359, type: 3}
   amperageLabel: {fileID: 0}
+  interactionUIData: {fileID: 0}
 --- !u!1 &3932950582475012021
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,6 +749,7 @@ MonoBehaviour:
   amperage: 40
   burnedMesh: {fileID: -3187784610473809064, guid: 0d91f5b306919fb4c98d19a9cfd60359, type: 3}
   amperageLabel: {fileID: 0}
+  interactionUIData: {fileID: 0}
 --- !u!1 &4989954246062442176
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,6 +905,7 @@ MonoBehaviour:
   amperage: 40
   burnedMesh: {fileID: -3187784610473809064, guid: 0d91f5b306919fb4c98d19a9cfd60359, type: 3}
   amperageLabel: {fileID: 0}
+  interactionUIData: {fileID: 0}
 --- !u!1 &5503541154382271046
 GameObject:
   m_ObjectHideFlags: 0
@@ -1092,6 +1097,7 @@ MonoBehaviour:
   amperage: 40
   burnedMesh: {fileID: -3187784610473809064, guid: 0d91f5b306919fb4c98d19a9cfd60359, type: 3}
   amperageLabel: {fileID: 0}
+  interactionUIData: {fileID: 0}
 --- !u!1001 &1376104985957452563
 PrefabInstance:
   m_ObjectHideFlags: 0

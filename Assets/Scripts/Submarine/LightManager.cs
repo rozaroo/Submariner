@@ -8,11 +8,9 @@ public class LightManager : MonoBehaviour
 
     [Header("Alert Config")]
     [SerializeField] private LightObject[] lightsObjects;
-    [SerializeField] private float flickerSpeed = 2f;
     [SerializeField] private float flickerMinIntensity = 0.2f;
     [SerializeField] private float flickerMaxIntensity = 1.5f;
     [SerializeField] private float blackoutIntensity = 0.05f;
-    [SerializeField] private float flickerDuration = 3f;
     [SerializeField] private float alertCycleDuration = 1f;
 
     [Header("Light Themes")]

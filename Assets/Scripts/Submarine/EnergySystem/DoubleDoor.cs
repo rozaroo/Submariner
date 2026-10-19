@@ -9,6 +9,9 @@ public class DoubleDoor : MonoBehaviour, IInteractable
     [SerializeField] private float _openAngle = 90f;
     [SerializeField] private float _openSpeed = 5f;
     
+    [Header("Interaction")]
+    [SerializeField] private InteractionUIData interactionUIData;
+    
     private bool _isOpen = false;
     private Coroutine _animationCoroutine;
     
@@ -37,6 +40,12 @@ public class DoubleDoor : MonoBehaviour, IInteractable
             _isOpen ? _firstDoorOpenRotation  : _firstDoorClosedRotation,
             _isOpen ? _secondDoorOpenRotation : _secondDoorClosedRotation
         ));
+    }
+    
+    public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
+    {
+        string action = _isOpen ? "Open Door" : "Close Door";
+        return new InteractionFeedback(action, interactionUIData);
     }
 
     private IEnumerator AnimateDoors(Quaternion firstTarget, Quaternion secondTarget)

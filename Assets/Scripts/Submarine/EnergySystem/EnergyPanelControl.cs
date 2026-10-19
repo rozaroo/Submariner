@@ -22,6 +22,9 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
     [SerializeField] private float underAmperageThresholdMultiplier = 0.5f;
     [SerializeField] private float underAmperageFuseLifetime = 25f;
     [SerializeField] private float overAmperageBurnDelay = 1f;
+    
+    [Header("Interaction")]
+    [SerializeField] private InteractionUIData interactionUIData;
 
     private readonly List<Transform> _slotParents = new();
     private readonly List<Vector3> _slotLocalPositions = new();
@@ -82,6 +85,29 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
         }
 
         Log.Info("Energy panel needs a functional fuse.");
+    }
+
+    public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
+    {
+        if (energySystem != null && energySystem.IsFuseBroken)
+        {
+            if (HasBurnedFuseInPanel())
+            {
+                return new InteractionFeedback("Remove Broken Fuse", interactionUIData);
+            }
+            
+            if (player != null && player.InventorySystem != null)
+            {
+                if (player.InventorySystem.HeldItem is Fuse fuse && fuse.IsFunctional)
+                {
+                    return new InteractionFeedback("Place New Fuse", interactionUIData);
+                }
+            }
+            
+            return new InteractionFeedback("Requires new Fuse", interactionUIData);
+        }
+        
+        return new InteractionFeedback("Panel Operative", interactionUIData);
     }
 
     public bool TryRemoveFuse(Fuse fuse, PlayerCharacter player)
@@ -235,6 +261,15 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
         Log.Info($"Fuse burned in slot {_burnedSlotIndex}");
     }
 
+    public bool HasBurnedFuseInPanel()
+    {
+        if (_burnedSlotIndex >= 0 && _burnedSlotIndex < fuseSlots.Count)
+        {
+            return fuseSlots[_burnedSlotIndex] != null && fuseSlots[_burnedSlotIndex].IsBurned;
+        }
+        return false;
+    }
+    
     private void OnFuseRestored()
     {
         _burnedSlotIndex = -1;

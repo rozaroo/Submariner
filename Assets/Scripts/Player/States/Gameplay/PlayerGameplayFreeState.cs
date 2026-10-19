@@ -18,10 +18,14 @@ public class PlayerGameplayFreeState : PlayerGameplayState
         _context.EnableGameplayInputs();
     }
 
-    public override void Update() { }
+    public override void Update()
+    {
+        _context.TryGetInteractDataRaycast();
+    }
 
     public override void OnExit()
     {
         _context.DisableGameplayInputs();
+        _context.ClearCurrentInteractable();
     }
 }

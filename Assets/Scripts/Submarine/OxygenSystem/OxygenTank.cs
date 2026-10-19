@@ -13,6 +13,9 @@ public class OxygenTank : MonoBehaviour, IInteractable, IPickable
     [SerializeField] private float currentCharge;
     [SerializeField] private Transform chargeBar;
     
+    [Header("Interaction")]
+    [SerializeField] private InteractionUIData interactionUIData;
+    
     private Collider[] _colliders;
     private Rigidbody _rb;
 
@@ -45,6 +48,18 @@ public class OxygenTank : MonoBehaviour, IInteractable, IPickable
     public void Interact(PlayerCharacter player)
     {
         player.InventorySystem.TryPickUp(this);
+    }
+
+    public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
+    {
+        if (player != null && player.InventorySystem != null)
+        {
+            if (player.InventorySystem.HeldItem != null)
+            {
+                return new InteractionFeedback("Holding Another Item", interactionUIData);
+            }
+        }
+        return new InteractionFeedback("Pick up Oxygen Tank", interactionUIData);
     }
 
     public void OnPickUp()

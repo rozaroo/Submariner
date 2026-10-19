@@ -15,6 +15,9 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     [SerializeField] private string blowtorchStartEvent = "Start_BlowtorchSFX";
     [SerializeField] private string blowtorchStopEvent = "Stop_BlowtorchSFX";
     
+    [Header("Interaction")]
+    [SerializeField] private InteractionUIData interactionUIData;
+    
     private bool _isWelding;
     
     private Camera _camera;
@@ -35,6 +38,18 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     {
         player.InventorySystem.TryPickUp(this);
         _camera = player.CamController.MainCamera;
+    }
+
+    public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
+    {
+        if (player != null && player.InventorySystem != null)
+        {
+            if (player.InventorySystem.HeldItem != null)
+            {
+                return new InteractionFeedback("Holding Another Item", interactionUIData);
+            }
+        }
+        return new InteractionFeedback("Pick up Blowtorch", interactionUIData);
     }
 
     public void OnPickUp()

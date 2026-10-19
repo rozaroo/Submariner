@@ -7,7 +7,6 @@ public class NumberLampsController : MonoBehaviour
     [Header("Settings")]
     [Header("Configuración de Arquitectura")]
     [SerializeField] private List<NumberLampObject> lamps;
-    [SerializeField] private int numberToShow = 0;
 
     private void Awake()
     {
