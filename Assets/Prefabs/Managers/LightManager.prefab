@@ -75,10 +75,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  flickerSpeed: 1
   flickerMinIntensity: 0.01
   flickerMaxIntensity: 10
-  flickerDuration: 10
+  blackoutIntensity: 0.05
   alertCycleDuration: 2
+  restoreFadeDuration: 2
   hullDamageColor: {r: 1, g: 0, b: 0, a: 1}
   lowOxygenColor: {r: 0, g: 0.35719442, b: 1, a: 1}

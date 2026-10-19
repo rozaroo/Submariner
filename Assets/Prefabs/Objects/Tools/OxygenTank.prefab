@@ -99,7 +99,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3350554650319353135}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -117,7 +117,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!65 &1373595691483096991
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -151,7 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70a9460127c985142a8f837f547f3189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holdOffset: {x: -0.3, y: -0.3, z: 0.6}
+  holdPositionOffset: {x: -0.3, y: -0.3, z: 0.6}
+  holdRotationOffset: {x: 0, y: 0, z: 0}
   maxCharge: 120
   currentCharge: 100
   chargeBar: {fileID: 7538541669108802054}
