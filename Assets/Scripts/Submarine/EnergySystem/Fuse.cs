@@ -20,6 +20,9 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
     [SerializeField] private ParticleSystem blowOutParticles;
     
     [SerializeField] private string _fuseBreakSFX = "Fuse_Break_SFX";
+    
+    [Header("Interaction")]
+    [SerializeField] private InteractionUIData interactionUIData;
 
     private Collider _collider;
     private Rigidbody _rb;
@@ -57,6 +60,18 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
         }
 
         player.InventorySystem.TryPickUp(this);
+    }
+
+    public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
+    {
+        if (player != null && player.InventorySystem != null)
+        {
+            if (player.InventorySystem.HeldItem != null)
+            {
+                return new InteractionFeedback("Holding Another Item", interactionUIData);
+            }
+        }
+        return new InteractionFeedback("Pick up Fuse", interactionUIData);
     }
 
     public void OnPickUp()

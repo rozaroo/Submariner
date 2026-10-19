@@ -9,6 +9,9 @@ public class PressureDoor : MonoBehaviour, IInteractable
     [SerializeField] private float _openSpeed = 5f;
     [SerializeField] private Transform _doorTransform;
     
+    [Header("Interaction")]
+    [SerializeField] private InteractionUIData interactionUIData;
+    
     private bool _isOpen = false;
     private Coroutine _animationCoroutine;
     private Quaternion _closedRotation;
@@ -27,11 +30,7 @@ public class PressureDoor : MonoBehaviour, IInteractable
     public void Interact(PlayerCharacter player)
     {
         _isOpen = !_isOpen;
-        if (_animationCoroutine != null)
-        {
-            StopCoroutine(_animationCoroutine);
-        }
-        
+        if (_animationCoroutine != null) StopCoroutine(_animationCoroutine);
         if (_isOpen)
         {
             OpenDoor(player);
@@ -44,20 +43,20 @@ public class PressureDoor : MonoBehaviour, IInteractable
         }
     }
 
+    public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
+    {
+        string action = _isOpen ? "Close Door" : "Open Door";
+        return new InteractionFeedback(action, interactionUIData);
+    }
+
     private void OpenDoor(PlayerCharacter player)
     {
         _isOpen = true;
         SFXManager.PostEvent("Start_Opening_Pressure_DoorSFX", gameObject);
         Vector3 direction = transform.position - player.transform.position;
         float dotProduct = Vector3.Dot(_hingePosition, direction);
-        if (dotProduct < 0)
-        {
-            _openRotation = Quaternion.Euler(_openAngle) * _closedRotation;
-        }
-        else
-        {
-            _openRotation =  Quaternion.Euler(-_openAngle) * _closedRotation;
-        }
+        if (dotProduct < 0) _openRotation = Quaternion.Euler(_openAngle) * _closedRotation;
+        else _openRotation =  Quaternion.Euler(-_openAngle) * _closedRotation;
         _animationCoroutine = StartCoroutine(AnimateDoor(_openRotation));
     }
 

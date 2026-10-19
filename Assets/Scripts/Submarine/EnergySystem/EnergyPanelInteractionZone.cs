@@ -16,4 +16,9 @@ public class EnergyPanelInteractionZone : MonoBehaviour, IInteractable
 
         energyPanelControl.Interact(player);
     }
+
+    public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
+    {
+        return energyPanelControl.SendInteractionFeedback(player);
+    }
 }

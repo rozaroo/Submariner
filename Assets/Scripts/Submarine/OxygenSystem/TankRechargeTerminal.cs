@@ -8,6 +8,10 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
     [SerializeField] private float energyConsumption = 5f;
     [SerializeField] private Transform dockPoint;
     [SerializeField] private EnergySystem energySystem;
+
+    [Header("Interaction")]
+    [SerializeField] private InteractionUIData interactionUIData;
+    
     private OxygenTank _dockedTank;
     private Coroutine _rechargeCoroutine;
     private bool _hasRegisteredEnergyConsumption;
@@ -63,6 +67,30 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
         {
             UndockTank(player);
         }
+    }
+
+    public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
+    {
+        if (_dockedTank != null)
+        {
+            return new InteractionFeedback("Release Oxygen Tank", interactionUIData);
+        }
+
+        if (player != null && player.InventorySystem != null)
+        {
+            if (player.InventorySystem.HeldItem is OxygenTank oxygenTank)
+            {
+                string text = oxygenTank.isFull ? "Place Oxygen Tank (Full)" : "Place Oxygen Tank";
+                return new InteractionFeedback(text, interactionUIData);
+            }
+            
+            if (player.InventorySystem.HeldItem != null)
+            {
+                return new InteractionFeedback("Requires Oxygen Tank", interactionUIData);
+            }
+        }
+        
+        return new InteractionFeedback("Requires Oxygen Tank", null);
     }
 
     private void DockTank(OxygenTank tank)

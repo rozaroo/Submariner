@@ -35,6 +35,7 @@ public class PlayerGameplayFreeState : PlayerGameplayState
     public override void Update()
     {
         ApplyHeadbobbing();
+        _context.TryGetInteractDataRaycast();
     }
 
     private void ApplyHeadbobbing()
@@ -75,5 +76,6 @@ public class PlayerGameplayFreeState : PlayerGameplayState
     public override void OnExit()
     {
         _context.DisableGameplayInputs();
+        _context.ClearCurrentInteractable();
     }
 }

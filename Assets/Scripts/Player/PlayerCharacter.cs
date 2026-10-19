@@ -42,6 +42,8 @@ public class PlayerCharacter : MonoBehaviour
     
     private Vector3 _defaultCameraLocalPosition;
     private Quaternion _defaultCameraLocalRotation;
+    
+    private IInteractable _currentInteractable;
 
     public CameraPose SavedCameraPose { get; private set; }
     public PlayerInput Input { get; private set; }
@@ -156,7 +158,7 @@ public class PlayerCharacter : MonoBehaviour
         _useAction =
             Input.actions[useActionName];
 
-        _interactionAction.started += TryInteractRaycast;
+        _interactionAction.started += TryInteract;
 
         _dropAction.started += TryDropItem;
 
@@ -169,7 +171,7 @@ public class PlayerCharacter : MonoBehaviour
     {
         if (_interactionAction == null) return;
         
-        _interactionAction.started -= TryInteractRaycast;
+        _interactionAction.started -= TryInteract;
 
         _dropAction.started -= TryDropItem;
 
@@ -184,7 +186,7 @@ public class PlayerCharacter : MonoBehaviour
         Cursor.visible = isMouseVisible;
     }
 
-    private void TryInteractRaycast(InputAction.CallbackContext ctx)
+    public void TryGetInteractDataRaycast()
     {
         Ray ray = new Ray(
             CamController.MainCamera.transform.position,
@@ -194,8 +196,11 @@ public class PlayerCharacter : MonoBehaviour
         {
             Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 2f);
 
-            if (hit.collider.TryGetComponent(out IInteractable interactable))
-                interactable.Interact(this);
+            if (hit.collider.TryGetComponent(out IInteractable interactableReceived))
+            {
+                _currentInteractable = interactableReceived;
+                GameEventChannel<OnInteraction>.RaiseEvent(new OnInteraction(_currentInteractable.SendInteractionFeedback(this)));
+            }
         }
         else
         {
@@ -204,6 +209,25 @@ public class PlayerCharacter : MonoBehaviour
                 ray.direction * interactionDistance,
                 Color.red,
                 2f);
+            _currentInteractable = null;
+            GameEventChannel<OnInteraction>.RaiseEvent(new OnInteraction(new InteractionFeedback()));
+        }
+    }
+    
+    public void ClearCurrentInteractable()
+    {
+        if (_currentInteractable != null)
+        {
+            _currentInteractable = null;
+            GameEventChannel<OnInteraction>.RaiseEvent(new OnInteraction(new InteractionFeedback()));
+        }
+    }
+
+    private void TryInteract(InputAction.CallbackContext ctx)
+    {
+        if (_currentInteractable != null)
+        {
+            _currentInteractable.Interact(this);
         }
     }
 

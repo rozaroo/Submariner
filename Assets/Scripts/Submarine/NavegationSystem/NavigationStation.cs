@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,6 +17,9 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
 
     [Header("Property Settings")] 
     [SerializeField] private MapUIManager mapUI;
+    
+    [Header("Interaction")]
+    [SerializeField] private InteractionUIData interactionUIData;
     
     [Header("Input Settings")]
     [SerializeField] private string exitActionName;
@@ -36,13 +40,17 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
         player.OnPossessionState(this);
     }
 
+    public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
+    {
+        return new InteractionFeedback("Enter Navigation", interactionUIData);
+    }
+
     public void Possess(PlayerCharacter player)
     {
         _currentPlayer = player;
         mapUI.MapCanvas.worldCamera = _currentPlayer.CamController.MainCamera;
         var exitAction = _currentPlayer.Input.actions[exitActionName];
         exitAction.started += OnExitPerformed;
-        
         enabled = true;
     }
 
@@ -50,7 +58,6 @@ public class NavigationStation : MonoBehaviour, IInteractable, IPossessable
     {
         var exitAction = _currentPlayer.Input.actions[exitActionName];
         exitAction.started -= OnExitPerformed;
-        
         mapUI.MapCanvas.worldCamera = null;
         _currentPlayer = null;
         enabled = false;

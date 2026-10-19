@@ -20,10 +20,10 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     [Header("Input Settings")]
     [SerializeField] private string takePhotoActionName; 
     [SerializeField] private string exitActionName;
-    [SerializeField] private string ResetStationName;
-
-    [Header("Inputs")]
-    [SerializeField] private string lookActionName = "Look";
+    [SerializeField] private string resetStationName;
+    
+    [Header("Interaction")]
+    [SerializeField] private InteractionUIData interactionUIData;
 
     private PhosphorusCamera _componentCamera;
     private PlayerCharacter _currentPlayer;
@@ -51,6 +51,11 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
         player.OnPossessionState(this);
     }
     
+    public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
+    {
+        return new InteractionFeedback("Enter Periscope",interactionUIData);
+    }
+
     #region PosessionLogic
     
     public void Possess(PlayerCharacter player)
@@ -64,7 +69,7 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
         InputAction cancelAction = _currentPlayer.Input.actions[exitActionName];
         cancelAction.started += OnExitStarted;
 
-        InputAction resetAction = _currentPlayer.Input.actions[ResetStationName];
+        InputAction resetAction = _currentPlayer.Input.actions[resetStationName];
         resetAction.started += OnResetStarted;
 
         enabled = true;
@@ -82,7 +87,7 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
         InputAction cancelAction = _currentPlayer.Input.actions[exitActionName];
         cancelAction.started -= OnExitStarted;
 
-        InputAction resetAction = _currentPlayer.Input.actions[ResetStationName];
+        InputAction resetAction = _currentPlayer.Input.actions[resetStationName];
         resetAction.started -= OnResetStarted;
 
         _periscopeCameraAnchorSo.phosphorusCameraComponent.EndPeriscopeControl();

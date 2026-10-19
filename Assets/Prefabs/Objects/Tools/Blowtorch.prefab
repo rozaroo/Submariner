@@ -76,6 +76,7 @@ MonoBehaviour:
     m_Bits: 256
   blowtorchStartEvent: Start_BlowtorchSFX
   blowtorchStopEvent: Stop_BlowtorchSFX
+  interactionUIData: {fileID: 11400000, guid: d38ccb83d32d5034393f87265238543f, type: 2}
   flameParticles: {fileID: 4459757349723131906}
   aimSpeed: 8
   aimRotationOffset: {x: -30, y: 0, z: 0}

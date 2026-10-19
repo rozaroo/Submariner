@@ -110,6 +110,7 @@ MonoBehaviour:
   playerMapName: Player
   stationMapName: Station
   mapUI: {fileID: 3630336487683295386}
+  interactionUIData: {fileID: 11400000, guid: 267bb620c539fa34fae2bf897d03009b, type: 2}
   exitActionName: ExitStation
 --- !u!65 &8051345550395868860
 BoxCollider:

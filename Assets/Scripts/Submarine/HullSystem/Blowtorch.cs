@@ -23,6 +23,9 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     [SerializeField] private float aimSpeed = 8f;
     [SerializeField] private Vector3 aimRotationOffset = new Vector3(-5f, 0f, 0f);
     
+    [Header("Interaction")]
+    [SerializeField] private InteractionUIData interactionUIData;
+    
     private bool _isWelding;
     private Quaternion _targetLocalRotation = Quaternion.identity;
     
@@ -53,6 +56,18 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     {
         player.InventorySystem.TryPickUp(this);
         _camera = player.CamController.MainCamera;
+    }
+
+    public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
+    {
+        if (player != null && player.InventorySystem != null)
+        {
+            if (player.InventorySystem.HeldItem != null)
+            {
+                return new InteractionFeedback("Holding Another Item", interactionUIData);
+            }
+        }
+        return new InteractionFeedback("Pick up Blowtorch", interactionUIData);
     }
 
     public void OnPickUp()

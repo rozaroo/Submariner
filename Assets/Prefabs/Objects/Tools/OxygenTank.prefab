@@ -155,6 +155,7 @@ MonoBehaviour:
   maxCharge: 120
   currentCharge: 100
   chargeBar: {fileID: 7538541669108802054}
+  interactionUIData: {fileID: 11400000, guid: d38ccb83d32d5034393f87265238543f, type: 2}
 --- !u!1 &4014262897013094432
 GameObject:
   m_ObjectHideFlags: 0

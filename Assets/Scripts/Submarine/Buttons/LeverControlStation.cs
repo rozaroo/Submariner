@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,6 +22,9 @@ public class LeverControlStation : MonoBehaviour, IInteractable, IPossessable
     [SerializeField] private string pointerDeltaActionName = "Pointer";
     [SerializeField] private string exitActionName = "ExitStation";
     [SerializeField, Min(0.1f)] private float leverRaycastDistance = 5f;
+    
+    [Header("Interaction")]
+    [SerializeField] private InteractionUIData interactionUIData;
 
     private PlayerCharacter _currentPlayer;
     private Camera _playerCamera;
@@ -63,6 +67,11 @@ public class LeverControlStation : MonoBehaviour, IInteractable, IPossessable
         player.OnPossessionState(this);
     }
 
+    public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
+    {
+        return new InteractionFeedback("Enter Engine Control", interactionUIData);
+    }
+
     public void Possess(PlayerCharacter player)
     {
         _currentPlayer = player;
@@ -76,20 +85,10 @@ public class LeverControlStation : MonoBehaviour, IInteractable, IPossessable
             _clickAction.started += OnClickStarted;
             _clickAction.canceled += OnClickCanceled;
         }
-        else
-        {
-            Log.Error($"[{nameof(LeverControlStation)}] Action '{clickActionName}' was not found.");
-        }
-
-        if (_exitAction != null)
-        {
-            _exitAction.started += OnExitStarted;
-        }
-        else
-        {
-            Log.Error($"[{nameof(LeverControlStation)}] Action '{exitActionName}' was not found.");
-        }
-
+        else Log.Error($"[{nameof(LeverControlStation)}] Action '{clickActionName}' was not found.");
+        
+        if (_exitAction != null) _exitAction.started += OnExitStarted;
+        else Log.Error($"[{nameof(LeverControlStation)}] Action '{exitActionName}' was not found.");
         enabled = true;
     }
 
@@ -100,12 +99,7 @@ public class LeverControlStation : MonoBehaviour, IInteractable, IPossessable
             _clickAction.started -= OnClickStarted;
             _clickAction.canceled -= OnClickCanceled;
         }
-
-        if (_exitAction != null)
-        {
-            _exitAction.started -= OnExitStarted;
-        }
-
+        if (_exitAction != null) _exitAction.started -= OnExitStarted;
         _draggedLever = null;
         _clickAction = null;
         _pointerDeltaAction = null;
