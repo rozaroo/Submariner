@@ -104,6 +104,11 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
 
     private void OnPhotoClickStarted(InputAction.CallbackContext context)
     {
+        if (StationClickBlocker.TryConsumeClick(_currentPlayer?.CamController.MainCamera))
+        {
+            return;
+        }
+
         if (_periscopeCameraAnchorSo.phosphorusCameraComponent == null) return;
         
         if (!_periscopeCameraAnchorSo.phosphorusCameraComponent.CanTakePhoto())

@@ -152,6 +152,11 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 
     private void OnClickStarted(InputAction.CallbackContext context)
     {
+        if (StationClickBlocker.TryConsumeClick(_playerCamera))
+        {
+            return;
+        }
+
         if (Mouse.current == null) return;
 
         Vector2 mousePos = Mouse.current.position.ReadValue();

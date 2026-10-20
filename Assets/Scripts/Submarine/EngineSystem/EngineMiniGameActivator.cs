@@ -120,6 +120,11 @@ public class EngineMiniGameActivator : MonoBehaviour, IPossessable, IInteractabl
 
     private void OnClickStarted(InputAction.CallbackContext context)
     {
+        if (StationClickBlocker.TryConsumeClick(_playerCamera))
+        {
+            return;
+        }
+
         if (engineMiniGame == null || !engineMiniGame.IsAcceptingInput) return;
 
         EngineMiniGameComponent clickedComponent = GetComponentUnderCursor();

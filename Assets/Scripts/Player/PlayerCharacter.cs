@@ -5,6 +5,9 @@ using UnityEngine.InputSystem.Interactions;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerCharacter : MonoBehaviour
 {
+    public static event System.Action<IPossessable, PlayerCharacter> StationPossessed;
+    public static event System.Action<IPossessable, PlayerCharacter> StationUnpossessed;
+
     [Header("Control Settings")] 
     [SerializeField] private float moveSpeed = 5f;
 
@@ -131,6 +134,7 @@ public class PlayerCharacter : MonoBehaviour
         _gameplaySm.ChangeState(
             new PlayerGameplayPossessionState(_gameplaySm, this, station, Input.currentActionMap.name,
                 station.CursorLockMode, station.IsMouseVisible));
+        StationPossessed?.Invoke(station, this);
     }
 
     public void OnUnPossessionState(IPossessable station)
@@ -141,6 +145,7 @@ public class PlayerCharacter : MonoBehaviour
             prevMap = possessionState.PreviousMapName;
         }
         _gameplaySm.ChangeState(new PlayerGameplayUnPossessionState(_gameplaySm, this, station, prevMap));
+        StationUnpossessed?.Invoke(station, this);
     }
 
     #endregion
