@@ -15,6 +15,8 @@ public class TutorialSketchbook : MonoBehaviour
     [SerializeField] private MonoBehaviour owningStation;
     [Tooltip("Collider used to receive clicks. The component never modifies this collider.")]
     [SerializeField] private Collider clickCollider;
+    [Tooltip("Outline material used to guide the player before their first interaction.")]
+    [SerializeField] private Material outlineMaterial;
 
     [Header("Reading placement")]
     [SerializeField, Min(0.01f)] private float readingDistance = 0.65f;
@@ -26,10 +28,12 @@ public class TutorialSketchbook : MonoBehaviour
     private IPossessable _owningStation;
     private Collider _sketchbookCollider;
     private TutorialSketchbookContent _content;
+    private TutorialSketchbookOutline _outline;
     private Camera _stationCamera;
     private InputAction _clickAction;
     private Coroutine _transition;
     private bool _isReading;
+    private bool _hasBeenInteracted;
     private Vector3 _tableWorldPosition;
     private Quaternion _tableWorldRotation;
 
@@ -39,6 +43,14 @@ public class TutorialSketchbook : MonoBehaviour
         CacheTablePose();
         CacheClickCollider();
         _content = GetComponent<TutorialSketchbookContent>();
+        _outline = GetComponent<TutorialSketchbookOutline>();
+        if (_outline == null)
+        {
+            _outline = gameObject.AddComponent<TutorialSketchbookOutline>();
+        }
+
+        _outline.Initialize(outlineMaterial);
+        _outline.SetVisible(false);
     }
 
     private void OnEnable()
@@ -110,6 +122,7 @@ public class TutorialSketchbook : MonoBehaviour
         StopListeningForClicks();
         _clickAction = player.Input.actions[StationClickActionName];
         StationClickBlocker.Register(this);
+        _outline.SetVisible(!_hasBeenInteracted);
 
         if (_clickAction != null)
         {
@@ -126,6 +139,7 @@ public class TutorialSketchbook : MonoBehaviour
 
         StopListeningForClicks();
         _stationCamera = null;
+        _outline.SetVisible(false);
         ReturnToTable(immediately: true);
     }
 
@@ -175,6 +189,8 @@ public class TutorialSketchbook : MonoBehaviour
             return false;
         }
 
+        _hasBeenInteracted = true;
+        _outline.SetVisible(false);
         BringToReadingPosition();
         return true;
     }

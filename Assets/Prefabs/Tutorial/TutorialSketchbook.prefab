@@ -3269,6 +3269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owningStation: {fileID: 0}
   clickCollider: {fileID: 181673910968147249}
+  outlineMaterial: {fileID: 2100000, guid: a58e07290b397a1439b61842b1b83a0b, type: 2}
   readingDistance: 0.3
   readingOffset: {x: -0.1, y: 0, z: 0}
   readingRotationOffset: {x: 0, y: -91, z: 0}
