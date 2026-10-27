@@ -23,7 +23,10 @@ public class WaypointManager : MonoBehaviour
     [Header("Interaction Settings")]
     [Tooltip("Radius of Pixels to interact with.")]
     [SerializeField] private float removalRadius = 30f;
-    
+    [Header("Motor Feedback")]
+    [SerializeField] private EngineSystem engineSystem;
+    [SerializeField] private NavigationLampFeedback navigationLamp;
+
     private readonly List<WaypointData> _waypoints = new();
     private RectTransform _mapRect;
     
@@ -73,19 +76,20 @@ public class WaypointManager : MonoBehaviour
             {
                 Vector3 localPoint3D = mapRect.InverseTransformPoint(hit.point);
                 Vector2 localPoint2D = new Vector2(localPoint3D.x, localPoint3D.y);
-
                 if (isLeftClick)
                 {
+                    // Mostrar aviso si el motor no está activo.
+                    if (engineSystem != null && !engineSystem.IsRunning())
+                    {
+                        if (navigationLamp != null) navigationLamp.ShowMotorWarning();
+                    }
                     var mapIcon = CreateMapIcon(localPoint2D);
+                    if (mapIcon == null) return;
                     var iconLineBehaviour = mapIcon.gameObject.GetComponent<LineBehaviour>();
-
                     SetWaypoint(mapIcon, iconLineBehaviour);
                     RefreshIndices();
                 }
-                else
-                {
-                    TryRemoveWaypointAt(localPoint2D);
-                }
+                else TryRemoveWaypointAt(localPoint2D);
             }
         }
     }
