@@ -69,7 +69,7 @@ public class UIPlayerManager : MonoBehaviour
         }
     }
 
-    public void HidePrompt()
+    private void HidePrompt()
     {
         if (interactionPrompt != null && interactionPrompt.activeSelf)
         {

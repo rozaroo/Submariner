@@ -71,11 +71,13 @@ public class EngineMiniGameActivator : MonoBehaviour, IPossessable, IInteractabl
 
     public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
     {
-        if (engineMiniGame == null || engineMiniGame.CanStart)
-        {
-            if (cameraAnchor == null || directionAnchor == null) 
-                return new InteractionFeedback("", interactionUIData);
-        }
+        bool canInteract = engineMiniGame != null
+                           && engineMiniGame.CanStart
+                           && cameraAnchor != null
+                           && directionAnchor != null;
+
+        if (!canInteract)
+            return new InteractionFeedback("", interactionUIData, false);
 
         return new InteractionFeedback("Repair Engine", interactionUIData);
     }

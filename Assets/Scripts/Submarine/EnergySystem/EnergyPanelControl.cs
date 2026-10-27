@@ -261,7 +261,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
         int requiredAmp = GetRequiredAmperage(_burnedSlotIndex);
         burnedFuse.Burn();
 
-        Log.Info($"[EnergyPanelControl] SE QUEMÓ EL FUSIBLE en el slot {_burnedSlotIndex} | Amperaje del fusible: {burnedFuse.Amperage}A | Amperaje requerido en este slot: {requiredAmp}A");
+        Log.Info($"[EnergyPanelControl] SE QUEMï¿½ EL FUSIBLE en el slot {_burnedSlotIndex} | Amperaje del fusible: {burnedFuse.Amperage}A | Amperaje requerido en este slot: {requiredAmp}A");
     }
 
     public bool HasBurnedFuseInPanel()
@@ -334,12 +334,12 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
         }
         else if (fuse.Amperage < requiredAmperage)
         {
-            Log.Warning($"[EnergyPanelControl] Sub-amperaje detectado ({fuse.Amperage}A < {requiredAmperage}A). Se quemará en {underAmperageFuseLifetime}s.");
+            Log.Warning($"[EnergyPanelControl] Sub-amperaje detectado ({fuse.Amperage}A < {requiredAmperage}A). Se quemarï¿½ en {underAmperageFuseLifetime}s.");
             RestoreEnergyWithUnderAmperageFuse(fuse);
         }
         else
         {
-            Log.Warning($"[EnergyPanelControl] Sobre-amperaje detectado ({fuse.Amperage}A > {requiredAmperage}A). Se quemará en {overAmperageBurnDelay}s.");
+            Log.Warning($"[EnergyPanelControl] Sobre-amperaje detectado ({fuse.Amperage}A > {requiredAmperage}A). Se quemarï¿½ en {overAmperageBurnDelay}s.");
             RestoreEnergyWithOverAmperageFuse(fuse);
         }
 
@@ -528,7 +528,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
             energySystem.BreakFuseFromPanel();
         }
 
-        Log.Warning($"[EnergyPanelControl] SE QUEMÓ FUSIBLE POR AMPERAJE INCORRECTO en slot {fuseIndex} | Tenía: {fuse.Amperage}A | Requería: {requiredAmp}A");
+        Log.Warning($"[EnergyPanelControl] SE QUEMï¿½ FUSIBLE POR AMPERAJE INCORRECTO en slot {fuseIndex} | Tenï¿½a: {fuse.Amperage}A | Requerï¿½a: {requiredAmp}A");
         _wrongFuseCoroutine = null;
     }
 

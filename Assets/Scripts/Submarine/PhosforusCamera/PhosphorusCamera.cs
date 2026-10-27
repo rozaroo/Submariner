@@ -29,6 +29,11 @@ public class PhosphorusCamera : MonoBehaviour
 
     [Header("Energy Consumption")]
     [SerializeField] private float energyConsumption = 5f;
+    
+    [Header("Reset Settings")]
+    [SerializeField] private float resetDuration = 0.5f;
+
+    private bool _isResettingCamera;
 
     private EnergyStatus _energyStatus = EnergyStatus.Full;
     private bool _isProcessingPhoto;
@@ -40,6 +45,7 @@ public class PhosphorusCamera : MonoBehaviour
     private float _yaw;
     private float _pitch;
     private Coroutine _photoSequenceRoutine;
+    private Coroutine _resetCameraRoutine;
     private float _cooldownRemaining;
 
     public bool IsPossessed => _isPossessingCamera;
@@ -60,12 +66,16 @@ public class PhosphorusCamera : MonoBehaviour
     
     private void Update()
     {
-        if (_isPossessingCamera) HandleEdgeRotation();
+        if (_isPossessingCamera && !_isResettingCamera) HandleEdgeRotation();
     }
     
     private void OnEnable() => GameEventChannel<OnEnergyStatusChange>.OnEventRaised += UpdateEnergyStatus;
-    
-    private void OnDisable() => GameEventChannel<OnEnergyStatusChange>.OnEventRaised -= UpdateEnergyStatus;
+
+    private void OnDisable()
+    {
+        CancelCameraReset();
+        GameEventChannel<OnEnergyStatusChange>.OnEventRaised -= UpdateEnergyStatus;
+    }
 
     private void HandleEdgeRotation()
     {
@@ -203,15 +213,58 @@ public class PhosphorusCamera : MonoBehaviour
         _initialPitch = _pitch;
     }
 
-    public void ResetCameraRotation()
+    public void StartCameraReset()
     {
         if (exteriorCamera == null) return;
-        _yaw = _initialYaw;
-        _pitch = _initialPitch;
+
+        if (_resetCameraRoutine != null) StopCoroutine(_resetCameraRoutine);
+        _resetCameraRoutine = StartCoroutine(CameraResetRoutine());
+    }
+
+    private IEnumerator CameraResetRoutine()
+    {
+        _isResettingCamera = true;
+
         _currentVelocityX = 0f;
         _currentVelocityY = 0f;
+
+        float startYaw = _yaw;
+        float startPitch = _pitch;
+
+        float yawDelta = Mathf.DeltaAngle(startYaw, _initialYaw);
+        float pitchDelta = _initialPitch - startPitch;
+
+        float timer = 0f;
+        while (timer < resetDuration)
+        {
+            timer += Time.deltaTime;
+            float t = Mathf.SmoothStep(0f, 1f, timer / resetDuration);
+
+            _yaw = startYaw + yawDelta * t;
+            _pitch = startPitch + pitchDelta * t;
+            exteriorCamera.transform.rotation = Quaternion.Euler(_pitch, _yaw, 0f);
+
+            yield return null;
+        }
+        
+        _yaw = startYaw + yawDelta;
+        _pitch = _initialPitch;
         exteriorCamera.transform.rotation = Quaternion.Euler(_pitch, _yaw, 0f);
+
+        _isResettingCamera = false;
+        _resetCameraRoutine = null;
     }
+    
+    private void CancelCameraReset()
+    {
+        if (_resetCameraRoutine != null)
+        {
+            StopCoroutine(_resetCameraRoutine);
+            _resetCameraRoutine = null;
+        }
+        _isResettingCamera = false;
+    }
+
     public void ForceDisable()
     {
         if (_photoSequenceRoutine != null) StopCoroutine(_photoSequenceRoutine);

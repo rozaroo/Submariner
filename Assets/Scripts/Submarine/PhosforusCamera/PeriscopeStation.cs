@@ -123,7 +123,7 @@ public class PeriscopeStation : MonoBehaviour, IInteractable, IPossessable
     private void OnResetStarted(InputAction.CallbackContext context)
     {
         if (_periscopeCameraAnchorSo.phosphorusCameraComponent == null) return;
-        _periscopeCameraAnchorSo.phosphorusCameraComponent.ResetCameraRotation();
+        _periscopeCameraAnchorSo.phosphorusCameraComponent.StartCameraReset();
     }
 
     #endregion

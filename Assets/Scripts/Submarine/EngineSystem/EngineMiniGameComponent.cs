@@ -23,8 +23,8 @@ public class EngineMiniGameComponent : MonoBehaviour, IInteractable
     [SerializeField, Min(0.01f)] private float colorTransitionDuration = 0.12f;
     [SerializeField, Min(0.01f)] private float hitBlinkDuration = 0.1f;
     [SerializeField, Min(1)] private int hitBlinkCount = 2;
-    
-    [Header("Interaction")]
+
+    [Header("Interaction")] 
     [SerializeField] private InteractionUIData interactionUIData;
 
     private Material _tubeMaterial;
@@ -69,7 +69,14 @@ public class EngineMiniGameComponent : MonoBehaviour, IInteractable
 
     public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
     {
-        return new InteractionFeedback("Start Engine Sequence", interactionUIData);
+        if(engineMinigame != null)
+        {
+            if(engineMinigame.IsActive)
+            {
+                return new InteractionFeedback("Start Engine Sequence", interactionUIData);
+            }
+        }
+        return new InteractionFeedback("", interactionUIData, false);
     }
 
     public void ClickInteract(PlayerCharacter player) => Interact(player);

@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class EngineSystem : MonoBehaviour
 {
     public event Action OnEngineStartedEvent;
-    public event Action OnEngineStoppedEvent; // Nuevo evento
+    public event Action OnEngineStoppedEvent;
 
     [Header("Startup")]
     [SerializeField] private float startupTime = 3f;
@@ -48,6 +48,7 @@ public class EngineSystem : MonoBehaviour
             CheckTemperature();
         }
     }
+    
     private void OnDestroy()
     {
         if (navigationLeverPull != null)
@@ -122,7 +123,8 @@ public class EngineSystem : MonoBehaviour
         Log.Info("[ENGINE] Status changed -> DEGRADED");
     }
 
-    private void BreakEngine()
+    [ContextMenu("Force Break Engine")]
+    public void BreakEngine()
     {
         _currentState = EngineState.Broken;
 

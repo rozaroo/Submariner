@@ -1255,6 +1255,7 @@ MonoBehaviour:
   exitActionName: ExitStation
   drainagePercentage: 0.5
   energyConsumption: 10
+  interactionUIData: {fileID: 11400000, guid: 267bb620c539fa34fae2bf897d03009b, type: 2}
 --- !u!114 &4917294596352061485
 MonoBehaviour:
   m_ObjectHideFlags: 0

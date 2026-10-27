@@ -48,7 +48,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2147483648
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -76,10 +76,10 @@ MonoBehaviour:
     m_Bits: 256
   blowtorchStartEvent: Start_BlowtorchSFX
   blowtorchStopEvent: Stop_BlowtorchSFX
-  interactionUIData: {fileID: 11400000, guid: d38ccb83d32d5034393f87265238543f, type: 2}
   flameParticles: {fileID: 4459757349723131906}
   aimSpeed: 8
   aimRotationOffset: {x: -30, y: 0, z: 0}
+  interactionUIData: {fileID: 11400000, guid: d38ccb83d32d5034393f87265238543f, type: 2}
 --- !u!54 &5657099322741680373
 Rigidbody:
   m_ObjectHideFlags: 0
