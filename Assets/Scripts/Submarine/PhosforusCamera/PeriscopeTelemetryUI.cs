@@ -41,8 +41,8 @@ public class PeriscopeTelemetryUI : MonoBehaviour
     {
         if (telemetryContainer != null) telemetryContainer.SetActive(true);
         if (photoPrompt != null) photoPrompt.SetActive(true);
-        if (noBatteryIcon != null) noBatteryIcon.SetActive(false);
     }
+
 
     private void HideTelemetry(OnPeriscopeUnPossess evt)
     {
@@ -60,8 +60,10 @@ public class PeriscopeTelemetryUI : MonoBehaviour
 
     private void UpdateTelemetry()
     {
-        float yaw = periscopeAnchorSo.phosphorusCameraComponent.CurrentYaw;
-        float pitch = periscopeAnchorSo.phosphorusCameraComponent.CurrentPitch;
+        var cam = periscopeAnchorSo.phosphorusCameraComponent;
+
+        float yaw = cam.CurrentYaw;
+        float pitch = cam.CurrentPitch;
         if (yawText != null) yawText.text = $"BRG {Mathf.FloorToInt(yaw):D3}°";
         if (pitchText != null)
         {
@@ -70,7 +72,7 @@ public class PeriscopeTelemetryUI : MonoBehaviour
         }
         if (cooldownText != null)
         {
-            float cooldown = periscopeAnchorSo.phosphorusCameraComponent.CooldownRemaining;
+            float cooldown = cam.CooldownRemaining;
             if (cooldown > 0f)
             {
                 cooldownText.gameObject.SetActive(true);
@@ -78,16 +80,13 @@ public class PeriscopeTelemetryUI : MonoBehaviour
             }
             else cooldownText.gameObject.SetActive(false);
         }
-        if (photoPrompt != null)
-        {
-            bool canTakePhoto = periscopeAnchorSo.phosphorusCameraComponent.CanTakePhoto();
-            photoPrompt.SetActive(canTakePhoto);
-        }
+        if (photoPrompt != null) photoPrompt.SetActive(cam.CanTakePhoto());
+        if (noBatteryIcon != null) noBatteryIcon.SetActive(cam.IsBatteryEmpty);
     }
+    
     private void UpdateBatteryIcon(OnEnergyStatusChange newStatus)
     {
-        if (noBatteryIcon == null) return;
-        bool batteryEmpty = newStatus.energyStatus == EnergyStatus.Empty;
-        noBatteryIcon.SetActive(batteryEmpty);
+        if (noBatteryIcon == null || telemetryContainer == null || !telemetryContainer.activeSelf) return;
+        noBatteryIcon.SetActive(newStatus.energyStatus == EnergyStatus.Empty);
     }
 }

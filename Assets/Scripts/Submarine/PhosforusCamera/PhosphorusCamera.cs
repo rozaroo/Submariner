@@ -39,6 +39,7 @@ public class PhosphorusCamera : MonoBehaviour
     private bool _isProcessingPhoto;
     private bool _isPossessingCamera;
     private bool _hasRegisteredEnergyConsumption;
+    private bool _hasStoredInitialRotation;
 
     private float _initialYaw;
     private float _initialPitch;
@@ -57,11 +58,25 @@ public class PhosphorusCamera : MonoBehaviour
 
     private void Start()
     {
-        if (exteriorCamera != null) exteriorCamera.enabled = false;
+        if (exteriorCamera != null)
+        {
+            exteriorCamera.enabled = false;
+            StoreInitialRotation();
+        }
         else Log.Warning("[PhosphorusCamera]: No Exterior Camera");
-        
+
         if (periscopeCameraAnchorSo != null) periscopeCameraAnchorSo.phosphorusCameraComponent = this;
         else Log.Warning("[PhosphorusCamera]: No PeriscopeCameraAnchor");
+    }
+    
+    private void StoreInitialRotation()
+    {
+        if (_hasStoredInitialRotation) return;
+
+        Vector3 rotation = exteriorCamera.transform.eulerAngles;
+        _initialYaw = rotation.y;
+        _initialPitch = rotation.x > 180f ? rotation.x - 360f : rotation.x;
+        _hasStoredInitialRotation = true;
     }
     
     private void Update()
@@ -74,6 +89,7 @@ public class PhosphorusCamera : MonoBehaviour
     private void OnDisable()
     {
         CancelCameraReset();
+        CancelPhotoSequence();
         GameEventChannel<OnEnergyStatusChange>.OnEventRaised -= UpdateEnergyStatus;
     }
 
@@ -124,9 +140,7 @@ public class PhosphorusCamera : MonoBehaviour
         _energyStatus = newStatus.energyStatus;
         if (_energyStatus == EnergyStatus.Empty)
         {
-            if (_photoSequenceRoutine != null) StopCoroutine(_photoSequenceRoutine);
-            StopEnergyConsumption();
-            _isProcessingPhoto = false;
+            CancelPhotoSequence();
 
             if (_isPossessingCamera && periscopeCameraAnchorSo.flashComponent != null)
                 periscopeCameraAnchorSo.flashComponent.SetOverlayColor(Color.black, 1f);
@@ -195,6 +209,19 @@ public class PhosphorusCamera : MonoBehaviour
         _isProcessingPhoto = false;
         _cooldownRemaining = 0f;
     }
+    
+    private void CancelPhotoSequence()
+    {
+        if (_photoSequenceRoutine != null)
+        {
+            StopCoroutine(_photoSequenceRoutine);
+            _photoSequenceRoutine = null;
+        }
+
+        StopEnergyConsumption();
+        _isProcessingPhoto = false;
+        _cooldownRemaining = 0f;
+    }
 
     public void EnableCamera()
     {
@@ -204,13 +231,14 @@ public class PhosphorusCamera : MonoBehaviour
             periscopeCameraAnchorSo.playerCamera.enabled = false;
         }
         if (exteriorCamera != null) exteriorCamera.enabled = true; 
-        if (periscopeCameraAnchorSo.flashComponent != null)  periscopeCameraAnchorSo.flashComponent.SetOverlayColor(Color.black, 1f);
+        if (periscopeCameraAnchorSo.flashComponent != null) periscopeCameraAnchorSo.flashComponent.SetOverlayColor(Color.black, 1f);
+
+        StoreInitialRotation();
+
         Vector3 rotation = exteriorCamera.transform.eulerAngles;
         _yaw = rotation.y;
         _pitch = rotation.x;
         if (_pitch > 180f) _pitch -= 360f;
-        _initialYaw = _yaw;
-        _initialPitch = _pitch;
     }
 
     public void StartCameraReset()
@@ -267,25 +295,19 @@ public class PhosphorusCamera : MonoBehaviour
 
     public void ForceDisable()
     {
-        if (_photoSequenceRoutine != null) StopCoroutine(_photoSequenceRoutine);
-        StopEnergyConsumption();
-        _isProcessingPhoto = false;
-        
-        if (exteriorCamera != null) 
+        CancelPhotoSequence();
+
+        if (exteriorCamera != null)
         {
-            exteriorCamera.targetTexture = null; 
+            exteriorCamera.targetTexture = null;
             exteriorCamera.enabled = false;
         }
-        
-        if (periscopeCameraAnchorSo.playerCamera != null) 
-        {
+
+        if (periscopeCameraAnchorSo.playerCamera != null)
             periscopeCameraAnchorSo.playerCamera.enabled = true;
-        }
-            
-        if (periscopeCameraAnchorSo.flashComponent != null) 
-        {
+
+        if (periscopeCameraAnchorSo.flashComponent != null)
             periscopeCameraAnchorSo.flashComponent.SetOverlayAlpha(0f);
-        }
     }
 
     public void BeginPeriscopeControl() => _isPossessingCamera = true;

@@ -274,7 +274,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584085635745139754
+    m_lastTime: -8584084763187154482
     List:
     - name: Fuse_Break_SFX
       guid: b066f001ec0a9d43a1664e1b435589fa
@@ -801,8 +801,8 @@ MonoBehaviour:
         guid: 5d7dbdec1c0e2a40aa4dae4663cd9edc
       Path: Events\Gameplay_SFX\Stop_Electric_Ambience
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Stop_FuseMake
       guid: 83b1aebd5016f34b851332ccec5bd0d9
       id: 880757133
@@ -1245,7 +1245,7 @@ MonoBehaviour:
     m_lastTime: -8584171482151416719
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 0300000006000000080000003a000000
+  ExpandedWaapiItemIds: 01000000030000000400000006000000080000002c0000002d00000030000000320000003400000035000000380000003a0000003c000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

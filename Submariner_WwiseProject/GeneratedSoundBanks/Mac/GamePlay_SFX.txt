@@ -26,6 +26,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	3037698516	Start_Motor_Engine_Minigame_Succeeded			\Gameplay_SFX\Start_Motor_Engine_Minigame_Succeeded	
 	3214537693	Start_PhosphorusCameraFlash_Event			\Gameplay_SFX\Start_PhosphorusCameraFlash_Event	
 	3355137523	Start_FuseMake			\Gameplay_SFX\Start_FuseMake	
+	3457084944	Stop_Electric_Ambience			\Gameplay_SFX\Stop_Electric_Ambience	
 	3771492726	Start_SubmarineCollision			\Gameplay_SFX\Start_SubmarineCollision	
 	3884825202	Stop_TensionEvent			\Gameplay_SFX\Stop_TensionEvent	
 	3907807344	Start_Engine_Minigame_SucceededStage			\Gameplay_SFX\Start_Engine_Minigame_SucceededStage	
