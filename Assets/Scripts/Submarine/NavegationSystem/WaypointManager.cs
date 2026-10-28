@@ -76,10 +76,12 @@ public class WaypointManager : MonoBehaviour
             {
                 Vector3 localPoint3D = mapRect.InverseTransformPoint(hit.point);
                 Vector2 localPoint2D = new Vector2(localPoint3D.x, localPoint3D.y);
+
                 if (isLeftClick)
                 {
-                    // Mostrar aviso si el motor no está activo.
-                    if (engineSystem != null && !engineSystem.IsRunning())
+                    bool motorActivo = engineSystem != null && engineSystem.IsRunning();
+
+                    if (!motorActivo)
                     {
                         if (navigationLamp != null) navigationLamp.ShowMotorWarning();
                     }
