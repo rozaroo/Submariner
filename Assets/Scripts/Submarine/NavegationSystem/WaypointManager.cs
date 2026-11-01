@@ -79,12 +79,21 @@ public class WaypointManager : MonoBehaviour
 
                 if (isLeftClick)
                 {
-                    bool motorActivo = engineSystem != null && engineSystem.IsRunning();
-
-                    if (!motorActivo)
+                    // Comprobar si el motor está funcionando.
+                    if (engineSystem == null)
                     {
-                        if (navigationLamp != null) navigationLamp.ShowMotorWarning();
+                        Debug.LogError("[Navigation] EngineSystem no está asignado.");
+                        return;
                     }
+
+                    if (!engineSystem.IsRunning())
+                    {
+                        // Intento de navegación con motor apagado.
+                        if (navigationLamp != null) navigationLamp.ShowMotorWarning();
+                        else Debug.LogError("[Navigation] NavigationLamp no está asignada.");
+                        return; // No permite colocar el punto.
+                    }
+                    // Motor encendido: navegación normal.
                     var mapIcon = CreateMapIcon(localPoint2D);
                     if (mapIcon == null) return;
                     var iconLineBehaviour = mapIcon.gameObject.GetComponent<LineBehaviour>();
