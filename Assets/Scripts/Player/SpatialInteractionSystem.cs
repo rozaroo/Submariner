@@ -67,9 +67,8 @@ public class SpatialInteractionSystem : MonoBehaviour
     private SpatialInteractionTarget focusedTarget;
     private readonly SpatialInteractionOutline outline = new();
 
-    public IInteractable Tick(PlayerCharacter player, LayerMask interactionLayers)
+    public IInteractable ResolveInteraction(PlayerCharacter player, LayerMask interactionLayers)
     {
-        lastTick = Time.frameCount;
         if (Time.unscaledTime >= nextDiscovery)
         {
             DiscoverTargets(interactionLayers);
@@ -79,8 +78,70 @@ public class SpatialInteractionSystem : MonoBehaviour
         Camera camera = player.CamController.MainCamera;
         if (currentCamera != camera) hasCameraPose = false;
         currentCamera = camera;
-        SpatialInteractionTarget selected = null;
+
+        // Machine surfaces have priority. Visual anchors must never replace their hitboxes.
+        focusedTarget = FindSurfaceTarget(player, camera, interactionLayers);
+        if (focusedTarget != null) return (IInteractable)focusedTarget.Source;
+
+        // Also allow aiming at an icon, as long as its object is nearby and visible.
         float bestScore = float.PositiveInfinity;
+        foreach (var target in SpatialInteractionTarget.Active)
+        {
+            if (!IsEligible(target, player, interactionLayers)) continue;
+            float closeRadius = CloseRadius(target);
+            if (target.DistanceFrom(camera.transform.position) > closeRadius) continue;
+            Vector3 direction = target.Position - camera.transform.position;
+            float angle = Vector3.Angle(camera.transform.forward, direction);
+            if (angle > focusAngle || angle >= bestScore
+                || IsOccluded(camera.transform.position, target.Position, player.transform, target.Source.transform)) continue;
+            if (!((IInteractable)target.Source).SendInteractionFeedback(player).canInteract) continue;
+            focusedTarget = target;
+            bestScore = angle;
+        }
+        return focusedTarget != null ? (IInteractable)focusedTarget.Source : null;
+    }
+
+    private bool IsEligible(SpatialInteractionTarget target, PlayerCharacter player, LayerMask layers) =>
+        target != null && target.isActiveAndEnabled && target.Source is IInteractable
+        && target.Source.gameObject.activeInHierarchy && !target.Source.transform.IsChildOf(player.transform)
+        && (layers.value & (1 << target.Source.gameObject.layer)) != 0;
+
+    private float CloseRadius(SpatialInteractionTarget target) =>
+        target.InteractionRadius(interactionRadius, target.DiscoveryRadius(discoveryRadius))
+        * Mathf.Max(0.01f, radiusMultiplier);
+
+    private SpatialInteractionTarget FindSurfaceTarget(PlayerCharacter player, Camera camera, LayerMask layers)
+    {
+        float maxDistance = Mathf.Min(Mathf.Max(0.1f, interactionRadius), Mathf.Max(0.1f, discoveryRadius))
+            * Mathf.Max(0.01f, radiusMultiplier);
+        foreach (var target in SpatialInteractionTarget.Active)
+            if (IsEligible(target, player, layers)) maxDistance = Mathf.Max(maxDistance, CloseRadius(target));
+
+        if (!Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit,
+                maxDistance, layers, QueryTriggerInteraction.UseGlobal)) return null;
+
+        // Use the same collider-to-IInteractable lookup as the original player interaction.
+        var source = hit.collider.GetComponent<IInteractable>() as MonoBehaviour;
+        SpatialInteractionTarget selected = null;
+        foreach (var target in SpatialInteractionTarget.Active)
+            if (IsEligible(target, player, layers)
+                && (target.Source == source || target.gameObject == hit.collider.gameObject))
+            { selected = target; break; }
+
+        // A freshly spawned object may not have reached the periodic discovery pass yet.
+        if (selected == null && source != null && hit.collider.GetComponent<SpatialInteractionTarget>() == null)
+            selected = hit.collider.gameObject.AddComponent<SpatialInteractionTarget>();
+
+        if (!IsEligible(selected, player, layers) || hit.distance > CloseRadius(selected)) return null;
+        if (IsOccluded(camera.transform.position, hit.point, player.transform, selected.Source.transform)) return null;
+        return ((IInteractable)selected.Source).SendInteractionFeedback(player).canInteract ? selected : null;
+    }
+
+    public IInteractable Tick(PlayerCharacter player, LayerMask interactionLayers)
+    {
+        lastTick = Time.frameCount;
+        Camera camera = player.CamController.MainCamera;
+        SpatialInteractionTarget selected = focusedTarget;
         foreach (var target in SpatialInteractionTarget.Active)
         {
             if (target == null || target.Source == null || !target.Source.gameObject.activeInHierarchy) continue;
@@ -89,19 +150,17 @@ public class SpatialInteractionSystem : MonoBehaviour
             float discovery = target.DiscoveryRadius(discoveryRadius) * Mathf.Max(0.01f, radiusMultiplier);
             float closeRadius = target.InteractionRadius(interactionRadius, target.DiscoveryRadius(discoveryRadius))
                 * Mathf.Max(0.01f, radiusMultiplier);
-            float distance = Vector3.Distance(camera.transform.position, target.DistanceOrigin);
+            float distance = target.DistanceFrom(camera.transform.position);
             Vector3 direction = target.Position - camera.transform.position;
-            bool visible = distance <= discovery && Vector3.Dot(camera.transform.forward, direction) > 0f
-                && !IsOccluded(camera.transform.position, target.Position, player.transform, target.Source.transform);
+            bool isFocused = target == selected;
+            bool visible = isFocused || (distance <= discovery && Vector3.Dot(camera.transform.forward, direction) > 0f
+                && !IsOccluded(camera.transform.position, target.Position, player.transform, target.Source.transform));
             if (!visible) { if (views.TryGetValue(target, out var hidden)) hidden.Hide(); continue; }
 
             var feedback = ((IInteractable)target.Source).SendInteractionFeedback(player);
             if (string.IsNullOrEmpty(feedback.messageToDisplay))
             { if (views.TryGetValue(target, out var hidden)) hidden.Hide(); continue; }
-            bool close = distance <= closeRadius;
-            float angle = Vector3.Angle(camera.transform.forward, direction);
-            if (close && feedback.canInteract && angle <= focusAngle && angle < bestScore)
-            { selected = target; bestScore = angle; }
+            bool close = isFocused || distance <= closeRadius;
             if (!views.TryGetValue(target, out var view))
             {
                 if (visualRoot == null)
@@ -115,11 +174,8 @@ public class SpatialInteractionSystem : MonoBehaviour
                 view = new SpatialInteractionView(visualRoot, font);
                 views.Add(target, view);
             }
-            ShowTarget(view, target, camera, feedback, close, false);
+            ShowTarget(view, target, camera, feedback, close, isFocused);
         }
-        if (selected != null && views.TryGetValue(selected, out var focused))
-            ShowTarget(focused, selected, camera, ((IInteractable)selected.Source).SendInteractionFeedback(player),
-                true, true);
 
         deadTargets.Clear();
         foreach (var entry in views)

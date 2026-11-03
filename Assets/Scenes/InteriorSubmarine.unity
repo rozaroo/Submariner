@@ -3676,6 +3676,18 @@ PrefabInstance:
       value: 0.004
       objectReference: {fileID: 0}
     - target: {fileID: 920000000000000001, guid: 45c12e2cd143bca45b4aa14fbbdd1952, type: 3}
+      propertyPath: enableOutline
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 920000000000000001, guid: 45c12e2cd143bca45b4aa14fbbdd1952, type: 3}
+      propertyPath: outlineShader
+      value: 
+      objectReference: {fileID: -6465566751694194690, guid: f07b880740c804a418dfa73673b544e7, type: 3}
+    - target: {fileID: 920000000000000001, guid: 45c12e2cd143bca45b4aa14fbbdd1952, type: 3}
+      propertyPath: outlineMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 92db228f11549c341abad6e5e7f59844, type: 2}
+    - target: {fileID: 920000000000000001, guid: 45c12e2cd143bca45b4aa14fbbdd1952, type: 3}
       propertyPath: occlusionLayers.m_Bits
       value: 2147485691
       objectReference: {fileID: 0}

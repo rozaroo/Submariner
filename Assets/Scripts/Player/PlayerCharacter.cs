@@ -200,7 +200,9 @@ public class PlayerCharacter : MonoBehaviour
     {
         if (useSpatialInteraction && _spatialInteraction != null)
         {
-            _currentInteractable = _spatialInteraction.Tick(this, interactableLayer);
+            // Resolve gameplay before updating presentation: icons cannot block machine input.
+            _currentInteractable = _spatialInteraction.ResolveInteraction(this, interactableLayer);
+            _spatialInteraction.Tick(this, interactableLayer);
             return;
         }
 
@@ -243,7 +245,8 @@ public class PlayerCharacter : MonoBehaviour
     private void TryInteract(InputAction.CallbackContext ctx)
     {
         // Refresh range, visibility and feedback at the moment the key is pressed.
-        if (useSpatialInteraction) TryGetInteractDataRaycast();
+        if (useSpatialInteraction && _spatialInteraction != null)
+            _currentInteractable = _spatialInteraction.ResolveInteraction(this, interactableLayer);
         if (_currentInteractable != null)
         {
             _currentInteractable.Interact(this);
