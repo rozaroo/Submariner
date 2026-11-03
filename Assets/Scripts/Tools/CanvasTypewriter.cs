@@ -10,6 +10,7 @@ public class CanvasTypewriter : MonoBehaviour
 {
     [Header("Story")]
     [SerializeField] private TMP_Text targetText;
+    [Tooltip("Insert <page> between passages. Only these markers create pages; text is never split automatically.")]
     [TextArea(5, 20)] [SerializeField] private string storyText;
     [Tooltip("Wait for the first left mouse click anywhere on screen before writing.")]
     [SerializeField] private bool startOnClick = true;
@@ -27,6 +28,12 @@ public class CanvasTypewriter : MonoBehaviour
     [Tooltip("Continue writing even when Time.timeScale is zero.")]
     [SerializeField] private bool useUnscaledTime = true;
 
+    [Header("Pages")]
+    [Tooltip("Optional object shown while waiting for a click to read the next page.")]
+    [SerializeField] private GameObject continuePrompt;
+    [Tooltip("Optional text displaying the current page, for example 1 / 4.")]
+    [SerializeField] private TMP_Text pageCounter;
+
     [Header("Wwise sound")]
     [Tooltip("A short, non-looping key event. Its SoundBank must already be loaded.")]
     [SerializeField] private string typingEvent;
@@ -34,11 +41,14 @@ public class CanvasTypewriter : MonoBehaviour
     [Min(0f)] [SerializeField] private float minimumSoundInterval = 0.035f;
 
     [Header("Events")]
-    [Tooltip("Also fires when SkipToEnd is called. Does not fire when stopped or disabled.")]
+    [Tooltip("Fires after the last page or SkipToEnd. Does not fire between pages or when stopped.")]
     [SerializeField] private UnityEvent onCompleted = new();
 
     public bool IsTyping { get; private set; }
     public bool IsFastForwarding { get; private set; }
+    public bool IsWaitingForNextPage { get; private set; }
+    public int CurrentPage => pages.Length == 0 ? 0 : pageIndex + 1;
+    public int TotalPages => pages.Length;
 
     private int visibleCharacters;
     private int characterCount;
@@ -47,6 +57,8 @@ public class CanvasTypewriter : MonoBehaviour
     private uint playingEventId;
     private bool waitingForClick;
     private int clickReadyFrame;
+    private int pageIndex;
+    private string[] pages = System.Array.Empty<string>();
 
     private void Awake()
     {
@@ -56,6 +68,8 @@ public class CanvasTypewriter : MonoBehaviour
 
     private void OnEnable()
     {
+        SetContinuePrompt(false);
+        if (pageCounter != null && pageCounter != targetText) pageCounter.text = string.Empty;
         waitingForClick = startOnClick;
         clickReadyFrame = Time.frameCount;
         if (waitingForClick)
@@ -81,15 +95,46 @@ public class CanvasTypewriter : MonoBehaviour
             return;
         }
 
-        targetText.text = text ?? string.Empty;
+        // Render one author-defined passage at a time. TMP must not create extra pages.
+        targetText.enableAutoSizing = false;
+        targetText.textWrappingMode = TextWrappingModes.Normal;
+        targetText.overflowMode = TextOverflowModes.Overflow;
+        targetText.richText = true;
+        targetText.firstVisibleCharacter = 0;
+        targetText.useMaxVisibleDescender = false;
+        targetText.pageToDisplay = 1;
+        pageIndex = 0;
+        pages = System.Array.FindAll(
+            System.Text.RegularExpressions.Regex.Split(text ?? string.Empty, @"<page\s*>",
+                System.Text.RegularExpressions.RegexOptions.IgnoreCase),
+            passage => !string.IsNullOrWhiteSpace(passage));
+        if (TotalPages == 0)
+        {
+            targetText.text = string.Empty;
+            targetText.maxVisibleCharacters = 0;
+            UpdatePageCounter();
+            Complete();
+            return;
+        }
+        BeginPage(0);
+    }
+
+    private void BeginPage(int index)
+    {
+        pageIndex = index;
+        targetText.text = pages[pageIndex].Trim();
         targetText.maxVisibleCharacters = 0;
+        Canvas.ForceUpdateCanvases();
         targetText.ForceMeshUpdate(true);
         characterCount = targetText.textInfo.characterCount;
         visibleCharacters = 0;
+        IsWaitingForNextPage = false;
+        IsFastForwarding = false;
+        SetContinuePrompt(false);
+        UpdatePageCounter();
         remainingDelay = Mathf.Max(0f, initialDelay);
         nextSoundTime = float.NegativeInfinity;
         IsTyping = true;
-        if (characterCount == 0) Complete();
     }
 
     private void Update()
@@ -100,6 +145,7 @@ public class CanvasTypewriter : MonoBehaviour
         {
             if (waitingForClick) Play();
             else if (IsTyping) ToggleSpeed();
+            else if (IsWaitingForNextPage) NextPage();
         }
         if (!IsTyping) return;
         if (targetText == null) { Stop(); return; }
@@ -109,12 +155,43 @@ public class CanvasTypewriter : MonoBehaviour
         // Catch up at low frame rates instead of limiting writing to one character per frame.
         while (IsTyping && remainingDelay <= 0f)
         {
-            if (visibleCharacters >= characterCount) { Complete(); return; }
+            if (visibleCharacters >= characterCount) { FinishPage(); return; }
             var character = targetText.textInfo.characterInfo[visibleCharacters];
             targetText.maxVisibleCharacters = ++visibleCharacters;
             if (!char.IsWhiteSpace(character.character)) PlayKeySound();
             remainingDelay += CharacterDelay(character.character);
         }
+    }
+
+    private void FinishPage()
+    {
+        IsTyping = false;
+        IsFastForwarding = false;
+        if (pageIndex + 1 >= TotalPages) { Complete(); return; }
+        IsWaitingForNextPage = true;
+        clickReadyFrame = Time.frameCount;
+        SetContinuePrompt(true);
+    }
+
+    /// <summary>Advance only after the current page has finished writing.</summary>
+    public void NextPage()
+    {
+        if (!IsWaitingForNextPage || !isActiveAndEnabled) return;
+        if (targetText == null) { Stop(); return; }
+        BeginPage(pageIndex + 1);
+    }
+
+    private void SetContinuePrompt(bool visible)
+    {
+        // The prompt must be a separate child, not the object running this component.
+        if (continuePrompt != null && !transform.IsChildOf(continuePrompt.transform))
+            continuePrompt.SetActive(visible);
+    }
+
+    private void UpdatePageCounter()
+    {
+        if (pageCounter != null && pageCounter != targetText)
+            pageCounter.text = CurrentPage + " / " + TotalPages;
     }
 
     /// <summary>Alternate fast and normal writing without restarting or skipping the story.</summary>
@@ -144,13 +221,17 @@ public class CanvasTypewriter : MonoBehaviour
         SFXManager.PostEvent(typingEvent, gameObject);
     }
 
-    /// <summary>Reveal all text and signal completion without playing the remaining key sounds.</summary>
+    /// <summary>Jump to the final page and signal completion without the remaining key sounds.</summary>
     [ContextMenu("Skip to end")]
     public void SkipToEnd()
     {
-        if (!IsTyping) return;
+        if (!IsTyping && !IsWaitingForNextPage) return;
         StopSound();
-        if (targetText != null) targetText.maxVisibleCharacters = int.MaxValue;
+        if (targetText != null)
+        {
+            BeginPage(TotalPages - 1);
+            targetText.maxVisibleCharacters = int.MaxValue;
+        }
         Complete();
     }
 
@@ -158,8 +239,10 @@ public class CanvasTypewriter : MonoBehaviour
     public void Stop()
     {
         waitingForClick = false;
+        IsWaitingForNextPage = false;
         IsTyping = false;
         IsFastForwarding = false;
+        SetContinuePrompt(false);
         StopSound();
     }
 
@@ -173,6 +256,8 @@ public class CanvasTypewriter : MonoBehaviour
     {
         IsTyping = false;
         IsFastForwarding = false;
+        IsWaitingForNextPage = false;
+        SetContinuePrompt(false);
         onCompleted.Invoke();
     }
 
