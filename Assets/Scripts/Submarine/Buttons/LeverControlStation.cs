@@ -120,6 +120,11 @@ public class LeverControlStation : MonoBehaviour, IInteractable, IPossessable
 
     private void OnClickStarted(InputAction.CallbackContext context)
     {
+        if (StationClickBlocker.TryConsumeClick(_playerCamera))
+        {
+            return;
+        }
+
         _draggedLever = GetLeverUnderCursor();
     }
 

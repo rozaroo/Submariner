@@ -185,6 +185,11 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
 
     private void OnClickStarted(InputAction.CallbackContext context)
     {
+        if (StationClickBlocker.TryConsumeClick(_playerCamera))
+        {
+            return;
+        }
+
         if (Mouse.current == null || _playerCamera == null)
         {
             return;

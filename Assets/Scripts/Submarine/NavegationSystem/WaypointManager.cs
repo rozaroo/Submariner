@@ -47,10 +47,20 @@ public class WaypointManager : MonoBehaviour
         
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
+            if (StationClickBlocker.TryConsumeClick(navigationStation != null ? navigationStation.ActiveCamera : null))
+            {
+                return;
+            }
+
             HandleMapClick(true);
         }
         else if (Mouse.current.rightButton.wasPressedThisFrame)
         {
+            if (StationClickBlocker.TryConsumeClick(navigationStation != null ? navigationStation.ActiveCamera : null))
+            {
+                return;
+            }
+
             HandleMapClick(false);
         }
     }
