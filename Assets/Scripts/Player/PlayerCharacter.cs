@@ -16,6 +16,10 @@ public class PlayerCharacter : MonoBehaviour
     [Header("Interaction Settings (Raycast)")] 
     [SerializeField] private float interactionDistance = 2.5f;
     [SerializeField] private LayerMask interactableLayer;
+    [Tooltip("Use world-space icons instead of the HUD prompt.")]
+    [SerializeField] private bool useSpatialInteraction = true;
+    private SpatialInteractionSystem _spatialInteraction;
+    public bool UsesSpatialInteraction => useSpatialInteraction;
     
     [Header("Knockback From Submarine Impact")]
     [SerializeField] private float minImpactSpeed = 1f;
@@ -73,6 +77,12 @@ public class PlayerCharacter : MonoBehaviour
         CamController = GetComponent<CameraController>();
         InventorySystem = GetComponent<InventorySystem>();
         FootstepSystem = GetComponent<FootstepSystem>();
+        if (useSpatialInteraction)
+        {
+            _spatialInteraction = GetComponent<SpatialInteractionSystem>();
+            if (_spatialInteraction == null)
+                _spatialInteraction = gameObject.AddComponent<SpatialInteractionSystem>();
+        }
         
         if (CamController != null)
         {
@@ -188,6 +198,12 @@ public class PlayerCharacter : MonoBehaviour
 
     public void TryGetInteractDataRaycast()
     {
+        if (useSpatialInteraction && _spatialInteraction != null)
+        {
+            _currentInteractable = _spatialInteraction.Tick(this, interactableLayer);
+            return;
+        }
+
         Ray ray = new Ray(
             CamController.MainCamera.transform.position,
             CamController.MainCamera.transform.forward);
@@ -216,6 +232,7 @@ public class PlayerCharacter : MonoBehaviour
     
     public void ClearCurrentInteractable()
     {
+        if (_spatialInteraction != null) _spatialInteraction.HideAll();
         if (_currentInteractable != null)
         {
             _currentInteractable = null;
@@ -225,6 +242,8 @@ public class PlayerCharacter : MonoBehaviour
 
     private void TryInteract(InputAction.CallbackContext ctx)
     {
+        // Refresh range, visibility and feedback at the moment the key is pressed.
+        if (useSpatialInteraction) TryGetInteractDataRaycast();
         if (_currentInteractable != null)
         {
             _currentInteractable.Interact(this);
