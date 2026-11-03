@@ -278,8 +278,8 @@ MonoBehaviour:
         guid: 9556acfd933ecb4b806ce56ad7fa9085
       Path: Events\Default Work Unit\Play_Metal_Keypad_Random
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.374771
+      minDuration: 0.135188
   - PhysicalPath: Events\Gameplay_SFX.wwu
     PathAndIcons:
     - ElementName: Events
@@ -291,7 +291,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584079398673268608
+    m_lastTime: -8584078616822286471
     List:
     - name: Fuse_Break_SFX
       guid: b066f001ec0a9d43a1664e1b435589fa
@@ -310,6 +310,23 @@ MonoBehaviour:
       maxAttenuation: 6
       maxDuration: 2.272
       minDuration: 2.272
+    - name: Play_Metal_Keypad_Random
+      guid: 9556acfd933ecb4b806ce56ad7fa9085
+      id: 2022048240
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Play_Metal_Keypad_Random
+        ObjectType: 3
+        guid: 9556acfd933ecb4b806ce56ad7fa9085
+      Path: Events\Gameplay_SFX\Play_Metal_Keypad_Random
+      maxAttenuation: 0
+      maxDuration: 0.374771
+      minDuration: 0.135188
     - name: Start_BackgroundSubmarineMFX
       guid: 3d44cf04c3b4dc479f069f53e9c2ca5f
       id: 3003027233
