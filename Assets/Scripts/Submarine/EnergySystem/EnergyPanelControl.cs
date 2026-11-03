@@ -107,7 +107,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
             return new InteractionFeedback("Requires new Fuse", interactionUIData);
         }
         
-        return new InteractionFeedback("Panel Operative", interactionUIData);
+        return new InteractionFeedback("Remove Fuse", interactionUIData);
     }
 
     public bool TryRemoveFuse(Fuse fuse, PlayerCharacter player)

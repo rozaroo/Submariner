@@ -87,7 +87,7 @@ public class SpatialInteractionSystem : MonoBehaviour
         float bestScore = float.PositiveInfinity;
         foreach (var target in SpatialInteractionTarget.Active)
         {
-            if (!IsEligible(target, player, interactionLayers)) continue;
+            if (!IsEligible(target, player, interactionLayers) || !target.SpatialUIEnabled) continue;
             float closeRadius = CloseRadius(target);
             if (target.DistanceFrom(camera.transform.position) > closeRadius) continue;
             Vector3 direction = target.Position - camera.transform.position;
@@ -145,6 +145,11 @@ public class SpatialInteractionSystem : MonoBehaviour
         foreach (var target in SpatialInteractionTarget.Active)
         {
             if (target == null || target.Source == null || !target.Source.gameObject.activeInHierarchy) continue;
+            if (!target.SpatialUIEnabled)
+            {
+                if (views.TryGetValue(target, out var hiddenView)) hiddenView.Hide();
+                continue;
+            }
             if (target.Source.transform.IsChildOf(player.transform)) continue;
             if ((interactionLayers.value & (1 << target.Source.gameObject.layer)) == 0) continue;
             float discovery = target.DiscoveryRadius(discoveryRadius) * Mathf.Max(0.01f, radiusMultiplier);

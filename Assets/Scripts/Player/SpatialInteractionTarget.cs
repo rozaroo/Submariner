@@ -7,6 +7,12 @@ public class SpatialInteractionTarget : MonoBehaviour
 {
     internal static readonly HashSet<SpatialInteractionTarget> Active = new();
 
+    [Header("Spatial UI")]
+    [Tooltip("When checked, hides this object's spatial icons, text and outline. Surface interaction remains available.")]
+    [SerializeField] private bool disableSpatialUI;
+
+    public bool SpatialUIEnabled => !disableSpatialUI;
+
     [Tooltip("Optional IInteractable component. Defaults to one on this GameObject.")]
     [SerializeField] private MonoBehaviour interactionSource;
     [Tooltip("Optional anchor. Without one, uses the top of the object's collider.")]
@@ -35,7 +41,7 @@ public class SpatialInteractionTarget : MonoBehaviour
     [Tooltip("Meshes to outline (for example the whole table). Empty uses renderers under Interaction Source.")]
     [SerializeField] private Renderer[] outlineRenderers;
 
-    public bool AllowOutline => allowOutline;
+    public bool AllowOutline => allowOutline && SpatialUIEnabled;
     public Renderer[] GetOutlineRenderers() => outlineRenderers != null && outlineRenderers.Length > 0
         ? outlineRenderers : Source != null ? Source.GetComponentsInChildren<Renderer>() : System.Array.Empty<Renderer>();
 
