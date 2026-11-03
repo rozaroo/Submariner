@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="140">
 	<RootPaths>
-		<ProjectRoot>D:\Github\Submariner\Submariner_WwiseProject\</ProjectRoot>
-		<SourceFilesRoot>D:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>D:\Github\Submariner\Submariner_WwiseProject\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>C:\Users\tomas\Documents\GitHub\Submariner\Submariner_WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\tomas\Documents\GitHub\Submariner\Submariner_WwiseProject\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\tomas\Documents\GitHub\Submariner\Submariner_WwiseProject\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>D:\Github\Submariner\Submariner_WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>C:\Users\tomas\Documents\GitHub\Submariner\Submariner_WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
@@ -34,12 +34,13 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3401228817" Language="SFX" Hash="2707591342">
+		<SoundBank Id="3401228817" Language="SFX" Hash="1325322573">
 			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
 			<ShortName>GamePlay_SFX</ShortName>
 			<Path>GamePlay_SFX.bnk</Path>
 			<IncludedEvents>
 				<Event Id="1054404358" Name="Fuse_Break_SFX" ObjectPath="\Events\Gameplay_SFX\Fuse_Break_SFX" MaxAttenuation="6." DurationType="OneShot" DurationMin="2.272" DurationMax="2.272"/>
+				<Event Id="2022048240" Name="Play_Metal_Keypad_Random" ObjectPath="\Events\Gameplay_SFX\Play_Metal_Keypad_Random" DurationType="OneShot" DurationMin="0.135188" DurationMax="0.374771"/>
 				<Event Id="3003027233" Name="Start_BackgroundSubmarineMFX" ObjectPath="\Events\Gameplay_SFX\Start_BackgroundSubmarineMFX" DurationType="Infinite"/>
 				<Event Id="1116808773" Name="Start_BlowtorchSFX" ObjectPath="\Events\Gameplay_SFX\Start_BlowtorchSFX" DurationType="Infinite"/>
 				<Event Id="738466431" Name="Start_ButtonPress" ObjectPath="\Events\Gameplay_SFX\Start_ButtonPress" DurationType="OneShot" DurationMin="0.082455" DurationMax="0.115269"/>
@@ -140,6 +141,10 @@
 					<ShortName>404049__deathscyp__breaker-1.wav</ShortName>
 					<Path>SFX\404049__deathscyp__breaker-1_10C4C929.wem</Path>
 				</File>
+				<File Id="319948512" Language="SFX">
+					<ShortName>01KJQHE521HE2H524DXGMR3V5S.wav</ShortName>
+					<Path>SFX\01KJQHE521HE2H524DXGMR3V5S_0FCD6340.wem</Path>
+				</File>
 				<File Id="324386202" Language="SFX">
 					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
 					<Path>SFX\490951__nox_sound__footsteps_walk_90F3FF8A.wem</Path>
@@ -147,6 +152,10 @@
 				<File Id="363360337" Language="SFX">
 					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
 					<Path>SFX\490951__nox_sound__footsteps_walk_D20C9472.wem</Path>
+				</File>
+				<File Id="374347039" Language="SFX">
+					<ShortName>01KHKXB2414VYGDDFX5GRC0K1M-_1_.wav</ShortName>
+					<Path>SFX\01KHKXB2414VYGDDFX5GRC0K1M-_1__88449359.wem</Path>
 				</File>
 				<File Id="375624474" Language="SFX">
 					<ShortName>653294__osvoldon__big-structure-collision-heard-from-inside.wav</ShortName>
@@ -179,6 +188,10 @@
 				<File Id="458355858" Language="SFX">
 					<ShortName>696374__sanderboah__walking-on-metal.wav</ShortName>
 					<Path>SFX\696374__sanderboah__walking-on-metal_3E8AF12D.wem</Path>
+				</File>
+				<File Id="475346004" Language="SFX">
+					<ShortName>01KHKXB2414VYGDDFX5GRC0K1M-_1_.wav</ShortName>
+					<Path>SFX\01KHKXB2414VYGDDFX5GRC0K1M-_1__6F91709B.wem</Path>
 				</File>
 				<File Id="479738779" Language="SFX">
 					<ShortName>PressureDoorClose.wav</ShortName>
@@ -244,9 +257,17 @@
 					<ShortName>387232__steaq__badge-coin-win.wav</ShortName>
 					<Path>SFX\387232__steaq__badge-coin-win_B402D4D8.wem</Path>
 				</File>
+				<File Id="740122124" Language="SFX">
+					<ShortName>01KHKXB2414VYGDDFX5GRC0K1M-_1_.wav</ShortName>
+					<Path>SFX\01KHKXB2414VYGDDFX5GRC0K1M-_1__51A61B83.wem</Path>
+				</File>
 				<File Id="750154524" Language="SFX">
 					<ShortName>244394__werra__bangexplosion-metallic.wav</ShortName>
 					<Path>SFX\244394__werra__bangexplosion-metallic_10C4C929.wem</Path>
+				</File>
+				<File Id="764827214" Language="SFX">
+					<ShortName>01KJQHE521HE2H524DXGMR3V5S.wav</ShortName>
+					<Path>SFX\01KJQHE521HE2H524DXGMR3V5S_BC118925.wem</Path>
 				</File>
 				<File Id="783648702" Language="SFX">
 					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
@@ -275,6 +296,10 @@
 				<File Id="824137965" Language="SFX">
 					<ShortName>94127__bmaczero__clank1 (1).wav</ShortName>
 					<Path>SFX\94127__bmaczero__clank1 (1)_10C4C929.wem</Path>
+				</File>
+				<File Id="845454047" Language="SFX">
+					<ShortName>01KHKXB2414VYGDDFX5GRC0K1M-_1_.wav</ShortName>
+					<Path>SFX\01KHKXB2414VYGDDFX5GRC0K1M-_1__21F45003.wem</Path>
 				</File>
 				<File Id="845855491" Language="SFX">
 					<ShortName>16937__sculptor__watersubmarine render 001.wav</ShortName>
@@ -327,6 +352,10 @@
 				<File Id="1004030655" Language="SFX">
 					<ShortName>490951__nox_sound__footsteps_walk.wav</ShortName>
 					<Path>SFX\490951__nox_sound__footsteps_walk_8BA8F09A.wem</Path>
+				</File>
+				<File Id="1026869329" Language="SFX">
+					<ShortName>01KJQHE521HE2H524DXGMR3V5S.wav</ShortName>
+					<Path>SFX\01KJQHE521HE2H524DXGMR3V5S_0005D7D0.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 			<GameParameters>

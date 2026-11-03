@@ -29,7 +29,7 @@ public class CanvasTypewriter : MonoBehaviour
 
     [Header("Wwise sound")]
     [Tooltip("A short, non-looping key event. Its SoundBank must already be loaded.")]
-    [SerializeField] private AK.Wwise.Event typingEvent = new();
+    [SerializeField] private string typingEvent;
     [Tooltip("Limits overlapping key sounds at high writing speeds.")]
     [Min(0f)] [SerializeField] private float minimumSoundInterval = 0.035f;
 
@@ -112,7 +112,7 @@ public class CanvasTypewriter : MonoBehaviour
             if (visibleCharacters >= characterCount) { Complete(); return; }
             var character = targetText.textInfo.characterInfo[visibleCharacters];
             targetText.maxVisibleCharacters = ++visibleCharacters;
-            if (character.isVisible && !char.IsWhiteSpace(character.character)) PlayKeySound();
+            if (!char.IsWhiteSpace(character.character)) PlayKeySound();
             remainingDelay += CharacterDelay(character.character);
         }
     }
@@ -140,10 +140,8 @@ public class CanvasTypewriter : MonoBehaviour
         float now = useUnscaledTime ? Time.unscaledTime : Time.time;
         if (now < nextSoundTime) return;
         nextSoundTime = now + Mathf.Max(0f, minimumSoundInterval);
-        if (typingEvent == null || !typingEvent.IsValid()) return;
         // Keep ownership of a single key event so stopping never affects other game audio.
-        if (playingEventId != 0) AkSoundEngine.StopPlayingID(playingEventId);
-        playingEventId = typingEvent.Post(gameObject);
+        SFXManager.PostEvent(typingEvent, gameObject);
     }
 
     /// <summary>Reveal all text and signal completion without playing the remaining key sounds.</summary>

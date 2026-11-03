@@ -14,6 +14,7 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID FUSE_BREAK_SFX = 1054404358U;
+        static const AkUniqueID PLAY_METAL_KEYPAD_RANDOM = 2022048240U;
         static const AkUniqueID START_BACKGROUNDSUBMARINEMFX = 3003027233U;
         static const AkUniqueID START_BLOWTORCHSFX = 1116808773U;
         static const AkUniqueID START_BUTTONPRESS = 738466431U;

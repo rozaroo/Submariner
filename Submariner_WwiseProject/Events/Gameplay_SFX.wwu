@@ -438,6 +438,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_Metal_Keypad_Random" ID="{FDAC5695-3E93-4BCB-806C-E56AD7FA9085}">
+					<ChildrenList>
+						<Action Name="" ID="{75977B53-E58F-4037-8BEB-81E10CFDE49D}" ShortID="290087810">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Metal_Keypad_Random" ID="{A07F515C-4BE1-4900-ADA0-D6F4A4781CC2}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
