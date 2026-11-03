@@ -233,7 +233,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\VoicesOfTides
     guid: 6cfb55a730df374090e3de101ed00759
     GuidInternal: 
-    m_lastTime: -8584175527643322536
+    m_lastTime: -8584078578360778486
     List:
     - name: GamePlay_SFX
       guid: 8f55fbaac4adf94c90c05b67fca3cb88
@@ -249,6 +249,20 @@ MonoBehaviour:
         ObjectType: 7
         guid: 8f55fbaac4adf94c90c05b67fca3cb88
       Path: SoundBanks\VoicesOfTides\GamePlay_SFX
+    - name: Menu_SFX
+      guid: 72ddcc862cfed3448c1ca98efad673cf
+      id: 2767847388
+      PathAndIcons:
+      - ElementName: SoundBanks
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: VoicesOfTides
+        ObjectType: 12
+        guid: 6cfb55a730df374090e3de101ed00759
+      - ElementName: Menu_SFX
+        ObjectType: 7
+        guid: 72ddcc862cfed3448c1ca98efad673cf
+      Path: SoundBanks\VoicesOfTides\Menu_SFX
   EventWwu:
   - PhysicalPath: Events\Default Work Unit.wwu
     PathAndIcons:
@@ -274,7 +288,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584078582328735263
+    m_lastTime: -8584078578916972815
     List:
     - name: Fuse_Break_SFX
       guid: b066f001ec0a9d43a1664e1b435589fa
@@ -1262,7 +1276,7 @@ MonoBehaviour:
     m_lastTime: -8584175760698278543
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 
+  ExpandedWaapiItemIds: 3000000032000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

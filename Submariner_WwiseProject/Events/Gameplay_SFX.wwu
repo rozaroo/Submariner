@@ -443,7 +443,7 @@
 						<Action Name="" ID="{75977B53-E58F-4037-8BEB-81E10CFDE49D}" ShortID="290087810">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="Metal_Keypad_Random" ID="{A07F515C-4BE1-4900-ADA0-D6F4A4781CC2}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
+									<ObjectRef Name="Metal_Keypad_Random" ID="{A07F515C-4BE1-4900-ADA0-D6F4A4781CC2}" WorkUnitID="{320A8F09-89F3-4FB9-BDA5-7A9EDA5A26CA}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

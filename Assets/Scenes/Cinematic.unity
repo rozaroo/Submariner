@@ -371,6 +371,7 @@ GameObject:
   - component: {fileID: 1126586909}
   - component: {fileID: 1126586910}
   - component: {fileID: 1126586912}
+  - component: {fileID: 1126586913}
   m_Layer: 5
   m_Name: Canvas Typewriter
   m_TagString: Untagged
@@ -467,6 +468,30 @@ MonoBehaviour:
     positionOffset: {x: 0, y: 0, z: 0}
   m_posOffsetData: {fileID: 0}
   listenerMask: 1
+--- !u!114 &1126586913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126586908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9127a2bf9b255934987347a6f35da759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 03e8b55c180a6774e8ff2c09183f3700, type: 2}
+  decodeBank: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 958ca0ea
+  bankNameInternal: 
+  valueGuidInternal: 
 --- !u!1 &1160011973
 GameObject:
   m_ObjectHideFlags: 0

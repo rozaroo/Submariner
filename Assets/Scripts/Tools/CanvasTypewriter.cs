@@ -31,7 +31,7 @@ public class CanvasTypewriter : MonoBehaviour
     [Header("Pages")]
     [Tooltip("Optional object shown while waiting for a click to read the next page.")]
     [SerializeField] private GameObject continuePrompt;
-    [Tooltip("Optional text displaying the current page, for example 1 / 4.")]
+    [Tooltip("Optional text displaying the current page, for example 1/4.")]
     [SerializeField] private TMP_Text pageCounter;
 
     [Header("Wwise sound")]
@@ -49,6 +49,11 @@ public class CanvasTypewriter : MonoBehaviour
     public bool IsWaitingForNextPage { get; private set; }
     public int CurrentPage => pages.Length == 0 ? 0 : pageIndex + 1;
     public int TotalPages => pages.Length;
+    public bool IsFinalPage => TotalPages > 0 && CurrentPage == TotalPages;
+    public bool HasCompleted { get; private set; }
+    public TMP_Text TextComponent => targetText;
+    public event System.Action StoryStarted;
+    public event System.Action StoryCompleted;
 
     private int visibleCharacters;
     private int characterCount;
@@ -95,6 +100,8 @@ public class CanvasTypewriter : MonoBehaviour
             return;
         }
 
+        StoryStarted?.Invoke();
+
         // Render one author-defined passage at a time. TMP must not create extra pages.
         targetText.enableAutoSizing = false;
         targetText.textWrappingMode = TextWrappingModes.Normal;
@@ -121,6 +128,7 @@ public class CanvasTypewriter : MonoBehaviour
 
     private void BeginPage(int index)
     {
+        HasCompleted = false;
         pageIndex = index;
         targetText.text = pages[pageIndex].Trim();
         targetText.maxVisibleCharacters = 0;
@@ -191,7 +199,7 @@ public class CanvasTypewriter : MonoBehaviour
     private void UpdatePageCounter()
     {
         if (pageCounter != null && pageCounter != targetText)
-            pageCounter.text = CurrentPage + " / " + TotalPages;
+            pageCounter.text = CurrentPage + "/" + TotalPages;
     }
 
     /// <summary>Alternate fast and normal writing without restarting or skipping the story.</summary>
@@ -238,6 +246,7 @@ public class CanvasTypewriter : MonoBehaviour
     /// <summary>Stop writing, leaving the currently visible text on screen.</summary>
     public void Stop()
     {
+        HasCompleted = false;
         waitingForClick = false;
         IsWaitingForNextPage = false;
         IsTyping = false;
@@ -254,10 +263,14 @@ public class CanvasTypewriter : MonoBehaviour
 
     private void Complete()
     {
+        // Completion is a story-level event, never an intermediate-page event.
+        if (HasCompleted || (TotalPages > 0 && !IsFinalPage)) return;
+        HasCompleted = true;
         IsTyping = false;
         IsFastForwarding = false;
         IsWaitingForNextPage = false;
         SetContinuePrompt(false);
+        StoryCompleted?.Invoke();
         onCompleted.Invoke();
     }
 

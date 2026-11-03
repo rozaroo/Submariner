@@ -117,6 +117,7 @@ namespace AK
     {
         static const AkUniqueID INIT = 1355168291U;
         static const AkUniqueID GAMEPLAY_SFX = 3401228817U;
+        static const AkUniqueID MENU_SFX = 2767847388U;
     } // namespace BANKS
 
     namespace BUSSES
