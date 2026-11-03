@@ -154,6 +154,7 @@ GameObject:
   - component: {fileID: 8590537888755363150}
   - component: {fileID: 1056754517332843801}
   - component: {fileID: 8617833552634711072}
+  - component: {fileID: 920000000000000001}
   m_Layer: 31
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -195,6 +196,7 @@ MonoBehaviour:
   dropActionName: DropItem
   useActionName: Click
   interactionDistance: 2.5
+  useSpatialInteraction: 1
   interactableLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -534,3 +536,30 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &920000000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7324493023298970460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 419169e55c2446bdae1aff509e3bb042, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  discoveryRadius: 7
+  interactionRadius: 2.5
+  radiusMultiplier: 1
+  focusAngle: 15
+  occlusionLayers:
+    serializedVersion: 2
+    m_Bits: 4294967291
+  iconSize: 0.16
+  discoveryIcon: {fileID: 0}
+  interactionIconOverride: {fileID: 0}
+  discoveryIconSize: 0.048
+  textSize: 2
+  normalColor: {r: 0.75, g: 0.9, b: 0.85, a: 0.85}
+  focusedColor: {r: 1, g: 1, b: 1, a: 1}
+  font: {fileID: 0}

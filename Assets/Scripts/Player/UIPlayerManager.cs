@@ -13,6 +13,8 @@ public class UIPlayerManager : MonoBehaviour
     private void Start()
     {
         HidePrompt();
+        var player = FindFirstObjectByType<PlayerCharacter>();
+        if (player != null && player.UsesSpatialInteraction) enabled = false;
     }
 
     private void OnEnable()
