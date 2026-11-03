@@ -14,7 +14,7 @@ public class MainMenuManager : MonoBehaviour
         isTransitioning = true;
 
         StopMusic();
-        SceneTransitionManager.Instance.LoadSceneWithFade("InteriorSubmarine");
+        SceneTransitionManager.Instance.LoadSceneWithFade("Cinematic");
     }
 
     public void BackToMainMenu()
