@@ -196,10 +196,10 @@ MonoBehaviour:
   dropActionName: DropItem
   useActionName: Click
   interactionDistance: 2.5
-  useSpatialInteraction: 1
   interactableLayer:
     serializedVersion: 2
     m_Bits: 8
+  useSpatialInteraction: 1
   minImpactSpeed: 0.1
   maxExpectedImpactSpeed: 15
   minForce: 2
@@ -398,6 +398,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDefaultListener: 1
   listenerId: 0
+--- !u!114 &920000000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7324493023298970460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 419169e55c2446bdae1aff509e3bb042, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  discoveryRadius: 7
+  interactionRadius: 2.5
+  radiusMultiplier: 1
+  focusAngle: 15
+  occlusionLayers:
+    serializedVersion: 2
+    m_Bits: 2147485691
+  discoveryIcon: {fileID: 0}
+  interactionIconOverride: {fileID: 0}
+  discoveryIconSize: 0.048
+  iconSize: 0.16
+  textSize: 1.2
+  normalColor: {r: 0.75, g: 0.9, b: 0.85, a: 0.85}
+  focusedColor: {r: 1, g: 1, b: 1, a: 1}
+  font: {fileID: 11400000, guid: 3923472d66bc6da4a95a264051dd57f6, type: 2}
+  transitionDuration: 0.25
+  enableOutline: 1
+  outlineShader: {fileID: -6465566751694194690, guid: f07b880740c804a418dfa73673b544e7, type: 3}
+  outlineMaterial: {fileID: 2100000, guid: 92db228f11549c341abad6e5e7f59844, type: 2}
+  animateIcons: 1
+  levitationAmplitude: 0.018
+  levitationFrequency: 0.6
+  movementSway: 0.025
+  lookSway: 0.004
+  maxSwayDistance: 0.05
+  swayResponse: 8
+  textOpacity: 0.7
+  unfocusedTextOpacity: 0.3
+  fadeTextWithDistance: 1
+  farTextOpacity: 0.1
 --- !u!1 &7568800606293847566
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,30 +578,3 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!114 &920000000000000001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7324493023298970460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 419169e55c2446bdae1aff509e3bb042, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  discoveryRadius: 7
-  interactionRadius: 2.5
-  radiusMultiplier: 1
-  focusAngle: 15
-  occlusionLayers:
-    serializedVersion: 2
-    m_Bits: 4294967291
-  iconSize: 0.16
-  discoveryIcon: {fileID: 0}
-  interactionIconOverride: {fileID: 0}
-  discoveryIconSize: 0.048
-  textSize: 2
-  normalColor: {r: 0.75, g: 0.9, b: 0.85, a: 0.85}
-  focusedColor: {r: 1, g: 1, b: 1, a: 1}
-  font: {fileID: 0}
