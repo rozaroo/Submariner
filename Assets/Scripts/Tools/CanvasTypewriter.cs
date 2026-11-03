@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 /// <summary>Reveals a complete TMP text without changing its layout as letters appear.</summary>
 [DisallowMultipleComponent]
 [RequireComponent(typeof(AkGameObj))]
+[RequireComponent(typeof(CinematicEndButton))]
 public class CanvasTypewriter : MonoBehaviour
 {
     [Header("Story")]
@@ -69,6 +70,8 @@ public class CanvasTypewriter : MonoBehaviour
     {
         // Also supports existing scene instances created before AkGameObj was required.
         if (GetComponent<AkGameObj>() == null) gameObject.AddComponent<AkGameObj>();
+        // Restore the cinematic exit in older scene instances that lost the companion component.
+        if (GetComponent<CinematicEndButton>() == null) gameObject.AddComponent<CinematicEndButton>();
     }
 
     private void OnEnable()
