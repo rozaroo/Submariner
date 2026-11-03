@@ -51,6 +51,15 @@ public class SpatialInteractionSystem : MonoBehaviour
     [Min(0f)] [SerializeField] private float maxSwayDistance = 0.05f;
     [Tooltip("How quickly sway responds and returns to the anchor.")]
     [Min(0.1f)] [SerializeField] private float swayResponse = 8f;
+    
+    [Header("Text opacity")]
+    [Tooltip("Multiplicador global de opacidad para todo el texto.")]
+    [Range(0f, 1f)] [SerializeField] private float textOpacity = 1f;
+    [Tooltip("Opacidad del texto cuando el objeto no está enfocado.")]
+    [Range(0f, 1f)] [SerializeField] private float unfocusedTextOpacity = 0.6f;
+    [SerializeField] private bool fadeTextWithDistance = true;
+    [Tooltip("Opacidad mínima cuando el objeto está en el límite del radio de descubrimiento.")]
+    [Range(0f, 1f)] [SerializeField] private float farTextOpacity = 0.25f;
 
     private readonly Dictionary<SpatialInteractionTarget, SpatialInteractionView> views = new();
     private readonly List<SpatialInteractionTarget> deadTargets = new();
@@ -197,10 +206,30 @@ public class SpatialInteractionSystem : MonoBehaviour
     private void ShowTarget(SpatialInteractionView view, SpatialInteractionTarget target, Camera camera,
         InteractionFeedback feedback, bool close, bool focused)
     {
+        float multiplier = textOpacity;
+        if (!focused)
+        {
+            multiplier *= unfocusedTextOpacity;
+            if (fadeTextWithDistance)
+            {
+                float scale = Mathf.Max(0.01f, radiusMultiplier);
+                float far = target.DiscoveryRadius(discoveryRadius) * scale;
+                float near = CloseRadius(target);
+                float distance = target.DistanceFrom(camera.transform.position);
+                float t = Mathf.InverseLerp(far, near, distance);
+                multiplier *= Mathf.Lerp(farTextOpacity, 1f, t);
+            }
+        }
+
+        Color normal = normalColor;
+        normal.a *= multiplier;
+        Color focusedCol = focusedColor;
+        focusedCol.a *= textOpacity;
+
         view.Show(target.Position, camera, feedback, close, focused,
             target.DiscoveryIcon(discoveryIcon), target.InteractionIcon(interactionIconOverride),
             target.DiscoveryIconSize(discoveryIconSize),
-            Mathf.Max(0.01f, iconSize) * target.IconScale, textSize, normalColor, focusedColor,
+            Mathf.Max(0.01f, iconSize) * target.IconScale, textSize, normal, focusedCol,
             transitionDuration);
     }
 
