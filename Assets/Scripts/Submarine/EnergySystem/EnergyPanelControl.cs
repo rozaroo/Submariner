@@ -22,6 +22,9 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
     [SerializeField] private float underAmperageThresholdMultiplier = 0.5f;
     [SerializeField] private float underAmperageFuseLifetime = 25f;
     [SerializeField] private float overAmperageBurnDelay = 1f;
+    [Tooltip("Seconds the burned fuse stays visible (for VFX/SFX) before it disappears.")]
+    [SerializeField] private float burnedFuseDestroyDelay = 1f;
+    
     
     [Header("Interaction")]
     [SerializeField] private InteractionUIData interactionUIData;
@@ -79,11 +82,6 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
             return;
         }
 
-        if (TryRemoveBurnedFuse(player))
-        {
-            return;
-        }
-
         Log.Info("Energy panel needs a functional fuse.");
     }
 
@@ -91,11 +89,6 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
     {
         if (energySystem != null && energySystem.IsFuseBroken)
         {
-            if (HasBurnedFuseInPanel())
-            {
-                return new InteractionFeedback("Remove Broken Fuse", interactionUIData);
-            }
-            
             if (player != null && player.InventorySystem != null)
             {
                 if (player.InventorySystem.HeldItem is Fuse fuse && fuse.IsFunctional)
@@ -107,33 +100,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
             return new InteractionFeedback("Requires new Fuse", interactionUIData);
         }
         
-        return new InteractionFeedback("Remove Fuse", interactionUIData);
-    }
-
-    public bool TryRemoveFuse(Fuse fuse, PlayerCharacter player)
-    {
-        if (fuse == null || player == null)
-        {
-            return false;
-        }
-
-        int fuseIndex = fuseSlots.IndexOf(fuse);
-        if (fuseIndex < 0 || !fuse.IsBurned)
-        {
-            return false;
-        }
-
-        fuse.DetachFromPanel();
-        if (!player.InventorySystem.TryPickUp(fuse))
-        {
-            InstallFuseInSlot(fuse, fuseIndex);
-            return false;
-        }
-
-        fuseSlots[fuseIndex] = null;
-        _burnedSlotIndex = fuseIndex;
-        Log.Info("Burned fuse removed from energy panel.");
-        return true;
+        return new InteractionFeedback("Remove Fuse", interactionUIData, false);
     }
 
     private void EnsureSlotListSize()
@@ -259,34 +226,33 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
 
         Fuse burnedFuse = fuseSlots[_burnedSlotIndex];
         int requiredAmp = GetRequiredAmperage(_burnedSlotIndex);
-        burnedFuse.Burn();
+        int burnedAmperage = burnedFuse.Amperage; 
+        
+        BurnAndDestroyFuse(_burnedSlotIndex);
 
         Log.Info($"[EnergyPanelControl] SE QUEM� EL FUSIBLE en el slot {_burnedSlotIndex} | Amperaje del fusible: {burnedFuse.Amperage}A | Amperaje requerido en este slot: {requiredAmp}A");
     }
-
-    public bool HasBurnedFuseInPanel()
+    
+    private void BurnAndDestroyFuse(int slotIndex)
     {
-        if (_burnedSlotIndex >= 0 && _burnedSlotIndex < fuseSlots.Count)
-        {
-            return fuseSlots[_burnedSlotIndex] != null && fuseSlots[_burnedSlotIndex].IsBurned;
-        }
-        return false;
+        Fuse fuse = fuseSlots[slotIndex];
+        fuseSlots[slotIndex] = null;      // el slot queda libre para instalar uno nuevo
+        _burnedSlotIndex = slotIndex;     // sigue marcando qué slot hay que reparar
+
+        if (fuse == null) return;
+
+        fuse.Burn();                      // deja correr el feedback de quemado
+
+        // Evita que el jugador lo agarre mientras desaparece
+        foreach (Collider col in fuse.GetComponentsInChildren<Collider>())
+            col.enabled = false;
+
+        Destroy(fuse.gameObject, burnedFuseDestroyDelay);
     }
     
     private void OnFuseRestored()
     {
         _burnedSlotIndex = -1;
-    }
-
-    private bool TryRemoveBurnedFuse(PlayerCharacter player)
-    {
-        if (_burnedSlotIndex < 0 || _burnedSlotIndex >= fuseSlots.Count)
-        {
-            return false;
-        }
-
-        Fuse burnedFuse = fuseSlots[_burnedSlotIndex];
-        return TryRemoveFuse(burnedFuse, player);
     }
 
     private bool TryInstallFuse(PlayerCharacter player)
@@ -520,8 +486,9 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
         }
 
         int requiredAmp = GetRequiredAmperage(fuseIndex);
-        fuse.Burn();
-        _burnedSlotIndex = fuseIndex;
+        int fuseAmperage = fuse.Amperage;
+        
+        BurnAndDestroyFuse(fuseIndex);
 
         if (energySystem != null)
         {
