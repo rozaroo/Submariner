@@ -53,12 +53,6 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
 
     public void Interact(PlayerCharacter player)
     {
-        if (_installedPanel != null)
-        {
-            _installedPanel.TryRemoveFuse(this, player);
-            return;
-        }
-
         player.InventorySystem.TryPickUp(this);
     }
 
