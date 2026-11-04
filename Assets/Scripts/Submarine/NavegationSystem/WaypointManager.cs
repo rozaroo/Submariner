@@ -24,6 +24,11 @@ public class WaypointManager : MonoBehaviour
     [Tooltip("Radius of Pixels to interact with.")]
     [SerializeField] private float removalRadius = 30f;
     
+    [Tooltip("Maximum number of waypoints that can exist at the same time. 0 = unlimited.")]
+    [SerializeField, Min(0)] private int maxWaypoints = 5;
+    
+    private bool IsAtWaypointLimit => maxWaypoints > 0 && _waypoints.Count >= maxWaypoints;
+    
     private readonly List<WaypointData> _waypoints = new();
     private RectTransform _mapRect;
     
@@ -86,6 +91,11 @@ public class WaypointManager : MonoBehaviour
 
                 if (isLeftClick)
                 {
+                    if (IsAtWaypointLimit)
+                    {
+                        return;
+                    }
+
                     var mapIcon = CreateMapIcon(localPoint2D);
                     var iconLineBehaviour = mapIcon.gameObject.GetComponent<LineBehaviour>();
 
@@ -123,7 +133,7 @@ public class WaypointManager : MonoBehaviour
         if (data.Behaviour == null)
         {
             Log.Warning($"WaypointBehaviour not found on {mapIcon}");
-            Destroy(mapIcon);
+            MapIconFactory.Release(mapIcon);
             return;
         }
 
