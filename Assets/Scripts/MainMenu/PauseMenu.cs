@@ -6,6 +6,8 @@ public class PauseMenu : MonoBehaviour
 {
     [Header("UI References")]
     [SerializeField] private GameObject pauseCanvas;
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject controlsPanel;
 
     private bool _isPaused = false;
     private CursorLockMode _previousLockState;
@@ -28,7 +30,10 @@ public class PauseMenu : MonoBehaviour
         {
             if (_isPaused)
             {
-                Resume();
+                if (controlsPanel != null && controlsPanel.activeSelf)
+                    ShowPausePanel();
+                else
+                    Resume();
             }
             else
             {
@@ -58,6 +63,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseCanvas.SetActive(false);
+        ShowPausePanel();
         Time.timeScale = 1f;
         _isPaused = false;
         
@@ -85,6 +91,7 @@ public class PauseMenu : MonoBehaviour
         _previousLockState = Cursor.lockState;
         _previousCursorVisible = Cursor.visible;
 
+        ShowPausePanel();
         pauseCanvas.SetActive(true);
         Time.timeScale = 0f;
         _isPaused = true;
@@ -92,6 +99,19 @@ public class PauseMenu : MonoBehaviour
         // Show cursor for menu navigation
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+    }
+
+    public void ShowControls()
+    {
+        if (!_isPaused || pausePanel == null || controlsPanel == null) return;
+        pausePanel.SetActive(false);
+        controlsPanel.SetActive(true);
+    }
+
+    public void ShowPausePanel()
+    {
+        if (controlsPanel != null) controlsPanel.SetActive(false);
+        if (pausePanel != null) pausePanel.SetActive(true);
     }
 
     public void GoToMainMenu()
