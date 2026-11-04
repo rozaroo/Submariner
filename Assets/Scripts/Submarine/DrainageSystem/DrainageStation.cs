@@ -31,6 +31,11 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     
     [Header("Interaction")]
     [SerializeField] private InteractionUIData interactionUIData;
+    
+    [Header("Indicator Lights")]
+    [SerializeField] private LightObject[] drainageIndicators;
+    [SerializeField] private Color activeColor = Color.green;
+    [SerializeField] private Color inactiveColor = Color.red;
 
     private EnergyStatus _energyStatus = EnergyStatus.Full;
     private DrainageMinigame _minigame;
@@ -53,7 +58,21 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     private void Awake()
     {
         _minigame = GetComponent<DrainageMinigame>();
+
+        if (drainageIndicators != null)
+        {
+            foreach (LightObject indicator in drainageIndicators)
+            {
+                if (indicator != null) indicator.Initialize();
+            }
+        }
     }
+    
+    private void Start()
+    {
+        UpdateIndicator();
+    }
+    
 
     private void OnEnable()
     {
@@ -113,6 +132,21 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     {
         return new InteractionFeedback("Enter Drainage Station", interactionUIData);
     }
+    
+    #region Indicator Logic
+
+    private void UpdateIndicator()
+    {
+        if (drainageIndicators == null) return;
+
+        Color color = _isDrainageActive ? activeColor : inactiveColor;
+        foreach (LightObject indicator in drainageIndicators)
+        {
+            if (indicator != null) indicator.SetColor(color);
+        }
+    }
+
+    #endregion
 
     #region PosessionLogic
 
@@ -186,6 +220,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         if (!_isDrainageActive)
         {
             _minigame.RestartMinigame();
+            if (mainLeverPull != null) mainLeverPull.Restart();   // <-- nuevo: bloquea y resetea la palanca
         }
         _currentPlayer.OnUnPossessionState(this);
     }
@@ -240,6 +275,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         {
             GameEventChannel<OnDrainagePropertyChange>.RaiseEvent(new OnDrainagePropertyChange(drainagePercentage));
             _isDrainageActive = true;
+            UpdateIndicator();               // <-- nuevo
             StartDrainageEnergyConsumption();
             Log.Info("Drainage Active");
         }
@@ -258,6 +294,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         }
 
         _isDrainageActive = false;
+        UpdateIndicator();                   // <-- nuevo
         StopDrainageEnergyConsumption();
         GameEventChannel<OnDrainagePropertyChange>.RaiseEvent(new OnDrainagePropertyChange(0f));
         Log.Info("Drainage Stopped");
@@ -267,6 +304,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     {
         if (!_isDrainageActive && !_minigame.hasSucceeded)
         {
+            if (mainLeverPull != null) mainLeverPull.Restart();   // <-- nuevo
             _minigame.SetupMiniGame();
         }
     }

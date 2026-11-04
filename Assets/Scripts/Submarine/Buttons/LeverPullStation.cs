@@ -13,6 +13,8 @@ public class LeverPullStation : MonoBehaviour, ILeverControls
     private float _initialAngle;
     private float _currentAngle = 0f;
     
+    private Quaternion _initialRotation;
+    
     public bool isActive { get; set; }
     public bool isLocked { get; set; }
     public Action onActivation { get; set; }
@@ -20,8 +22,9 @@ public class LeverPullStation : MonoBehaviour, ILeverControls
 
     private void Awake()
     {
-        _initialAngle = transform.localRotation.eulerAngles.z;
-        _currentAngle = _initialAngle;
+        _initialRotation = transform.localRotation;
+        _currentAngle = 0f;
+        Lock();
     }
     
     public void Lock() => isLocked = true;
@@ -41,17 +44,14 @@ public class LeverPullStation : MonoBehaviour, ILeverControls
         {
             isActive = false;
             onDeactivation?.Invoke();
-            SetLeverRotation(_initialAngle);
+            SetLeverRotation(0f);
         }
     }
 
     public void OnActionDrag(float delta)
     {
         if (isLocked) return;
-        _currentAngle -= delta * pullSpeed;
-        _currentAngle = Mathf.Clamp(_currentAngle, _initialAngle, maxAngleActivation);
-        // Keep the drag preview on the same side as the configured pull
-        // direction; SetLeverRotation applies the visual mirror when needed.
+        _currentAngle = Mathf.Clamp(_currentAngle - delta * pullSpeed, 0f, maxAngleActivation);
         SetLeverRotation(_currentAngle);
 
         if (_currentAngle >= maxAngleActivation && !isActive)
@@ -59,7 +59,7 @@ public class LeverPullStation : MonoBehaviour, ILeverControls
             Log.Info("Lever reached activation angle.");
             SetActive(true);
         }
-        else if (_currentAngle <= _initialAngle && isActive)
+        else if (_currentAngle <= 0f && isActive)
         {
             Log.Info("Lever returned to initial position.");
             SetActive(false);
@@ -70,14 +70,13 @@ public class LeverPullStation : MonoBehaviour, ILeverControls
     {
         Lock();
         isActive = false;
-        SetLeverRotation(_initialAngle);
+        SetLeverRotation(0f);
     }
 
     private void SetLeverRotation(float angle)
     {
         float direction = Mathf.Approximately(rotationDirection, 0f) ? 1f : Mathf.Sign(rotationDirection);
-        float visualAngle = _initialAngle + ((angle - _initialAngle) * direction);
-        transform.localRotation = Quaternion.Euler(0f, 0f, visualAngle);
+        transform.localRotation = _initialRotation * Quaternion.Euler(0f, 0f, angle * direction);
         _currentAngle = angle;
     }
 }
