@@ -56,16 +56,19 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
 
     public void Interact(PlayerCharacter player)
     {
-        player.InventorySystem.TryExtractHeldItem(out OxygenTank oxygenTankItem);
-        if (oxygenTankItem != null)
+        InventorySystem inventory = player.InventorySystem;
+        if (_dockedTank != null)
         {
-            DockTank(oxygenTankItem);
+            if (inventory.TryPickUp(_dockedTank))
+            {
+                UndockTank();
+            }
             return;
         }
 
-        if (_dockedTank != null)
+        if (dockPoint != null && inventory.TryExtractHeldItem(out OxygenTank tank))
         {
-            UndockTank(player);
+            DockTank(tank);
         }
     }
 
@@ -73,30 +76,22 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
     {
         if (_dockedTank != null)
         {
-            return new InteractionFeedback("Release Oxygen Tank", interactionUIData);
+            return player?.InventorySystem?.HeldItem == null
+                ? new InteractionFeedback("Release Oxygen Tank", interactionUIData)
+                : new InteractionFeedback("Holding Another Item", interactionUIData, false);
         }
 
-        if (player != null && player.InventorySystem != null)
+        if (dockPoint != null && player?.InventorySystem?.HeldItem is OxygenTank oxygenTank)
         {
-            if (player.InventorySystem.HeldItem is OxygenTank oxygenTank)
-            {
-                string text = oxygenTank.isFull ? "Place Oxygen Tank (Full)" : "Place Oxygen Tank";
-                return new InteractionFeedback(text, interactionUIData);
-            }
-            
-            if (player.InventorySystem.HeldItem != null)
-            {
-                return new InteractionFeedback("Requires Oxygen Tank", interactionUIData);
-            }
+            string text = oxygenTank.isFull ? "Place Oxygen Tank (Full)" : "Place Oxygen Tank";
+            return new InteractionFeedback(text, interactionUIData);
         }
-        
-        return new InteractionFeedback("Requires Oxygen Tank", null);
+
+        return new InteractionFeedback("Requires Oxygen Tank", interactionUIData, false);
     }
 
     private void DockTank(OxygenTank tank)
     {
-        if (_dockedTank != null) return;
-
         _dockedTank = tank;
         _dockedTank.Dock();
         _dockedTank.transform.position = dockPoint.position;
@@ -106,7 +101,7 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
         _rechargeCoroutine = StartCoroutine(RechargeCoroutine());
     }
 
-    private void UndockTank(PlayerCharacter player)
+    private void UndockTank()
     {
         if (_rechargeCoroutine != null)
         {
@@ -115,7 +110,6 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
         }
         StopEnergyConsumption();
 
-        _dockedTank.Interact(player);
         _dockedTank = null;
     }
 

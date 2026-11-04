@@ -12,16 +12,32 @@ public class ItemStorage : MonoBehaviour, IInteractable
 
     [SerializeField] private ToolType toolType;
     [SerializeField] private Transform storagePoint;
+    [Tooltip("Optional starting tool. Place it within this support's collider in the scene.")]
     [SerializeField] private MonoBehaviour startingItem;
     [SerializeField] private InteractionUIData interactionUIData;
 
     private MonoBehaviour _storedItem;
 
     private string ItemName => toolType == ToolType.OxygenTank ? "Oxygen Tank" : "Blowtorch";
+    private bool HasStoredItem => _storedItem != null && storagePoint != null
+        && _storedItem.transform.parent == storagePoint;
 
     private void Start()
     {
-        if (storagePoint != null && startingItem is IPickable item && Accepts(item))
+        if (storagePoint == null || startingItem == null || startingItem is not IPickable item || !Accepts(item))
+        {
+            return;
+        }
+
+        Transform itemTransform = startingItem.transform;
+        if (itemTransform.parent != null && itemTransform.parent != storagePoint)
+        {
+            return;
+        }
+
+        BoxCollider interactionCollider = GetComponent<BoxCollider>();
+        var interactionBounds = new Bounds(interactionCollider.center, interactionCollider.size);
+        if (interactionBounds.Contains(transform.InverseTransformPoint(itemTransform.position)))
         {
             Store(item);
         }
@@ -30,7 +46,7 @@ public class ItemStorage : MonoBehaviour, IInteractable
     public void Interact(PlayerCharacter player)
     {
         InventorySystem inventory = player.InventorySystem;
-        if (_storedItem != null)
+        if (HasStoredItem)
         {
             if (inventory.HeldItem != null) return;
 
@@ -52,7 +68,7 @@ public class ItemStorage : MonoBehaviour, IInteractable
     public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
     {
         IPickable heldItem = player?.InventorySystem?.HeldItem;
-        if (_storedItem != null)
+        if (HasStoredItem)
         {
             return heldItem == null
                 ? new InteractionFeedback($"Take {ItemName}", interactionUIData)

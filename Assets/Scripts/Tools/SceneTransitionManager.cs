@@ -8,6 +8,7 @@ public class SceneTransitionManager : MonoBehaviour
     public static SceneTransitionManager Instance { get; private set; }
 
     private Image fadeImage;
+    private Coroutine fadeRoutine;
     private float fadeOutDuration = 1.5f;
     private float fadeInDuration = 4.0f;
 
@@ -71,12 +72,18 @@ public class SceneTransitionManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        StartCoroutine(FadeIn());
+        StartFade(FadeIn());
     }
 
     public void LoadSceneWithFade(string sceneName)
     {
-        StartCoroutine(FadeOutAndLoad(sceneName));
+        StartFade(FadeOutAndLoad(sceneName));
+    }
+
+    private void StartFade(IEnumerator fade)
+    {
+        if (fadeRoutine != null) StopCoroutine(fadeRoutine);
+        fadeRoutine = StartCoroutine(fade);
     }
 
     private IEnumerator FadeOutAndLoad(string sceneName)
@@ -87,11 +94,12 @@ public class SceneTransitionManager : MonoBehaviour
 
         float timer = 0f;
         Color color = fadeImage.color;
+        float startAlpha = color.a;
         
         while (timer < fadeOutDuration)
         {
             timer += Time.unscaledDeltaTime;
-            color.a = Mathf.Clamp01(timer / fadeOutDuration);
+            color.a = Mathf.Lerp(startAlpha, 1f, timer / fadeOutDuration);
             fadeImage.color = color;
             yield return null;
         }
@@ -128,5 +136,6 @@ public class SceneTransitionManager : MonoBehaviour
         fadeImage.raycastTarget = false;
 
         Time.timeScale = 1f;
+        fadeRoutine = null;
     }
 }

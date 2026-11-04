@@ -63,6 +63,7 @@ public class CanvasTypewriter : MonoBehaviour
     private uint playingEventId;
     private bool waitingForClick;
     private int clickReadyFrame;
+    private CinematicEndButton endButton;
     private int pageIndex;
     private string[] pages = System.Array.Empty<string>();
 
@@ -71,7 +72,8 @@ public class CanvasTypewriter : MonoBehaviour
         // Also supports existing scene instances created before AkGameObj was required.
         if (GetComponent<AkGameObj>() == null) gameObject.AddComponent<AkGameObj>();
         // Restore the cinematic exit in older scene instances that lost the companion component.
-        if (GetComponent<CinematicEndButton>() == null) gameObject.AddComponent<CinematicEndButton>();
+        endButton = GetComponent<CinematicEndButton>();
+        if (endButton == null) endButton = gameObject.AddComponent<CinematicEndButton>();
     }
 
     private void OnEnable()
@@ -152,7 +154,8 @@ public class CanvasTypewriter : MonoBehaviour
     {
         // Ignore the click that may have opened/enabled this cinematic itself.
         if (Time.frameCount > clickReadyFrame
-            && Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+            && Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame
+            && (endButton == null || !endButton.IsSkipButtonAt(Mouse.current.position.ReadValue())))
         {
             if (waitingForClick) Play();
             else if (IsTyping) ToggleSpeed();

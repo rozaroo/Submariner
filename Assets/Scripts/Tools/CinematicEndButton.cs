@@ -1,10 +1,9 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-/// <summary>Reveal the cinematic's exit button after its final passage and use the scene fade.</summary>
+/// <summary>Control the cinematic's exit buttons and scene fade.</summary>
 [DisallowMultipleComponent]
 public class CinematicEndButton : MonoBehaviour
 {
@@ -12,6 +11,8 @@ public class CinematicEndButton : MonoBehaviour
     [SerializeField] private CanvasTypewriter typewriter;
     [Tooltip("Optional custom button. If empty, a button is created in the story's Canvas.")]
     [SerializeField] private Button immersionButton;
+    [Tooltip("Optional scene button that skips the cinematic.")]
+    [SerializeField] private Button skipButton;
     [SerializeField] private string buttonLabel = "Inmersión";
     [SerializeField] private string targetScene = "InteriorSubmarine";
 
@@ -41,7 +42,11 @@ public class CinematicEndButton : MonoBehaviour
             enabled = false;
             return;
         }
-        if (immersionButton == null) CreateButton();
+        if (immersionButton == null)
+        {
+            immersionButton = CreateImmersionButton();
+            ownsButton = immersionButton != null;
+        }
         if (immersionButton == null) { enabled = false; return; }
         buttonGroup = immersionButton.GetComponent<CanvasGroup>();
         if (buttonGroup == null) buttonGroup = immersionButton.gameObject.AddComponent<CanvasGroup>();
@@ -56,10 +61,16 @@ public class CinematicEndButton : MonoBehaviour
         typewriter.StoryCompleted += ShowButton;
         typewriter.StoryStarted += ResetButton;
         immersionButton.onClick.AddListener(BeginImmersion);
+        if (skipButton != null)
+        {
+            skipButton.onClick.AddListener(BeginSkip);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
         if (typewriter.HasCompleted) ShowButton();
     }
 
-    private void CreateButton()
+    private Button CreateImmersionButton()
     {
         Canvas canvas = GetComponentInParent<Canvas>();
         TMP_Text storyText = typewriter.TextComponent;
@@ -67,12 +78,11 @@ public class CinematicEndButton : MonoBehaviour
         if (canvas == null)
         {
             Debug.LogWarning("[CinematicEndButton] A Canvas or a custom button is required.", this);
-            return;
+            return null;
         }
-        var buttonObject = new GameObject("Inmersión", typeof(RectTransform), typeof(Image), typeof(Button));
+        var buttonObject = new GameObject(buttonLabel, typeof(RectTransform), typeof(Image), typeof(Button));
         buttonObject.layer = canvas.gameObject.layer;
         buttonObject.transform.SetParent(canvas.transform, false);
-        ownsButton = true;
         var rect = (RectTransform)buttonObject.transform;
         rect.anchorMin = rect.anchorMax = buttonAnchor;
         rect.pivot = new Vector2(0.5f, 0.5f);
@@ -80,13 +90,13 @@ public class CinematicEndButton : MonoBehaviour
         rect.sizeDelta = buttonSize;
         var background = buttonObject.GetComponent<Image>();
         background.color = new Color(0.12f, 0.16f, 0.16f, 0.95f);
-        immersionButton = buttonObject.GetComponent<Button>();
-        immersionButton.targetGraphic = background;
-        var colors = immersionButton.colors;
+        var button = buttonObject.GetComponent<Button>();
+        button.targetGraphic = background;
+        var colors = button.colors;
         colors.highlightedColor = new Color(1.3f, 1.3f, 1.3f, 1f);
         colors.selectedColor = Color.white;
         colors.pressedColor = new Color(0.7f, 0.7f, 0.7f, 1f);
-        immersionButton.colors = colors;
+        button.colors = colors;
 
         var textObject = new GameObject("Label", typeof(RectTransform));
         textObject.layer = buttonObject.layer;
@@ -102,13 +112,23 @@ public class CinematicEndButton : MonoBehaviour
         label.rectTransform.anchorMax = Vector2.one;
         label.rectTransform.offsetMin = new Vector2(12f, 4f);
         label.rectTransform.offsetMax = new Vector2(-12f, -4f);
+        return button;
+    }
+
+    internal bool IsSkipButtonAt(Vector2 screenPosition)
+    {
+        if (!isActiveAndEnabled || skipButton == null || !skipButton.isActiveAndEnabled
+            || !skipButton.IsInteractable() || skipButton.transform is not RectTransform rect) return false;
+        Canvas canvas = skipButton.GetComponentInParent<Canvas>();
+        if (canvas == null) return false;
+        Camera eventCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
+        return RectTransformUtility.RectangleContainsScreenPoint(rect, screenPosition, eventCamera);
     }
 
     private void ResetButton()
     {
         StopAllCoroutines();
         revealing = false;
-        transitioning = false;
         if (buttonGroup == null) return;
         buttonGroup.alpha = 0f;
         buttonGroup.interactable = false;
@@ -128,7 +148,7 @@ public class CinematicEndButton : MonoBehaviour
     private void LateUpdate()
     {
         // Hide immediately if playback restarts or moves away from the completed final page.
-        if (buttonGroup != null && !CanShowButton && (revealing || buttonGroup.alpha > 0f))
+        if (!transitioning && buttonGroup != null && !CanShowButton && (revealing || buttonGroup.alpha > 0f))
             ResetButton();
     }
 
@@ -159,8 +179,15 @@ public class CinematicEndButton : MonoBehaviour
 
     public void BeginImmersion()
     {
-        if (transitioning || !CanShowButton
-            || immersionButton == null || !immersionButton.interactable) return;
+        if (!CanShowButton || immersionButton == null || !immersionButton.interactable) return;
+        BeginTransition();
+    }
+
+    private void BeginSkip() => BeginTransition();
+
+    private void BeginTransition()
+    {
+        if (transitioning) return;
         if (!Application.CanStreamedLevelBeLoaded(targetScene))
         {
             Debug.LogError("[CinematicEndButton] Add the target scene to the active build profile: " + targetScene, this);
@@ -172,8 +199,11 @@ public class CinematicEndButton : MonoBehaviour
             return;
         }
         transitioning = true;
+        StopAllCoroutines();
+        if (!typewriter.HasCompleted) typewriter.Stop();
         immersionButton.interactable = false;
         buttonGroup.interactable = false;
+        if (skipButton != null) skipButton.interactable = false;
         SceneTransitionManager.Instance.LoadSceneWithFade(targetScene);
     }
 
@@ -185,6 +215,8 @@ public class CinematicEndButton : MonoBehaviour
             typewriter.StoryStarted -= ResetButton;
         }
         if (immersionButton != null) immersionButton.onClick.RemoveListener(BeginImmersion);
+        if (skipButton != null) skipButton.onClick.RemoveListener(BeginSkip);
+        transitioning = false;
         ResetButton();
     }
 
