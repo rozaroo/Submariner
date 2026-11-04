@@ -2,7 +2,22 @@ using UnityEngine;
 
 public class MainMenuManager : MonoBehaviour
 {
+    [Header("UI References")]
+    [SerializeField] private GameObject mainCanvas;
+    [SerializeField] private GameObject controlsCanvas;
+
     private bool isTransitioning = false; 
+
+    public void ShowControls() => SetControlsVisible(true);
+
+    public void CloseControls() => SetControlsVisible(false);
+
+    private void SetControlsVisible(bool visible)
+    {
+        if (isTransitioning || mainCanvas == null || controlsCanvas == null) return;
+        mainCanvas.SetActive(!visible);
+        controlsCanvas.SetActive(visible);
+    }
 
     public void PlayGame()
     {
