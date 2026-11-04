@@ -12,6 +12,7 @@ public class MapUIManager : MonoBehaviour
     
     [Header("Level Configuration")]
     [SerializeField] private MapRuntimeDataSO mapRuntimeData;
+    [SerializeField] private MapAssetSO obstacleCollisionIcon;
     
     [Header("World Map Sync")]
     [SerializeField] private float linearSyncSpeed = 100f;
@@ -27,6 +28,7 @@ public class MapUIManager : MonoBehaviour
     
     private Dictionary<IWorldMapUIElement, MapIcon> _worldElementIconDictionary; //To store every icon created, but maybe separate them by update mode to avoid iterating through static icons when syncing dynamic ones.
     private Dictionary<IWorldMapUIElement, DynamicIconData> _dynamicIconDictionary;
+    private readonly Dictionary<int, MapIcon> _obstacleIcons = new();
     
     public Canvas MapCanvas { get; private set; }
 
@@ -47,6 +49,7 @@ public class MapUIManager : MonoBehaviour
         GameEventChannel<OnWorldSubmarineGenerated>.OnEventRaised += OnWorldSubmarineGenerated;
         GameEventChannel<OnWorldMapElementGenerated>.OnEventRaised += OnWorldElementGenerated;
         GameEventChannel<OnSonarElementsDetection>.OnEventRaised += OnSonarChanged;
+        GameEventChannel<OnObstacleDamagedHull>.OnEventRaised += OnObstacleDamagedHull;
         
         InitializeMapSync();
     }
@@ -58,6 +61,7 @@ public class MapUIManager : MonoBehaviour
         GameEventChannel<OnWorldMapElementGenerated>.OnEventRaised -= OnWorldElementGenerated;
         
         GameEventChannel<OnSonarElementsDetection>.OnEventRaised -= OnSonarChanged;
+        GameEventChannel<OnObstacleDamagedHull>.OnEventRaised -= OnObstacleDamagedHull;
         
         StopMapSync();
     }
@@ -143,6 +147,17 @@ public class MapUIManager : MonoBehaviour
     {
         icon.IconRectTransform.localRotation = Quaternion.Euler(0,0,element.rotation.y);
     }
+
+    private void OnObstacleDamagedHull(OnObstacleDamagedHull impact)
+    {
+        if (HardModeSettings.IsEnabled || obstacleCollisionIcon == null || mapRuntimeData == null
+            || _obstacleIcons.ContainsKey(impact.ObstacleId)) return;
+
+        MapIcon icon = MapIconFactory.Create(obstacleCollisionIcon, _mapRect);
+        icon.IconRectTransform.anchoredPosition = WorldPositionConverter.WorldToMap(
+            impact.Position, mapRuntimeData.worldMapSize, mapRuntimeData.uiMapSize);
+        _obstacleIcons.Add(impact.ObstacleId, icon);
+    }
     
     private void ChangeMapSize()
     {
@@ -174,6 +189,12 @@ public class MapUIManager : MonoBehaviour
         }
         _worldElementIconDictionary.Clear();
         _dynamicIconDictionary.Clear(); 
+
+        foreach (MapIcon icon in _obstacleIcons.Values)
+        {
+            MapIconFactory.Release(icon);
+        }
+        _obstacleIcons.Clear();
     }
     
     private void OnElementDestroyed(IWorldElement entity)

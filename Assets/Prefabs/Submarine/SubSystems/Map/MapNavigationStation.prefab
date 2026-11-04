@@ -245,6 +245,7 @@ MonoBehaviour:
   mapIconContainer: {fileID: 5914100611169596746}
   backgroundImage: {fileID: 2178189341779036896}
   mapRuntimeData: {fileID: 11400000, guid: f993c08ecc9c4a340b86e7895003b85a, type: 2}
+  obstacleCollisionIcon: {fileID: 11400000, guid: a4c4773915384598b565f3810193d18e, type: 2}
   linearSyncSpeed: 100
   pingAudioCooldown: 0.1
 --- !u!114 &5618182712713203161

@@ -86,16 +86,22 @@ public class HullDamageManager : MonoBehaviour
     private void OnSubmarineCollision(OnSubmarineCollision collision)
     {
         SFXManager.PostEvent("Start_SubmarineCollision", gameObject);
-        StartSpawningBehaviour();
+        Collider obstacle = collision.subCollider;
+        var damageEvent = obstacle != null ? new OnObstacleDamagedHull(obstacle) : default;
+        if (StartSpawningBehaviour() && damageEvent.ObstacleId != 0)
+        {
+            GameEventChannel<OnObstacleDamagedHull>.RaiseEvent(damageEvent);
+        }
     }
 
-    private void StartSpawningBehaviour()
+    private bool StartSpawningBehaviour()
     {
         if (_spawnCoroutine != null) StopCoroutine(_spawnCoroutine);
 
-        TrySpawnCrack();
+        bool spawnedCrack = TrySpawnCrack();
 
         _spawnCoroutine = StartCoroutine(SpawnHullDamageRoutine());
+        return spawnedCrack;
     }
 
     private void StopSpawningBehaviour()
