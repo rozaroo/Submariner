@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4831706417564255906}
   - component: {fileID: 1660390698674463070}
   - component: {fileID: 6668795923759991624}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Top Part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,13 +103,6 @@ MonoBehaviour:
   partType: 0
   amperage: 10
   selectedVisual: {fileID: 0}
-  amperageLabel: {fileID: 0}
-  showAmperageOnHover: 1
-  createHoverLabelIfMissing: 1
-  hoverAmperageLabel: {fileID: 0}
-  hoverLabelLocalOffset: {x: 0, y: 0.25, z: 0}
-  hoverLabelCharacterSize: 0.08
-  hoverLabelColor: {r: 1, g: 0.7803587, b: 0, a: 1}
 --- !u!65 &6668795923759991624
 BoxCollider:
   m_ObjectHideFlags: 0

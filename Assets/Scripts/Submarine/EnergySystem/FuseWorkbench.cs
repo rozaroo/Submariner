@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Collider))]
 public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
 {
+    private const float DragHeightSpeed = 5f;
+    private const float DragRotationSpeed = 540f;
+
     [Header("Possession Config")]
     [SerializeField] private Transform cameraAnchor;
     [SerializeField] private Transform directionAnchor;
@@ -53,14 +57,17 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     [Header("Top Parts")]
     [SerializeField] private FusePart topPartPrefab;
     [SerializeField] private List<Transform> topPartSpawnPoints = new();
+    [SerializeField] private List<TMP_Text> topPartLabels = new();
 
     [Header("Core Parts")]
     [SerializeField] private FusePart corePartPrefab;
     [SerializeField] private List<Transform> corePartSpawnPoints = new();
+    [SerializeField] private List<TMP_Text> corePartLabels = new();
 
     [Header("Bottom Parts")]
     [SerializeField] private FusePart bottomPartPrefab;
     [SerializeField] private List<Transform> bottomPartSpawnPoints = new();
+    [SerializeField] private List<TMP_Text> bottomPartLabels = new();
 
     private readonly List<FusePart> _spawnedParts = new();
 
@@ -70,13 +77,11 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     private FusePart _snappedCorePart;
     private FusePart _snappedBottomPart;
     private FusePart _draggedPart;
+    private Vector2 _dragViewportOffset;
     private Fuse _assembledFuse;
     private Coroutine _dragCoroutine;
-    private Coroutine _hoverCoroutine;
     private Coroutine _handheldSolderCoroutine;
     private Blowtorch _solderingTorch;
-    private FusePart _hoveredPart;
-    private bool _hasGeneratedParts;
     private bool _isTopConnectionSoldered;
     private bool _isBottomConnectionSoldered;
 
@@ -86,6 +91,12 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     public float TransitionDuration => transitionDuration;
     public CursorLockMode CursorLockMode => cursorLockMode;
     public bool IsMouseVisible => showMouseCursor;
+    private Vector3 WorkPlaneNormal => workPlaneAnchor != null ? workPlaneAnchor.up : Vector3.up;
+
+    private void Awake()
+    {
+        GenerateParts();
+    }
 
     public void Interact(PlayerCharacter player)
     {
@@ -119,11 +130,6 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     /// </summary>
     public bool TrySolderWithHandheldBlowtorch(Blowtorch blowtorch)
     {
-        if (!_hasGeneratedParts)
-        {
-            GenerateParts();
-        }
-
         if (_handheldSolderCoroutine != null)
         {
             return _solderingTorch == blowtorch;
@@ -171,11 +177,6 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         clickAction.canceled += OnClickCanceled;
         exitAction.started += OnExitPerformed;
 
-        if (!_hasGeneratedParts)
-        {
-            GenerateParts();
-        }
-        StartHoverTracking();
         enabled = true;
     }
 
@@ -189,7 +190,6 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         exitAction.started -= OnExitPerformed;
         
         StopDrag();
-        StopHoverTracking();
         _currentPlayer = null;
         _playerCamera = null;
         enabled = false;
@@ -202,32 +202,16 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
             return;
         }
 
-        if (Mouse.current == null || _playerCamera == null)
+        if (_playerCamera == null || !TryGetPointerViewport(out Vector2 pointerViewport))
         {
             return;
         }
 
-        Vector2 mousePosition = Mouse.current.position.ReadValue();
-
-        Vector2 viewportPos = new Vector2(
-            mousePosition.x / Screen.width,
-            mousePosition.y / Screen.height
-        );
-
-        Ray ray = _playerCamera.ViewportPointToRay(viewportPos);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance))
+        FusePart part = FindPart(_playerCamera.ViewportPointToRay(pointerViewport));
+        if (part != null)
         {
-            FusePart fusePart = hit.collider.GetComponentInParent<FusePart>();
-
-            if (fusePart != null)
-            {
-                SetHoveredPart(null);
-                BeginDragPart(fusePart);
-                return;
-            }
+            BeginDragPart(part, pointerViewport);
         }
-
     }
 
     private void OnClickCanceled(InputAction.CallbackContext context)
@@ -252,14 +236,14 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
             bottomAmperages = fuseRecipeCatalog.BottomPartAmperages;
         }
 
-        SpawnPartGroup(topPartPrefab, topPartSpawnPoints, topAmperages);
-        SpawnPartGroup(corePartPrefab, corePartSpawnPoints, coreAmperages);
-        SpawnPartGroup(bottomPartPrefab, bottomPartSpawnPoints, bottomAmperages);
+        SpawnPartGroup(topPartPrefab, topPartSpawnPoints, topPartLabels, topAmperages);
+        SpawnPartGroup(corePartPrefab, corePartSpawnPoints, corePartLabels, coreAmperages);
+        SpawnPartGroup(bottomPartPrefab, bottomPartSpawnPoints, bottomPartLabels, bottomAmperages);
 
-        _hasGeneratedParts = true;
     }
 
-    private void SpawnPartGroup(FusePart partPrefab, List<Transform> spawnPoints, IReadOnlyList<int> catalogAmperages)
+    private void SpawnPartGroup(
+        FusePart partPrefab, List<Transform> spawnPoints, List<TMP_Text> labels, IReadOnlyList<int> catalogAmperages)
     {
         if (partPrefab == null)
         {
@@ -296,145 +280,114 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
                 spawnedPart.SetAmperage(catalogAmperages[i]);
             }
 
+            if (i < labels.Count && labels[i] != null)
+            {
+                labels[i].raycastTarget = false;
+                labels[i].text = $"{spawnedPart.Amperage}A";
+            }
+
             spawnedPart.CacheInitialPlacement();
             _spawnedParts.Add(spawnedPart);
         }
     }
 
-    private void BeginDragPart(FusePart fusePart)
+    private FusePart FindPart(Ray ray)
     {
-        StopDrag();
-        SetHoveredPart(null);
-        _draggedPart = fusePart;
-        _draggedPart.SetSelected(true);
-        DetachPartFromAssembly(_draggedPart);
-        _draggedPart.transform.SetParent(transform, true);
-        _dragCoroutine = StartCoroutine(DragPart());
-    }
+        Physics.SyncTransforms();
+        FusePart closestPart = null;
+        float closestDistance = raycastDistance;
 
-    private IEnumerator DragPart()
-    {
-        while (_draggedPart != null)
+        foreach (FusePart part in _spawnedParts)
         {
-            if (TryGetCursorPointOnWorkPlane(out Vector3 cursorPoint))
+            // Query each trigger directly so the workbench's collider cannot intercept the click.
+            if (part != null && part.PickCollider.Raycast(ray, out RaycastHit hit, closestDistance))
             {
-                _draggedPart.transform.position = cursorPoint;
+                closestPart = part;
+                closestDistance = hit.distance;
             }
-
-            yield return null;
         }
+
+        return closestPart;
     }
 
-    private void StartHoverTracking()
+    private void BeginDragPart(FusePart part, Vector2 pointerViewport)
     {
-        if (_hoverCoroutine != null)
-        {
-            StopCoroutine(_hoverCoroutine);
-        }
-
-        _hoverCoroutine = StartCoroutine(TrackHoveredPart());
-    }
-
-    private void StopHoverTracking()
-    {
-        if (_hoverCoroutine != null)
-        {
-            StopCoroutine(_hoverCoroutine);
-            _hoverCoroutine = null;
-        }
-
-        SetHoveredPart(null);
-    }
-
-    private IEnumerator TrackHoveredPart()
-    {
-        while (true)
-        {
-            if (_draggedPart != null)
-            {
-                SetHoveredPart(null);
-                yield return null;
-                continue;
-            }
-
-            SetHoveredPart(GetPartUnderCursor());
-
-            if (_hoveredPart != null)
-            {
-                _hoveredPart.UpdateHoverLabel(_playerCamera);
-            }
-
-            yield return null;
-        }
-    }
-
-    private FusePart GetPartUnderCursor()
-    {
-        if (Mouse.current == null || _playerCamera == null)
-        {
-            return null;
-        }
-
-        Vector2 mousePosition = Mouse.current.position.ReadValue();
-        Vector2 viewportPos = new Vector2(mousePosition.x / Screen.width, mousePosition.y / Screen.height);
-        Ray ray = _playerCamera.ViewportPointToRay(viewportPos);
-
-        if (!Physics.Raycast(ray, out RaycastHit hit, raycastDistance))
-        {
-            return null;
-        }
-
-        return hit.collider.GetComponentInParent<FusePart>();
-    }
-
-    private void SetHoveredPart(FusePart newHoveredPart)
-    {
-        if (_hoveredPart == newHoveredPart)
+        Transform snapPoint = GetSnapPointForPart(part);
+        if (_draggedPart != null || snapPoint == null)
         {
             return;
         }
 
-        if (_hoveredPart != null)
-        {
-            _hoveredPart.SetHovered(false, null);
-        }
+        _draggedPart = part;
+        _dragViewportOffset = (Vector2)_playerCamera.WorldToViewportPoint(part.transform.position) - pointerViewport;
+        part.SetSelected(true);
+        DetachPartFromAssembly(part);
+        _dragCoroutine = StartCoroutine(DragPart(part, snapPoint));
+    }
 
-        _hoveredPart = newHoveredPart;
+    private IEnumerator DragPart(FusePart part, Transform snapPoint)
+    {
+        Vector3 normal = WorkPlaneNormal;
+        float pickupHeight = Vector3.Dot(part.transform.position, normal);
+        float hoverHeight = Vector3.Dot(snapPoint.position, normal) + dragSurfaceOffset;
+        float height = pickupHeight;
+        Quaternion pickupRotation = part.transform.rotation;
+        float approachRadius = partSnapRadius * 1.75f;
 
-        if (_hoveredPart != null)
+        // Start in the pickup pose, then lower toward the table as the cursor enters the crafting area.
+        while (true)
         {
-            _hoveredPart.SetHovered(true, _playerCamera);
+            yield return null;
+            if (!TryGetDragRay(out Ray ray))
+            {
+                continue;
+            }
+
+            bool approaching = IsNearSnapPoint(ray, snapPoint, approachRadius);
+            height = Mathf.MoveTowards(height, approaching ? hoverHeight : pickupHeight, DragHeightSpeed * Time.deltaTime);
+            Plane dragPlane = new Plane(normal, -height);
+            if (dragPlane.Raycast(ray, out float distance) && distance <= raycastDistance)
+            {
+                Quaternion targetRotation = approaching ? snapPoint.rotation : pickupRotation;
+                Quaternion rotation = Quaternion.RotateTowards(
+                    part.transform.rotation, targetRotation, DragRotationSpeed * Time.deltaTime);
+                part.transform.SetPositionAndRotation(ray.GetPoint(distance), rotation);
+            }
         }
     }
 
-    private bool TryGetCursorPointOnWorkPlane(out Vector3 cursorPoint)
+    private bool TryGetDragRay(out Ray ray)
     {
-        cursorPoint = Vector3.zero;
-
-        if (Mouse.current == null || _playerCamera == null)
+        ray = default;
+        if (_playerCamera == null || !TryGetPointerViewport(out Vector2 pointerViewport))
         {
             return false;
         }
 
-        Transform planeAnchor = transform;
-        if (workPlaneAnchor != null)
-        {
-            planeAnchor = workPlaneAnchor;
-        }
-
-        Vector2 mousePosition = Mouse.current.position.ReadValue();
-        Vector2 viewportPos = new Vector2(mousePosition.x / Screen.width, mousePosition.y / Screen.height);
-        Ray ray = _playerCamera.ViewportPointToRay(viewportPos);
-        
-        Plane workPlane = new Plane(planeAnchor.up, planeAnchor.position);
-
-        if (!workPlane.Raycast(ray, out float distance))
-        {
-            return false;
-        }
-
-        cursorPoint = ray.GetPoint(distance) + (planeAnchor.up * dragSurfaceOffset);
+        ray = _playerCamera.ViewportPointToRay(pointerViewport + _dragViewportOffset);
         return true;
+    }
+
+    private static bool TryGetPointerViewport(out Vector2 pointerViewport)
+    {
+        pointerViewport = default;
+        if (Mouse.current == null)
+        {
+            return false;
+        }
+
+        // The camera's render texture is stretched across the game window.
+        Vector2 pointer = Mouse.current.position.ReadValue();
+        pointerViewport = new Vector2(pointer.x / Screen.width, pointer.y / Screen.height);
+        return true;
+    }
+
+    private bool IsNearSnapPoint(Ray ray, Transform snapPoint, float radius)
+    {
+        Plane snapPlane = new Plane(WorkPlaneNormal, snapPoint.position);
+        return snapPlane.Raycast(ray, out float distance)
+            && distance <= raycastDistance
+            && (ray.GetPoint(distance) - snapPoint.position).sqrMagnitude <= radius * radius;
     }
 
     private void StopDrag()
@@ -444,44 +397,23 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
             StopCoroutine(_dragCoroutine);
             _dragCoroutine = null;
         }
-        if (_draggedPart != null)
-        {
-            DropDraggedPart();
-        }
-    }
 
-    private void DropDraggedPart()
-    {
         FusePart part = _draggedPart;
         _draggedPart = null;
-
-        if (TrySnapPartToAssembly(part))
+        if (part == null)
         {
             return;
         }
 
-        part.ReturnToInitialPlacement();
-        DestroyAssembledFuse();
-    }
-
-    private bool TrySnapPartToAssembly(FusePart part)
-    {
         Transform snapPoint = GetSnapPointForPart(part);
-        if (snapPoint == null)
+        if (snapPoint != null && TryGetDragRay(out Ray ray) && IsNearSnapPoint(ray, snapPoint, partSnapRadius))
         {
-            Log.Warning("[FuseWorkbench] Assembly snap point missing");
-            return false;
+            SnapPart(part, snapPoint);
         }
-
-        float distanceToSnap = Vector3.Distance(part.transform.position, snapPoint.position);
-        if (distanceToSnap > partSnapRadius)
+        else
         {
-            part.SetSelected(false);
-            return false;
+            part.ReturnToInitialPlacement();
         }
-
-        SnapPart(part, snapPoint);
-        return true;
     }
 
     private Transform GetSnapPointForPart(FusePart part)
@@ -521,9 +453,6 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
                 Log.Warning("[FuseWorkbench] Unsupported fuse part type");
                 break;
         }
-
-        DestroyAssembledFuse();
-        TryAssembleFuse();
     }
 
     private void SetSnappedPart(ref FusePart snappedPart, FusePart newPart, Transform snapPoint)
@@ -565,7 +494,6 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         if (wasSnapped)
         {
             CancelHandheldSoldering();
-            DestroyAssembledFuse();
         }
     }
 
@@ -631,23 +559,30 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
             Log.Warning("[FuseWorkbench] Assembled Fuse Prefab or Spawn Point Not Set");
             return;
         }
-        if (destroyPreviousFuseOnAssembly && _assembledFuse != null) Destroy(_assembledFuse.gameObject);
         int totalAmperage = _snappedTopPart.Amperage + _snappedCorePart.Amperage + _snappedBottomPart.Amperage;
-        _assembledFuse = Instantiate(assembledFusePrefab, assembledFuseSpawnPoint.position, assembledFuseSpawnPoint.rotation);
-        _assembledFuse.SetAmperage(totalAmperage);
-        _assembledFuse.Restore();
+        Fuse newFuse = Instantiate(assembledFusePrefab, assembledFuseSpawnPoint.position, assembledFuseSpawnPoint.rotation);
+        newFuse.SetAmperage(totalAmperage);
+        newFuse.Restore();
 
+        if (destroyPreviousFuseOnAssembly && _assembledFuse != null && !_assembledFuse.HasBeenPickedUp)
+        {
+            Destroy(_assembledFuse.gameObject);
+        }
+
+        _assembledFuse = newFuse;
+        ReturnAssemblyPartsToStock();
         Log.Info($"Fuse assembled with {totalAmperage}A.");
     }
 
-    private void DestroyAssembledFuse()
+    private void ReturnAssemblyPartsToStock()
     {
-        if (_assembledFuse == null)
-        {
-            return;
-        }
-
-        Destroy(_assembledFuse.gameObject);
-        _assembledFuse = null;
+        _snappedTopPart.ReturnToInitialPlacement();
+        _snappedCorePart.ReturnToInitialPlacement();
+        _snappedBottomPart.ReturnToInitialPlacement();
+        _snappedTopPart = null;
+        _snappedCorePart = null;
+        _snappedBottomPart = null;
+        _isTopConnectionSoldered = false;
+        _isBottomConnectionSoldered = false;
     }
 }

@@ -35,6 +35,7 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
     public bool IsBurned => isBurned;
     public bool IsFunctional => !isBurned;
     public int Amperage => amperage;
+    internal bool HasBeenPickedUp { get; private set; }
 
     private Mesh _originalMesh;
     private bool _hasStoredOriginals;
@@ -80,6 +81,7 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
 
     public void OnPickUp()
     {
+        HasBeenPickedUp = true;
         _rb.isKinematic = true;
         _collider.enabled = false;
     }
