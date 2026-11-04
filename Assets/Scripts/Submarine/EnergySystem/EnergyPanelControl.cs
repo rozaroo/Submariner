@@ -364,7 +364,7 @@ public class EnergyPanelControl : MonoBehaviour, IInteractable
         fuse.transform.SetParent(_slotParents[slotIndex], false);
         fuse.transform.localPosition = _slotLocalPositions[slotIndex];
         fuse.transform.localRotation = _slotLocalRotations[slotIndex];
-        fuse.InstallInPanel(this);
+        fuse.InstallInPanel();
         Log.Info("Fuse installed in energy panel.");
     }
 

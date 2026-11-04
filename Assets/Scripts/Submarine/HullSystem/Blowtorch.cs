@@ -27,12 +27,14 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     [SerializeField] private InteractionUIData interactionUIData;
     
     private bool _isWelding;
+    private bool _isHeld;
     private Quaternion _targetLocalRotation = Quaternion.identity;
     
     private Camera _camera;
     private Collider _collider;
     private Rigidbody _rb;
     private FuseWorkbench _activeWorkbench;
+    private Vector3 _solderTargetLocalPoint;
     
     public GameObject GameObject => gameObject;
     public Vector3 HoldPositionOffset => holdPositionOffset;
@@ -46,10 +48,25 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     
     private void Update()
     {
-        if (_rb.isKinematic)
+        if (_isHeld)
         {
+            if (_activeWorkbench != null && flameParticles != null)
+            {
+                Transform emitter = flameParticles.transform;
+                Vector3 target = _activeWorkbench.transform.TransformPoint(_solderTargetLocalPoint);
+                // Aim from the nozzle, which is offset from the tool's pivot.
+                Quaternion correction = Quaternion.FromToRotation(emitter.forward, target - emitter.position);
+                Quaternion worldRotation = correction * transform.rotation;
+                _targetLocalRotation = Quaternion.Inverse(transform.parent.rotation) * worldRotation;
+            }
+
             transform.localRotation = Quaternion.Slerp(transform.localRotation, _targetLocalRotation, Time.deltaTime * aimSpeed);
         }
+    }
+
+    private void OnDisable()
+    {
+        _activeWorkbench?.CancelHandheldSoldering();
     }
 
     public void Interact(PlayerCharacter player)
@@ -60,6 +77,11 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
 
     public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
     {
+        if (!_collider.enabled)
+        {
+            return new InteractionFeedback("", interactionUIData, false);
+        }
+
         if (player != null && player.InventorySystem != null)
         {
             if (player.InventorySystem.HeldItem != null)
@@ -72,6 +94,7 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
 
     public void OnPickUp()
     {
+        _isHeld = true;
         _rb.isKinematic = true;
         _collider.enabled = false;
         _targetLocalRotation = Quaternion.Euler(holdRotationOffset);
@@ -79,11 +102,23 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     
     public void OnDrop()
     {
-        _activeWorkbench?.CancelHandheldSoldering();
-        _activeWorkbench = null;
-        StopWeldingEffects();
+        _isHeld = false;
+        UseItemReleased();
         _rb.isKinematic = false;
         _collider.enabled = true;
+    }
+
+    public void Dock()
+    {
+        _isHeld = false;
+        UseItemReleased();
+        if (!_rb.isKinematic)
+        {
+            _rb.linearVelocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+        }
+        _rb.isKinematic = true;
+        _collider.enabled = false;
     }
     
     public void UseItem()
@@ -95,10 +130,10 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
     {
         if (TrySolderWorkbench())
         {
-            StopWeldingEffects();
             return;
         }
 
+        _activeWorkbench?.CancelHandheldSoldering();
         Ray ray = new Ray(_camera.transform.position, _camera.transform.forward);
         
         if (Physics.Raycast(ray, out RaycastHit hit, repairRange, crackLayer) && hit.collider.TryGetComponent(out HullDamage crack))
@@ -156,8 +191,23 @@ public class Blowtorch : MonoBehaviour, IInteractable, IPickable, IUsable
             return false;
         }
 
+        return workbench.TrySolderWithHandheldBlowtorch(this);
+    }
+
+    public void BeginFuseSoldering(FuseWorkbench workbench, Vector3 jointPosition)
+    {
+        _activeWorkbench?.CancelHandheldSoldering();
+        StopWeldingEffects();
         _activeWorkbench = workbench;
-        return workbench.TrySolderWithHandheldBlowtorch();
+        _solderTargetLocalPoint = workbench.transform.InverseTransformPoint(jointPosition);
+        if (flameParticles != null) flameParticles.Play();
+    }
+
+    public void EndFuseSoldering()
+    {
+        _activeWorkbench = null;
+        _targetLocalRotation = Quaternion.Euler(holdRotationOffset);
+        if (flameParticles != null) flameParticles.Stop();
     }
     
     public void StopWeldingEffects()

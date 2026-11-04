@@ -54,6 +54,11 @@ public class OxygenTank : MonoBehaviour, IInteractable, IPickable
 
     public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
     {
+        if (!_rb.detectCollisions)
+        {
+            return new InteractionFeedback("", interactionUIData, false);
+        }
+
         if (player != null && player.InventorySystem != null)
         {
             if (player.InventorySystem.HeldItem != null)
