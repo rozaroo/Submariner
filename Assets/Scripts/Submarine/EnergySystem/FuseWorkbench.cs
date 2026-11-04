@@ -37,6 +37,10 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     [SerializeField] private Transform topAssemblyPoint;
     [SerializeField] private Transform coreAssemblyPoint;
     [SerializeField] private Transform bottomAssemblyPoint;
+
+    [Header("Solder Targets Relative to Core Assembly Point")]
+    [SerializeField] private Vector3 topSolderOffset = new Vector3(0.045f, -0.108f, 0f);
+    [SerializeField] private Vector3 bottomSolderOffset = new Vector3(0.045f, 0.13f, 0f);
     
     [Header("Interaction")]
     [SerializeField] private InteractionUIData interactionUIData;
@@ -70,6 +74,7 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     private Coroutine _dragCoroutine;
     private Coroutine _hoverCoroutine;
     private Coroutine _handheldSolderCoroutine;
+    private Blowtorch _solderingTorch;
     private FusePart _hoveredPart;
     private bool _hasGeneratedParts;
     private bool _isTopConnectionSoldered;
@@ -86,9 +91,9 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     {
         // With the blowtorch equipped, interacting with the bench welds the next
         // pending joint instead of entering the part-placement view.
-        if (player.InventorySystem.IsHolding<Blowtorch>())
+        if (player.InventorySystem.HeldItem is Blowtorch blowtorch)
         {
-            TrySolderWithHandheldBlowtorch();
+            TrySolderWithHandheldBlowtorch(blowtorch);
             return;
         }
 
@@ -112,7 +117,7 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
     /// The bench keeps ownership of the FuseMake audio because it is the
     /// object that knows when a valid connection has completed.
     /// </summary>
-    public bool TrySolderWithHandheldBlowtorch()
+    public bool TrySolderWithHandheldBlowtorch(Blowtorch blowtorch)
     {
         if (!_hasGeneratedParts)
         {
@@ -121,16 +126,19 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
 
         if (_handheldSolderCoroutine != null)
         {
-            return true;
+            return _solderingTorch == blowtorch;
         }
 
         FuseWorkbenchConnectionType target = GetNextPendingSolderTarget();
-        if (target == FuseWorkbenchConnectionType.None)
+        if (target == FuseWorkbenchConnectionType.None || coreAssemblyPoint == null)
         {
             return false;
         }
 
         enabled = true;
+        Vector3 jointOffset = target == FuseWorkbenchConnectionType.TopToCore ? topSolderOffset : bottomSolderOffset;
+        _solderingTorch = blowtorch;
+        blowtorch.BeginFuseSoldering(this, coreAssemblyPoint.TransformPoint(jointOffset));
         _handheldSolderCoroutine = StartCoroutine(SolderWithHandheldBlowtorch(target));
         return true;
     }
@@ -143,8 +151,12 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         }
 
         StopCoroutine(_handheldSolderCoroutine);
-        _handheldSolderCoroutine = null;
-        SFXManager.PostEvent(blowtorchStopEvent, gameObject);
+        EndHandheldSoldering();
+    }
+
+    private void OnDisable()
+    {
+        CancelHandheldSoldering();
     }
     
     public void Possess(PlayerCharacter playerCharacter)
@@ -552,6 +564,7 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
 
         if (wasSnapped)
         {
+            CancelHandheldSoldering();
             DestroyAssembledFuse();
         }
     }
@@ -562,8 +575,19 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
         yield return new WaitForSeconds(solderDuration);
 
         CompleteSolderTarget(target);
-        _handheldSolderCoroutine = null;
+        EndHandheldSoldering();
         TryAssembleFuse();
+    }
+
+    private void EndHandheldSoldering()
+    {
+        _handheldSolderCoroutine = null;
+        if (_solderingTorch != null)
+        {
+            _solderingTorch.EndFuseSoldering();
+        }
+        _solderingTorch = null;
+        SFXManager.PostEvent(blowtorchStopEvent, gameObject);
     }
 
     private FuseWorkbenchConnectionType GetNextPendingSolderTarget()
@@ -585,7 +609,6 @@ public class FuseWorkbench : MonoBehaviour, IInteractable, IPossessable
 
     private void CompleteSolderTarget(FuseWorkbenchConnectionType solderTarget)
     {
-        SFXManager.PostEvent(blowtorchStopEvent, gameObject);
         switch (solderTarget)
         {
             case FuseWorkbenchConnectionType.TopToCore:

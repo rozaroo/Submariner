@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapRuntimeData: {fileID: 11400000, guid: f993c08ecc9c4a340b86e7895003b85a, type: 2}
   sonarIconSprite: {fileID: 21300000, guid: 3dcaf00a4ae832d4b94c470b03c0804d, type: 3}
-  mainSonarColor: {r: 1, g: 1, b: 0, a: 0.3}
-  secondarySonarColor: {r: 0, g: 1, b: 0, a: 0.3}
+  mainSonarColor: {r: 0.9811321, g: 0.9811321, b: 0, a: 0.019607844}
+  secondarySonarColor: {r: 0, g: 1, b: 0, a: 0.039215688}

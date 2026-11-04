@@ -27,7 +27,7 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
     private Collider _collider;
     private Rigidbody _rb;
     private MeshFilter _meshFilter;
-    private EnergyPanelControl _installedPanel;
+    private bool _isInstalled;
 
     public GameObject GameObject => gameObject;
     public Vector3 HoldPositionOffset => holdPositionOffset;
@@ -53,9 +53,8 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
 
     public void Interact(PlayerCharacter player)
     {
-        if (_installedPanel != null)
+        if (_isInstalled)
         {
-            _installedPanel.TryRemoveFuse(this, player);
             return;
         }
 
@@ -64,6 +63,11 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
 
     public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
     {
+        if (_isInstalled)
+        {
+            return new InteractionFeedback("", interactionUIData, false);
+        }
+
         if (player != null && player.InventorySystem != null)
         {
             if (player.InventorySystem.HeldItem != null)
@@ -108,16 +112,11 @@ public class Fuse : MonoBehaviour, IInteractable, IPickable
         amperage = Mathf.Max(0, newAmperage);
     }
 
-    public void InstallInPanel(EnergyPanelControl panel)
+    public void InstallInPanel()
     {
-        _installedPanel = panel;
+        _isInstalled = true;
         _rb.isKinematic = true;
         _collider.enabled = true;
-    }
-
-    public void DetachFromPanel()
-    {
-        _installedPanel = null;
     }
 
     private void StoreOriginalVisuals()
