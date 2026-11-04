@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb41d959a1f4bac43ab1b01fd5ec98c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookSensitivity: 20
+  lookSensitivity: 5
   upDownPitchLimit: 70
   lookLerpSpeed: 40
   lookActionName: Look

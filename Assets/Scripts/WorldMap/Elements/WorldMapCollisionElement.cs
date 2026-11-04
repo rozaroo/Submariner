@@ -8,6 +8,7 @@ public class WorldMapCollisionElement : WorldMapElement
 
     private void OnCollisionEnter(Collision other)
     {
+        if (!other.gameObject.CompareTag("Exterior")) return; // o comprobá layer / componente SubmarineMovement
         OnCollisionSubmarine?.Invoke();
         Destroy(gameObject);
     }
