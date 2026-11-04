@@ -24,10 +24,17 @@ public class NormalCameraStrategy : ICameraStrategy
     public void Look(CameraContext ctx)
     {
         Vector2 lookDir = ctx.LookAction.ReadValue<Vector2>();
-        
-        ctx.InputYaw += lookDir.x * ctx.LookSensitivity * Time.deltaTime;
-        ctx.InputPitch -= lookDir.y * ctx.LookSensitivity * Time.deltaTime;
-        ctx.InputPitch = Mathf.Clamp(ctx.InputPitch, -ctx.UpDownPitchLimit, ctx.UpDownPitchLimit);
+
+        if (Cursor.lockState != CursorLockMode.Locked) lookDir = Vector2.zero;
+
+        bool isPointer = ctx.LookAction.activeControl?.device is UnityEngine.InputSystem.Pointer;
+        float scale = isPointer ? 0.05f : Time.deltaTime;
+
+        lookDir = Vector2.ClampMagnitude(lookDir, 200f); // solo red de seguridad
+
+        ctx.InputYaw   += lookDir.x * ctx.LookSensitivity * scale;
+        ctx.InputPitch -= lookDir.y * ctx.LookSensitivity * scale;
+        ctx.InputPitch  = Mathf.Clamp(ctx.InputPitch, -ctx.UpDownPitchLimit, ctx.UpDownPitchLimit);
         
         if (ctx.LookLerpSpeed <= 50)
         {

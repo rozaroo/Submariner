@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour, ICameraRotation
 {
     [Header("Vision Settings")]
-    [SerializeField] private float lookSensitivity = 100f;
+    [SerializeField] private float lookSensitivity = 10f;
     [SerializeField] private float upDownPitchLimit = 70f;
     [SerializeField] private float lookLerpSpeed = 10f;
     
@@ -22,6 +23,7 @@ public class CameraController : MonoBehaviour, ICameraRotation
     public float CurrentPitch { get; set; }
     
     public Camera MainCamera => playerCamera;
+    
 
     private void Start()
     {
