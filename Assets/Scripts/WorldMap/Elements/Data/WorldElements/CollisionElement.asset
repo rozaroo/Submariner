@@ -18,5 +18,5 @@ MonoBehaviour:
   requiredSize: 0.1
   sizeMultiplier: 1
   spawnWeight: 2
-  baseScale: {x: 1, y: 10, z: 1}
+  baseScale: {x: 1, y: 1, z: 1}
   scaleRange: {x: 10, y: 20}
