@@ -92,7 +92,8 @@ public class EngineSystem : MonoBehaviour
         while (_currentState == EngineState.Operative || _currentState == EngineState.Degraded)
         {
             yield return new WaitForSeconds(temperatureIncreaseInterval);
-            currentTemperature += temperatureIncreaseAmount;
+            if (_currentState != EngineState.Operative && _currentState != EngineState.Degraded) yield break;
+            currentTemperature = Mathf.Min(currentTemperature + temperatureIncreaseAmount,maxTemperature);
             Log.Info($"Engine Temperature: {currentTemperature}%");
             CheckTemperature();
         }
@@ -211,5 +212,13 @@ public class EngineSystem : MonoBehaviour
         GameEventChannel<OnEngineStateChanged>.RaiseEvent(new OnEngineStateChanged { State = EngineState.Off, SpeedMultiplier = 0f });
         SFXManager.PostEvent("Stop_Motor_Engine", gameObject);
         Log.Info("[ENGINE] Repair complete. Pull the navigation lever to start the engine.");
+    }
+    public void IncreaseTemperature(float amount)
+    {
+        if (_currentState == EngineState.Off || _currentState == EngineState.Broken) return;
+        if (amount <= 0f) return;
+        currentTemperature = Mathf.Clamp(currentTemperature + amount,0f,maxTemperature);
+        Log.Info($"[ENGINE] Emergency brake temperature increase: {currentTemperature}%");
+        CheckTemperature();
     }
 }

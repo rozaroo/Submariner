@@ -1,34 +1,61 @@
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
+
+public enum SubmarineSpeedMode
+{
+    Inactive,
+    Normal,
+    Reverse,
+    Urgency
+}
 
 [RequireComponent(typeof(Rigidbody))]
 public class SubmarineMovement : MonoBehaviour
 {
-    [Header("Movement Properties")]
-    [SerializeField] private float smoothTime = 0.9f;
-    [SerializeField] private float rotationSmoothTime = 0.15f;
-    [SerializeField] private float maxMovementSpeed = 20f;
-    [SerializeField] private float maxRotationSpeed = 40f;
-    [SerializeField] private float distanceOffset = 0.1f;
-    [SerializeField] private float smoothDeaccelerationTime = 1f;
+    [Header("Speed Settings")]
+    [SerializeField] private float normalSpeed = 5f;
+    [SerializeField] private float reverseSpeed = -5f;
+    [SerializeField] private float urgencySpeed = 10f;
 
-    [Header("Collision Properties")] 
-    [SerializeField] private float _bounceFactor = 0.4f;
-    
+    [Header("Movement Settings")]
+    [SerializeField] private float accelerationTime = 2f;
+    [SerializeField] private float decelerationTime = 3f;
+    [SerializeField] private float rotationSmoothTime = 0.5f;
+    [SerializeField] private float distanceOffset = 0.5f;
+
+    [Header("Collision Properties")]
+    [SerializeField] private float bounceFactor = 0.4f;
+
     private Rigidbody _rb;
-    private List<Vector3> _currentWaypoints;
-    private List<Vector3> _newWaypoints;
-    private bool _hasTarget;
+    private Vector3 _previousPosition;
+    private List<Vector3> _currentWaypoints = new();
+
     private int _currentIndex;
-    private Vector3 _currentTarget;
-    private Vector3 _velocity = Vector3.zero;
-    private Coroutine _movementCoroutine;
-    
-    private float _rotationVelocity = 0f;
+    private bool _hasTarget;
+
+    private Vector3 _velocity;
+
+    private float _currentSpeed;
+    private float _targetSpeed;
+    private float _currentAngle;
+
     private float _speedMultiplier = 1f;
+
     private EngineState _currentEngineState = EngineState.Off;
-    
+    private SubmarineSpeedMode _speedMode = SubmarineSpeedMode.Inactive;
+
+    private bool _isEmergencyBraking;
+    public bool IsEmergencyBraking => _isEmergencyBraking;
+    public float CurrentSpeed => _currentSpeed;
+    public float CurrentAngle => _currentAngle;
+    public SubmarineSpeedMode CurrentSpeedMode => _speedMode;
+
+    private void Awake()
+    {
+        _rb = GetComponent<Rigidbody>();
+    }
+
     private void OnEnable()
     {
         GameEventChannel<OnSubmarineRouteChanged>.OnEventRaised += GetNewWaypointList;
@@ -43,34 +70,28 @@ public class SubmarineMovement : MonoBehaviour
         GameEventChannel<OnEngineStateChanged>.OnEventRaised -= HandleEngineStateChanged;
     }
 
-    private void Start()
+    private void FixedUpdate()
     {
-        _rb = GetComponent<Rigidbody>();
-        _currentWaypoints = new List<Vector3>();
-        _newWaypoints = new List<Vector3>();
+        _previousPosition = _rb.position;
+        UpdateMovement();
+        UpdateRotation();
+        CheckWaypointArrival();
     }
 
-    #region EngineControlCheck
+    #region Engine
 
     private void HandleEngineStateChanged(OnEngineStateChanged data)
     {
         _currentEngineState = data.State;
         _speedMultiplier = data.SpeedMultiplier;
-
-        if (IsEngineRunning())
+        if (!IsEngineRunning())
         {
-            if (_newWaypoints != null && _newWaypoints.Count > 0 && !_hasTarget)
-            {
-                UpdateToNewWaypointList();
-            }
-        }
-        else
-        {
-            _hasTarget = false;
-            StopMovingTowards();
+            _speedMode = SubmarineSpeedMode.Inactive;
+            _targetSpeed = 0f;
+            _isEmergencyBraking = false;
         }
     }
-    
+
     private bool IsEngineRunning()
     {
         return _currentEngineState == EngineState.Operative || _currentEngineState == EngineState.Degraded;
@@ -78,208 +99,233 @@ public class SubmarineMovement : MonoBehaviour
 
     #endregion
 
-    private void OnSubmarineCollision(OnSubmarineCollision collision)
+    #region NavigationControls
+
+    public void SetSpeedMode(SubmarineSpeedMode mode)
     {
-        Vector3 closestPoint = collision.subCollider.ClosestPoint(_rb.position);
-        Vector3 normal = _rb.position - closestPoint;
-
-        normal = normal.sqrMagnitude > 0.001f ? normal.normalized : -_velocity.normalized;
-        float impactSpeed = _velocity.magnitude;
-        
-        _hasTarget = false;
-        _currentWaypoints?.Clear();
-        _newWaypoints?.Clear();
-
-        if (_movementCoroutine != null) StopCoroutine(_movementCoroutine);
-        _velocity = Vector3.Reflect(_velocity, normal) * _bounceFactor;
-        _movementCoroutine = StartCoroutine(DecelerateToStop());
-
-        GameEventChannel<OnSubmarineRouteCleared>.RaiseEvent(new OnSubmarineRouteCleared());
-        GameEventChannel<OnSubmarineImpact>.RaiseEvent(new OnSubmarineImpact(normal, impactSpeed));
-    }
-
-    #region CoroutinesHandlers
-
-    [ContextMenu("Movement/StartMovementTowards")]
-    public void StartMovingTowards()
-    {
-        if (_movementCoroutine != null) StopCoroutine(_movementCoroutine);
-        GetCurrentTarget();
-        if (_hasTarget) _movementCoroutine = StartCoroutine(MoveSmoothTowards());
-    }
-
-    private void StopMovingTowards()
-    {
-        if (_movementCoroutine != null)
-            StopCoroutine(_movementCoroutine);
-        
-        _movementCoroutine = StartCoroutine(DecelerateToStop());
-    }
-    
-    #endregion
-
-    #region Coroutines
-
-    private IEnumerator MoveSmoothTowards()
-    {
-        _velocity = Vector3.zero;
-        _rotationVelocity = 0f;
-
-        yield return RotateTowardsTarget();
-    
-        float sqrDistanceOffset = distanceOffset * distanceOffset;
-
-        while (_hasTarget && (_currentTarget - _rb.position).sqrMagnitude > sqrDistanceOffset)
+        if (!IsEngineRunning())
         {
-            _rb.MovePosition(Vector3.SmoothDamp(_rb.position, _currentTarget, ref _velocity, smoothTime, maxMovementSpeed * _speedMultiplier));
-            yield return new WaitForFixedUpdate();
-        }
-        _velocity = Vector3.zero; 
-        CheckTargetAvailability();
-    }
-
-    private IEnumerator RotateTowardsTarget()
-    {
-        while (_hasTarget)
-        {
-            Vector3 dir = _currentTarget - _rb.position;
-            dir.y = 0;
-
-            if (dir.sqrMagnitude < 0.001f) yield break;
-
-            float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
-            float currentAngle = _rb.rotation.eulerAngles.y;
-
-            float smoothAngle = Mathf.SmoothDampAngle(
-                currentAngle, 
-                targetAngle,
-                ref _rotationVelocity,
-                rotationSmoothTime, 
-                maxRotationSpeed);
-
-            _rb.MoveRotation(Quaternion.Euler(
-                _rb.rotation.eulerAngles.x, 
-                smoothAngle, 
-                _rb.rotation.eulerAngles.z));
-
-            if (Mathf.Abs(Mathf.DeltaAngle(currentAngle, targetAngle)) < 1f)
-            {
-                _rotationVelocity = 0f;
-                yield break;
-            }
-
-            yield return new WaitForFixedUpdate();
-        }
-    }
-    
-    private IEnumerator DecelerateToStop()
-    {
-        Vector3 velocityDampRef = Vector3.zero;
-        float rotationDampRef = 0f;
-        
-        while (_velocity.magnitude > 0.01f || Mathf.Abs(_rotationVelocity) > 0.01f)
-        {
-            _velocity = Vector3.SmoothDamp(
-                _velocity, 
-                Vector3.zero, 
-                ref velocityDampRef, 
-                smoothDeaccelerationTime, 
-                maxMovementSpeed);
-        
-            _rotationVelocity = Mathf.SmoothDamp(
-                _rotationVelocity, 
-                0f, 
-                ref rotationDampRef, 
-                smoothDeaccelerationTime, 
-                maxRotationSpeed);
-            
-            _rb.MovePosition(_rb.position + _velocity * Time.fixedDeltaTime);
-            
-            Vector3 currentLocalEuler = _rb.rotation.eulerAngles;
-            float newYAngle = currentLocalEuler.y + (_rotationVelocity * Time.fixedDeltaTime);
-
-            _rb.MoveRotation(Quaternion.Euler(currentLocalEuler.x, newYAngle, currentLocalEuler.z));
-            
-            yield return new WaitForFixedUpdate();
-        }
-        _velocity = Vector3.zero;
-        _rotationVelocity = 0f;
-    }
-
-    #endregion
-
-    #region TargetTools
-
-    private void GetCurrentTarget()
-    {
-        if (_currentIndex > _currentWaypoints.Count - 1)
-        {
-            _hasTarget = false;
+            _speedMode = SubmarineSpeedMode.Inactive;
+            _targetSpeed = 0f;
             return;
         }
-        _currentTarget = _currentWaypoints[_currentIndex];
-        _hasTarget = true;
-        _currentIndex++;
+
+        if (_isEmergencyBraking)
+            return;
+
+        _speedMode = mode;
+
+        switch (mode)
+        {
+            case SubmarineSpeedMode.Inactive:
+                _targetSpeed = 0f;
+                break;
+
+            case SubmarineSpeedMode.Normal:
+                _targetSpeed = normalSpeed;
+                break;
+
+            case SubmarineSpeedMode.Reverse:
+                _targetSpeed = reverseSpeed;
+                break;
+
+            case SubmarineSpeedMode.Urgency:
+                _targetSpeed = urgencySpeed;
+                break;
+        }
     }
 
-    private void CheckTargetAvailability()
+    public void SetAngle(float angle)
     {
-        if (!_hasTarget)
-        {
-            UpdateToNewWaypointList();
-        }
-        else
-        {
-            _velocity = Vector3.zero;
-            _rb.position = _currentTarget;
-            OnWaypoint();
-        }
+        if (!IsEngineRunning()) return;
+        _currentAngle = Mathf.Clamp(angle, -45f, 45f);
     }
 
     #endregion
 
-    #region WaypointUpdates
+    #region Movement
+
+    private void UpdateMovement()
+    {
+        Vector3 desiredVelocity = Vector3.zero;
+        Vector3 movementDirection = Vector3.zero;
+        bool hasMovementDirection = false;
+
+        // Calculamos el rumbo hacia el waypoint.
+        if (_hasTarget && _currentWaypoints != null && _currentIndex < _currentWaypoints.Count)
+        {
+            Vector3 routeDirection = _currentWaypoints[_currentIndex] - _rb.position;
+            routeDirection.y = 0f;
+            if (routeDirection.sqrMagnitude > 0.001f)
+            {
+                routeDirection.Normalize();
+                movementDirection = Quaternion.Euler(0f, _currentAngle, 0f) * routeDirection;
+                desiredVelocity = movementDirection * (_targetSpeed * _speedMultiplier);
+                hasMovementDirection = true;
+            }
+        }
+        // El freno de emergencia siempre tiene como objetivo detenerse.
+        if (_isEmergencyBraking) desiredVelocity = Vector3.zero;
+        float currentVelocityMagnitude = _velocity.magnitude;
+        float desiredVelocityMagnitude = desiredVelocity.magnitude;
+        float movementRate;
+        // Determinamos si estamos acelerando o desacelerando.
+        if (desiredVelocityMagnitude < currentVelocityMagnitude ||Vector3.Dot(_velocity, desiredVelocity) < 0f ||_isEmergencyBraking)
+        {
+            movementRate = normalSpeed / Mathf.Max(decelerationTime, 0.01f);
+            if (_isEmergencyBraking) movementRate *= 2f;
+        }
+        else movementRate = urgencySpeed / Mathf.Max(accelerationTime, 0.01f);
+        // Actualizamos el vector de velocidad.
+        _velocity = Vector3.MoveTowards(_velocity,desiredVelocity,movementRate * Time.fixedDeltaTime);
+
+        // Sincronizamos la velocidad escalar con el movimiento real.
+        if (hasMovementDirection) _currentSpeed = Vector3.Dot(_velocity, movementDirection);
+        else
+        {
+            _currentSpeed = _velocity.magnitude;
+            if (_velocity.sqrMagnitude < 0.0025f) _currentSpeed = 0f;
+        }
+        _rb.MovePosition(_rb.position + _velocity * Time.fixedDeltaTime);
+        CheckEmergencyBrakeRelease();
+    }
+    private void CheckEmergencyBrakeRelease()
+    {
+        if (!_isEmergencyBraking)
+            return;
+
+        if (_velocity.magnitude > 0.05f ||
+            Mathf.Abs(_currentSpeed) > 0.05f)
+            return;
+
+        _velocity = Vector3.zero;
+        _currentSpeed = 0f;
+
+        ReleaseEmergencyBrake();
+
+        Debug.Log("[SubmarineMovement] Emergency brake released.");
+    }
+
+    private void UpdateRotation()
+    {
+        if (!_hasTarget || _currentWaypoints == null || _currentIndex >= _currentWaypoints.Count) return;
+        if (_velocity.sqrMagnitude < 0.0001f) return;
+        Vector3 direction = _currentWaypoints[_currentIndex] - _rb.position;
+        direction.y = 0f;
+        if (direction.sqrMagnitude < 0.001f) return;
+        direction.Normalize();
+        direction = Quaternion.Euler(0f, _currentAngle, 0f) * direction;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        Quaternion newRotation = Quaternion.Slerp(_rb.rotation,targetRotation,Time.fixedDeltaTime / Mathf.Max(rotationSmoothTime, 0.01f));
+        _rb.MoveRotation(newRotation);
+    }
+
+    #endregion
+
+    #region Waypoints
+
+    private void GetNewWaypointList(OnSubmarineRouteChanged data)
+    {
+        _currentWaypoints = new List<Vector3>(data._waypoints);
+        _currentIndex = 0;
+        _hasTarget = _currentWaypoints.Count > 0;
+    }
+
+    private void CheckWaypointArrival()
+    {
+        if (!_hasTarget || _currentWaypoints == null ||
+            _currentIndex >= _currentWaypoints.Count)
+            return;
+
+        Vector3 target = _currentWaypoints[_currentIndex];
+
+        // Trabajamos únicamente sobre el plano XZ.
+        Vector3 previousPosition = new Vector3(
+            _previousPosition.x, 0f, _previousPosition.z);
+
+        Vector3 currentPosition = new Vector3(
+            _rb.position.x, 0f, _rb.position.z);
+
+        target.y = 0f;
+
+        // Comprobamos si terminó dentro del radio del waypoint.
+        if (Vector3.Distance(currentPosition, target) <= distanceOffset)
+        {
+            OnWaypoint();
+            return;
+        }
+
+        // Comprobamos si la trayectoria pasó cerca del waypoint.
+        Vector3 movementSegment = currentPosition - previousPosition;
+
+        if (movementSegment.sqrMagnitude < 0.0001f) return;
+        float t = Vector3.Dot(target - previousPosition,movementSegment) / movementSegment.sqrMagnitude;
+
+        t = Mathf.Clamp01(t);
+
+        Vector3 closestPoint = previousPosition + movementSegment * t;
+
+        float distanceToSegment = Vector3.Distance(closestPoint, target);
+
+        if (distanceToSegment <= distanceOffset)
+            OnWaypoint();
+    }
 
     private void OnWaypoint()
     {
         GameEventChannel<OnSubmarineArrivedAtCheckpoint>.RaiseEvent(new OnSubmarineArrivedAtCheckpoint());
-        UpdateToNewWaypointList();
-    }
-
-    private void GetNewWaypointList(OnSubmarineRouteChanged data)
-    {
-        _newWaypoints = data._waypoints;
-        UpdateToNewWaypointList();
-    }
-
-    private void UpdateToNewWaypointList()
-    {
-        if (_newWaypoints != null && _newWaypoints.Count > 0)
+        _currentIndex++;
+        if (_currentIndex >= _currentWaypoints.Count)
         {
-            _currentWaypoints = _newWaypoints;
-            
-            if (IsEngineRunning())
-            {
-                if (!_hasTarget || Vector3.Distance(_currentWaypoints[0], _currentTarget) > 0.05f)
-                {
-                    _currentIndex = 0;
-                    StartMovingTowards();
-                }
-            }
-            else
-            {
-                _hasTarget = false;
-                StopMovingTowards();
-            }
-        }
-        else
-        {
-            _currentWaypoints?.Clear();
             _hasTarget = false;
-            StopMovingTowards();
+            _targetSpeed = 0f;
+            _speedMode = SubmarineSpeedMode.Inactive;
         }
     }
 
     #endregion
+
+    #region EmergencyBrake
+
+    public bool ActivateEmergencyBrake()
+    {
+        if (!IsEngineRunning() || _isEmergencyBraking)
+            return false;
+
+        _isEmergencyBraking = true;
+        _speedMode = SubmarineSpeedMode.Inactive;
+        _targetSpeed = 0f;
+
+        return true;
+    }
+
+    public void ReleaseEmergencyBrake()
+    {
+        _isEmergencyBraking = false;
+    }
+
+    #endregion
+
+    #region Collision
+
+    private void OnSubmarineCollision(OnSubmarineCollision collision)
+    {
+        if (_rb == null) return;
+        Vector3 closestPoint = collision.subCollider.ClosestPoint(_rb.position);
+        Vector3 normal = _rb.position - closestPoint;
+        normal = normal.sqrMagnitude > 0.001f ? normal.normalized : -_velocity.normalized;
+        float impactSpeed = _velocity.magnitude;
+        _hasTarget = false;
+        _currentWaypoints.Clear();
+        _currentIndex = 0;
+        _velocity = Vector3.Reflect(_velocity, normal) * bounceFactor;
+        _targetSpeed = 0f;
+        _speedMode = SubmarineSpeedMode.Inactive;
+        GameEventChannel<OnSubmarineRouteCleared>.RaiseEvent(new OnSubmarineRouteCleared());
+        GameEventChannel<OnSubmarineImpact>.RaiseEvent(new OnSubmarineImpact(normal, impactSpeed));
+    }
+
+    #endregion
 }
+
 
