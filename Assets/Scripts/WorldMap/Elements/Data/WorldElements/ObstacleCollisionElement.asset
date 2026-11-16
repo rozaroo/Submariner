@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0335926970e952549a43f340a6b8d7a7, type: 3}
-  m_Name: CollisionElement
+  m_Name: ObstacleCollisionElement
   m_EditorClassIdentifier: 
   elementName: CubeCollisionTest
   prefab: {fileID: 2561515119989598273, guid: 974c7f5bc0dfc6f43821abda6febb6e8, type: 3}
   SonarDetectionMode: 3
-  requiredSize: 4
+  requiredSize: 3
   sizeMultiplier: 1
   spawnWeight: 2
   baseScale: {x: 1, y: 1, z: 1}
