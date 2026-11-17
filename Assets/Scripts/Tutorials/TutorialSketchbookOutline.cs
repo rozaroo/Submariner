@@ -12,10 +12,16 @@ public class TutorialSketchbookOutline : MonoBehaviour
 
     [SerializeField] private Material outlineMaterial;
     [Header("Breathing")]
-    [SerializeField, Min(0f)] private float minimumOutlineSize = 1.008f;
-    [SerializeField, Min(0f)] private float maximumOutlineSize = 1.012f;
-    [SerializeField, Min(0.01f)] private float breathingFrequency = 1.1f;
+    [SerializeField, Min(0f)] private float minimumOutlineSize = 1.004f;
+    [SerializeField, Min(0f)] private float maximumOutlineSize = 1.03f;
+    [SerializeField, Min(0.01f)] private float blinkFrequency = 1.5f;
+    [Tooltip("Optional. Color property whose alpha also pulses (leave empty to skip).")]
+    [SerializeField] private string colorPropertyName = "_Outline_Color";
+    [SerializeField, Range(0f, 1f)] private float minimumAlpha = 0.25f;
 
+    private const string SizePropertyName = "_Outline_Size";
+    private float _visibleSince;
+    
     private readonly List<GameObject> _proxies = new();
     private Material _runtimeOutlineMaterial;
     private bool _isVisible;
@@ -67,6 +73,11 @@ public class TutorialSketchbookOutline : MonoBehaviour
 
     public void SetVisible(bool isVisible)
     {
+        if (isVisible && !_isVisible)
+        {
+            _visibleSince = Time.time;
+        }
+
         _isVisible = isVisible;
 
         foreach (GameObject proxy in _proxies)
@@ -80,13 +91,39 @@ public class TutorialSketchbookOutline : MonoBehaviour
 
     private void Update()
     {
-        if (!_isVisible || _runtimeOutlineMaterial == null || !_runtimeOutlineMaterial.HasProperty("_Outline_Size"))
+        if (!_isVisible || _runtimeOutlineMaterial == null)
         {
             return;
         }
 
-        float pulse = (Mathf.Sin(Time.time * breathingFrequency * Mathf.PI * 2f) + 1f) * 0.5f;
-        _runtimeOutlineMaterial.SetFloat("_Outline_Size", Mathf.Lerp(minimumOutlineSize, maximumOutlineSize, pulse));
+        // cos arranca en 1 (máximo) al hacerse visible.
+        float phase = (Mathf.Cos((Time.time - _visibleSince) * blinkFrequency * Mathf.PI * 2f) + 1f) * 0.5f;
+
+        bool hasSize = _runtimeOutlineMaterial.HasProperty(SizePropertyName);
+        if (hasSize)
+        {
+            _runtimeOutlineMaterial.SetFloat(SizePropertyName, Mathf.Lerp(minimumOutlineSize, maximumOutlineSize, phase));
+        }
+
+        bool hasColor = !string.IsNullOrEmpty(colorPropertyName) && _runtimeOutlineMaterial.HasProperty(colorPropertyName);
+        if (hasColor)
+        {
+            Color color = _runtimeOutlineMaterial.GetColor(colorPropertyName);
+            color.a = Mathf.Lerp(minimumAlpha, 1f, phase);
+            _runtimeOutlineMaterial.SetColor(colorPropertyName, color);
+        }
+        
+        if (!hasSize && !hasColor)
+        {
+            bool on = phase > 0.35f;
+            foreach (GameObject proxy in _proxies)
+            {
+                if (proxy != null)
+                {
+                    proxy.SetActive(on);
+                }
+            }
+        }
     }
 
     private void BuildProxies()
