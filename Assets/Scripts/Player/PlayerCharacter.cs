@@ -207,7 +207,7 @@ public class PlayerCharacter : MonoBehaviour
         {
             // Resolve gameplay before updating presentation: icons cannot block machine input.
             _currentInteractable = _spatialInteraction.ResolveInteraction(this, interactableLayer);
-            _spatialInteraction.Tick(this, interactableLayer);
+            _spatialInteraction.Tick(this, interactableLayer); //Mensaje
             return;
         }
 

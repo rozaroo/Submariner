@@ -83,12 +83,28 @@ public class SpatialInteractionTarget : MonoBehaviour
     public Vector3 DistanceOrigin => Source != null ? Source.transform.position : transform.position;
     public float DistanceFrom(Vector3 position)
     {
-        // Match the old raycast range: measure to the usable surface, not the mesh pivot.
         var collider = Source != null ? Source.GetComponent<Collider>() : null;
-        return collider != null && collider.enabled && collider.gameObject.activeInHierarchy
-            ? Vector3.Distance(position, collider.ClosestPoint(position))
-            : Vector3.Distance(position, DistanceOrigin);
+
+        if (collider != null && collider.enabled && collider.gameObject.activeInHierarchy)
+        {
+            if (SupportsClosestPoint(collider))
+                return Vector3.Distance(position, collider.ClosestPoint(position));
+
+            // Fallback: centro de los bounds, o el más cercano dentro de los bounds
+            return Vector3.Distance(position, collider.bounds.ClosestPoint(position));
+        }
+
+        return Vector3.Distance(position, DistanceOrigin);
     }
+    
+    private static bool SupportsClosestPoint(Collider c)
+    {
+        return c is BoxCollider
+               || c is SphereCollider
+               || c is CapsuleCollider
+               || (c is MeshCollider mc && mc.convex);
+    }
+    
     public float DiscoveryRadius(float fallback) => Mathf.Max(0.1f,
         (overrideRadii ? discoveryRadius : fallback) * Mathf.Max(0.01f, radiusMultiplier));
     public float InteractionRadius(float fallback, float discovery) => Mathf.Min(discovery,

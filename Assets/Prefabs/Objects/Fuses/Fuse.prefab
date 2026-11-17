@@ -68,6 +68,8 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 7167144ad031b70458cc51fa768eeed2, type: 2}
+  - {fileID: 2100000, guid: ae0acec146e6d514e8edc5102a845d72, type: 2}
+  - {fileID: 2100000, guid: 01f954912a2622d4ab838197dab973c6, type: 2}
   - {fileID: 2100000, guid: 5a9c6a18e9dcdec478b03a9c61b3e84f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -150,14 +152,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef567a2ddcafc04894b2271b2709622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holdOffset: {x: 0.2, y: -0.2, z: 0.6}
+  holdPositionOffset: {x: 0.2, y: -0.2, z: 0.6}
+  holdRotationOffset: {x: 0, y: 0, z: 0}
   isBurned: 0
   amperage: 40
   burnedMesh: {fileID: -3187784610473809064, guid: 0d91f5b306919fb4c98d19a9cfd60359, type: 3}
   amperageLabel: {fileID: 0}
-  showAmperageLabel: 1
-  createAmperageLabelIfMissing: 1
-  amperageLabelLocalOffset: {x: 0, y: 0, z: 0}
-  amperageLabelLocalRotation: {x: 0, y: 0, z: 0}
-  amperageLabelCharacterSize: 0.08
-  amperageLabelColor: {r: 1, g: 1, b: 1, a: 1}
+  blowOutParticles: {fileID: 0}
+  _fuseBreakSFX: Fuse_Break_SFX
+  interactionUIData: {fileID: 0}
