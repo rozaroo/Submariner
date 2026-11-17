@@ -30,16 +30,6 @@
 				</Event>
 				<Event Name="Stop_TensionEvent" ID="{36B543C8-F2F2-42E6-8000-0DBC70D8A202}">
 					<ChildrenList>
-						<Action Name="" ID="{2E6D460B-25C9-4E7E-97C9-F68FC971CB06}" ShortID="108759519">
-							<PropertyList>
-								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="BackgroudNoisesRandom" ID="{72A47F02-7AB6-451E-8697-4A66D52DA602}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
 						<Action Name="" ID="{82851228-F4D6-460E-B0F7-EAB6448D970C}" ShortID="154233677">
 							<PropertyList>
 								<Property Name="ActionType" Type="int16" Value="2"/>
@@ -48,6 +38,16 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="TensionPlaylist" ID="{697C8FED-AAF1-413D-BC13-8FA7301F7C76}" WorkUnitID="{D36549F1-7A07-4154-AA3F-8C9545328D11}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{2E6D460B-25C9-4E7E-97C9-F68FC971CB06}" ShortID="108759519">
+							<PropertyList>
+								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BackgroudNoisesRandom" ID="{72A47F02-7AB6-451E-8697-4A66D52DA602}" WorkUnitID="{1EC167BD-CAF1-416E-A0B8-60C56E29F84A}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -87,6 +87,17 @@
 				</Event>
 				<Event Name="Start_BackgroundSubmarineMFX" ID="{04CF443D-B4C3-47DC-9F06-9F53E9C2CA5F}">
 					<ChildrenList>
+						<Action Name="" ID="{E6C6F8DA-55D1-41C0-ABE0-1D7AE4CD91F2}" ShortID="559540286">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="Scope" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="TensionPlaylist" ID="{697C8FED-AAF1-413D-BC13-8FA7301F7C76}" WorkUnitID="{D36549F1-7A07-4154-AA3F-8C9545328D11}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
 						<Action Name="" ID="{84C7286A-B863-49E5-B53A-8DB72FDFC759}" ShortID="427394090">
 							<ReferenceList>
 								<Reference Name="Target">
@@ -444,6 +455,22 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="Metal_Keypad_Random" ID="{A07F515C-4BE1-4900-ADA0-D6F4A4781CC2}" WorkUnitID="{320A8F09-89F3-4FB9-BDA5-7A9EDA5A26CA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_Tension_OnDeath_SFX" ID="{F967C878-81F5-47AD-B936-9E0E59E8B0D3}">
+					<ChildrenList>
+						<Action Name="" ID="{A5D4E008-B5F4-4064-827D-54339904FBA7}" ShortID="335787464">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+								<Property Name="Scope" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="TensionPlaylist" ID="{697C8FED-AAF1-413D-BC13-8FA7301F7C76}" WorkUnitID="{D36549F1-7A07-4154-AA3F-8C9545328D11}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

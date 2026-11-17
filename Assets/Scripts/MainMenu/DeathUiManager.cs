@@ -8,13 +8,11 @@ public class DeathUIManager : MonoBehaviour
 
     private void OnEnable()
     {
-      
         GameEventChannel<OnDeath>.OnEventRaised += OnPlayerDeath;
     }
 
     private void OnDisable()
     {
-        
         GameEventChannel<OnDeath>.OnEventRaised -= OnPlayerDeath;
     }
 

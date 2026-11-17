@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="140">
 	<RootPaths>
-		<ProjectRoot>C:\Users\tomas\Documents\GitHub\Submariner\Submariner_WwiseProject\</ProjectRoot>
-		<SourceFilesRoot>C:\Users\tomas\Documents\GitHub\Submariner\Submariner_WwiseProject\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\tomas\Documents\GitHub\Submariner\Submariner_WwiseProject\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>D:\Github\Submariner\Submariner_WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>D:\Github\Submariner\Submariner_WwiseProject\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>D:\Github\Submariner\Submariner_WwiseProject\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>C:\Users\tomas\Documents\GitHub\Submariner\Submariner_WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>D:\Github\Submariner\Submariner_WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
@@ -34,7 +34,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="2767847388" Language="SFX" Hash="2715242834">
+		<SoundBank Id="2767847388" Language="SFX" Hash="2164683838">
 			<ObjectPath>\SoundBanks\VoicesOfTides\Menu_SFX</ObjectPath>
 			<ShortName>Menu_SFX</ShortName>
 			<Path>Menu_SFX.bnk</Path>
@@ -54,6 +54,10 @@
 					<ShortName>01KHKXB2414VYGDDFX5GRC0K1M-_1_.wav</ShortName>
 					<Path>SFX\01KHKXB2414VYGDDFX5GRC0K1M-_1__6F91709B.wem</Path>
 				</File>
+				<File Id="628353612" Language="SFX">
+					<ShortName>452421__sagamusix__metal-stairs-foot-steps.wav</ShortName>
+					<Path>SFX\452421__sagamusix__metal-stairs-foot-steps_10C4C929.wem</Path>
+				</File>
 				<File Id="740122124" Language="SFX">
 					<ShortName>01KHKXB2414VYGDDFX5GRC0K1M-_1_.wav</ShortName>
 					<Path>SFX\01KHKXB2414VYGDDFX5GRC0K1M-_1__51A61B83.wem</Path>
@@ -66,13 +70,17 @@
 					<ShortName>01KHKXB2414VYGDDFX5GRC0K1M-_1_.wav</ShortName>
 					<Path>SFX\01KHKXB2414VYGDDFX5GRC0K1M-_1__21F45003.wem</Path>
 				</File>
+				<File Id="1020755499" Language="SFX">
+					<ShortName>441252__regentag__waterflow-loop.wav</ShortName>
+					<Path>SFX\441252__regentag__waterflow-loop_10C4C929.wem</Path>
+				</File>
 				<File Id="1026869329" Language="SFX">
 					<ShortName>01KJQHE521HE2H524DXGMR3V5S.wav</ShortName>
 					<Path>SFX\01KJQHE521HE2H524DXGMR3V5S_0005D7D0.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 		</SoundBank>
-		<SoundBank Id="3401228817" Language="SFX" Hash="1413249417">
+		<SoundBank Id="3401228817" Language="SFX" Hash="1012851280">
 			<ObjectPath>\SoundBanks\VoicesOfTides\GamePlay_SFX</ObjectPath>
 			<ShortName>GamePlay_SFX</ShortName>
 			<Path>GamePlay_SFX.bnk</Path>
@@ -110,6 +118,7 @@
 				<Event Id="880757133" Name="Stop_FuseMake" ObjectPath="\Events\Gameplay_SFX\Stop_FuseMake" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="3933279043" Name="Stop_HullBreachSFX" ObjectPath="\Events\Gameplay_SFX\Stop_HullBreachSFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="344065456" Name="Stop_Motor_Engine" ObjectPath="\Events\Gameplay_SFX\Stop_Motor_Engine" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
+				<Event Id="2708049124" Name="Stop_Tension_OnDeath_SFX" ObjectPath="\Events\Gameplay_SFX\Stop_Tension_OnDeath_SFX" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 				<Event Id="3884825202" Name="Stop_TensionEvent" ObjectPath="\Events\Gameplay_SFX\Stop_TensionEvent" DurationType="Infinite"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>

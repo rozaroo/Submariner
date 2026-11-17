@@ -47,6 +47,7 @@ namespace AK
         static const AkUniqueID STOP_FUSEMAKE = 880757133U;
         static const AkUniqueID STOP_HULLBREACHSFX = 3933279043U;
         static const AkUniqueID STOP_MOTOR_ENGINE = 344065456U;
+        static const AkUniqueID STOP_TENSION_ONDEATH_SFX = 2708049124U;
         static const AkUniqueID STOP_TENSIONEVENT = 3884825202U;
     } // namespace EVENTS
 

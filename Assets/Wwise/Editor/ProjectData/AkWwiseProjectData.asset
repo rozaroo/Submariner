@@ -288,7 +288,7 @@ MonoBehaviour:
     ParentPath: Events\Gameplay_SFX
     guid: a7075cb480cc804bbbacef59f1484550
     GuidInternal: 
-    m_lastTime: -8584067597908517804
+    m_lastTime: -8584066516955301156
     List:
     - name: Fuse_Break_SFX
       guid: b066f001ec0a9d43a1664e1b435589fa
@@ -882,6 +882,23 @@ MonoBehaviour:
         ObjectType: 3
         guid: f7a4f125d45f8c46abf91696e0b6c194
       Path: Events\Gameplay_SFX\Stop_Motor_Engine
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Stop_Tension_OnDeath_SFX
+      guid: 78c867f9f581ad47b9369e0e59e8b0d3
+      id: 2708049124
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Gameplay_SFX
+        ObjectType: 12
+        guid: a7075cb480cc804bbbacef59f1484550
+      - ElementName: Stop_Tension_OnDeath_SFX
+        ObjectType: 3
+        guid: 78c867f9f581ad47b9369e0e59e8b0d3
+      Path: Events\Gameplay_SFX\Stop_Tension_OnDeath_SFX
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0

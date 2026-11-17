@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
 
         if (SceneTransitionManager.Instance != null)
         {
+            SFXManager.PostEvent("Stop_Tension_OnDeath_SFX", gameObject);
             SceneTransitionManager.Instance.LoadSceneWithFade("Defeat");
         }
         else
