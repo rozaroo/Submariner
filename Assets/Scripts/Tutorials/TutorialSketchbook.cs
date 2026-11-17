@@ -24,6 +24,9 @@ public class TutorialSketchbook : MonoBehaviour
     [Tooltip("Extra local rotation relative to the camera when reading. X tilts, Y turns, and Z rolls the sketchbook.")]
     [SerializeField] private Vector3 readingRotationOffset;
     [SerializeField, Min(0.01f)] private float transitionDuration = 0.25f;
+    
+    private enum TutorialState { Unused, Used }
+    private TutorialState _state = TutorialState.Unused;
 
     private IPossessable _owningStation;
     private Collider _sketchbookCollider;
@@ -39,6 +42,7 @@ public class TutorialSketchbook : MonoBehaviour
 
     private void Awake()
     {
+        _state = TutorialState.Unused;
         CacheOwningStation();
         CacheTablePose();
         CacheClickCollider();
@@ -118,6 +122,7 @@ public class TutorialSketchbook : MonoBehaviour
             return;
         }
 
+        _outline.SetVisible(_state == TutorialState.Unused);
         _stationCamera = player.CamController.MainCamera;
         StopListeningForClicks();
         _clickAction = player.Input.actions[StationClickActionName];
@@ -189,10 +194,21 @@ public class TutorialSketchbook : MonoBehaviour
             return false;
         }
 
-        _hasBeenInteracted = true;
+        MarkAsUsed();
         _outline.SetVisible(false);
         BringToReadingPosition();
         return true;
+    }
+    
+    private void MarkAsUsed()
+    {
+        if (_state == TutorialState.Used)
+        {
+            return;
+        }
+
+        _state = TutorialState.Used;
+        _outline.SetVisible(false);
     }
 
     private bool IsPointerOverSketchbook()
