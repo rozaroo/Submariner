@@ -958,7 +958,7 @@ MonoBehaviour:
   lineBreakPause: 0.2
   useUnscaledTime: 1
   continuePrompt: {fileID: 0}
-  pageCounter: {fileID: 0}
+  pageCounter: {fileID: 1043477706}
   typingEvent: Play_Metal_Keypad_Random
   minimumSoundInterval: 0.035
   onCompleted:
