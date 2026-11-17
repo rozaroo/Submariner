@@ -6122,7 +6122,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1486521213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6255,6 +6255,10 @@ PrefabInstance:
     - target: {fileID: 247556578119447125, guid: 45c12e2cd143bca45b4aa14fbbdd1952, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3246600704839594514, guid: 45c12e2cd143bca45b4aa14fbbdd1952, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 2147487711
       objectReference: {fileID: 0}
     - target: {fileID: 7324493023298970460, guid: 45c12e2cd143bca45b4aa14fbbdd1952, type: 3}
       propertyPath: m_Name
@@ -6425,7 +6429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 936370429721258251, guid: 00ef0bc0a0f5a2847abf1e523f4d2335, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2927956906349748985, guid: 00ef0bc0a0f5a2847abf1e523f4d2335, type: 3}
       propertyPath: m_Pivot.x
