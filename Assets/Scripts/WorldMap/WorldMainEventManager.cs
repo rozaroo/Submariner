@@ -141,6 +141,7 @@ public class WorldMainEventManager : MonoBehaviour
             WorldUIUpdateMode.Static, WorldUISyncMode.Linear);
 
         _extractionPoint.gameObject.SetActive(true);
+        _extractionPoint.OnSubmarineReachedExtraction -= OnSubmarineReachedExtraction;
         _extractionPoint.OnSubmarineReachedExtraction += OnSubmarineReachedExtraction;
         
         GameEventChannel<OnWorldMapElementGenerated>.RaiseEvent(
@@ -157,11 +158,15 @@ public class WorldMainEventManager : MonoBehaviour
     {
         _extractionPoint.OnSubmarineReachedExtraction -= OnSubmarineReachedExtraction;
 
-        GameEventChannel<OnMainEventAreaChanged>.RaiseEvent(
-            new OnMainEventAreaChanged(Vector3.zero, 0f, false, string.Empty));
+        Log.Info("[MainEventManager] Submarine reached extraction.");
+        GameEventChannel<OnGameWon>.RaiseEvent(new OnGameWon());   // lo importante primero
 
-        GameEventChannel<OnGameWon>.RaiseEvent(new OnGameWon());
-        Log.Info("[MainEventManager] Game Won");
+        try
+        {
+            GameEventChannel<OnMainEventAreaChanged>.RaiseEvent(
+                new OnMainEventAreaChanged(Vector3.zero, 0f, false, string.Empty));
+        }
+        catch (System.Exception e) { Log.Error($"[MainEventManager] {e}"); }
     }
 
     #region Testing

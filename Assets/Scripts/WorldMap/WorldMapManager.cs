@@ -37,8 +37,8 @@ public class WorldMapManager : MonoBehaviour
         try
         {
             CreateSubmarine();
-            GenerateMainEvents();
             GenerateExtractionPoint(); 
+            GenerateMainEvents();
             GenerateRandomFill();
             GameEventChannel<OnMainEventsGenerated>.RaiseEvent(
                 new OnMainEventsGenerated(_generatedMainEvents, _generatedExtractionPoint));
@@ -148,9 +148,11 @@ public class WorldMapManager : MonoBehaviour
 
         if (!TryAssignPosition(go, mainEventExclusionRadius, mapSpawnAttempts))
         {
-            Log.Warning("[WorldMapManager] Extraction Point didnt found available location.");
-            Destroy(go);
-            return;
+            if (!TryAssignPosition(go, mainEventExclusionRadius * 0.5f, mapSpawnAttempts * 2))
+            {
+                Log.Warning("[WorldMapManager] Extraction Point forced position.");
+                ApplyPosition(go, GenerateRandomPosition());
+            }
         }
         
         go.SetActive(false);
