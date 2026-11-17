@@ -15,8 +15,9 @@ MonoBehaviour:
   elementName: Extraction_Element
   prefab: {fileID: 6375476034618856122, guid: b28d368530d8ee2488b3c5e834b19a75, type: 3}
   SonarDetectionMode: 1
-  requiredSize: 0
+  requiredSize: 25
   sizeMultiplier: 1
+  spawnWeight: 1
   mapAsset: {fileID: 11400000, guid: 3d0b7b3e525f28249b1a67a159564909, type: 2}
   updateMode: 0
   syncMode: 0
