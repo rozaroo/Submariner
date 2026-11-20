@@ -79,14 +79,12 @@ public class LeverControlStation : MonoBehaviour, IInteractable, IPossessable
         _clickAction = player.Input.actions.FindAction(clickActionName);
         _pointerDeltaAction = player.Input.actions.FindAction(pointerDeltaActionName);
         _exitAction = player.Input.actions.FindAction(exitActionName);
-
         if (_clickAction != null)
         {
             _clickAction.started += OnClickStarted;
             _clickAction.canceled += OnClickCanceled;
         }
         else Log.Error($"[{nameof(LeverControlStation)}] Action '{clickActionName}' was not found.");
-        
         if (_exitAction != null) _exitAction.started += OnExitStarted;
         else Log.Error($"[{nameof(LeverControlStation)}] Action '{exitActionName}' was not found.");
         enabled = true;
@@ -100,6 +98,7 @@ public class LeverControlStation : MonoBehaviour, IInteractable, IPossessable
             _clickAction.canceled -= OnClickCanceled;
         }
         if (_exitAction != null) _exitAction.started -= OnExitStarted;
+        if (_draggedLever is ILeverDragRelease releasable) releasable.OnActionRelease();
         _draggedLever = null;
         _clickAction = null;
         _pointerDeltaAction = null;
@@ -112,9 +111,7 @@ public class LeverControlStation : MonoBehaviour, IInteractable, IPossessable
     private void Update()
     {
         if (_draggedLever == null || _currentPlayer == null) return;
-
         if (_pointerDeltaAction == null) return;
-
         _draggedLever.OnActionDrag(_pointerDeltaAction.ReadValue<Vector2>().y);
     }
 
@@ -125,6 +122,7 @@ public class LeverControlStation : MonoBehaviour, IInteractable, IPossessable
 
     private void OnClickCanceled(InputAction.CallbackContext context)
     {
+        if (_draggedLever is ILeverDragRelease releasable) releasable.OnActionRelease();
         _draggedLever = null;
     }
 
@@ -136,14 +134,13 @@ public class LeverControlStation : MonoBehaviour, IInteractable, IPossessable
     private ILeverControls GetLeverUnderCursor()
     {
         if (_playerCamera == null || Mouse.current == null) return null;
-
         Vector2 mousePosition = Mouse.current.position.ReadValue();
-        Vector2 viewportPosition = new(mousePosition.x / Screen.width, mousePosition.y / Screen.height);
+        Vector2 viewportPosition = new(mousePosition.x / Screen.width,mousePosition.y / Screen.height);
         Ray ray = _playerCamera.ViewportPointToRay(viewportPosition);
-
         if (!Physics.Raycast(ray, out RaycastHit hit, leverRaycastDistance)) return null;
-
-        LeverPullStation lever = hit.collider.GetComponentInParent<LeverPullStation>();
-        return lever != null && !lever.isLocked ? lever : null;
+        MonoBehaviour[] components = hit.collider.GetComponentsInParent<MonoBehaviour>();
+        foreach (MonoBehaviour component in components)
+            if (component is ILeverControls lever && !lever.isLocked) return lever;
+        return null;
     }
 }

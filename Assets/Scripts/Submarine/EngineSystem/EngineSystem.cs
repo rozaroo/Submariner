@@ -27,6 +27,9 @@ public class EngineSystem : MonoBehaviour
     private Coroutine _engineStartingCoroutine;
     private Coroutine _temperatureCoroutine;
 
+    public EngineState CurrentState => _currentState;
+    public float CurrentTemperature => currentTemperature;
+
     #region UnityFunctions
 
     private void Start()
@@ -35,17 +38,6 @@ public class EngineSystem : MonoBehaviour
         {
             navigationLeverPull.onActivation += TryStartEngine;
             navigationLeverPull.onDeactivation += StopEngine;
-        }
-    }
-    private void Update()
-    {
-        if (Keyboard.current != null && Keyboard.current.f2Key.wasPressedThisFrame)
-        {
-            currentTemperature = maxTemperature;
-
-            Debug.Log($"[ENGINE TEST] Temperature forced to {currentTemperature}%");
-
-            CheckTemperature();
         }
     }
     
@@ -221,4 +213,37 @@ public class EngineSystem : MonoBehaviour
         Log.Info($"[ENGINE] Emergency brake temperature increase: {currentTemperature}%");
         CheckTemperature();
     }
+    #region Debug
+
+    public void DebugStartEngine()
+    {
+        TryStartEngine();
+    }
+
+    public void DebugStopEngine()
+    {
+        if (_currentState == EngineState.Off ||
+            _currentState == EngineState.Broken)
+            return;
+
+        StopEngine();
+    }
+
+    public void DebugForceCriticalTemperature()
+    {
+        if (!IsRunning()) return;
+
+        currentTemperature = criticalTemperature;
+        CheckTemperature();
+    }
+
+    public void DebugForceMaxTemperature()
+    {
+        if (!IsRunning()) return;
+
+        currentTemperature = maxTemperature;
+        CheckTemperature();
+    }
+
+    #endregion
 }

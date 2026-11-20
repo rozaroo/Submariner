@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,6 +49,7 @@ public class SubmarineMovement : MonoBehaviour
     public float CurrentSpeed => _currentSpeed;
     public float CurrentAngle => _currentAngle;
     public SubmarineSpeedMode CurrentSpeedMode => _speedMode;
+    public System.Action<SubmarineSpeedMode> OnSpeedModeChanged;
 
     private void Awake()
     {
@@ -86,13 +86,13 @@ public class SubmarineMovement : MonoBehaviour
         _speedMultiplier = data.SpeedMultiplier;
         if (!IsEngineRunning())
         {
-            _speedMode = SubmarineSpeedMode.Inactive;
+            SetCurrentSpeedMode(SubmarineSpeedMode.Inactive);
             _targetSpeed = 0f;
             _isEmergencyBraking = false;
         }
     }
 
-    private bool IsEngineRunning()
+    public bool IsEngineRunning()
     {
         return _currentEngineState == EngineState.Operative || _currentEngineState == EngineState.Degraded;
     }
@@ -105,16 +105,12 @@ public class SubmarineMovement : MonoBehaviour
     {
         if (!IsEngineRunning())
         {
-            _speedMode = SubmarineSpeedMode.Inactive;
+            SetCurrentSpeedMode(SubmarineSpeedMode.Inactive);
             _targetSpeed = 0f;
             return;
         }
-
-        if (_isEmergencyBraking)
-            return;
-
-        _speedMode = mode;
-
+        if (_isEmergencyBraking) return;
+        SetCurrentSpeedMode(mode);
         switch (mode)
         {
             case SubmarineSpeedMode.Inactive:
@@ -191,18 +187,11 @@ public class SubmarineMovement : MonoBehaviour
     }
     private void CheckEmergencyBrakeRelease()
     {
-        if (!_isEmergencyBraking)
-            return;
-
-        if (_velocity.magnitude > 0.05f ||
-            Mathf.Abs(_currentSpeed) > 0.05f)
-            return;
-
+        if (!_isEmergencyBraking) return;
+        if (_velocity.magnitude > 0.05f || Mathf.Abs(_currentSpeed) > 0.05f) return;
         _velocity = Vector3.zero;
         _currentSpeed = 0f;
-
         ReleaseEmergencyBrake();
-
         Debug.Log("[SubmarineMovement] Emergency brake released.");
     }
 
@@ -279,7 +268,7 @@ public class SubmarineMovement : MonoBehaviour
         {
             _hasTarget = false;
             _targetSpeed = 0f;
-            _speedMode = SubmarineSpeedMode.Inactive;
+            SetCurrentSpeedMode(SubmarineSpeedMode.Inactive);
         }
     }
 
@@ -289,13 +278,10 @@ public class SubmarineMovement : MonoBehaviour
 
     public bool ActivateEmergencyBrake()
     {
-        if (!IsEngineRunning() || _isEmergencyBraking)
-            return false;
-
+        if (!IsEngineRunning() || _isEmergencyBraking) return false;
         _isEmergencyBraking = true;
-        _speedMode = SubmarineSpeedMode.Inactive;
+        SetCurrentSpeedMode(SubmarineSpeedMode.Inactive);
         _targetSpeed = 0f;
-
         return true;
     }
 
@@ -320,11 +306,16 @@ public class SubmarineMovement : MonoBehaviour
         _currentIndex = 0;
         _velocity = Vector3.Reflect(_velocity, normal) * bounceFactor;
         _targetSpeed = 0f;
-        _speedMode = SubmarineSpeedMode.Inactive;
+        SetCurrentSpeedMode(SubmarineSpeedMode.Inactive);
         GameEventChannel<OnSubmarineRouteCleared>.RaiseEvent(new OnSubmarineRouteCleared());
         GameEventChannel<OnSubmarineImpact>.RaiseEvent(new OnSubmarineImpact(normal, impactSpeed));
     }
-
+    private void SetCurrentSpeedMode(SubmarineSpeedMode mode)
+    {
+        if (_speedMode == mode) return;
+        _speedMode = mode;
+        OnSpeedModeChanged?.Invoke(_speedMode);
+    }
     #endregion
 }
 

@@ -60,14 +60,15 @@ public class ButtonStation : MonoBehaviour, IButtonControls
         }
     }
 
-    public void OnActionUp() //TODO: Not Being used, change the usage on Drainage Station (or others) or remove if useless (Prefer the first option)
+    public void OnActionUp()
     {
         if (isPressed && !isLocked)
         {
-            ChangeColor(activeColor);
+            isPressed = false;
+            ChangeColor(unlockedColor);
         }
     }
-    
+
     public void Restart()
     {
         Lock();

@@ -33,6 +33,7 @@ public class LeverInteractionAdapter : MonoBehaviour, IInteractable
 
     public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
     {
-        return _station.SendInteractionFeedback(player);
+        if (_station != null) return _station.SendInteractionFeedback(player);
+        return new InteractionFeedback("Interact", null);
     }
 }
