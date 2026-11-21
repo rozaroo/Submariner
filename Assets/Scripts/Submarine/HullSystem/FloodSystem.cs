@@ -1,10 +1,11 @@
-using System;
+using Bitgem.VFX.StylisedWater;
 using UnityEngine;
 
 public class FloodSystem : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform waterMesh;
+    [SerializeField] private WaterVolumeBox waterVolume;
 
     [Header("Settings")]
     [SerializeField] private float maxRiseSpeed = 1f;
@@ -17,6 +18,11 @@ public class FloodSystem : MonoBehaviour
     private float _currentHeight;
     private bool _sunkLogged;
     private bool _isFlooding;
+    private Renderer _volumeRenderer;
+    private Vector3 _volumeScale;
+    private Vector3 _volumeTop;
+    private float _volumeDepth;
+    private float _surfaceOffset;
 
     private void Awake()
     {
@@ -28,6 +34,19 @@ public class FloodSystem : MonoBehaviour
 
     private void Start()
     {
+        if (waterVolume != null)
+        {
+            waterVolume.Rebuild();
+
+            Bounds bounds = waterVolume.GetComponent<MeshFilter>().sharedMesh.bounds;
+            Transform volume = waterVolume.transform;
+            _volumeRenderer = waterVolume.GetComponent<Renderer>();
+            _volumeScale = volume.localScale;
+            _volumeTop = new Vector3(0f, bounds.max.y, 0f);
+            _volumeDepth = volume.TransformVector(Vector3.up * bounds.size.y).y;
+            _surfaceOffset = volume.TransformPoint(_volumeTop).y - waterMesh.position.y;
+        }
+
         _currentHeight = startHeight;
         SetWaterHeight(_currentHeight);
     }
@@ -99,5 +118,21 @@ public class FloodSystem : MonoBehaviour
         Vector3 pos = waterMesh.position;
         pos.y = y;
         waterMesh.position = pos;
+
+        if (_volumeRenderer == null) return;
+
+        float depth = y - startHeight;
+        _volumeRenderer.enabled = depth > 0f;
+        if (depth <= 0f) return;
+
+        Transform volume = waterVolume.transform;
+        Vector3 scale = _volumeScale;
+        scale.y *= depth / _volumeDepth;
+        volume.localScale = scale;
+
+        // Preserve the existing trigger motion while the visible volume grows from the dry waterline.
+        Vector3 volumePosition = volume.position;
+        volumePosition.y += y + _surfaceOffset - volume.TransformPoint(_volumeTop).y;
+        volume.position = volumePosition;
     }
 }
