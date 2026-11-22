@@ -1,35 +1,40 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
-/// <summary>
-/// Draws a separate copy of each mesh with an outline material. The original
-/// renderers and their material slots are never modified.
-/// </summary>
+/// <summary>Applies a pulsing outline material to the sketchbook's own mesh renderers.</summary>
 [DisallowMultipleComponent]
 public class TutorialSketchbookOutline : MonoBehaviour
 {
-    private const string ProxyNamePrefix = "__TutorialSketchbookOutline_";
+    private const string SizePropertyName = "_Outline_Size";
+    private const string StencilComparePropertyName = "_Outline_StencilCompare";
 
     [SerializeField] private Material outlineMaterial;
     [Header("Breathing")]
-    [SerializeField, Min(0f)] private float minimumOutlineSize = 1.004f;
-    [SerializeField, Min(0f)] private float maximumOutlineSize = 1.03f;
+    [Tooltip("Minimum fraction of the outline width set in the material.")]
+    [SerializeField, Range(0f, 1f)] private float minimumOutlineFraction = 0.4f;
     [SerializeField, Min(0.01f)] private float blinkFrequency = 1.5f;
     [Tooltip("Optional. Color property whose alpha also pulses (leave empty to skip).")]
     [SerializeField] private string colorPropertyName = "_Outline_Color";
     [SerializeField, Range(0f, 1f)] private float minimumAlpha = 0.25f;
 
-    private const string SizePropertyName = "_Outline_Size";
-    private float _visibleSince;
-    
-    private readonly List<GameObject> _proxies = new();
-    private Material _runtimeOutlineMaterial;
-    private bool _isVisible;
-
-    private void Awake()
+    private sealed class RendererMaterials
     {
-        SetVisible(false);
+        public MeshRenderer Renderer;
+        public MeshFilter Filter;
+        public Mesh OriginalMesh;
+        public Mesh OutlineMesh;
+        public Material[] OriginalMaterials;
+        public Material[] OutlineMaterials;
     }
+
+    private readonly List<RendererMaterials> _renderers = new();
+    private Material _runtimeOutlineMaterial;
+    private Material _runtimeMaskMaterial;
+    private float _visibleSince;
+    private bool _isVisible;
+    private bool _outlineApplied;
 
     private void OnDisable()
     {
@@ -38,71 +43,65 @@ public class TutorialSketchbookOutline : MonoBehaviour
 
     private void OnDestroy()
     {
-        ClearProxies();
-
-        if (_runtimeOutlineMaterial != null)
-        {
-            Destroy(_runtimeOutlineMaterial);
-        }
+        SetVisible(false);
+        ReleaseResources();
     }
 
     public void Initialize(Material material)
     {
+        SetVisible(false);
         if (material != null && material != outlineMaterial)
         {
+            ReleaseResources();
             outlineMaterial = material;
-            ClearProxies();
-
-            if (_runtimeOutlineMaterial != null)
-            {
-                Destroy(_runtimeOutlineMaterial);
-                _runtimeOutlineMaterial = null;
-            }
         }
 
-        RemovePreviousOutlineProxies();
+        if (outlineMaterial == null || _runtimeOutlineMaterial != null) return;
 
-        if (outlineMaterial != null && _runtimeOutlineMaterial == null)
+        _runtimeOutlineMaterial = new Material(outlineMaterial);
+        _runtimeOutlineMaterial.SetShaderPassEnabled("ShadowCaster", false);
+        if (_runtimeOutlineMaterial.HasProperty(StencilComparePropertyName))
         {
-            _runtimeOutlineMaterial = new Material(outlineMaterial);
-            BuildProxies();
+            // Draw every unexpanded book surface into stencil before drawing the enlarged outline.
+            _runtimeMaskMaterial = new Material(_runtimeOutlineMaterial);
+            _runtimeMaskMaterial.renderQueue = _runtimeOutlineMaterial.renderQueue - 1;
+            _runtimeMaskMaterial.SetFloat(SizePropertyName, 1f);
+            _runtimeMaskMaterial.SetFloat("_Outline_Cull", (float)CullMode.Off);
+            _runtimeMaskMaterial.SetFloat("_Outline_ColorMask", 0f);
+            _runtimeMaskMaterial.SetFloat(StencilComparePropertyName, (float)CompareFunction.Always);
+            _runtimeMaskMaterial.SetFloat("_Outline_StencilPass", (float)StencilOp.Replace);
         }
-
-        SetVisible(false);
+        PrepareRenderers();
     }
 
     public void SetVisible(bool isVisible)
     {
-        if (isVisible && !_isVisible)
-        {
-            _visibleSince = Time.time;
-        }
+        if (isVisible == _isVisible || _runtimeOutlineMaterial == null) return;
 
         _isVisible = isVisible;
-
-        foreach (GameObject proxy in _proxies)
+        if (_isVisible)
         {
-            if (proxy != null)
-            {
-                proxy.SetActive(isVisible);
-            }
+            _visibleSince = Time.time;
+            Update();
+        }
+        else
+        {
+            ApplyOutline(false);
         }
     }
 
     private void Update()
     {
-        if (!_isVisible || _runtimeOutlineMaterial == null)
-        {
-            return;
-        }
+        if (!_isVisible || _runtimeOutlineMaterial == null) return;
 
-        // cos arranca en 1 (máximo) al hacerse visible.
         float phase = (Mathf.Cos((Time.time - _visibleSince) * blinkFrequency * Mathf.PI * 2f) + 1f) * 0.5f;
-
-        bool hasSize = _runtimeOutlineMaterial.HasProperty(SizePropertyName);
+        bool hasSize = outlineMaterial != null && outlineMaterial.HasProperty(SizePropertyName)
+                       && _runtimeOutlineMaterial.HasProperty(SizePropertyName);
         if (hasSize)
         {
-            _runtimeOutlineMaterial.SetFloat(SizePropertyName, Mathf.Lerp(minimumOutlineSize, maximumOutlineSize, phase));
+            float outlineSize = outlineMaterial.GetFloat(SizePropertyName);
+            float widthFraction = Mathf.Lerp(minimumOutlineFraction, 1f, phase);
+            _runtimeOutlineMaterial.SetFloat(SizePropertyName, Mathf.Lerp(1f, outlineSize, widthFraction));
         }
 
         bool hasColor = !string.IsNullOrEmpty(colorPropertyName) && _runtimeOutlineMaterial.HasProperty(colorPropertyName);
@@ -112,87 +111,98 @@ public class TutorialSketchbookOutline : MonoBehaviour
             color.a = Mathf.Lerp(minimumAlpha, 1f, phase);
             _runtimeOutlineMaterial.SetColor(colorPropertyName, color);
         }
-        
-        if (!hasSize && !hasColor)
-        {
-            bool on = phase > 0.35f;
-            foreach (GameObject proxy in _proxies)
-            {
-                if (proxy != null)
-                {
-                    proxy.SetActive(on);
-                }
-            }
-        }
+
+        ApplyOutline(hasSize || hasColor || phase > 0.35f);
     }
 
-    private void BuildProxies()
+    private void PrepareRenderers()
     {
-        MeshRenderer[] sourceRenderers = GetComponentsInChildren<MeshRenderer>(true);
-        foreach (MeshRenderer sourceRenderer in sourceRenderers)
-        {
-            if (sourceRenderer.GetComponent<TutorialSketchbookOutlineProxy>() != null)
-            {
-                continue;
-            }
-
-            MeshFilter sourceFilter = sourceRenderer.GetComponent<MeshFilter>();
-            if (sourceFilter == null || sourceFilter.sharedMesh == null)
-            {
-                continue;
-            }
-
-            GameObject proxy = new GameObject($"{ProxyNamePrefix}{sourceRenderer.GetInstanceID()}");
-            proxy.layer = sourceRenderer.gameObject.layer;
-            proxy.AddComponent<TutorialSketchbookOutlineProxy>();
-
-            Transform proxyTransform = proxy.transform;
-            proxyTransform.SetParent(sourceRenderer.transform.parent, false);
-            proxyTransform.localPosition = sourceRenderer.transform.localPosition;
-            proxyTransform.localRotation = sourceRenderer.transform.localRotation;
-            proxyTransform.localScale = sourceRenderer.transform.localScale;
-
-            MeshFilter proxyFilter = proxy.AddComponent<MeshFilter>();
-            proxyFilter.sharedMesh = sourceFilter.sharedMesh;
-
-            MeshRenderer proxyRenderer = proxy.AddComponent<MeshRenderer>();
-            proxyRenderer.sharedMaterial = _runtimeOutlineMaterial;
-            proxyRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            proxyRenderer.receiveShadows = false;
-            _proxies.Add(proxy);
-        }
-    }
-
-    private void ClearProxies()
-    {
-        foreach (GameObject proxy in _proxies)
-        {
-            if (proxy != null)
-            {
-                Destroy(proxy);
-            }
-        }
-
-        _proxies.Clear();
-    }
-
-    private void RemovePreviousOutlineProxies()
-    {
-        bool hasCurrentProxies = _proxies.Count > 0;
-
         foreach (MeshRenderer renderer in GetComponentsInChildren<MeshRenderer>(true))
         {
-            bool isCurrentProxy = !hasCurrentProxies && renderer.GetComponent<TutorialSketchbookOutlineProxy>() != null;
-            bool isOldProxy = renderer.gameObject.name.EndsWith(" Outline") && outlineMaterial != null &&
-                              renderer.sharedMaterial != null && renderer.sharedMaterial.shader == outlineMaterial.shader;
+            if (!renderer.TryGetComponent(out MeshFilter filter) || filter.sharedMesh == null) continue;
 
-            if (isCurrentProxy || isOldProxy)
+            Mesh mesh = filter.sharedMesh;
+            Material[] materials = renderer.sharedMaterials;
+            int subMeshCount = mesh.subMeshCount;
+            if (subMeshCount == 0 || materials.Length < subMeshCount) continue;
+            if (subMeshCount > 1 && !mesh.isReadable)
             {
-                Destroy(renderer.gameObject);
+                Debug.LogWarning("Enable Read/Write on the sketchbook mesh to outline all its submeshes.", renderer);
+                continue;
             }
+
+            int maskSlots = _runtimeMaskMaterial != null ? subMeshCount : 0;
+            int firstOutlineSlot = materials.Length + maskSlots;
+            Material[] withOutline = new Material[firstOutlineSlot + subMeshCount];
+            Array.Copy(materials, withOutline, materials.Length);
+            Array.Fill(withOutline, _runtimeMaskMaterial, materials.Length, maskSlots);
+            Array.Fill(withOutline, _runtimeOutlineMaterial, firstOutlineSlot, subMeshCount);
+
+            _renderers.Add(new RendererMaterials
+            {
+                Renderer = renderer,
+                Filter = filter,
+                OriginalMesh = mesh,
+                OutlineMesh = subMeshCount > 1 ? CreateOutlineMesh(mesh, materials.Length, withOutline.Length) : null,
+                OriginalMaterials = materials,
+                OutlineMaterials = withOutline
+            });
+        }
+    }
+
+    private static Mesh CreateOutlineMesh(Mesh source, int originalMaterialCount, int totalMaterialCount)
+    {
+        // Extra material slots otherwise redraw only the last submesh.
+        int sourceSubMeshCount = source.subMeshCount;
+        Mesh mesh = Instantiate(source);
+        mesh.name = source.name + " (Outline)";
+        mesh.subMeshCount = totalMaterialCount;
+
+        for (int index = sourceSubMeshCount; index < mesh.subMeshCount; index++)
+        {
+            int originalIndex = index < originalMaterialCount
+                ? sourceSubMeshCount - 1
+                : (index - originalMaterialCount) % sourceSubMeshCount;
+            mesh.SetIndices(source.GetIndices(originalIndex, applyBaseVertex: false), source.GetTopology(originalIndex),
+                index, calculateBounds: false, baseVertex: source.GetSubMesh(originalIndex).baseVertex);
+        }
+
+        return mesh;
+    }
+
+    private void ApplyOutline(bool visible)
+    {
+        if (visible == _outlineApplied) return;
+        _outlineApplied = visible;
+
+        foreach (RendererMaterials entry in _renderers)
+        {
+            if (entry.Renderer == null) continue;
+            if (entry.OutlineMesh != null && entry.Filter != null)
+            {
+                entry.Filter.sharedMesh = visible ? entry.OutlineMesh : entry.OriginalMesh;
+            }
+            entry.Renderer.sharedMaterials = visible ? entry.OutlineMaterials : entry.OriginalMaterials;
+        }
+    }
+
+    private void ReleaseResources()
+    {
+        foreach (RendererMaterials entry in _renderers)
+        {
+            if (entry.OutlineMesh != null) Destroy(entry.OutlineMesh);
+        }
+        _renderers.Clear();
+
+        if (_runtimeOutlineMaterial != null)
+        {
+            Destroy(_runtimeOutlineMaterial);
+            _runtimeOutlineMaterial = null;
+        }
+        if (_runtimeMaskMaterial != null)
+        {
+            Destroy(_runtimeMaskMaterial);
+            _runtimeMaskMaterial = null;
         }
     }
 }
-
-/// <summary>Marks a renderer generated exclusively for the sketchbook outline.</summary>
-public class TutorialSketchbookOutlineProxy : MonoBehaviour { }

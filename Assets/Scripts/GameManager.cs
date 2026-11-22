@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private bool _isEnding;
+
     private void Start()
     {
         SFXManager.PostEvent("Start_BackgroundSubmarineMFX", gameObject);
@@ -22,6 +24,8 @@ public class GameManager : MonoBehaviour
 
     private void OnGameWon(OnGameWon gameWon)
     {
+        if (_isEnding) return;
+        _isEnding = true;
         Log.Info("[GameManager] Reached Victory. Successful Evacuation.");
         
         Cursor.lockState = CursorLockMode.None;
@@ -46,14 +50,9 @@ public class GameManager : MonoBehaviour
 
     private void OnPlayerDeath(OnDeath ev)
     {
+        if (_isEnding) return;
+        _isEnding = true;
         Log.Info($"[GameManager] Jugador muerto por: {ev.TypeOfDeath}");
-        switch (ev.TypeOfDeath)
-        {
-            case DeathType.OxygenDepravation:
-                break;
-            case DeathType.SubmarineSunk:
-                break;
-        }
         
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -63,7 +62,10 @@ public class GameManager : MonoBehaviour
         if (SceneTransitionManager.Instance != null)
         {
             SFXManager.PostEvent("Stop_Tension_OnDeath_SFX", gameObject);
-            SceneTransitionManager.Instance.LoadSceneWithFade("Defeat");
+            if (ev.TypeOfDeath == DeathType.OxygenDepravation)
+                SceneTransitionManager.Instance.LoadSceneAfterSuffocation("Defeat", FindFirstObjectByType<SuffocationEffect>());
+            else
+                SceneTransitionManager.Instance.LoadSceneWithFade("Defeat");
         }
         else
         {

@@ -50,7 +50,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: 7833122117494664109}
   - {fileID: -6183012977598750386}
-  m_RendererFeatureMap: ad6b866f10d7b46c4ea198b4748631aa
+  - {fileID: 7202304281443716152}
+  m_RendererFeatureMap: ad6b866f10d7b46c4ea198b4748631aa384cbaa395b9f363
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -102,3 +103,17 @@ MonoBehaviour:
     BlurQuality: 0
     Falloff: 100
     SampleCount: -1
+--- !u!114 &7202304281443716152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1c7f7064b9242e09d9a7dd3f8dcf3ee, type: 3}
+  m_Name: UnderwaterBlurFeature
+  m_EditorClassIdentifier:
+  m_Active: 1
+  blurShader: {fileID: 4800000, guid: 4c44ccc59af54163b6d980c6fc951774, type: 3}

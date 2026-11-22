@@ -97,12 +97,45 @@ namespace Bitgem.VFX.StylisedWater
 
         public float? GetHeight(Vector3 _position)
         {
-            // convert the position to a tile
-            var x = Mathf.FloorToInt((_position.x - transform.position.x + 0.5f) / TileSize);
-            var z = Mathf.FloorToInt((_position.z - transform.position.z + 0.5f) / TileSize);
+            var tile = GetTopTile(_position - transform.position, out _);
+            return tile.HasValue ? transform.position.y + tile.Value * TileSize : (float?)null;
+        }
 
-            // check if out of bounds
-            if (x < 0 || x >= MAX_TILES_X || z < 0 || z >= MAX_TILES_Z)
+        internal bool TryGetSurfacePoint(Vector3 worldPosition, out Vector3 localPoint,
+            out Vector2Int tile, out int tileY)
+        {
+            localPoint = transform.InverseTransformPoint(worldPosition);
+            tileY = GetTopTile(localPoint, out tile) ?? -1;
+            if (tileY < 0) return false;
+
+            // Use the top face of the tile, with the same local coordinates as Rebuild.
+            localPoint.y = (tileY + 1) * TileSize - 0.5f;
+            return true;
+        }
+
+        internal bool UsesFoamDiagonal(Vector2Int tile, int y)
+        {
+            int x = tile.x;
+            int z = tile.y;
+            bool foamNegX = (IncludeFoam & TileFace.NegX) != 0 && (x == 0 || !tiles[x - 1, y, z]);
+            bool foamPosX = (IncludeFoam & TileFace.PosX) != 0 && (x == MAX_TILES_X - 1 || !tiles[x + 1, y, z]);
+            bool foamNegZ = (IncludeFoam & TileFace.NegZ) != 0 && (z == 0 || !tiles[x, y, z - 1]);
+            bool foamPosZ = (IncludeFoam & TileFace.PosZ) != 0 && (z == MAX_TILES_Z - 1 || !tiles[x, y, z + 1]);
+            return UsesFoamDiagonal(foamNegX, foamPosX, foamNegZ, foamPosZ);
+        }
+
+        private static bool UsesFoamDiagonal(bool foamNegX, bool foamPosX, bool foamNegZ, bool foamPosZ)
+        {
+            return (foamNegX && foamPosZ) || (foamPosX && foamNegZ);
+        }
+
+        private int? GetTopTile(Vector3 localPosition, out Vector2Int tile)
+        {
+            var x = Mathf.FloorToInt((localPosition.x + 0.5f) / TileSize);
+            var z = Mathf.FloorToInt((localPosition.z + 0.5f) / TileSize);
+            tile = new Vector2Int(x, z);
+
+            if (tiles == null || x < 0 || x >= MAX_TILES_X || z < 0 || z >= MAX_TILES_Z)
             {
                 return null;
             }
@@ -113,7 +146,7 @@ namespace Bitgem.VFX.StylisedWater
             {
                 if (tiles[x, y, z])
                 {
-                    return transform.position.y + y * TileSize;
+                    return y;
                 }
             }
 
@@ -213,7 +246,7 @@ namespace Bitgem.VFX.StylisedWater
                             colors.Add(foamPosX || foamPosZ || foamPosXposZ ? Color.red : Color.black);
                             colors.Add(foamPosX || foamNegZ || foamPosXnegZ ? Color.red : Color.black);
                             var v = vertices.Count - 4;
-                            if (foamNegX && foamPosZ || foamPosX && foamNegZ)
+                            if (UsesFoamDiagonal(foamNegX, foamPosX, foamNegZ, foamPosZ))
                             {
                                 indices.Add(v + 1);
                                 indices.Add(v + 2);

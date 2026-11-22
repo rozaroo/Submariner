@@ -126,6 +126,7 @@ public class EngineMiniGame : MonoBehaviour
     public void CancelMinigame()
     {
         if (!CanCancel) return;
+        bool wasActive = _isActive;
 
         _isActive = false;
         _isCompleting = false;
@@ -134,7 +135,7 @@ public class EngineMiniGame : MonoBehaviour
         StopCompletionFeedback();
         TurnOffAllComponents();
         if (timerText != null) timerText.gameObject.SetActive(false);
-        Debug.Log("[ENGINE MINIGAME] Reparación cancelada por el jugador.");
+        if (wasActive) Debug.Log("[ENGINE MINIGAME] Reparación cancelada por el jugador.");
     }
 
     private IEnumerator EmergencyTimerRoutine()
@@ -298,15 +299,18 @@ public class EngineMiniGame : MonoBehaviour
         _isActive = false;
         _isCompleting = true;
         _acceptingInput = false;
-        SFXManager.PostEvent(onSucceededMinigame, gameObject);
         StopRunningCoroutines();
         if (timerText != null) timerText.gameObject.SetActive(false);
+
+        // Commit the repair before the player can skip the completion feedback.
+        if (engineSystem != null) engineSystem.RestartEngine();
+        Debug.Log("[ENGINE MINIGAME] Motor reparado. Vuelve a la palanca de navegación.");
+        SFXManager.PostEvent(onSucceededMinigame, gameObject);
         _completionCoroutine = StartCoroutine(EmergencyRestartFeedback());
     }
 
     private IEnumerator EmergencyRestartFeedback()
     {
-        // Three seconds of escalating feedback before the repaired engine is handed back to navigation.
         for (int i = 0; i < 3; i++)
         {
             foreach (EngineMiniGameComponent component in components)
@@ -324,10 +328,8 @@ public class EngineMiniGame : MonoBehaviour
         TurnOffAllComponents();
         yield return new WaitForSeconds(completionFadeOutDelay);
 
-        if (engineSystem != null) engineSystem.RestartEngine();
         _isCompleting = false;
         _completionCoroutine = null;
-        Debug.Log("[ENGINE MINIGAME] Motor reparado. Vuelve a la palanca de navegación.");
         Completed?.Invoke();
     }
 

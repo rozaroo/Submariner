@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Material Outline
-  m_Shader: {fileID: -6465566751694194690, guid: c51e121bef0820b4789defaa6ae851a8, type: 3}
+  m_Shader: {fileID: 4800000, guid: 5ea272898a52412aa30fed4e2c250872, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -51,6 +51,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Outline_Glow: 0.16
     - _Outline_Size: 1.1
     - _QueueControl: 0
     - _QueueOffset: 0

@@ -79,8 +79,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volume: {fileID: 0}
-  maxIntensity: 8
-  curve: 9
-  pulseAmplitude: 0.04
-  pulseSpeed: 2.5
-  recoverySpeed: 0.3
+  lowOxygenThreshold: 0.15
+  maxIntensity: 0.28
+  vignetteSmoothness: 0.55
+  blinkStartSeconds: 18
+  blinkExposureDrop: 6
+  recoverySpeed: 0.8

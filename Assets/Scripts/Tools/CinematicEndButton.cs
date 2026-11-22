@@ -115,11 +115,13 @@ public class CinematicEndButton : MonoBehaviour
         return button;
     }
 
-    internal bool IsSkipButtonAt(Vector2 screenPosition)
+    internal bool IsSkipButtonAt(Vector2 screenPosition) => isActiveAndEnabled && IsButtonAt(skipButton, screenPosition);
+
+    internal static bool IsButtonAt(Button button, Vector2 screenPosition, bool requireInteractable = true)
     {
-        if (!isActiveAndEnabled || skipButton == null || !skipButton.isActiveAndEnabled
-            || !skipButton.IsInteractable() || skipButton.transform is not RectTransform rect) return false;
-        Canvas canvas = skipButton.GetComponentInParent<Canvas>();
+        if (button == null || !button.isActiveAndEnabled || (requireInteractable && !button.IsInteractable())
+            || button.transform is not RectTransform rect) return false;
+        Canvas canvas = button.GetComponentInParent<Canvas>();
         if (canvas == null) return false;
         Camera eventCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
         return RectTransformUtility.RectangleContainsScreenPoint(rect, screenPosition, eventCamera);

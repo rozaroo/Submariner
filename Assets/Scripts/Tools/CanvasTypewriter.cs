@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 /// <summary>Reveals a complete TMP text without changing its layout as letters appear.</summary>
 [DisallowMultipleComponent]
@@ -20,8 +21,10 @@ public class CanvasTypewriter : MonoBehaviour
 
     [Header("Writing")]
     [Min(1f)] [SerializeField] private float charactersPerSecond = 35f;
-    [Tooltip("Each click while writing toggles this speed multiplier, including punctuation pauses.")]
-    [Min(1f)] [SerializeField] private float fastForwardMultiplier = 4f;
+    [Tooltip("Writing multiplier for the highest speed setting (x3).")]
+    [Min(3f)] [SerializeField] private float thirdSpeedMultiplier = 3f;
+    [SerializeField] private Button speedButton;
+    [SerializeField] private TMP_Text speedLabel;
     [Min(0f)] [SerializeField] private float initialDelay = 0.3f;
     [Min(0f)] [SerializeField] private float commaPause = 0.12f;
     [Min(0f)] [SerializeField] private float sentencePause = 0.3f;
@@ -30,8 +33,10 @@ public class CanvasTypewriter : MonoBehaviour
     [SerializeField] private bool useUnscaledTime = true;
 
     [Header("Pages")]
-    [Tooltip("Optional object shown while waiting for a click to read the next page.")]
+    [SerializeField] private Button revealPageButton;
+    [Tooltip("Optional object shown before the first click and between pages. Add a Canvas Group to pulse its opacity.")]
     [SerializeField] private GameObject continuePrompt;
+    [Min(0.2f)] [SerializeField] private float promptBlinkPeriod = 1.4f;
     [Tooltip("Optional text displaying the current page, for example 1/4.")]
     [SerializeField] private TMP_Text pageCounter;
 
@@ -46,7 +51,7 @@ public class CanvasTypewriter : MonoBehaviour
     [SerializeField] private UnityEvent onCompleted = new();
 
     public bool IsTyping { get; private set; }
-    public bool IsFastForwarding { get; private set; }
+    public bool IsFastForwarding => IsTyping && speedLevel > 1;
     public bool IsWaitingForNextPage { get; private set; }
     public int CurrentPage => pages.Length == 0 ? 0 : pageIndex + 1;
     public int TotalPages => pages.Length;
@@ -63,6 +68,9 @@ public class CanvasTypewriter : MonoBehaviour
     private uint playingEventId;
     private bool waitingForClick;
     private int clickReadyFrame;
+    private int speedLevel = 1;
+    private CanvasGroup continuePromptGroup;
+    private float promptShownAt;
     private CinematicEndButton endButton;
     private int pageIndex;
     private string[] pages = System.Array.Empty<string>();
@@ -74,14 +82,24 @@ public class CanvasTypewriter : MonoBehaviour
         // Restore the cinematic exit in older scene instances that lost the companion component.
         endButton = GetComponent<CinematicEndButton>();
         if (endButton == null) endButton = gameObject.AddComponent<CinematicEndButton>();
+        if (continuePrompt != null) continuePromptGroup = continuePrompt.GetComponent<CanvasGroup>();
     }
 
     private void OnEnable()
     {
-        SetContinuePrompt(false);
+        speedLevel = 1;
+        UpdateSpeedLabel();
+        if (speedButton != null) speedButton.onClick.AddListener(ToggleSpeed);
+        if (revealPageButton != null)
+        {
+            revealPageButton.onClick.AddListener(RevealCurrentPage);
+            revealPageButton.interactable = false;
+        }
         if (pageCounter != null && pageCounter != targetText) pageCounter.text = string.Empty;
         waitingForClick = startOnClick;
         clickReadyFrame = Time.frameCount;
+        SetContinuePrompt(waitingForClick);
+        SetStoryControlsVisible(waitingForClick);
         if (waitingForClick)
         {
             if (targetText != null) targetText.maxVisibleCharacters = 0;
@@ -142,8 +160,9 @@ public class CanvasTypewriter : MonoBehaviour
         characterCount = targetText.textInfo.characterCount;
         visibleCharacters = 0;
         IsWaitingForNextPage = false;
-        IsFastForwarding = false;
         SetContinuePrompt(false);
+        SetStoryControlsVisible(true);
+        if (revealPageButton != null) revealPageButton.interactable = true;
         UpdatePageCounter();
         remainingDelay = Mathf.Max(0f, initialDelay);
         nextSoundTime = float.NegativeInfinity;
@@ -153,19 +172,33 @@ public class CanvasTypewriter : MonoBehaviour
     private void Update()
     {
         // Ignore the click that may have opened/enabled this cinematic itself.
-        if (Time.frameCount > clickReadyFrame
-            && Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame
-            && (endButton == null || !endButton.IsSkipButtonAt(Mouse.current.position.ReadValue())))
+        Mouse mouse = Mouse.current;
+        if (Time.frameCount > clickReadyFrame && mouse != null)
         {
-            if (waitingForClick) Play();
-            else if (IsTyping) ToggleSpeed();
-            else if (IsWaitingForNextPage) NextPage();
+            if (IsTyping && mouse.rightButton.wasPressedThisFrame)
+            {
+                RevealCurrentPage();
+            }
+            else if (mouse.leftButton.wasPressedThisFrame)
+            {
+                Vector2 pointerPosition = mouse.position.ReadValue();
+                if (!CinematicEndButton.IsButtonAt(speedButton, pointerPosition)
+                    && !CinematicEndButton.IsButtonAt(revealPageButton, pointerPosition, requireInteractable: false)
+                    && (endButton == null || !endButton.IsSkipButtonAt(pointerPosition)))
+                {
+                    if (waitingForClick) Play();
+                    else if (IsTyping) ToggleSpeed();
+                    else if (IsWaitingForNextPage) NextPage();
+                }
+            }
         }
+        if (waitingForClick || IsWaitingForNextPage) UpdateContinuePrompt();
         if (!IsTyping) return;
         if (targetText == null) { Stop(); return; }
         float delta = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
         if (delta <= 0f) return;
-        remainingDelay -= delta * (IsFastForwarding ? Mathf.Max(1f, fastForwardMultiplier) : 1f);
+        float multiplier = speedLevel == 3 ? Mathf.Max(3f, thirdSpeedMultiplier) : speedLevel;
+        remainingDelay -= delta * multiplier;
         // Catch up at low frame rates instead of limiting writing to one character per frame.
         while (IsTyping && remainingDelay <= 0f)
         {
@@ -180,11 +213,19 @@ public class CanvasTypewriter : MonoBehaviour
     private void FinishPage()
     {
         IsTyping = false;
-        IsFastForwarding = false;
+        if (revealPageButton != null) revealPageButton.interactable = false;
         if (pageIndex + 1 >= TotalPages) { Complete(); return; }
         IsWaitingForNextPage = true;
         clickReadyFrame = Time.frameCount;
         SetContinuePrompt(true);
+    }
+
+    private void RevealCurrentPage()
+    {
+        if (!isActiveAndEnabled || !IsTyping || targetText == null) return;
+        visibleCharacters = characterCount;
+        targetText.maxVisibleCharacters = visibleCharacters;
+        FinishPage();
     }
 
     /// <summary>Advance only after the current page has finished writing.</summary>
@@ -198,8 +239,18 @@ public class CanvasTypewriter : MonoBehaviour
     private void SetContinuePrompt(bool visible)
     {
         // The prompt must be a separate child, not the object running this component.
-        if (continuePrompt != null && !transform.IsChildOf(continuePrompt.transform))
-            continuePrompt.SetActive(visible);
+        if (continuePrompt == null || transform.IsChildOf(continuePrompt.transform)) return;
+        continuePrompt.SetActive(visible);
+        if (!visible || continuePromptGroup == null) return;
+        promptShownAt = Time.unscaledTime;
+        continuePromptGroup.alpha = 1f;
+    }
+
+    private void UpdateContinuePrompt()
+    {
+        if (continuePromptGroup == null || !continuePromptGroup.isActiveAndEnabled) return;
+        float phase = (Time.unscaledTime - promptShownAt) / Mathf.Max(0.2f, promptBlinkPeriod);
+        continuePromptGroup.alpha = Mathf.Clamp01(0.35f + 0.65f * Mathf.Cos(phase * 2f * Mathf.PI));
     }
 
     private void UpdatePageCounter()
@@ -208,10 +259,23 @@ public class CanvasTypewriter : MonoBehaviour
             pageCounter.text = CurrentPage + "/" + TotalPages;
     }
 
-    /// <summary>Alternate fast and normal writing without restarting or skipping the story.</summary>
+    /// <summary>Cycle through the writing speeds without restarting or advancing the story.</summary>
     public void ToggleSpeed()
     {
-        if (IsTyping) IsFastForwarding = !IsFastForwarding;
+        if (!isActiveAndEnabled || (!waitingForClick && !IsTyping && !IsWaitingForNextPage)) return;
+        speedLevel = speedLevel == 3 ? 1 : speedLevel + 1;
+        UpdateSpeedLabel();
+    }
+
+    private void UpdateSpeedLabel()
+    {
+        if (speedLabel != null) speedLabel.text = $"x{speedLevel}";
+    }
+
+    private void SetStoryControlsVisible(bool visible)
+    {
+        if (speedButton != null) speedButton.gameObject.SetActive(visible);
+        if (revealPageButton != null) revealPageButton.gameObject.SetActive(visible);
     }
 
     private float CharacterDelay(char character)
@@ -256,8 +320,8 @@ public class CanvasTypewriter : MonoBehaviour
         waitingForClick = false;
         IsWaitingForNextPage = false;
         IsTyping = false;
-        IsFastForwarding = false;
         SetContinuePrompt(false);
+        SetStoryControlsVisible(false);
         StopSound();
     }
 
@@ -273,12 +337,17 @@ public class CanvasTypewriter : MonoBehaviour
         if (HasCompleted || (TotalPages > 0 && !IsFinalPage)) return;
         HasCompleted = true;
         IsTyping = false;
-        IsFastForwarding = false;
         IsWaitingForNextPage = false;
         SetContinuePrompt(false);
+        SetStoryControlsVisible(false);
         StoryCompleted?.Invoke();
         onCompleted.Invoke();
     }
 
-    private void OnDisable() => Stop();
+    private void OnDisable()
+    {
+        if (speedButton != null) speedButton.onClick.RemoveListener(ToggleSpeed);
+        if (revealPageButton != null) revealPageButton.onClick.RemoveListener(RevealCurrentPage);
+        Stop();
+    }
 }

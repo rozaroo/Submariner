@@ -93,9 +93,7 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
     private void DockTank(OxygenTank tank)
     {
         _dockedTank = tank;
-        _dockedTank.Dock();
-        _dockedTank.transform.position = dockPoint.position;
-        _dockedTank.transform.rotation = dockPoint.rotation;
+        tank.Dock(dockPoint);
 
         if (_rechargeCoroutine != null) StopCoroutine(_rechargeCoroutine);
         _rechargeCoroutine = StartCoroutine(RechargeCoroutine());

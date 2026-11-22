@@ -1,7 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LightObject : MonoBehaviour
 {
+    private static readonly int LightColorId = Shader.PropertyToID("_LightColor");
+    private static readonly int EmissionColorId = Shader.PropertyToID("_EmissionColor");
+    private static readonly int EmissionIntensityId = Shader.PropertyToID("_EmissionIntensity");
+
     [Header("Settings")]
     [SerializeField] private Renderer targetRenderer;
     [SerializeField] private Light lightComponent;
@@ -13,38 +18,26 @@ public class LightObject : MonoBehaviour
     [Tooltip("La intensidad de emisi�n base del material. Pon aqu� el mismo valor que tienes en tu shader (ej. 1).")]
     [SerializeField] private float materialEmissionIntensity = 1f;
 
+    private readonly List<Material> _sharedMaterials = new();
     private MaterialPropertyBlock _lightMaterialPropertyBlock;
     private bool _isToggledOn = true;
-    
     private Color _initialLightColor;
     private float _initialLightIntensity;
-    private Color _baseMatLightColor;
-    private Color _baseMatEmissionColor;
 
     public Color LightColor => lightColor;
     public float Intensity => intensity;
 
     public void Initialize()
     {
-        _lightMaterialPropertyBlock = new MaterialPropertyBlock();
-
         if (lightComponent != null)
         {
             _isToggledOn = lightComponent.enabled;
-            
             lightColor = lightComponent.color;
             intensity = lightComponent.intensity;
-
-            _initialLightColor = lightComponent.color;
-            _initialLightIntensity = lightComponent.intensity;
         }
 
-        if (targetRenderer != null)
-        {
-            _baseMatLightColor = targetRenderer.sharedMaterial.GetColor("_LightColor");
-            _baseMatEmissionColor = targetRenderer.sharedMaterial.GetColor("_EmissionColor");
-        }
-
+        _initialLightColor = lightColor;
+        _initialLightIntensity = intensity;
         ApplySettings();
     }
 
@@ -56,37 +49,36 @@ public class LightObject : MonoBehaviour
             lightComponent.intensity = _isToggledOn ? intensity : 0f;
         }
 
-        if (targetRenderer != null)
+        if (targetRenderer == null) return;
+
+        bool useBaseColors = lightColor == _initialLightColor;
+        float intensityRatio = _initialLightIntensity > 0.001f ? intensity / _initialLightIntensity : 1f;
+        float currentEmission = _isToggledOn ? materialEmissionIntensity * intensityRatio : 0f;
+
+        targetRenderer.GetSharedMaterials(_sharedMaterials);
+        for (int index = 0; index < _sharedMaterials.Count; index++)
         {
-            targetRenderer.GetPropertyBlock(_lightMaterialPropertyBlock);
+            Material material = _sharedMaterials[index];
+            if (material == null) continue;
 
-            
-            if (lightColor == _initialLightColor)
-            {
-                _lightMaterialPropertyBlock.SetColor("_LightColor", _baseMatLightColor);
-                _lightMaterialPropertyBlock.SetColor("_EmissionColor", _baseMatEmissionColor);
-            }
-            else
-            {
-               
-                _lightMaterialPropertyBlock.SetColor("_LightColor", lightColor);
-                _lightMaterialPropertyBlock.SetColor("_EmissionColor", lightColor);
-            }
+            // Station lights share a renderer with the copper housing.
+            bool hasLightColor = material.HasColor(LightColorId);
+            bool hasEmissionColor = material.HasColor(EmissionColorId);
+            bool hasEmissionIntensity = material.HasFloat(EmissionIntensityId);
+            if (!hasLightColor && !hasEmissionColor && !hasEmissionIntensity) continue;
 
-            
-            float intensityRatio = 1f;
-            if (_initialLightIntensity > 0.001f)
-            {
-               
-                intensityRatio = intensity / _initialLightIntensity;
-            }
+            _lightMaterialPropertyBlock ??= new MaterialPropertyBlock();
+            targetRenderer.GetPropertyBlock(_lightMaterialPropertyBlock, index);
+            if (_lightMaterialPropertyBlock.isEmpty) targetRenderer.GetPropertyBlock(_lightMaterialPropertyBlock);
 
-            
-            float currentEmission = _isToggledOn ? (materialEmissionIntensity * intensityRatio) : 0f;
+            if (hasLightColor)
+                _lightMaterialPropertyBlock.SetColor(LightColorId, useBaseColors ? material.GetColor(LightColorId) : lightColor);
+            if (hasEmissionColor)
+                _lightMaterialPropertyBlock.SetColor(EmissionColorId, useBaseColors ? material.GetColor(EmissionColorId) : lightColor);
+            if (hasEmissionIntensity)
+                _lightMaterialPropertyBlock.SetFloat(EmissionIntensityId, currentEmission);
 
-            _lightMaterialPropertyBlock.SetFloat("_EmissionIntensity", currentEmission);
-
-            targetRenderer.SetPropertyBlock(_lightMaterialPropertyBlock);
+            targetRenderer.SetPropertyBlock(_lightMaterialPropertyBlock, index);
         }
     }
 

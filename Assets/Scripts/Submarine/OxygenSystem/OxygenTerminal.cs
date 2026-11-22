@@ -16,17 +16,24 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
 
     private OxygenTank _dockedTank;
     private Coroutine _transferCoroutine;
+    private float _pendingOxygen;
     private bool _hasRegisteredEnergyConsumption;
     private bool _isBlackout;
 
     private void OnEnable()
     {
         GameEventChannel<OnEnergyStatusChange>.OnEventRaised += OnEnergyStatusChanged;
+        if (_dockedTank != null && !_dockedTank.isEmpty && oxygenSystem != null)
+            _transferCoroutine = StartCoroutine(TransferCoroutine());
     }
 
     private void OnDisable()
     {
         GameEventChannel<OnEnergyStatusChange>.OnEventRaised -= OnEnergyStatusChanged;
+        if (_transferCoroutine == null) return;
+
+        StopCoroutine(_transferCoroutine);
+        FinishTransfer();
     }
 
     private void OnEnergyStatusChanged(OnEnergyStatusChange status)
@@ -36,76 +43,51 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
 
     public void Interact(PlayerCharacter player)
     {
-        player.InventorySystem.TryExtractHeldItem(out OxygenTank oxygenTankItem);
-        if (oxygenTankItem != null)
-        {
-            DockTank(oxygenTankItem);
-            return;
-        }
+        InventorySystem inventory = player?.InventorySystem;
+        if (inventory == null) return;
 
         if (_dockedTank != null)
         {
-            UndockTank(player);
+            if (!inventory.TryPickUp(_dockedTank)) return;
+
+            _dockedTank = null;
+            if (_transferCoroutine != null) StopCoroutine(_transferCoroutine);
+            FinishTransfer();
+            Log.Info("[OxygenTerminal] Tank Undocked.");
+            return;
+        }
+
+        if (dockPoint != null && oxygenSystem != null && inventory.TryExtractHeldItem(out OxygenTank tank))
+        {
+            _dockedTank = tank;
+            tank.Dock(dockPoint);
+            _transferCoroutine = StartCoroutine(TransferCoroutine());
+            Log.Info("[OxygenTerminal] Tank Docked.");
         }
     }
 
     public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
     {
+        IPickable heldItem = player?.InventorySystem?.HeldItem;
         if (_dockedTank != null)
         {
-            return new InteractionFeedback("Release Oxygen Tank", interactionUIData);
+            return heldItem == null
+                ? new InteractionFeedback("Release Oxygen Tank", interactionUIData)
+                : new InteractionFeedback("Holding Another Item", interactionUIData, false);
         }
 
-        if (player != null && player.InventorySystem != null)
+        if (dockPoint != null && oxygenSystem != null && heldItem is OxygenTank oxygenTank)
         {
-            if (player.InventorySystem.HeldItem is OxygenTank oxygenTank)
-            {
-                string text = oxygenTank.isFull ? "Place Oxygen Tank (Full)" : "Place Oxygen Tank";
-                return new InteractionFeedback(text, interactionUIData);
-            }
-            
-            if (player.InventorySystem.HeldItem != null)
-            {
-                return new InteractionFeedback("Requires Oxygen Tank", interactionUIData);
-            }
+            string text = oxygenTank.isFull ? "Place Oxygen Tank (Full)" : "Place Oxygen Tank";
+            return new InteractionFeedback(text, interactionUIData);
         }
-        
-        return new InteractionFeedback("Requires Oxygen Tank", interactionUIData);
-    }
 
-    private void DockTank(OxygenTank tank)
-    {
-        if (_dockedTank != null) return;
-
-        _dockedTank = tank;
-        _dockedTank.Dock();
-        _dockedTank.transform.position = dockPoint.position;
-        _dockedTank.transform.rotation = dockPoint.rotation;
-
-        if (_transferCoroutine != null) StopCoroutine(_transferCoroutine);
-        _transferCoroutine = StartCoroutine(TransferCoroutine());
-        Log.Info("[OxygenTerminal] Tank Docked.");
-    }
-
-    private void UndockTank(PlayerCharacter player)
-    {
-        if (_transferCoroutine != null)
-        {
-            StopCoroutine(_transferCoroutine);
-            _transferCoroutine = null;
-            oxygenSystem.ResumeDrain();
-        }
-        StopEnergyConsumption();
-
-        _dockedTank.Interact(player);
-        _dockedTank = null;
-        Log.Info("[OxygenTerminal] Tank Undocked.");
+        return new InteractionFeedback("Requires Oxygen Tank", interactionUIData, false);
     }
 
     private IEnumerator TransferCoroutine()
     {
         yield return null;
-        float accumulatedDrained = 0f;
 
         while (_dockedTank != null && !_dockedTank.isEmpty)
         {
@@ -124,26 +106,28 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
                 ? transferRatePerSecond * Time.deltaTime
                 : Time.deltaTime;
 
-            float drained = _dockedTank.Drain(toDrain);
-            accumulatedDrained += drained;
-
-            if (accumulatedDrained >= 0.5f)
-            {
-                oxygenSystem.RestoreOxygen(accumulatedDrained);
-                accumulatedDrained = 0f;
-            }
+            _pendingOxygen += _dockedTank.Drain(toDrain);
+            if (_pendingOxygen >= 0.5f) DeliverPendingOxygen();
 
             yield return null;
         }
+        FinishTransfer();
+    }
 
-        StopEnergyConsumption();
-        if (accumulatedDrained > 0)
-        {
-            oxygenSystem.RestoreOxygen(accumulatedDrained);
-        }
-
-        oxygenSystem.ResumeDrain();
+    private void FinishTransfer()
+    {
+        bool wasTransferring = _transferCoroutine != null;
         _transferCoroutine = null;
+        StopEnergyConsumption();
+        DeliverPendingOxygen();
+        if (wasTransferring && oxygenSystem != null) oxygenSystem.ResumeDrain();
+    }
+
+    private void DeliverPendingOxygen()
+    {
+        float amount = _pendingOxygen;
+        _pendingOxygen = 0f;
+        if (amount > 0f && oxygenSystem != null) oxygenSystem.RestoreOxygen(amount);
     }
 
     private void StartEnergyConsumption()

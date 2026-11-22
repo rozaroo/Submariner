@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1373595691483096991}
   - component: {fileID: 2282629936573746252}
   - component: {fileID: 6477849319011386781}
+  - component: {fileID: 2396528843621602947}
   m_Layer: 3
   m_Name: OxygenTank
   m_TagString: Untagged
@@ -185,6 +186,21 @@ MonoBehaviour:
   discoveryIconSize: 0.048
   allowOutline: 1
   outlineRenderers: []
+--- !u!114 &2396528843621602947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3350554650319353135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36aa02d38bb10b548bc7b8879596b15c, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  WaterVolumeHelper: {fileID: 0}
+  useBuoyancy: 1
+  restingSubmersion: 0.66
 --- !u!1 &4014262897013094432
 GameObject:
   m_ObjectHideFlags: 0

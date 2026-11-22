@@ -88,7 +88,7 @@ public class OxygenTank : MonoBehaviour, IInteractable, IPickable
         SetCollidersEnabled(true);
     }
     
-    public void Dock()
+    public void Dock(Transform point = null)
     {
         SetCollidersEnabled(false);
         _rb.detectCollisions = false;
@@ -98,7 +98,8 @@ public class OxygenTank : MonoBehaviour, IInteractable, IPickable
             _rb.angularVelocity = Vector3.zero;
         }
         _rb.isKinematic = true;
-        transform.SetParent(null);
+        transform.SetParent(point, true);
+        if (point != null) transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
     }
 
     private void SetCollidersEnabled(bool isEnabled)
