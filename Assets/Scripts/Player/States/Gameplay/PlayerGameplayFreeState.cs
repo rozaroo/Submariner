@@ -25,7 +25,7 @@ public class PlayerGameplayFreeState : PlayerGameplayState
 
     public override void OnEnter()
     {
-        _context.SetMovementStrategy(new WalkingMovement());
+        _context.SetWalkingMovement();
         _context.CamController.SetCameraStrategy(new NormalCameraStrategy());
         _context.FootstepSystem.SetActive(true);
         _context.SetMouseConfiguration(CursorLockMode.Locked,false);

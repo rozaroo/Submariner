@@ -25,6 +25,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
 
     [Header("Drainage Settings")]
     [SerializeField] private float drainagePercentage = 1f;
+    [SerializeField] private LightObject[] drainageLights = System.Array.Empty<LightObject>();
 
     [Header("Energy Consumption Settings")]
     [SerializeField] private float energyConsumption = 5;
@@ -53,11 +54,16 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
     private void Awake()
     {
         _minigame = GetComponent<DrainageMinigame>();
+        foreach (LightObject light in drainageLights)
+        {
+            if (light != null) light.Initialize();
+        }
     }
 
     private void OnEnable()
     {
         GameEventChannel<OnEnergyStatusChange>.OnEventRaised += OnEnergyStatusChanged;
+        UpdateDrainageLights();
         
         if (_minigame != null)
         {
@@ -240,6 +246,7 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         {
             GameEventChannel<OnDrainagePropertyChange>.RaiseEvent(new OnDrainagePropertyChange(drainagePercentage));
             _isDrainageActive = true;
+            UpdateDrainageLights();
             StartDrainageEnergyConsumption();
             Log.Info("Drainage Active");
         }
@@ -258,9 +265,19 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         }
 
         _isDrainageActive = false;
+        UpdateDrainageLights();
         StopDrainageEnergyConsumption();
         GameEventChannel<OnDrainagePropertyChange>.RaiseEvent(new OnDrainagePropertyChange(0f));
         Log.Info("Drainage Stopped");
+    }
+
+    private void UpdateDrainageLights()
+    {
+        Color color = _isDrainageActive ? Color.green : Color.red;
+        foreach (LightObject light in drainageLights)
+        {
+            if (light != null) light.SetColor(color);
+        }
     }
 
     private void CheckDrainageMinigame()

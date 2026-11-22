@@ -1,3 +1,4 @@
+using Bitgem.VFX.StylisedWater;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
@@ -15,6 +16,10 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private string interactionActionName = "Interact";
     [SerializeField] private string dropActionName = "Drop";
     [SerializeField] private string useActionName = "Click";
+
+    [Header("Flood Movement")]
+    [SerializeField] private WaterVolumeHelper floodWater;
+    [SerializeField, Range(0.1f, 1f)] private float submergedSpeedMultiplier = 0.45f;
 
     [Header("Interaction Settings (Raycast)")] 
     [SerializeField] private float interactionDistance = 2.5f;
@@ -133,6 +138,11 @@ public class PlayerCharacter : MonoBehaviour
     public void SetMovementStrategy(IMovementStrategy movementStrategy)
     {
         _movementStrategy = movementStrategy;
+    }
+
+    internal void SetWalkingMovement()
+    {
+        SetMovementStrategy(new WalkingMovement(floodWater, submergedSpeedMultiplier));
     }
 
     #region State Machine

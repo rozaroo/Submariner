@@ -195,6 +195,8 @@ MonoBehaviour:
   interactionActionName: Interact
   dropActionName: DropItem
   useActionName: Click
+  floodWater: {fileID: 0}
+  submergedSpeedMultiplier: 0.45
   interactionDistance: 2.5
   interactableLayer:
     serializedVersion: 2
