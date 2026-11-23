@@ -313,7 +313,7 @@ public class MapUIManager : MonoBehaviour
                         SFXManager.PostEvent("Start_SonarPingOuter", gameObject);
                         _lastOuterPingTime = Time.time;
                     }
-                    icon.IsVisible = property.IsRevealed;
+                    icon.IsVisible = uiElement is ExtractionPointElement || property.IsRevealed;
                 }
             }
             else if (property.SonarRegion == SonarDetectionMode.InnerOnly)
@@ -325,7 +325,7 @@ public class MapUIManager : MonoBehaviour
                         SFXManager.PostEvent("Start_SonarPingInner", gameObject);
                         _lastInnerPingTime = Time.time;
                     }
-                    icon.IsVisible = !property.IsRevealed;
+                    icon.IsVisible = uiElement is ExtractionPointElement || !property.IsRevealed;
                 }
             }
         }

@@ -26,22 +26,22 @@ public class GameManager : MonoBehaviour
     {
         if (_isEnding) return;
         _isEnding = true;
-        HardModeSettings.UnlockAfterVictory();
-        Log.Info("[GameManager] Reached Victory. Successful Evacuation.");
-        
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        
-        GameEventChannel<OnPlayerInputStateChanged>.RaiseEvent(new OnPlayerInputStateChanged(false));
-        
-        if (SceneTransitionManager.Instance != null)
+
+        SceneTransitionManager transition = SceneTransitionManager.Instance;
+        if (transition != null && transition.isActiveAndEnabled)
         {
-            SceneTransitionManager.Instance.LoadSceneWithFade("Win");
+            transition.LoadSceneWithFade("Win");
         }
         else
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene("Win");
         }
+
+        HardModeSettings.UnlockAfterVictory();
+        Log.Info("[GameManager] Reached Victory. Successful Evacuation.");
+        GameEventChannel<OnPlayerInputStateChanged>.RaiseEvent(new OnPlayerInputStateChanged(false));
     }
     
     private void CallMapGeneration()

@@ -140,9 +140,9 @@ public class WorldMainEventManager : MonoBehaviour
             SonarDetectionMode.Both, extractionMapAsset,
             WorldUIUpdateMode.Static, WorldUISyncMode.Linear);
 
-        _extractionPoint.gameObject.SetActive(true);
         _extractionPoint.OnSubmarineReachedExtraction -= OnSubmarineReachedExtraction;
         _extractionPoint.OnSubmarineReachedExtraction += OnSubmarineReachedExtraction;
+        _extractionPoint.gameObject.SetActive(true);
         
         GameEventChannel<OnWorldMapElementGenerated>.RaiseEvent(
             new OnWorldMapElementGenerated(_extractionPoint));
@@ -159,7 +159,7 @@ public class WorldMainEventManager : MonoBehaviour
         _extractionPoint.OnSubmarineReachedExtraction -= OnSubmarineReachedExtraction;
 
         Log.Info("[MainEventManager] Submarine reached extraction.");
-        GameEventChannel<OnGameWon>.RaiseEvent(new OnGameWon());   // lo importante primero
+        GameEventChannel<OnGameWon>.RaiseEvent(new OnGameWon());
 
         try
         {
