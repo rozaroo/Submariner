@@ -115,7 +115,8 @@ public class CinematicEndButton : MonoBehaviour
         return button;
     }
 
-    internal bool IsSkipButtonAt(Vector2 screenPosition) => isActiveAndEnabled && IsButtonAt(skipButton, screenPosition);
+    internal bool IsSkipButtonAt(Vector2 screenPosition) =>
+        isActiveAndEnabled && IsButtonAt(skipButton, screenPosition, requireInteractable: false);
 
     internal static bool IsButtonAt(Button button, Vector2 screenPosition, bool requireInteractable = true)
     {
@@ -149,6 +150,9 @@ public class CinematicEndButton : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (skipButton != null)
+            skipButton.interactable = !transitioning && !typewriter.IsWarningLocked;
+
         // Hide immediately if playback restarts or moves away from the completed final page.
         if (!transitioning && buttonGroup != null && !CanShowButton && (revealing || buttonGroup.alpha > 0f))
             ResetButton();
@@ -185,7 +189,10 @@ public class CinematicEndButton : MonoBehaviour
         BeginTransition();
     }
 
-    private void BeginSkip() => BeginTransition();
+    private void BeginSkip()
+    {
+        if (!transitioning && typewriter.TrySkipPastWarning()) BeginTransition();
+    }
 
     private void BeginTransition()
     {

@@ -11,6 +11,10 @@ public class DrainageMinigame : MonoBehaviour
     [Header("Minigame Settings")]
     [SerializeField] private int buttonsToUnlock = 3;
 
+    [Header("Ready Button Light")]
+    [SerializeField, Min(0f)] private float readyButtonLightIntensity;
+    [SerializeField, Min(0.01f)] private float readyButtonLightRange = 0.2f;
+
     private int _playableButtonsCount;
     private int _buttonsPressedCount;
     
@@ -56,7 +60,7 @@ public class DrainageMinigame : MonoBehaviour
         for (int i = 0; i < buttonsToUnlock && availableButtons.Count > 0; i++)
         {
             int randomIndex = Random.Range(0, availableButtons.Count);
-            availableButtons[randomIndex].Unlock();
+            availableButtons[randomIndex].Unlock(readyButtonLightIntensity, readyButtonLightRange);
             availableButtons.RemoveAt(randomIndex);
             _playableButtonsCount++;
         }

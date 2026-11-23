@@ -51,7 +51,8 @@ MonoBehaviour:
   - {fileID: 7833122117494664109}
   - {fileID: -6183012977598750386}
   - {fileID: 7202304281443716152}
-  m_RendererFeatureMap: ad6b866f10d7b46c4ea198b4748631aa384cbaa395b9f363
+  - {fileID: 6426857937996203371}
+  m_RendererFeatureMap: ad6b866f10d7b46c4ea198b4748631aa384cbaa395b9f3636bc529603ec93059
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -117,3 +118,16 @@ MonoBehaviour:
   m_EditorClassIdentifier:
   m_Active: 1
   blurShader: {fileID: 4800000, guid: 4c44ccc59af54163b6d980c6fc951774, type: 3}
+--- !u!114 &6426857937996203371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b29bc7100e95431aa98b160b08d06af0, type: 3}
+  m_Name: PickupOutlineFeature
+  m_EditorClassIdentifier:
+  m_Active: 1

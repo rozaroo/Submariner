@@ -104,6 +104,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   repairDuration: 3
   waterLeak: {fileID: 8090720607560510228}
+  bubbleMaterial: {fileID: 2100000, guid: 3d966fc5ed3848d595fc990c052ba368, type: 2}
+  bubbleForwardOffset: 0.2
   _progress: 0
 --- !u!65 &5043228705828705307
 BoxCollider:

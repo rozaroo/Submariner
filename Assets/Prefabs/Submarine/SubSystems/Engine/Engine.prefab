@@ -163,6 +163,7 @@ MonoBehaviour:
   - {fileID: 4724654916917948942}
   - {fileID: 6621692960842467637}
   - {fileID: 3712989671066724482}
+  statusLights: []
   totalRounds: 3
   timeLimit: 60
   sequenceLightDuration: 0.5
@@ -177,11 +178,6 @@ MonoBehaviour:
   errorsBeforeHullDamage: 5
   hullDamageOnErrorLimit: 2
   hullDamageManager: {fileID: 0}
-  showTimer: 1
-  createTimerIfMissing: 1
-  timerCharacterSize: 0.08
-  timerColor: {r: 1, g: 1, b: 1, a: 1}
-  timerText: {fileID: 0}
   onEngineTubeFix: Start_Tube_Repair_Engine
   onEngineSequenceFailed: Start_Motor_Engine_Fail
   onSucceededRound: Start_Engine_Minigame_SucceededStage
@@ -1339,6 +1335,7 @@ MonoBehaviour:
   maxTemperature: 100
   temperatureIncreaseAmount: 1
   temperatureIncreaseInterval: 5
+  temperatureIndicator: {fileID: 0}
   coolingAmount: 2
   repairedTemperature: 50
 --- !u!114 &-3118094366103528463

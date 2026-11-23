@@ -33,6 +33,7 @@ public class EngineMiniGameActivator : MonoBehaviour, IPossessable, IInteractabl
     private InputAction _clickAction;
     private InputAction _exitAction;
     private EngineMiniGameComponent _hoveredComponent;
+    private bool _waitingForRepair;
 
     public string MapName => stationMapName;
     public Transform CameraAnchor => cameraAnchor;
@@ -55,11 +56,6 @@ public class EngineMiniGameActivator : MonoBehaviour, IPossessable, IInteractabl
             Debug.LogError("[ENGINE MINIGAME] EngineMiniGame no está asignado.");
             return;
         }
-        if (!engineMiniGame.CanStart)
-        {
-            Debug.Log("[ENGINE MINIGAME] El motor no requiere un reinicio de emergencia.");
-            return;
-        }
         if (cameraAnchor == null || directionAnchor == null)
         {
             Debug.LogError("[ENGINE MINIGAME] Faltan los anchors de cámara de la mesa.");
@@ -72,14 +68,14 @@ public class EngineMiniGameActivator : MonoBehaviour, IPossessable, IInteractabl
     public InteractionFeedback SendInteractionFeedback(PlayerCharacter player)
     {
         bool canInteract = engineMiniGame != null
-                           && engineMiniGame.CanStart
                            && cameraAnchor != null
                            && directionAnchor != null;
 
         if (!canInteract)
             return new InteractionFeedback("", interactionUIData, false);
 
-        return new InteractionFeedback("Repair Engine", interactionUIData);
+        string prompt = engineMiniGame.CanStart ? "Repair Engine" : "Inspect Engine";
+        return new InteractionFeedback(prompt, interactionUIData);
     }
 
     public void Possess(PlayerCharacter player)
@@ -96,28 +92,47 @@ public class EngineMiniGameActivator : MonoBehaviour, IPossessable, IInteractabl
         if (_exitAction != null) _exitAction.started += OnExitPerformed;
         else Debug.LogError($"[ENGINE MINIGAME] Acción de salida '{exitActionName}' no encontrada.");
 
-        engineMiniGame.Completed += OnMinigameCompleted;
-        engineMiniGame.StartMinigame();
+        if (engineMiniGame != null)
+        {
+            engineMiniGame.Completed += OnMinigameCompleted;
+        }
+        _waitingForRepair = true;
         enabled = true;
+        TryStartRepair();
     }
 
     public void UnPossess()
     {
         if (_clickAction != null) _clickAction.started -= OnClickStarted;
         if (_exitAction != null) _exitAction.started -= OnExitPerformed;
-        if (engineMiniGame != null) engineMiniGame.Completed -= OnMinigameCompleted;
+        if (engineMiniGame != null)
+        {
+            engineMiniGame.Completed -= OnMinigameCompleted;
+            engineMiniGame.CancelMinigame();
+        }
 
         SetHoveredComponent(null);
         _clickAction = null;
         _exitAction = null;
         _currentPlayer = null;
         _playerCamera = null;
+        _waitingForRepair = false;
         enabled = false;
     }
 
     private void Update()
     {
+        TryStartRepair();
         UpdateHoveredComponent();
+    }
+
+    private void TryStartRepair()
+    {
+        if (!_waitingForRepair || _currentPlayer == null || _currentPlayer.IsReadingStationBook) return;
+        if (engineMiniGame == null || !engineMiniGame.CanStart) return;
+
+        _waitingForRepair = false;
+        engineMiniGame.StartMinigame();
     }
 
     private void OnClickStarted(InputAction.CallbackContext context)
@@ -135,7 +150,6 @@ public class EngineMiniGameActivator : MonoBehaviour, IPossessable, IInteractabl
 
     private void OnExitPerformed(InputAction.CallbackContext context)
     {
-        if (engineMiniGame != null) engineMiniGame.CancelMinigame();
         _currentPlayer?.OnUnPossessionState(this);
     }
 

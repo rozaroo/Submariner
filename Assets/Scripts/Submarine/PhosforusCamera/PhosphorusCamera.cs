@@ -47,13 +47,13 @@ public class PhosphorusCamera : MonoBehaviour
     private float _pitch;
     private Coroutine _photoSequenceRoutine;
     private Coroutine _resetCameraRoutine;
-    private float _cooldownRemaining;
+    private double _nextPhotoTime;
 
     public bool IsPossessed => _isPossessingCamera;
     public float CurrentYaw => Mathf.Repeat(_yaw, 360f);
     public float CurrentPitch => -_pitch;
     public bool IsProcessingPhoto => _isProcessingPhoto;
-    public float CooldownRemaining => _cooldownRemaining;
+    public float CooldownRemaining => Mathf.Max(0f, (float)(_nextPhotoTime - Time.timeAsDouble));
     public bool IsBatteryEmpty => _energyStatus == EnergyStatus.Empty;
 
     private void Start()
@@ -147,21 +147,23 @@ public class PhosphorusCamera : MonoBehaviour
         }
     }
 
-    public bool CanTakePhoto() => _energyStatus != EnergyStatus.Empty && !_isProcessingPhoto;
+    public bool CanTakePhoto() => _energyStatus != EnergyStatus.Empty && !_isProcessingPhoto
+        && CooldownRemaining <= 0f;
 
     public void TryTakePhoto()
     {
         if (!CanTakePhoto()) return;
-        
+
+        // Leaving the periscope cancels the visual sequence, so track the cooldown independently.
+        _nextPhotoTime = Time.timeAsDouble
+            + (flashFadeInDuration + whiteScreenDuration + exteriorCameraDuration + finalFadeOutDuration);
         SFXManager.PostEvent("Start_PhosphorusCameraFlash_Event", gameObject);
-        if (_photoSequenceRoutine != null) StopCoroutine(_photoSequenceRoutine);
         _photoSequenceRoutine = StartCoroutine(PhotoSequenceRoutine());
     }
     
     private IEnumerator PhotoSequenceRoutine()
     {
         _isProcessingPhoto = true;
-        _cooldownRemaining = flashFadeInDuration + whiteScreenDuration + exteriorCameraDuration + finalFadeOutDuration;
         StartEnergyConsumption();
         PeriscopeFlash3D flash = periscopeCameraAnchorSo.flashComponent;
         
@@ -171,7 +173,6 @@ public class PhosphorusCamera : MonoBehaviour
         while (timer < flashFadeInDuration)
         {
             timer += Time.deltaTime;
-            _cooldownRemaining -= Time.deltaTime;
             float progress = timer / flashFadeInDuration;
             if (flash != null) flash.SetOverlayColor(Color.white, Mathf.SmoothStep(0f, 1f, progress));
             yield return null;
@@ -181,7 +182,6 @@ public class PhosphorusCamera : MonoBehaviour
         while (whiteScreenTimer < whiteScreenDuration)
         {
             whiteScreenTimer += Time.deltaTime;
-            _cooldownRemaining -= Time.deltaTime;
             yield return null;
         }
         if (flash != null) flash.SetOverlayAlpha(0f);
@@ -190,7 +190,6 @@ public class PhosphorusCamera : MonoBehaviour
         while (exteriorCameraTimer < exteriorCameraDuration)
         {
             exteriorCameraTimer += Time.deltaTime;
-            _cooldownRemaining -= Time.deltaTime;
             yield return null;
         }
 
@@ -199,7 +198,6 @@ public class PhosphorusCamera : MonoBehaviour
         {
             timer += Time.deltaTime;
             float progress = timer / finalFadeOutDuration;
-            _cooldownRemaining -= Time.deltaTime;
             if (flash != null) flash.SetOverlayColor(Color.black, Mathf.SmoothStep(0f, 1f, progress));
             yield return null;
         }
@@ -207,7 +205,7 @@ public class PhosphorusCamera : MonoBehaviour
         
         StopEnergyConsumption();
         _isProcessingPhoto = false;
-        _cooldownRemaining = 0f;
+        _photoSequenceRoutine = null;
     }
     
     private void CancelPhotoSequence()
@@ -220,7 +218,6 @@ public class PhosphorusCamera : MonoBehaviour
 
         StopEnergyConsumption();
         _isProcessingPhoto = false;
-        _cooldownRemaining = 0f;
     }
 
     public void EnableCamera()

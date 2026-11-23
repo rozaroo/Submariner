@@ -1019,6 +1019,7 @@ GameObject:
   - component: {fileID: 131729849546188698}
   - component: {fileID: 4917294596352061485}
   - component: {fileID: 3939747128975217634}
+  - component: {fileID: 6490962361582039177}
   m_Layer: 3
   m_Name: DrainageSystem
   m_TagString: Untagged
@@ -1079,7 +1080,7 @@ MonoBehaviour:
   drainagePercentage: 0.5
   drainageLights: []
   energyConsumption: 10
-  interactionUIData: {fileID: 11400000, guid: 267bb620c539fa34fae2bf897d03009b, type: 2}
+  interactionUIData: {fileID: 11400000, guid: 0224ad85d7364565a4e417c4d5ba0c66, type: 2}
 --- !u!114 &4917294596352061485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1102,6 +1103,8 @@ MonoBehaviour:
   - {fileID: 6910290549807535595}
   - {fileID: 9004665413881176764}
   buttonsToUnlock: 3
+  readyButtonLightIntensity: 0.003
+  readyButtonLightRange: 0.2
 --- !u!65 &3939747128975217634
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1123,6 +1126,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.33349708, y: 0.21523778, z: 0.5915438}
   m_Center: {x: -0.10088886, y: -0.11916584, z: -0.00954917}
+--- !u!65 &6490962361582039177
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7887449158100243412}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.36, y: 0.29, z: 0.62}
+  m_Center: {x: -0.101, y: -0.082, z: -0.01}
 --- !u!1 &8064138054499240304
 GameObject:
   m_ObjectHideFlags: 0

@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     {
         if (_isEnding) return;
         _isEnding = true;
+        HardModeSettings.UnlockAfterVictory();
         Log.Info("[GameManager] Reached Victory. Successful Evacuation.");
         
         Cursor.lockState = CursorLockMode.None;

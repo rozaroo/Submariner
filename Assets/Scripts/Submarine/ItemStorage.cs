@@ -15,12 +15,16 @@ public class ItemStorage : MonoBehaviour, IInteractable
     [Tooltip("Optional starting tool. Place it within this support's collider in the scene.")]
     [SerializeField] private MonoBehaviour startingItem;
     [SerializeField] private InteractionUIData interactionUIData;
+    [Tooltip("Return the starting tool if it falls this far below the storage point.")]
+    [SerializeField, Min(0.1f)] private float recoveryDepth = 4f;
 
     private MonoBehaviour _storedItem;
+    private Rigidbody _startingItemBody;
 
     private string ItemName => toolType == ToolType.OxygenTank ? "Oxygen Tank" : "Blowtorch";
     private bool HasStoredItem => _storedItem != null && storagePoint != null
         && _storedItem.transform.parent == storagePoint;
+    internal GameObject PickupObject => HasStoredItem ? _storedItem.gameObject : null;
 
     private void Start()
     {
@@ -29,6 +33,7 @@ public class ItemStorage : MonoBehaviour, IInteractable
             return;
         }
 
+        startingItem.TryGetComponent(out _startingItemBody);
         Transform itemTransform = startingItem.transform;
         if (itemTransform.parent != null && itemTransform.parent != storagePoint)
         {
@@ -40,6 +45,17 @@ public class ItemStorage : MonoBehaviour, IInteractable
         if (interactionBounds.Contains(transform.InverseTransformPoint(itemTransform.position)))
         {
             Store(item);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (_startingItemBody == null || !_startingItemBody.gameObject.activeInHierarchy
+            || _startingItemBody.isKinematic || storagePoint == null || HasStoredItem) return;
+
+        if (_startingItemBody.position.y < storagePoint.position.y - recoveryDepth)
+        {
+            Store((IPickable)startingItem);
         }
     }
 

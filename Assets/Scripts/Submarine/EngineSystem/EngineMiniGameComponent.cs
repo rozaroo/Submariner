@@ -125,7 +125,7 @@ public class EngineMiniGameComponent : MonoBehaviour, IInteractable
         _isCorrect = false;
         _isFailure = false;
         _isRoundTransition = false;
-        ApplyVisual();
+        ApplyVisual(immediate: !isActiveAndEnabled);
     }
 
     public void SetHovered(bool isHovered)

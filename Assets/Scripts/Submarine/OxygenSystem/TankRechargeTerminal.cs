@@ -16,6 +16,7 @@ public class TankRechargeTerminal : MonoBehaviour, IInteractable
     private Coroutine _rechargeCoroutine;
     private bool _hasRegisteredEnergyConsumption;
     private bool _isRechargePaused;
+    internal GameObject PickupObject => _dockedTank != null ? _dockedTank.gameObject : null;
 
     private void OnEnable()
     {

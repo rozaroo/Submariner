@@ -169,7 +169,9 @@ public class DrainageStation : MonoBehaviour, IPossessable, IInteractable
         Vector2 viewportPos = new Vector2(mousePos.x / Screen.width, mousePos.y / Screen.height);
         Ray ray = _playerCamera.ViewportPointToRay(viewportPos);
 
-        if (!Physics.Raycast(ray, out RaycastHit hit, 5f)) return;
+        // The console's entry trigger covers the buttons from outside the station.
+        if (!Physics.Raycast(ray, out RaycastHit hit, 5f, Physics.DefaultRaycastLayers,
+                QueryTriggerInteraction.Ignore)) return;
 
         if (hit.collider.TryGetComponent(out IButtonControls buttonControl))
         {

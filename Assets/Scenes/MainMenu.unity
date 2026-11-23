@@ -1410,7 +1410,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -688, y: -431}
+  m_AnchoredPosition: {x: -688, y: -341}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &757777739
@@ -1708,7 +1708,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -691, y: -337}
+  m_AnchoredPosition: {x: -688, y: -454}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &905357120
@@ -3769,7 +3769,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -718, y: -162.5}
+  m_AnchoredPosition: {x: 776, y: -493}
   m_SizeDelta: {x: 126.2353, y: 20.5803}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &910000000000001002
@@ -3826,7 +3826,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 910000000000001004}
   m_OnClick:
     m_PersistentCalls:
@@ -3938,7 +3938,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'HARD MODE: ON'
+  m_text: '<size=80%>HARD MODE: LOCKED</size>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3923472d66bc6da4a95a264051dd57f6, type: 2}
   m_sharedMaterial: {fileID: 8888809582829554801, guid: 3923472d66bc6da4a95a264051dd57f6, type: 2}

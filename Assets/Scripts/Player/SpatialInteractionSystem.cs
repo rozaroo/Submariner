@@ -36,6 +36,8 @@ public class SpatialInteractionSystem : MonoBehaviour
     [SerializeField] private Shader outlineShader;
     [Tooltip("Optional configured outline material. Takes priority over Outline Shader.")]
     [SerializeField] private Material outlineMaterial;
+    [Tooltip("Outline for nearby items that can be picked up.")]
+    [SerializeField] private Material pickupOutlineMaterial;
 
     [Header("Floating motion")]
     [SerializeField] private bool animateIcons = true;
@@ -75,6 +77,13 @@ public class SpatialInteractionSystem : MonoBehaviour
     private Vector3 smoothedSway;
     private SpatialInteractionTarget focusedTarget;
     private readonly SpatialInteractionOutline outline = new();
+    private readonly HashSet<GameObject> outlinedPickups = new();
+
+    internal IReadOnlyCollection<GameObject> OutlinedPickups => outlinedPickups;
+    internal Material PickupOutlineMaterial => pickupOutlineMaterial;
+
+    internal bool HasPickupOutlines(Camera camera) => isActiveAndEnabled && camera == currentCamera
+        && lastTick == Time.frameCount && pickupOutlineMaterial != null && outlinedPickups.Count > 0;
 
     public IInteractable ResolveInteraction(PlayerCharacter player, LayerMask interactionLayers)
     {
@@ -101,7 +110,7 @@ public class SpatialInteractionSystem : MonoBehaviour
             if (target.DistanceFrom(camera.transform.position) > closeRadius) continue;
             Vector3 direction = target.Position - camera.transform.position;
             float angle = Vector3.Angle(camera.transform.forward, direction);
-            if (angle > focusAngle || angle >= bestScore
+            if (angle > target.FocusAngle(focusAngle) || angle >= bestScore
                 || IsOccluded(camera.transform.position, target.Position, player.transform, target.Source.transform)) continue;
             if (!((IInteractable)target.Source).SendInteractionFeedback(player).canInteract) continue;
             focusedTarget = target;
@@ -149,6 +158,9 @@ public class SpatialInteractionSystem : MonoBehaviour
     public IInteractable Tick(PlayerCharacter player, LayerMask interactionLayers)
     {
         lastTick = Time.frameCount;
+        outlinedPickups.Clear();
+        bool showPickupOutlines = enableOutline && pickupOutlineMaterial != null
+            && player.InventorySystem != null && player.InventorySystem.HeldItem == null;
         Camera camera = player.CamController.MainCamera;
         SpatialInteractionTarget selected = focusedTarget;
         foreach (var target in SpatialInteractionTarget.Active)
@@ -175,6 +187,11 @@ public class SpatialInteractionSystem : MonoBehaviour
             if (string.IsNullOrEmpty(feedback.messageToDisplay))
             { if (views.TryGetValue(target, out var hidden)) hidden.Hide(); continue; }
             bool close = isFocused || distance <= closeRadius;
+            if (showPickupOutlines && close && target.AllowOutline && feedback.canInteract)
+            {
+                GameObject pickup = GetPickupObject(target.Source);
+                if (pickup != null) outlinedPickups.Add(pickup);
+            }
             if (!views.TryGetValue(target, out var view))
             {
                 if (visualRoot == null)
@@ -202,6 +219,15 @@ public class SpatialInteractionSystem : MonoBehaviour
         focusedTarget = selected;
         return selected != null ? (IInteractable)selected.Source : null;
     }
+
+    private static GameObject GetPickupObject(MonoBehaviour source) => source switch
+    {
+        IPickable pickup => pickup.GameObject,
+        ItemStorage storage => storage.PickupObject,
+        OxygenTerminal terminal => terminal.PickupObject,
+        TankRechargeTerminal terminal => terminal.PickupObject,
+        _ => null
+    };
 
     private void ShowTarget(SpatialInteractionView view, SpatialInteractionTarget target, Camera camera,
         InteractionFeedback feedback, bool close, bool focused)
@@ -269,6 +295,7 @@ public class SpatialInteractionSystem : MonoBehaviour
         foreach (var view in views.Values) view.Hide();
         focusedTarget = null;
         outline.Clear();
+        outlinedPickups.Clear();
         hasCameraPose = false;
         smoothedSway = Vector3.zero;
     }
@@ -316,7 +343,9 @@ public class SpatialInteractionSystem : MonoBehaviour
                 entry.Value.Animate(entry.Key.Position, currentCamera,
                     animateIcons ? Mathf.Max(0f, levitationAmplitude) : 0f,
                     Mathf.Max(0f, levitationFrequency), smoothedSway);
-        outline.SetFocus(enableOutline ? focusedTarget : null, outlineMaterial, outlineShader);
+        bool hasPickupFocus = pickupOutlineMaterial != null && focusedTarget != null
+            && GetPickupObject(focusedTarget.Source) != null;
+        outline.SetFocus(enableOutline && !hasPickupFocus ? focusedTarget : null, outlineMaterial, outlineShader);
         outline.Draw(currentCamera);
     }
     private void OnDisable() => HideAll();

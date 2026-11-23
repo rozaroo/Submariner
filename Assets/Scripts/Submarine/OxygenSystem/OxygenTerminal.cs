@@ -19,6 +19,7 @@ public class OxygenTerminal : MonoBehaviour, IInteractable
     private float _pendingOxygen;
     private bool _hasRegisteredEnergyConsumption;
     private bool _isBlackout;
+    internal GameObject PickupObject => _dockedTank != null ? _dockedTank.gameObject : null;
 
     private void OnEnable()
     {

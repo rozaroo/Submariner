@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,8 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public class TutorialSketchbookContent : MonoBehaviour
 {
+    private static readonly Regex UnderlinedText = new(@"\[\[([^\[\]]+)\]\]");
+
     public enum ContentMode
     {
         Text,
@@ -18,7 +21,9 @@ public class TutorialSketchbookContent : MonoBehaviour
 
     [Header("Content")]
     [SerializeField] private ContentMode contentMode = ContentMode.Text;
-    [SerializeField, TextArea(3, 12)] private string textContent;
+    [SerializeField, TextArea(3, 12)]
+    [Tooltip("Encierra entre [[ y ]] las palabras o frases que quieras subrayar.")]
+    private string textContent;
     [SerializeField] private Sprite imageContent;
 
     [Header("World-space view")]
@@ -59,7 +64,8 @@ public class TutorialSketchbookContent : MonoBehaviour
 
         if (textView != null)
         {
-            textView.text = textContent;
+            textView.richText = true;
+            textView.text = UnderlinedText.Replace(textContent ?? string.Empty, "<u>$1</u>");
             textView.gameObject.SetActive(showText);
         }
 

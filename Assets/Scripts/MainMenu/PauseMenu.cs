@@ -13,6 +13,7 @@ public class PauseMenu : MonoBehaviour
     private CursorLockMode _previousLockState;
     private bool _previousCursorVisible;
     private PlayerInput _playerInput;
+    private InputActionMap _pausedActionMap;
 
     private void Start()
     {
@@ -37,9 +38,6 @@ public class PauseMenu : MonoBehaviour
             }
             else
             {
-                if (Time.timeScale == 0f) return;
-
-                if (IsPlayerInStation()) return;
                 Pause();
             }
         }
@@ -62,6 +60,8 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        if (!_isPaused) return;
+
         pauseCanvas.SetActive(false);
         ShowPausePanel();
         Time.timeScale = 1f;
@@ -70,6 +70,8 @@ public class PauseMenu : MonoBehaviour
         // Restore cursor state
         Cursor.lockState = _previousLockState;
         Cursor.visible = _previousCursorVisible;
+        _pausedActionMap?.Enable();
+        _pausedActionMap = null;
 
         // Force cursor lock in editor if it was locked
         if (_previousLockState == CursorLockMode.Locked)
@@ -87,14 +89,25 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
+        if (_isPaused || Time.timeScale == 0f || IsPlayerInStation()) return;
+
         // Store current cursor state before pausing
         _previousLockState = Cursor.lockState;
         _previousCursorVisible = Cursor.visible;
 
-        ShowPausePanel();
-        pauseCanvas.SetActive(true);
         Time.timeScale = 0f;
         _isPaused = true;
+
+        // Input actions run independently of Time.timeScale.
+        InputActionMap actionMap = _playerInput != null ? _playerInput.currentActionMap : null;
+        if (actionMap != null && actionMap.enabled)
+        {
+            _pausedActionMap = actionMap;
+            _pausedActionMap.Disable();
+        }
+
+        ShowPausePanel();
+        pauseCanvas.SetActive(true);
 
         // Show cursor for menu navigation
         Cursor.lockState = CursorLockMode.None;

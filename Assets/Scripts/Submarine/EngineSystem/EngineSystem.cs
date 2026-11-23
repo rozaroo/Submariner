@@ -7,6 +7,7 @@ public class EngineSystem : MonoBehaviour
 {
     public event Action OnEngineStartedEvent;
     public event Action OnEngineStoppedEvent;
+    public event Action TemperatureChanged;
 
     [Header("Startup")]
     [SerializeField] private float startupTime = 3f;
@@ -18,6 +19,7 @@ public class EngineSystem : MonoBehaviour
     [SerializeField] private float maxTemperature = 100f;
     [SerializeField] private float temperatureIncreaseAmount = 1f;
     [SerializeField] private float temperatureIncreaseInterval = 5f;
+    [SerializeField] private GalvanometerIndicator temperatureIndicator;
 
     [Header("Cooling")]
     [SerializeField] private float coolingAmount = 2f;
@@ -27,10 +29,15 @@ public class EngineSystem : MonoBehaviour
     private Coroutine _engineStartingCoroutine;
     private Coroutine _temperatureCoroutine;
 
+    public float TemperatureFraction => Mathf.InverseLerp(0f, maxTemperature, currentTemperature);
+    public bool IsTemperatureCritical => currentTemperature >= criticalTemperature;
+
     #region UnityFunctions
 
     private void Start()
     {
+        UpdateTemperatureFeedback();
+
         if (navigationLeverPull != null)
         {
             navigationLeverPull.onActivation += TryStartEngine;
@@ -107,7 +114,9 @@ public class EngineSystem : MonoBehaviour
             BreakEngine();
             return;
         }
-        if (currentTemperature >= criticalTemperature)
+
+        UpdateTemperatureFeedback();
+        if (IsTemperatureCritical)
         {
             Log.Info("[ENGINE] Critical temperature reached.");
             EnterDegradedState();
@@ -126,7 +135,9 @@ public class EngineSystem : MonoBehaviour
     [ContextMenu("Force Break Engine")]
     public void BreakEngine()
     {
+        currentTemperature = maxTemperature;
         _currentState = EngineState.Broken;
+        UpdateTemperatureFeedback();
 
         GameEventChannel<OnEngineStateChanged>.RaiseEvent(new OnEngineStateChanged { State = EngineState.Broken, SpeedMultiplier = 0f });
 
@@ -174,7 +185,15 @@ public class EngineSystem : MonoBehaviour
         }
         currentTemperature -= coolingAmount;
         currentTemperature = Mathf.Max(0f, currentTemperature);
+        UpdateTemperatureFeedback();
         Log.Info($"[ENGINE] Cooling active. Temperature: {currentTemperature}%");
+    }
+
+    private void UpdateTemperatureFeedback()
+    {
+        if (temperatureIndicator != null)
+            temperatureIndicator.UpdateIndicator(currentTemperature, 0f, maxTemperature);
+        TemperatureChanged?.Invoke();
     }
 
     public bool CanBeCooled() => _currentState != EngineState.Off && _currentState != EngineState.Broken;
@@ -194,6 +213,7 @@ public class EngineSystem : MonoBehaviour
 
         currentTemperature = Mathf.Clamp(repairedTemperature, 0f, maxTemperature);
         _currentState = EngineState.Off;
+        UpdateTemperatureFeedback();
         Log.Info($"[ENGINE] Temperature restored to {currentTemperature}%");
         Log.Info("[ENGINE] Status changed -> OFF");
         Log.Info("[ENGINE] Engine repaired. Pull the navigation lever to start it again.");

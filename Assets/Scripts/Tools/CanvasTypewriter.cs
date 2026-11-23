@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,6 +11,10 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CinematicEndButton))]
 public class CanvasTypewriter : MonoBehaviour
 {
+    private static readonly Regex WarningTag = new(@"<warning>(.+?)</warning>",
+        RegexOptions.IgnoreCase | RegexOptions.Singleline);
+    private const string WarningColorTag = "<color=#CF101C>";
+
     [Header("Story")]
     [SerializeField] private TMP_Text targetText;
     [Tooltip("Insert <page> between passages. Only these markers create pages; text is never split automatically.")]
@@ -18,6 +23,8 @@ public class CanvasTypewriter : MonoBehaviour
     [SerializeField] private bool startOnClick = true;
     [Tooltip("Used only when Start On Click is disabled.")]
     [SerializeField] private bool playOnEnable;
+    [Tooltip("Minimum reading time after revealing a page with <warning>...</warning>.")]
+    [Min(0.1f)] [SerializeField] private float warningReadSeconds = 5f;
 
     [Header("Writing")]
     [Min(1f)] [SerializeField] private float charactersPerSecond = 35f;
@@ -57,6 +64,7 @@ public class CanvasTypewriter : MonoBehaviour
     public int TotalPages => pages.Length;
     public bool IsFinalPage => TotalPages > 0 && CurrentPage == TotalPages;
     public bool HasCompleted { get; private set; }
+    internal bool IsWarningLocked => warningPageIndex >= 0 && pageIndex == warningPageIndex && !warningRead;
     public TMP_Text TextComponent => targetText;
     public event System.Action StoryStarted;
     public event System.Action StoryCompleted;
@@ -74,6 +82,11 @@ public class CanvasTypewriter : MonoBehaviour
     private CinematicEndButton endButton;
     private int pageIndex;
     private string[] pages = System.Array.Empty<string>();
+    private int warningPageIndex = -1;
+    private bool warningRead;
+    private float warningUnlockAt;
+    private int warningTextStart;
+    private int warningTextEnd;
 
     private void Awake()
     {
@@ -87,6 +100,7 @@ public class CanvasTypewriter : MonoBehaviour
 
     private void OnEnable()
     {
+        if (targetText != null) targetText.OnPreRenderText += ShakeWarning;
         speedLevel = 1;
         UpdateSpeedLabel();
         if (speedButton != null) speedButton.onClick.AddListener(ToggleSpeed);
@@ -135,9 +149,9 @@ public class CanvasTypewriter : MonoBehaviour
         targetText.pageToDisplay = 1;
         pageIndex = 0;
         pages = System.Array.FindAll(
-            System.Text.RegularExpressions.Regex.Split(text ?? string.Empty, @"<page\s*>",
-                System.Text.RegularExpressions.RegexOptions.IgnoreCase),
+            Regex.Split(text ?? string.Empty, @"<page\s*>", RegexOptions.IgnoreCase),
             passage => !string.IsNullOrWhiteSpace(passage));
+        warningPageIndex = System.Array.FindIndex(pages, passage => WarningTag.IsMatch(passage));
         if (TotalPages == 0)
         {
             targetText.text = string.Empty;
@@ -153,7 +167,18 @@ public class CanvasTypewriter : MonoBehaviour
     {
         HasCompleted = false;
         pageIndex = index;
-        targetText.text = pages[pageIndex].Trim();
+        warningUnlockAt = float.PositiveInfinity;
+        warningTextStart = warningTextEnd = 0;
+        string passage = pages[pageIndex].Trim();
+        Match warning = WarningTag.Match(passage);
+        if (warning.Success)
+        {
+            warningTextStart = warning.Index + WarningColorTag.Length;
+            warningTextEnd = warningTextStart + warning.Groups[1].Length;
+            passage = WarningTag.Replace(passage, WarningColorTag + "$1</color>", 1);
+        }
+
+        targetText.text = passage;
         targetText.maxVisibleCharacters = 0;
         Canvas.ForceUpdateCanvases();
         targetText.ForceMeshUpdate(true);
@@ -214,10 +239,57 @@ public class CanvasTypewriter : MonoBehaviour
     {
         IsTyping = false;
         if (revealPageButton != null) revealPageButton.interactable = false;
+        if (IsWarningLocked)
+        {
+            warningUnlockAt = Time.unscaledTime + Mathf.Max(0.1f, warningReadSeconds);
+            return;
+        }
+        AllowNextPage();
+    }
+
+    private void AllowNextPage()
+    {
         if (pageIndex + 1 >= TotalPages) { Complete(); return; }
         IsWaitingForNextPage = true;
         clickReadyFrame = Time.frameCount;
         SetContinuePrompt(true);
+    }
+
+    private void LateUpdate()
+    {
+        if (!IsWarningLocked || targetText == null) return;
+
+        if (Time.unscaledTime >= warningUnlockAt)
+        {
+            warningRead = true;
+            targetText.ForceMeshUpdate();
+            AllowNextPage();
+        }
+        else if (visibleCharacters > 0)
+        {
+            targetText.ForceMeshUpdate();
+        }
+    }
+
+    private void ShakeWarning(TMP_TextInfo textInfo)
+    {
+        if (!IsWarningLocked || warningTextStart == warningTextEnd) return;
+
+        // Move the phrase as a group so the letters stay readable.
+        float step = Mathf.Floor(Time.unscaledTime * 24f);
+        float amplitude = targetText.fontSize * 0.065f;
+        Vector3 offset = new Vector3(Mathf.Sin(step * 2.4f), Mathf.Cos(step * 1.62f) * 0.55f) * amplitude;
+        int count = Mathf.Min(visibleCharacters, textInfo.characterCount);
+        for (int i = 0; i < count; i++)
+        {
+            TMP_CharacterInfo character = textInfo.characterInfo[i];
+            if (character.index >= warningTextEnd) break;
+            if (character.index < warningTextStart || !character.isVisible) continue;
+
+            Vector3[] vertices = textInfo.meshInfo[character.materialReferenceIndex].vertices;
+            for (int corner = 0; corner < 4; corner++)
+                vertices[character.vertexIndex + corner] += offset;
+        }
     }
 
     private void RevealCurrentPage()
@@ -231,7 +303,7 @@ public class CanvasTypewriter : MonoBehaviour
     /// <summary>Advance only after the current page has finished writing.</summary>
     public void NextPage()
     {
-        if (!IsWaitingForNextPage || !isActiveAndEnabled) return;
+        if (!IsWaitingForNextPage || IsWarningLocked || !isActiveAndEnabled) return;
         if (targetText == null) { Stop(); return; }
         BeginPage(pageIndex + 1);
     }
@@ -303,7 +375,7 @@ public class CanvasTypewriter : MonoBehaviour
     [ContextMenu("Skip to end")]
     public void SkipToEnd()
     {
-        if (!IsTyping && !IsWaitingForNextPage) return;
+        if ((!IsTyping && !IsWaitingForNextPage) || !TrySkipPastWarning()) return;
         StopSound();
         if (targetText != null)
         {
@@ -313,6 +385,18 @@ public class CanvasTypewriter : MonoBehaviour
         Complete();
     }
 
+    internal bool TrySkipPastWarning()
+    {
+        if (waitingForClick && WarningTag.IsMatch(storyText ?? string.Empty)) Play();
+        if (warningPageIndex < 0 || warningRead) return true;
+        if (pageIndex != warningPageIndex)
+        {
+            BeginPage(warningPageIndex);
+            RevealCurrentPage();
+        }
+        return false;
+    }
+
     /// <summary>Stop writing, leaving the currently visible text on screen.</summary>
     public void Stop()
     {
@@ -320,6 +404,8 @@ public class CanvasTypewriter : MonoBehaviour
         waitingForClick = false;
         IsWaitingForNextPage = false;
         IsTyping = false;
+        warningPageIndex = -1;
+        warningRead = false;
         SetContinuePrompt(false);
         SetStoryControlsVisible(false);
         StopSound();
@@ -346,6 +432,7 @@ public class CanvasTypewriter : MonoBehaviour
 
     private void OnDisable()
     {
+        if (targetText != null) targetText.OnPreRenderText -= ShakeWarning;
         if (speedButton != null) speedButton.onClick.RemoveListener(ToggleSpeed);
         if (revealPageButton != null) revealPageButton.onClick.RemoveListener(RevealCurrentPage);
         Stop();

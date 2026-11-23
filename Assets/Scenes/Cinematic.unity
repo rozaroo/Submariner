@@ -943,8 +943,8 @@ MonoBehaviour:
     para descender hasta las \xFAltimas coordenadas registradas.\n\nLa embarcaci\xF3n
     deber\xE1 ser operada sin asistencia t\xE9cnica adicional. Durante la inmersi\xF3n,
     quedar\xE1 a su cargo mantener el suministro el\xE9ctrico, administrar el ox\xEDgeno
-    y contener cualquier entrada de agua.\n<page>\nNOTA DEL SUPERIOR:\n\nAntes de
-    operar los equipos, consulte los manuales t\xE9cnicos que se han dejado a bordo.
+    y contener cualquier entrada de agua.\n<page>\nNOTA DEL SUPERIOR:\n\n<warning>Antes de
+    operar los equipos, consulte los manuales t\xE9cnicos que se han dejado a bordo.</warning>
     En ellos encontrar\xE1 los procedimientos de operaci\xF3n y mantenimiento de
     la maquinaria del submarino.\n<page>\nLa visibilidad exterior ser\xE1 limitada.
     Utilice el sonar para orientarse y la c\xE1mara de f\xF3sforo para documentar
@@ -958,6 +958,7 @@ MonoBehaviour:
     determinado el origen del sonido.\n\nProceda con la inmersi\xF3n."
   startOnClick: 1
   playOnEnable: 1
+  warningReadSeconds: 5
   charactersPerSecond: 8
   thirdSpeedMultiplier: 6
   speedButton: {fileID: 910000000000000213}

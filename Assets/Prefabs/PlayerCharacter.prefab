@@ -431,6 +431,7 @@ MonoBehaviour:
   enableOutline: 1
   outlineShader: {fileID: -6465566751694194690, guid: f07b880740c804a418dfa73673b544e7, type: 3}
   outlineMaterial: {fileID: 2100000, guid: 92db228f11549c341abad6e5e7f59844, type: 2}
+  pickupOutlineMaterial: {fileID: 2100000, guid: 637ca905315140bb83276b5aac1a5759, type: 2}
   animateIcons: 1
   levitationAmplitude: 0.018
   levitationFrequency: 0.6

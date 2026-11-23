@@ -160,4 +160,4 @@ MonoBehaviour:
   amperageLabel: {fileID: 0}
   blowOutParticles: {fileID: 0}
   _fuseBreakSFX: Fuse_Break_SFX
-  interactionUIData: {fileID: 0}
+  interactionUIData: {fileID: 11400000, guid: 267bb620c539fa34fae2bf897d03009b, type: 2}

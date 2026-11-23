@@ -147,13 +147,16 @@ public class PlayerCharacter : MonoBehaviour
 
     #region State Machine
 
-    public void OnPossessionState(IPossessable station)
+    internal bool IsReadingStationBook =>
+        _gameplaySm.CurrentState is PlayerGameplayPossessionState state && state.IsReadingBook;
+
+    public void OnPossessionState(IPossessable station, TutorialSketchbook bookToOpen = null)
     {
         SavedCameraPose = new CameraPose(CamController.MainCamera.transform.position,
             CamController.MainCamera.transform.rotation);
         _gameplaySm.ChangeState(
             new PlayerGameplayPossessionState(_gameplaySm, this, station, Input.currentActionMap.name,
-                station.CursorLockMode, station.IsMouseVisible));
+                station.CursorLockMode, station.IsMouseVisible, bookToOpen));
         StationPossessed?.Invoke(station, this);
     }
 
@@ -270,7 +273,23 @@ public class PlayerCharacter : MonoBehaviour
 
     private void TryDropItem(InputAction.CallbackContext ctx) => InventorySystem.DropItem();
 
-    private void OnUseStarted(InputAction.CallbackContext ctx) => _isHolding = false;
+    private void OnUseStarted(InputAction.CallbackContext ctx)
+    {
+        _isHolding = false;
+        if (!_canMove || Time.timeScale == 0f || _gameplaySm.CurrentState is not PlayerGameplayFreeState
+            || ctx.control.device is not Mouse mouse || CamController.MainCamera == null)
+        {
+            return;
+        }
+
+        TutorialSketchbook book = TutorialSketchbook.FindPointedBook(CamController.MainCamera, mouse,
+            transform, interactionDistance);
+        IPossessable station = book != null ? book.OwningStation : null;
+        if (station?.CameraAnchor != null && station.DirectionAnchor != null)
+        {
+            OnPossessionState(station, book);
+        }
+    }
 
     private void TryUseItem(InputAction.CallbackContext ctx)
     {

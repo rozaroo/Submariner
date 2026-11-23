@@ -18,9 +18,13 @@ public class SpatialInteractionTarget : MonoBehaviour
     [Tooltip("Optional anchor. Without one, uses the top of the object's collider.")]
     [SerializeField] private Transform anchor;
     [SerializeField] private Vector3 localOffset = new(0f, 0.2f, 0f);
+    [Tooltip("Apply the icon offset in world space so it stays above objects that can roll over.")]
+    [SerializeField] private bool useWorldSpaceOffset;
     [SerializeField] private bool overrideRadii;
     [Min(0.1f)] [SerializeField] private float discoveryRadius = 7f;
     [Min(0.1f)] [SerializeField] private float interactionRadius = 2.5f;
+    [Tooltip("Angle for selecting the interaction icon. Zero uses the player's focus angle.")]
+    [Range(0f, 60f)] [SerializeField] private float focusAngleOverride;
     [Tooltip("Scales both radii at runtime. Useful for upgrades or changing conditions.")]
     [Min(0.01f)] public float radiusMultiplier = 1f;
 
@@ -48,6 +52,7 @@ public class SpatialInteractionTarget : MonoBehaviour
     public Sprite DiscoveryIcon(Sprite fallback) => discoveryIcon != null ? discoveryIcon : fallback;
     public Sprite InteractionIcon(Sprite fallback) => interactionIconOverride != null ? interactionIconOverride : fallback;
     public float IconScale => Mathf.Max(0.01f, iconScale);
+    public float FocusAngle(float fallback) => focusAngleOverride > 0f ? focusAngleOverride : fallback;
     public float DiscoveryIconSize(float fallback) =>
         Mathf.Max(0.01f, overrideDiscoveryIconSize ? discoveryIconSize : fallback) * IconScale;
 
@@ -70,12 +75,15 @@ public class SpatialInteractionTarget : MonoBehaviour
     {
         get
         {
-            if (anchor != null) return anchor.TransformPoint(localOffset);
-            var boundsCollider = GetComponent<Collider>();
-            Vector3 top = boundsCollider != null
-                ? new Vector3(boundsCollider.bounds.center.x, boundsCollider.bounds.max.y, boundsCollider.bounds.center.z)
-                : transform.position;
-            return top + transform.TransformVector(localOffset);
+            Transform offsetSpace = anchor != null ? anchor : transform;
+            Vector3 position = offsetSpace.position;
+            if (anchor == null && TryGetComponent(out Collider collider) && collider.enabled)
+            {
+                Bounds bounds = collider.bounds;
+                position = new Vector3(bounds.center.x, bounds.max.y, bounds.center.z);
+            }
+
+            return position + (useWorldSpaceOffset ? localOffset : offsetSpace.TransformVector(localOffset));
         }
     }
 

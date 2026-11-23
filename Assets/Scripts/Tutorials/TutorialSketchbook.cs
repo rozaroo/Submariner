@@ -25,24 +25,24 @@ public class TutorialSketchbook : MonoBehaviour
     [SerializeField] private Vector3 readingRotationOffset;
     [SerializeField, Min(0.01f)] private float transitionDuration = 0.25f;
     
-    private enum TutorialState { Unused, Used }
-    private TutorialState _state = TutorialState.Unused;
-
     private IPossessable _owningStation;
-    private Collider _sketchbookCollider;
     private TutorialSketchbookContent _content;
     private TutorialSketchbookOutline _outline;
     private Camera _stationCamera;
     private InputAction _clickAction;
     private Coroutine _transition;
+    private bool _waitingForStationCamera;
     private bool _isReading;
     private bool _hasBeenInteracted;
     private Vector3 _tableWorldPosition;
     private Quaternion _tableWorldRotation;
 
+    internal IPossessable OwningStation => _owningStation is MonoBehaviour station && station != null
+        && station.gameObject.activeInHierarchy ? _owningStation : null;
+    internal bool IsReadingOrWaiting => _isReading || _waitingForStationCamera;
+
     private void Awake()
     {
-        _state = TutorialState.Unused;
         CacheOwningStation();
         CacheTablePose();
         CacheClickCollider();
@@ -66,8 +66,47 @@ public class TutorialSketchbook : MonoBehaviour
     private void OnDisable()
     {
         StopListeningForClicks();
+        _stationCamera = null;
+        _outline.SetVisible(false);
+        if (IsReadingOrWaiting || _transition != null)
+        {
+            ReturnToTable(immediately: true);
+        }
         PlayerCharacter.StationPossessed -= HandleStationPossessed;
         PlayerCharacter.StationUnpossessed -= HandleStationUnpossessed;
+    }
+
+    internal static TutorialSketchbook FindPointedBook(Camera camera, Mouse mouse, Transform player, float distance)
+    {
+        Ray ray = Cursor.lockState == CursorLockMode.Locked
+            ? camera.ViewportPointToRay(new Vector3(0.5f, 0.5f))
+            : GetCursorRay(camera, mouse);
+        RaycastHit[] hits = Physics.RaycastAll(ray, distance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Collide);
+        TutorialSketchbook closestBook = null;
+        float bookDistance = float.PositiveInfinity;
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.distance >= bookDistance) continue;
+            TutorialSketchbook book = hit.collider.GetComponentInParent<TutorialSketchbook>();
+            if (book == null || !book.isActiveAndEnabled || hit.collider != book.clickCollider) continue;
+
+            closestBook = book;
+            bookDistance = hit.distance;
+        }
+
+        if (closestBook == null) return null;
+
+        MonoBehaviour station = closestBook._owningStation as MonoBehaviour;
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.distance >= bookDistance || hit.collider.isTrigger || hit.transform.IsChildOf(player)) continue;
+            // A station's interaction volume can extend over its own book.
+            if (station != null && hit.collider.gameObject == station.gameObject) continue;
+            return null;
+        }
+
+        return closestBook;
     }
 
     private void CacheOwningStation()
@@ -122,7 +161,6 @@ public class TutorialSketchbook : MonoBehaviour
             return;
         }
 
-        _outline.SetVisible(_state == TutorialState.Unused);
         _stationCamera = player.CamController.MainCamera;
         StopListeningForClicks();
         _clickAction = player.Input.actions[StationClickActionName];
@@ -160,8 +198,7 @@ public class TutorialSketchbook : MonoBehaviour
             clickCollider = GetComponentInChildren<Collider>();
         }
 
-        _sketchbookCollider = clickCollider;
-        if (_sketchbookCollider == null)
+        if (clickCollider == null)
         {
             Log.Warning("[TutorialSketchbook] Assign a collider in the Inspector to receive clicks.");
         }
@@ -174,14 +211,24 @@ public class TutorialSketchbook : MonoBehaviour
 
     internal bool TryConsumeStationClick(Camera stationCamera)
     {
-        if (_stationCamera != stationCamera || _sketchbookCollider == null || Mouse.current == null)
+        if (_stationCamera != stationCamera)
+        {
+            return false;
+        }
+
+        if (_waitingForStationCamera)
+        {
+            return true;
+        }
+
+        if (clickCollider == null || Mouse.current == null)
         {
             return false;
         }
 
         if (_isReading)
         {
-            if (IsPointerOverSketchbook())
+            if (IsPointerOverSketchbook(stationCamera, Mouse.current))
             {
                 ReturnToTable(immediately: false);
             }
@@ -189,44 +236,43 @@ public class TutorialSketchbook : MonoBehaviour
             return true;
         }
 
-        if (!IsPointerOverSketchbook())
+        if (!IsPointerOverSketchbook(stationCamera, Mouse.current))
         {
             return false;
         }
 
-        MarkAsUsed();
-        _outline.SetVisible(false);
-        BringToReadingPosition();
+        OpenForReading(stationCamera);
         return true;
     }
-    
-    private void MarkAsUsed()
+
+    private bool IsPointerOverSketchbook(Camera camera, Mouse mouse)
     {
-        if (_state == TutorialState.Used)
-        {
-            return;
-        }
+        if (clickCollider == null) return false;
 
-        _state = TutorialState.Used;
-        _outline.SetVisible(false);
-    }
-
-    private bool IsPointerOverSketchbook()
-    {
-        Vector2 mousePosition = Mouse.current.position.ReadValue();
-        Vector2 viewportPosition = new(mousePosition.x / Screen.width, mousePosition.y / Screen.height);
-        Ray ray = _stationCamera.ViewportPointToRay(viewportPosition);
-
+        Ray ray = GetCursorRay(camera, mouse);
         // Test the book directly so the table collider cannot intercept it.
-        return _sketchbookCollider.Raycast(ray, out _, 5f) || RayHitsVisualBounds(ray);
+        return clickCollider.Raycast(ray, out _, 5f) || RayHitsVisualBounds(ray);
     }
 
-    private void BringToReadingPosition()
+    private static Ray GetCursorRay(Camera camera, Mouse mouse)
     {
+        // The camera renders to a texture stretched across the game window.
+        Vector2 position = mouse.position.ReadValue();
+        Vector2 viewportPosition = new(position.x / Screen.width, position.y / Screen.height);
+        return camera.ViewportPointToRay(viewportPosition);
+    }
+
+    internal void WaitForStationCamera() => _waitingForStationCamera = true;
+
+    internal void OpenForReading(Camera camera)
+    {
+        _waitingForStationCamera = false;
+        _hasBeenInteracted = true;
+        _outline.SetVisible(false);
         _isReading = true;
         _content?.Show();
-        Vector3 position = _stationCamera.transform.TransformPoint(readingOffset + Vector3.forward * readingDistance);
-        Quaternion rotation = _stationCamera.transform.rotation
+        Vector3 position = camera.transform.TransformPoint(readingOffset + Vector3.forward * readingDistance);
+        Quaternion rotation = camera.transform.rotation
                               * Quaternion.Euler(0f, 180f, 0f)
                               * Quaternion.Euler(90f, 0f, 0f)
                               * Quaternion.Euler(readingRotationOffset);
@@ -235,6 +281,7 @@ public class TutorialSketchbook : MonoBehaviour
 
     private void ReturnToTable(bool immediately)
     {
+        _waitingForStationCamera = false;
         _isReading = false;
         _content?.Hide();
 

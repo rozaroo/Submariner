@@ -13,6 +13,7 @@ public class EngineMiniGame : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] private List<EngineMiniGameComponent> components = new();
+    [SerializeField] private LightObject[] statusLights = System.Array.Empty<LightObject>();
 
     [Header("Minigame Settings")]
     [SerializeField] private int totalRounds = 3;
@@ -30,13 +31,6 @@ public class EngineMiniGame : MonoBehaviour
     [SerializeField] private int hullDamageOnErrorLimit = 2;
     [SerializeField] private HullDamageManager hullDamageManager;
 
-    [Header("Timer 3D")]
-    [SerializeField] private bool showTimer = true;
-    [SerializeField] private bool createTimerIfMissing = true;
-    [SerializeField] private float timerCharacterSize = 0.08f;
-    [SerializeField] private Color timerColor = Color.white;
-    [SerializeField] private TextMesh timerText;
-    
     [Header("Audio (Wwise)")]
     [SerializeField] private string onEngineTubeFix = "Start_Tube_Repair_Engine";
     [SerializeField] private string onEngineSequenceFailed = "Start_Motor_Engine_Fail";
@@ -71,30 +65,22 @@ public class EngineMiniGame : MonoBehaviour
         if (components.Count < 6)
             Debug.LogError($"[ENGINE MINIGAME] Se necesitan 6 componentes. Actualmente hay {components.Count}.");
 
-        EnsureTimerLabel();
+        foreach (LightObject light in statusLights)
+            if (light != null) light.Initialize();
+    }
+
+    private void OnEnable()
+    {
+        if (engineSystem != null)
+            engineSystem.TemperatureChanged += HandleTemperatureChanged;
+        ShowEngineStatus();
     }
 
     private void OnDisable()
     {
-        StopRunningCoroutines();
-    }
-
-    private void EnsureTimerLabel()
-    {
-        if (!showTimer || timerText != null || !createTimerIfMissing) return;
-
-        GameObject timerObject = new GameObject("EngineEmergencyTimer");
-        timerObject.transform.SetParent(transform);
-        timerObject.transform.localPosition = new Vector3(0.869f, -0.395f, 0f);
-        timerObject.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
-        timerObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-
-        timerText = timerObject.AddComponent<TextMesh>();
-        timerText.anchor = TextAnchor.MiddleCenter;
-        timerText.alignment = TextAlignment.Center;
-        timerText.characterSize = timerCharacterSize;
-        timerText.color = timerColor;
-        timerObject.SetActive(false);
+        if (engineSystem != null)
+            engineSystem.TemperatureChanged -= HandleTemperatureChanged;
+        CancelMinigame();
     }
 
     public void StartMinigame()
@@ -115,8 +101,6 @@ public class EngineMiniGame : MonoBehaviour
         _remainingTime = timeLimit;
         TurnOffAllComponents();
 
-        if (timerText != null) timerText.gameObject.SetActive(true);
-        UpdateTimerUI();
         _timerCoroutine = StartCoroutine(EmergencyTimerRoutine());
 
         StartRoundWithNewSequence();
@@ -134,7 +118,7 @@ public class EngineMiniGame : MonoBehaviour
         StopRunningCoroutines();
         StopCompletionFeedback();
         TurnOffAllComponents();
-        if (timerText != null) timerText.gameObject.SetActive(false);
+        ShowEngineStatus();
         if (wasActive) Debug.Log("[ENGINE MINIGAME] Reparación cancelada por el jugador.");
     }
 
@@ -144,7 +128,6 @@ public class EngineMiniGame : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
             _remainingTime = Mathf.Max(0f, _remainingTime - 1f);
-            UpdateTimerUI();
         }
 
         if (_isActive && _remainingTime <= 0f) TimeExpired();
@@ -152,6 +135,7 @@ public class EngineMiniGame : MonoBehaviour
 
     private void StartRoundWithNewSequence()
     {
+        ShowRoundProgress();
         _currentSequence.Clear();
         _currentInput = 0;
 
@@ -277,6 +261,7 @@ public class EngineMiniGame : MonoBehaviour
 
     private IEnumerator AdvanceToNextRoundRoutine()
     {
+        bool enteringFinalRound = _currentRound == totalRounds;
         TurnOffAllComponents();
         yield return new WaitForSeconds(roundTransitionInitialPause);
 
@@ -284,9 +269,11 @@ public class EngineMiniGame : MonoBehaviour
         {
             foreach (EngineMiniGameComponent component in components)
                 if (component != null) component.ShowRoundTransitionFeedback();
+            if (enteringFinalRound) SetAllStatusLights(Color.yellow);
             yield return new WaitForSeconds(roundTransitionPulseDuration);
 
             TurnOffAllComponents();
+            if (enteringFinalRound) SetAllStatusLights(Color.yellow, lit: false);
             yield return new WaitForSeconds(roundTransitionPulseDuration);
         }
 
@@ -300,7 +287,6 @@ public class EngineMiniGame : MonoBehaviour
         _isCompleting = true;
         _acceptingInput = false;
         StopRunningCoroutines();
-        if (timerText != null) timerText.gameObject.SetActive(false);
 
         // Commit the repair before the player can skip the completion feedback.
         if (engineSystem != null) engineSystem.RestartEngine();
@@ -314,15 +300,18 @@ public class EngineMiniGame : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             foreach (EngineMiniGameComponent component in components)
-                if (component != null) component.ShowCorrectFeedback();
+                if (component != null) component.ShowRoundTransitionFeedback();
+            SetAllStatusLights(Color.yellow);
             yield return new WaitForSeconds(0.5f);
 
             TurnOffAllComponents();
+            SetAllStatusLights(Color.yellow, lit: false);
             yield return new WaitForSeconds(0.5f);
         }
 
         foreach (EngineMiniGameComponent component in components)
             if (component != null) component.ShowCompletionFeedback();
+        SetAllStatusLights(Color.green);
 
         yield return new WaitForSeconds(completionGreenHoldDuration);
         TurnOffAllComponents();
@@ -330,6 +319,7 @@ public class EngineMiniGame : MonoBehaviour
 
         _isCompleting = false;
         _completionCoroutine = null;
+        ShowEngineStatus();
         Completed?.Invoke();
     }
 
@@ -339,7 +329,7 @@ public class EngineMiniGame : MonoBehaviour
         _acceptingInput = false;
         StopRunningCoroutines();
         TurnOffAllComponents();
-        if (timerText != null) timerText.gameObject.SetActive(false);
+        ShowEngineStatus();
 
         Debug.Log("[ENGINE MINIGAME] Tiempo agotado: sobrecalentamiento crítico.");
         GameEventChannel<OnDeath>.RaiseEvent(new OnDeath(DeathType.EngineOverheat));
@@ -414,9 +404,42 @@ public class EngineMiniGame : MonoBehaviour
         _idleReplayCoroutine = null;
     }
 
-    private void UpdateTimerUI()
+    private void HandleTemperatureChanged()
     {
-        if (timerText == null) return;
-        timerText.text = $"ROUND {_currentRound}/{totalRounds}\nTIME: {Mathf.CeilToInt(_remainingTime)}";
+        if (!CanCancel) ShowEngineStatus();
+    }
+
+    private void ShowEngineStatus()
+    {
+        if (engineSystem == null) return;
+
+        Color color = Color.green;
+        if (engineSystem.IsBroken() || engineSystem.IsTemperatureCritical)
+            color = Color.red;
+        else if (engineSystem.TemperatureFraction >= 0.5f)
+            color = Color.yellow;
+
+        SetAllStatusLights(color);
+    }
+
+    private void ShowRoundProgress()
+    {
+        int activeLight = _currentRound - 1;
+        for (int i = 0; i < statusLights.Length; i++)
+            SetStatusLight(statusLights[i], i < activeLight ? Color.green : Color.yellow, i <= activeLight);
+    }
+
+    private void SetAllStatusLights(Color color, bool lit = true)
+    {
+        foreach (LightObject light in statusLights)
+            SetStatusLight(light, color, lit);
+    }
+
+    private static void SetStatusLight(LightObject light, Color color, bool lit)
+    {
+        if (light == null) return;
+
+        if (lit && light.LightColor != color) light.SetColor(color);
+        light.Toggle(lit);
     }
 }
