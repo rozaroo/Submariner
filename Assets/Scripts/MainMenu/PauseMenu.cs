@@ -9,75 +9,82 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject controlsPanel;
 
+    [Header("Input Settings")]
+    [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private string pauseActionName = "Pause";
+    private InputAction pauseAction;
+
     private bool _isPaused = false;
     private CursorLockMode _previousLockState;
     private bool _previousCursorVisible;
-    private PlayerInput _playerInput;
-    private InputActionMap _pausedActionMap;
+
+    private string _previousActionMap;
+
+    private void Awake()
+    {
+        if (playerInput == null) playerInput = FindFirstObjectByType<PlayerInput>();
+        if (playerInput != null) pauseAction = playerInput.actions.FindAction("UI/" + pauseActionName);
+    }
+
+    private void OnEnable()
+    {
+        if (pauseAction != null)
+        {
+            pauseAction.Enable();
+            pauseAction.performed += OnPausePerformed;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (pauseAction != null)
+        {
+            pauseAction.performed -= OnPausePerformed;
+            pauseAction.Disable();
+        }
+    }
 
     private void Start()
     {
-        if (pauseCanvas != null)
-        {
-            pauseCanvas.SetActive(false);
-        }
-
-        _playerInput = FindFirstObjectByType<PlayerInput>();
+        if (pauseCanvas != null) pauseCanvas.SetActive(false);
     }
-
-    private void Update()
+    private void OnPausePerformed(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (_isPaused)
         {
-            if (_isPaused)
-            {
-                if (controlsPanel != null && controlsPanel.activeSelf)
-                    ShowPausePanel();
-                else
-                    Resume();
-            }
-            else
-            {
-                Pause();
-            }
+            if (controlsPanel != null && controlsPanel.activeSelf) ShowPausePanel();
+            else Resume();
+        }
+        else
+        {
+            if (Time.timeScale == 0f) return;
+            Pause();
         }
     }
 
     private bool IsPlayerInStation()
     {
-        if (_playerInput == null)
-        {
-            _playerInput = FindFirstObjectByType<PlayerInput>();
-        }
-
-        if (_playerInput != null && _playerInput.currentActionMap != null)
-        {
-            return _playerInput.currentActionMap.name == "Station";
-        }
-
+        if (playerInput != null && playerInput.currentActionMap != null) return playerInput.currentActionMap.name == "Station";
         return false;
     }
 
     public void Resume()
     {
-        if (!_isPaused) return;
-
         pauseCanvas.SetActive(false);
         ShowPausePanel();
         Time.timeScale = 1f;
         _isPaused = false;
-        
-        // Restore cursor state
+        // Restaurar el Action Map anterior
+        if (!string.IsNullOrEmpty(_previousActionMap))
+        {
+            playerInput.SwitchCurrentActionMap(_previousActionMap);
+            // Volver a habilitar Pause para la próxima pausa
+            if (pauseAction != null) pauseAction.Enable();
+        }
+        // Restaurar cursor
         Cursor.lockState = _previousLockState;
         Cursor.visible = _previousCursorVisible;
-        _pausedActionMap?.Enable();
-        _pausedActionMap = null;
-
-        // Force cursor lock in editor if it was locked
-        if (_previousLockState == CursorLockMode.Locked)
-        {
-            StartCoroutine(ForceCursorLock());
-        }
+        if (_previousLockState == CursorLockMode.Locked) StartCoroutine(ForceCursorLock());
     }
 
     private System.Collections.IEnumerator ForceCursorLock()
@@ -89,27 +96,22 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
-        if (_isPaused || Time.timeScale == 0f || IsPlayerInStation()) return;
+        if (playerInput == null) return;
 
-        // Store current cursor state before pausing
+        // Guardar el Action Map actual
+        if (playerInput.currentActionMap != null) _previousActionMap = playerInput.currentActionMap.name;
+
+        // Guardar el estado del cursor
         _previousLockState = Cursor.lockState;
         _previousCursorVisible = Cursor.visible;
 
-        Time.timeScale = 0f;
-        _isPaused = true;
-
-        // Input actions run independently of Time.timeScale.
-        InputActionMap actionMap = _playerInput != null ? _playerInput.currentActionMap : null;
-        if (actionMap != null && actionMap.enabled)
-        {
-            _pausedActionMap = actionMap;
-            _pausedActionMap.Disable();
-        }
+        // Cambiar al mapa de pausa
+        playerInput.SwitchCurrentActionMap("UI");
 
         ShowPausePanel();
         pauseCanvas.SetActive(true);
-
-        // Show cursor for menu navigation
+        Time.timeScale = 0f;
+        _isPaused = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
