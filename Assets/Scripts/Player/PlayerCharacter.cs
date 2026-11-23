@@ -88,8 +88,7 @@ public class PlayerCharacter : MonoBehaviour
         if (useSpatialInteraction)
         {
             _spatialInteraction = GetComponent<SpatialInteractionSystem>();
-            if (_spatialInteraction == null)
-                _spatialInteraction = gameObject.AddComponent<SpatialInteractionSystem>();
+            if (_spatialInteraction == null) _spatialInteraction = gameObject.AddComponent<SpatialInteractionSystem>();
         }
         
         if (CamController != null)
@@ -116,11 +115,7 @@ public class PlayerCharacter : MonoBehaviour
     private void HandleInputState(OnPlayerInputStateChanged state)
     {
         _canMove = state.IsInputEnabled;
-        
-        if (!_canMove && TryGetComponent(out Rigidbody rb))
-        {
-            rb.linearVelocity = Vector3.zero;
-        }
+        if (!_canMove && TryGetComponent(out Rigidbody rb)) rb.linearVelocity = Vector3.zero;
     }
 
     private void Update()
@@ -128,11 +123,7 @@ public class PlayerCharacter : MonoBehaviour
         if (!_canMove) return;
         _gameplaySm.Update();
         _movementStrategy?.Move(_movementContext);
-        
-        if (_isHolding)
-        {
-            InventorySystem.UseItemHold();
-        }
+        if (_isHolding) InventorySystem.UseItemHold();
     }
 
     public void SetMovementStrategy(IMovementStrategy movementStrategy)
